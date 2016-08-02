@@ -1,4 +1,4 @@
-package com.flatstack.android.utils;
+package com.b_designworks.android.utils;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;

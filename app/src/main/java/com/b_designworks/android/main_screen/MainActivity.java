@@ -1,11 +1,11 @@
-package com.flatstack.android.main_screen;
+package com.b_designworks.android.main_screen;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 
-import com.flatstack.android.BaseActivity;
-import com.flatstack.android.R;
+import com.b_designworks.android.BaseActivity;
+import com.b_designworks.android.R;
 
 import butterknife.Bind;
 

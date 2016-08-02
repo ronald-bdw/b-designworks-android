@@ -1,4 +1,4 @@
-package com.flatstack.android.main_screen;
+package com.b_designworks.android.main_screen;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.b_designworks.android.R;
+import com.b_designworks.android.utils.HomeAsUp;
 import com.bumptech.glide.Glide;
-import com.flatstack.android.R;
-import com.flatstack.android.utils.HomeAsUp;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
