@@ -29,6 +29,8 @@ ext {
             self  : "com.squareup.okhttp3:okhttp:$versions.okHttp"
     ]
     androidTests = [
+            robolectric    : 'org.robolectric:robolectric:3.0',
+            assertj        : 'com.squareup.assertj:assertj-android:1.0.0',
             espressoCore   : "com.android.support.test.espresso:espresso-core:$versions.espressoVersion",
             espressoContrib: "com.android.support.test.espresso:espresso-contrib:$versions.espressoVersion",
             espressoIntents: "com.android.support.test.espresso:espresso-intents:$versions.espressoVersion",
