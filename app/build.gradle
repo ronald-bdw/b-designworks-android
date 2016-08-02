@@ -21,6 +21,9 @@ android {
         applicationId APPLICATION_ID
         versionCode 1
         versionName '0.1.0'
+
+        def gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
+        buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
     }
 
     productFlavors {
