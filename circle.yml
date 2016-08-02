@@ -8,11 +8,10 @@ dependencies:
   pre:
     - echo y | android update sdk --no-ui --all --filter "tools,platform-tools,android-23,extra-google-m2repository"
     - echo y | android update sdk --no-ui --all --filter "build-tools-23.0.2"
-
+    - chmod +x gradlew
 
 test:
   override:
-    - chmod +x gradlew
     - ./gradlew build check
 
 #deployment:
