@@ -12,6 +12,7 @@ dependencies:
 
 test:
   override:
+    - chmod +x gradlew
     - ./gradlew build check
 
 #deployment:
