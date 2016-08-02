@@ -1,4 +1,5 @@
-Android app skeleton [![Build Status](https://travis-ci.org/fs/android-base.png)](https://travis-ci.org/fs/android-base)
+Android app skeleton [![Circle CI](https://circleci.com/gh/fs/b-designworks-android.png?style=shield&circle-token=4f747ae99f6db60e3e2125833690de99897d368b)](https://circleci.com/gh/AdMeGroup/AdMe-Android)
+
 =======================================
 ##Prerequisites
 * JDK 8
@@ -45,20 +46,6 @@ It will ask you to change the language level - do it, we're using Java 8 now
 * Change your app's package by either [renaming the folder structure for Java sources](https://github.com/fs/android-base/tree/master/app/src/main/java/com/flatstack/android) or by just changing this [constant](https://github.com/fs/android-base/blob/master/app/build.gradle#L5) in `build.gradle`
 
 ###Making a release build
-* Just uncomment [these lines](https://github.com/fs/android-base/blob/master/app/build.gradle#L41-L48) and fill them up with your credentials
-
-##Notes on ProGuarding
-Project already has proguard config for included libraries.
-If you add library check proguard section of documentation and update [proguard-rules.pro](https://github.com/fs/android-base/blob/master/app/proguard-rules.pr)
-
-##Notes on lambdas support: retrolambda and jack and Jill
-Now Jack and Jil allow to use lambdas. Also it aims to speed up compilation process.
-But it's buggy and does not support annotation processing (butterknife, dart, greenrobot eventbus3, dagger use it).
-When these drawbacks will be eliminated we move from retrolambda to jack&jill
-
-## Credits
-Android app skeleton is maintained by [Adel Nizamutdinov](http://github.com/adelnizamutdinov) and [Ilya Eremin](http://github.com/ilyaeremin).
-It was written by [Flatstack](http://www.flatstack.com) with the help of our
-[contributors](http://github.com/fs/android-base/contributors)
+* Just uncomment [these lines](https://github.com/fs/b-designworks-android/blob/master/app/build.gradle#L41-L48) and fill them up with your credentials
 
 [<img src="http://www.flatstack.com/logo.svg" width="100"/>](http://www.flatstack.com)
