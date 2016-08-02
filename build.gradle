@@ -1,6 +1,6 @@
-// project wide version settings for all submodules
 buildscript {
   repositories {
+    maven { url 'https://maven.fabric.io/public' }
     jcenter()
   }
 
@@ -8,8 +8,8 @@ buildscript {
     // android plugin
     classpath 'com.android.tools.build:gradle:2.1.2'
     // use Java 8 lambdas on android
-    // TODO replace with jack and jill in near future
     classpath 'me.tatarka:gradle-retrolambda:3.2.5'
+    classpath 'io.fabric.tools:gradle:1.+'
   }
 }
 
