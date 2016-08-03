@@ -1,20 +1,23 @@
 buildscript {
-  repositories {
-    maven { url 'https://maven.fabric.io/public' }
-    jcenter()
-  }
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+        jcenter()
+    }
 
-  dependencies {
-    // android plugin
-    classpath 'com.android.tools.build:gradle:2.1.2'
-    // use Java 8 lambdas on android
-    classpath 'me.tatarka:gradle-retrolambda:3.2.5'
-    classpath 'io.fabric.tools:gradle:1.+'
-  }
+    dependencies {
+        // android plugin
+        classpath 'com.android.tools.build:gradle:2.1.2'
+        // use Java 8 lambdas on android
+        classpath 'me.tatarka:gradle-retrolambda:3.2.5'
+        classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
+        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.5.5'
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+    configurations.classpath.exclude group: 'com.android.tools.external.lombok'
 }
 
 allprojects {
-  repositories {
-    jcenter()
-  }
+    repositories {
+        jcenter()
+    }
 }

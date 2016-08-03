@@ -9,14 +9,14 @@ import com.b_designworks.android.BuildConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import static org.assertj.android.api.Assertions.assertThat;
 
-@RunWith(RobolectricGradleTestRunner.class)
-@Config(sdk = 18, constants = BuildConfig.class, packageName = "com.b_designworks.android")
+@RunWith(RobolectricTestRunner.class)
+@Config(constants = BuildConfig.class)
 public class ViewsTest {
     @Test public void testRoot() throws Exception {
         final Activity activity = Robolectric.buildActivity(Activity.class).create().get();

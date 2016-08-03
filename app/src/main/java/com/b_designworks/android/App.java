@@ -14,7 +14,7 @@ public class App extends Application {
         setUpCrashMonitoring();
     }
 
-    private void setUpCrashMonitoring() {
+    protected void setUpCrashMonitoring() {
         Fabric.with(this, new Crashlytics());
         Crashlytics.setString("GIT_SHA", BuildConfig.GIT_SHA);
         Crashlytics.setBool("DEBUG", BuildConfig.DEBUG);
