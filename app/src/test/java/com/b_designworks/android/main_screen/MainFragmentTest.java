@@ -7,8 +7,8 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.b_designworks.android.BaseActivity;
-import com.flatstack.android.BuildConfig;
-import com.flatstack.android.R;
+import com.b_designworks.android.BuildConfig;
+import com.b_designworks.android.R;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.robolectric.RuntimeEnvironment.application;
 
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(sdk = 18, constants = BuildConfig.class, packageName = "com.flatstack.android")
+@Config(sdk = 18, constants = BuildConfig.class, packageName = "com.b_designworks.android")
 public class MainFragmentTest {
     MainFragment fragment;
 

@@ -1,4 +1,4 @@
-Android app skeleton [![Circle CI](https://circleci.com/gh/fs/b-designworks-android.png?style=shield&circle-token=4f747ae99f6db60e3e2125833690de99897d368b)](https://circleci.com/gh/AdMeGroup/AdMe-Android)
+Android app skeleton [![Circle CI](https://circleci.com/gh/fs/b-designworks-android.png?style=shield&circle-token=4f747ae99f6db60e3e2125833690de99897d368b)](https://circleci.com/gh/fs/b-designworks-android)
 
 =======================================
 ##Prerequisites
