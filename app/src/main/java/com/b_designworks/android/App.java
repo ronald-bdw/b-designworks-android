@@ -6,6 +6,7 @@ import com.b_designworks.android.utils.AndroidUtils;
 import com.crashlytics.android.Crashlytics;
 
 import io.fabric.sdk.android.Fabric;
+import io.smooch.core.Smooch;
 
 public class App extends Application {
 
@@ -13,6 +14,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         AndroidUtils.initialize(this);
+        Smooch.init(this, "8maa8895p2nud29ijkrf2ikx1");
         setUpCrashMonitoring();
     }
 
