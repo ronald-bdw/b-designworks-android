@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="#8bc34a"
+    android:padding="16dp"
+    android:text="LOGO PLACEHOLDER"
+    android:textSize="20sp"
+    tools:showIn="@layout/screen_select_provider"/>
