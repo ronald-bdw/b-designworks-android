@@ -14,11 +14,15 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         AndroidUtils.initialize(this);
+        setUpServices();
+    }
+
+    protected void setUpServices() {
         Smooch.init(this, "8maa8895p2nud29ijkrf2ikx1");
         setUpCrashMonitoring();
     }
 
-    protected void setUpCrashMonitoring() {
+    private void setUpCrashMonitoring() {
         Fabric.with(this, new Crashlytics());
         Crashlytics.setString("GIT_SHA", BuildConfig.GIT_SHA);
         Crashlytics.setBool("DEBUG", BuildConfig.DEBUG);

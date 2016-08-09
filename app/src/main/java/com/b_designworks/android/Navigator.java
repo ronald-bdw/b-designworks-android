@@ -14,8 +14,6 @@ import com.b_designworks.android.sync.SyncScreen;
 import com.b_designworks.android.trial.TrialScreen;
 import com.b_designworks.android.verification.VerifyScreen;
 
-import io.smooch.ui.ConversationActivity;
-
 /**
  * Created by Ilya Eremin on 03.08.2016.
  */
@@ -62,7 +60,4 @@ public class Navigator {
         context.startActivity(new Intent(context, AboutUsScreen.class));
     }
 
-    public static void smooch(Context context) {
-        ConversationActivity.show(context);
-    }
 }
