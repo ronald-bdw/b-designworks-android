@@ -54,8 +54,12 @@ public class ChatScreen extends BaseActivity {
         Navigator.settings(context());
     }
 
-    @OnClick(R.id.push_notifications) void onPushNotificationsClick(){
+    @OnClick(R.id.push_notifications) void onPushNotificationsClick() {
         Navigator.pushNotifications(context());
+    }
+
+    @OnClick(R.id.about_us) void onAboutUsClick() {
+        Navigator.aboutUs(context());
     }
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {

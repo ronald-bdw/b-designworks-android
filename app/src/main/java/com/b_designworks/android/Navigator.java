@@ -55,4 +55,8 @@ public class Navigator {
     public static void signUp(Context context) {
         context.startActivity(new Intent(context, RegistrationScreen.class));
     }
+
+    public static void aboutUs(Context context) {
+        context.startActivity(new Intent(context, AboutUsScreen.class));
+    }
 }

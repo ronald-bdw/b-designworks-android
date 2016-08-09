@@ -34,6 +34,7 @@
         <activity android:name=".sync.SyncScreen"/>
         <activity android:name=".registration.RegistrationScreen"/>
         <activity android:name=".profile.EditProfileScreen"/>
+        <activity android:name=".AboutUsScreen"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"
