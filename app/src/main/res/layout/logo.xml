@@ -7,6 +7,8 @@
     android:layout_gravity="center"
     android:background="#8bc34a"
     android:padding="16dp"
-    android:text="LOGO PLACEHOLDER"
+    android:text="Logo placeholder"
+    android:textAllCaps="true"
     android:textSize="20sp"
-    tools:showIn="@layout/screen_select_provider"/>
+    tools:showIn="@layout/screen_select_provider"
+    tools:ignore="HardcodedText"/>

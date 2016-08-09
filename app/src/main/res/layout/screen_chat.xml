@@ -23,18 +23,19 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_gravity="end"
         android:background="@android:color/white"
         android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_gravity="end"
         >
 
         <TextView
             android:id="@+id/profile"
-            android:text="Profile"
+            android:text="@string/chat_drawer_profile"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:gravity="center_vertical"
@@ -42,22 +43,32 @@
 
         <TextView
             android:id="@+id/push_notifications"
-            android:text="Push notifications"
+            android:text="@string/chat_drawer_push_notifications"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:gravity="center_vertical"
+            android:layout_marginTop="48dp"
             />
 
         <TextView
             android:id="@+id/settings"
-            android:text="Settings"
+            android:text="@string/chat_drawer_settings"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:gravity="center_vertical"
+            android:layout_marginTop="96dp"
+            />
+        
+        <TextView
+            android:id="@+id/about_us"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="bottom"
+            android:gravity="center_vertical"
+            android:text="@string/chat_drawer_about_us"
             />
 
-
-    </LinearLayout>
+    </FrameLayout>
 
 </android.support.v4.widget.DrawerLayout>
 

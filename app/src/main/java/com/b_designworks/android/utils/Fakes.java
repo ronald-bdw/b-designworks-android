@@ -30,8 +30,8 @@ public class Fakes {
         messages.add(5, dateTime);
 
         DateTime dateTime2 = new DateTime();
-        dateTime.setTimestamp("15 August 2016");
-        messages.add(9, dateTime);
+        dateTime2.setTimestamp("15 August 2016");
+        messages.add(9, dateTime2);
 
         return messages;
     }

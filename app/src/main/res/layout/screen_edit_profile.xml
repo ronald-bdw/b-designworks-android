@@ -16,13 +16,14 @@
         android:gravity="center_vertical"
         android:background="@android:color/white"
         android:layout_marginTop="1dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         >
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/avatar"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:layout_marginLeft="16dp"
             android:src="@drawable/avatar_placeholder_settings"
             />
 
@@ -30,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="32dp"
-            android:text="Change photo"
+            android:text="@string/edit_profile_change_photo"
             android:textSize="16sp"
             android:textStyle="bold"
             />
@@ -61,7 +62,7 @@
             android:layout_width="0dp"
             android:layout_weight="3"
             android:layout_height="wrap_content"
-            android:hint="Your name"
+            android:inputType="text"
             />
 
     </LinearLayout>
@@ -89,7 +90,7 @@
             android:layout_width="0dp"
             android:layout_weight="3"
             android:layout_height="wrap_content"
-            android:hint="Your second name"
+            android:inputType="text"
             />
 
     </LinearLayout>
@@ -119,7 +120,6 @@
             android:layout_weight="3"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
-            android:hint="Your email"
             />
 
     </LinearLayout>
@@ -148,7 +148,6 @@
             android:layout_width="0dp"
             android:layout_weight="3"
             android:layout_height="wrap_content"
-            android:hint="My phone"
             android:inputType="phone"
             />
 

@@ -41,7 +41,7 @@
         android:id="@+id/sync"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:text="Sync"
+        android:text="@string/settings_sync"
         android:gravity="center_vertical"
         android:paddingLeft="16dp"
         android:background="@android:color/white"
@@ -51,7 +51,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:text="Logout"
+        android:text="@string/settings_logout"
         android:gravity="center_vertical"
         android:paddingLeft="16dp"
         android:layout_marginTop="1dp"
