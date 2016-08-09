@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme"
         >
         <activity
-            android:name=".main_screen.MainActivity"
+            android:name=".login.SelectProviderScreen"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -24,8 +24,21 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity android:name=".chat.ChatScreen"/>
+        <activity android:name=".verification.VerifyScreen"/>
+        <activity android:name=".trial.TrialScreen"/>
+        <activity android:name=".profile.ProfileScreen"/>
+        <activity android:name=".settings.SettingsScreen"/>
+        <activity android:name=".settings.PushNotificationsSettingsScreen"/>
+        <activity android:name=".sync.SyncScreen"/>
+        <activity android:name=".registration.RegistrationScreen"/>
+        <activity android:name=".profile.EditProfileScreen"/>
+
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="a58319df29eb3929f0ed864166f3c42deb476e66" />
+            android:value="a58319df29eb3929f0ed864166f3c42deb476e66"
+            />
+
     </application>
 </manifest>
