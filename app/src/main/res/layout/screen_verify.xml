@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/default_background"
+    >
+
+    <include layout="@layout/logo"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Provider logo"
+        android:padding="16dp"
+        android:background="#8bc34a"
+        android:textSize="18sp"
+        android:layout_marginTop="16dp"
+        tools:ignore="HardcodedText"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/verify_enter_code"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="24dp"
+        />
+
+
+    <EditText
+        android:id="@+id/verification_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="0000000"
+        android:background="@android:color/white"
+        android:padding="16dp"
+        android:layout_marginTop="8dp"
+        tools:ignore="HardcodedText"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/verify_you_will_get_code"
+        android:layout_marginTop="8dp"
+        />
+
+    <Button
+        android:id="@+id/next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/next"
+        android:layout_marginTop="8dp"
+
+        />
+
+</LinearLayout>

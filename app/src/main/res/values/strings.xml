@@ -1,4 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Android Base</string>
+    <string name="app_name">Fitness App</string>
+    <string name="menu_right">Right menu</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_push_notifications">Push notifications</string>
+    <string name="title_sync">Sync</string>
+    <string name="title_edit_profile">Edit profile</string>
+    <string name="title_welcome">Welcome</string>
+    <string name="edit_profile_first_name">First name</string>
+    <string name="edit_profile_second_name">Second name</string>
+    <string name="edit_profile_email">Email</string>
+    <string name="edit_profile_phone">Phone</string>
+    <string name="settings_edit_profile">Edit Profile</string>
+    <string name="trial_sign_up">Sign up now</string>
+    <string name="pushes_send_me_push_notifications_for">Send me push notifications for:</string>
+    <string name="pushes_activity_on_any_kind">Activity on any kind</string>
+    <string name="pushes_only_key_words">Only key words</string>
+    <string name="pushes_nothing_push_notifications_off">Nothing (push notifications off)</string>
+    <string name="pushes_keywords_hint">Healthy sessions, walking, cycling</string>
+    <string name="pushes_key_words">Key words</string>
+    <string name="pushes_case_warning">Seperate words and phrases with commas.\nKey words are not case sensitive</string>
+    <string name="login_not_listed">Not listed. Click here</string>
+    <string name="next">Next</string>
+    <string name="chat_drawer_profile">Profile</string>
+    <string name="chat_drawer_push_notifications">Push notifications</string>
+    <string name="chat_drawer_settings">Settings</string>
+    <string name="chat_drawer_about_us">About us</string>
+    <string name="title_about_us">About us</string>
+    <string name="verify_you_will_get_code">You will get code provided by your provider</string>
+    <string name="verify_enter_code">Enter code</string>
+    <string name="sync_google_fit">Google Fit</string>
+    <string name="sync_fitbit">Fitbit</string>
+    <string name="settings_logout">Logout</string>
+    <string name="settings_sync">Sync</string>
+    <string name="profile_phone">Phone</string>
+    <string name="profile_email">Email</string>
+    <string name="edit_profile_change_photo">Change photo</string>
+    <string name="about_us_text">Some text about the App… Messenger bag pop-up bicycle rights, brunch cliche freegan vice mixtape wayfares gentrify kickstarger.\n\nCountact us and Social Media</string>
 </resources>

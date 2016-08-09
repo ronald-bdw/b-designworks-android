@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/default_background"
+    >
+
+    <include layout="@layout/layout_toolbar"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@android:color/white"
+        android:text="@string/pushes_send_me_push_notifications_for"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="1dp"
+        />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@android:color/white"
+        >
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/pushes_activity_on_any_kind"
+            />
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/pushes_only_key_words"
+            />
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/pushes_nothing_push_notifications_off"
+            />
+
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="48dp"
+        android:background="@android:color/white"
+        android:text="@string/pushes_key_words"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@android:color/white"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:hint="@string/pushes_keywords_hint"
+        android:padding="16dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pushes_case_warning"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="8dp"
+        />
+
+</LinearLayout>
