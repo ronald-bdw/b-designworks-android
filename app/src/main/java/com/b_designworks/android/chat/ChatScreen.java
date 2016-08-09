@@ -62,6 +62,10 @@ public class ChatScreen extends BaseActivity {
         Navigator.aboutUs(context());
     }
 
+    @OnClick(R.id.smooch) void onSmoochClick(){
+        Navigator.smooch(context());
+    }
+
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.right_panel:
