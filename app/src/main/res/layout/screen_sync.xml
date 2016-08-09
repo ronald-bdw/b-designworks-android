@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <include layout="@layout/layout_toolbar"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="Google Fit"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:textSize="16sp"
+        android:background="@android:color/white"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="Fitbit"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:textSize="16sp"
+        android:background="@android:color/white"
+        android:layout_marginTop="1dp"
+        />
+
+</LinearLayout>
