@@ -2,7 +2,9 @@
 #if you store all model under one package then use:
 # -keep class your.package.name.models.** { *; }
 #if you store models under different models packages then use:
-#-keep class **.models.** { *; }
+-keep class **.models.** { *; }
+
+-keepclassmembers enum * { *; }
 
 #butterknife
 -keep class butterknife.** { *; }
