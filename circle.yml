@@ -18,4 +18,5 @@ deployment:
   production: # just a label; label names are completely up to you
     branch: master
     commands:
-      - ./gradlew assembleProductionDebug crashlyticsUploadDistributionProdutionDebug
+        if [[ ! -z $CIRCLE_PULL_REQUEST ]] ; then - ./gradlew assembleProductionDebug crashlyticsUploadDistributionProdutionDebug ; fi
+
