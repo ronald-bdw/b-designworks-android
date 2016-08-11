@@ -2,7 +2,9 @@
 #if you store all model under one package then use:
 # -keep class your.package.name.models.** { *; }
 #if you store models under different models packages then use:
-#-keep class **.models.** { *; }
+-keep class **.models.** { *; }
+
+-keepclassmembers enum * { *; }
 
 #butterknife
 -keep class butterknife.** { *; }
@@ -60,6 +62,16 @@
   **[] $VALUES;
   public *;
 }
+
+#okio
+-dontwarn okio.**
+
+#retrofit2
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+-keepattributes Signature
+-keepattributes Exceptions
+-keepclasseswithmembers class * { @retrofit2.http.* <methods>; }
 
 #debug
 -renamesourcefileattribute SourceFile

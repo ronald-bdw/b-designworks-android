@@ -6,6 +6,7 @@ import com.b_designworks.android.utils.AndroidUtils;
 import com.crashlytics.android.Crashlytics;
 
 import io.fabric.sdk.android.Fabric;
+import io.smooch.core.Smooch;
 
 public class App extends Application {
 
@@ -13,10 +14,15 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         AndroidUtils.initialize(this);
+        setUpServices();
+    }
+
+    protected void setUpServices() {
+        Smooch.init(this, "833kwj0z5wkvt82tpgfbbqn3z");
         setUpCrashMonitoring();
     }
 
-    protected void setUpCrashMonitoring() {
+    private void setUpCrashMonitoring() {
         Fabric.with(this, new Crashlytics());
         Crashlytics.setString("GIT_SHA", BuildConfig.GIT_SHA);
         Crashlytics.setBool("DEBUG", BuildConfig.DEBUG);

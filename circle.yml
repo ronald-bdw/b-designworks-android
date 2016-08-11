@@ -1,6 +1,7 @@
 machine:
    environment:
      ANDROID_HOME: /usr/local/android-sdk-linux
+     GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError"'
    java:
      version: oraclejdk8
 
@@ -12,16 +13,11 @@ dependencies:
 
 test:
   override:
-    - ./gradlew build check
+    - ./gradlew check
 
-#deployment:
-#  production: # just a label; label names are completely up to you
-#    branch: master
-#    commands:
-#      - ./gradlew publishApkRelease
-#        -Dorg.gradle.project.track=production
-#  beta:
-#    branch: develop
-#    commands:
-#      - ./gradlew publishApkRelease
-#        -Dorg.gradle.project.track=beta
+deployment:
+  production:
+    branch: master
+    commands:
+      - if [[ ! -z $CIRCLE_PULL_REQUEST ]] ; then ./gradlew assembleProductionDebug crashlyticsUploadDistributionProdutionDebug ; fi
+

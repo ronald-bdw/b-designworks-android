@@ -59,4 +59,5 @@ public class Navigator {
     public static void aboutUs(Context context) {
         context.startActivity(new Intent(context, AboutUsScreen.class));
     }
+
 }
