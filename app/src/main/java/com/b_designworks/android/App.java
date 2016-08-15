@@ -14,6 +14,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         AndroidUtils.initialize(this);
+        DI.initialize(this);
         setUpServices();
     }
 
