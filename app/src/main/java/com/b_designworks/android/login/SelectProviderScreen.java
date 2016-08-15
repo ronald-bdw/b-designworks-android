@@ -12,27 +12,27 @@ import android.widget.Toast;
 import com.b_designworks.android.BaseActivity;
 import com.b_designworks.android.Navigator;
 import com.b_designworks.android.R;
-import com.b_designworks.android.utils.UiInfo;
+import com.b_designworks.android.utils.ui.UiInfo;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 
 /**
- * Created by Ilya Eremin on 03.08.2016.
+ * Created by Ilya Eremin on 12.08.2016.
  */
-public class SelectProviderScreen extends BaseActivity {
+public class SelectProviderScreen extends BaseActivity{
 
     String[] data = {"one", "two", "three", "four", "five"};
 
     @Bind(R.id.select_provider_spinner) Spinner uiSelectProviderSpinner;
 
     @NonNull @Override public UiInfo getUiInfo() {
-        return new UiInfo(R.layout.screen_select_provider);
+        return new UiInfo(R.layout.screen_enter_phone);
     }
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, data);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         uiSelectProviderSpinner.setAdapter(adapter);
@@ -48,11 +48,12 @@ public class SelectProviderScreen extends BaseActivity {
         });
     }
 
+
     @OnClick(R.id.next) void onNextClick() {
         if (uiSelectProviderSpinner.getSelectedItemPosition() >= 0) {
             Navigator.verification(context());
         } else {
-            Toast.makeText(SelectProviderScreen.this, "Please select provider", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context(), "Please select provider", Toast.LENGTH_SHORT).show();
         }
     }
 

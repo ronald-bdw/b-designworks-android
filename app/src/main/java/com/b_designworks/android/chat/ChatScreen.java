@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import com.b_designworks.android.BaseActivity;
 import com.b_designworks.android.Navigator;
 import com.b_designworks.android.R;
-import com.b_designworks.android.utils.UiInfo;
+import com.b_designworks.android.utils.ui.UiInfo;
 
 import butterknife.Bind;
 import butterknife.OnClick;

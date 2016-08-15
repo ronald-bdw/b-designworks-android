@@ -13,7 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.b_designworks.android.utils.Keyboard;
-import com.b_designworks.android.utils.UiInfo;
+import com.b_designworks.android.utils.ui.UiInfo;
 import com.f2prateek.dart.Dart;
 
 import butterknife.ButterKnife;
