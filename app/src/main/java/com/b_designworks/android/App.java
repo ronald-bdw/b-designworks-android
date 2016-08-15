@@ -13,8 +13,8 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        AndroidUtils.initialize(this);
         DI.initialize(this);
+        AndroidUtils.initialize(this);
         setUpServices();
     }
 

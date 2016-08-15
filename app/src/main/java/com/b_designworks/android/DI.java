@@ -1,10 +1,10 @@
 package com.b_designworks.android;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.b_designworks.android.utils.network.RxErrorHandlingCallAdapterFactory;
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -20,28 +20,44 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by Ilya Eremin on 14.03.2016.
  */
-
-/**
- * When you need different dependencies for tests and prod
- * then create new flavors: mock and producation and move these dependencies there
- */
 public class DI {
 
-    @SuppressLint("StaticFieldLeak") private static Context appContext;
+    @SuppressWarnings("StaticFieldLeak") private static volatile DI instance;
 
-    private static DI ourInstance = new DI();
-
-    public static DI getInstance() {
-        return ourInstance;
+    public static DI initialize(@NonNull Context context) {
+        DI localInstance = instance;
+        if (localInstance == null) {
+            synchronized (DI.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new DI(context);
+                }
+            }
+        }
+        return localInstance;
     }
 
-    public static void initialize(@NonNull Context context) {
-        appContext = context;
+    private final Context context;
+
+    private DI(Context context) {
+        this.context = context;
+    }
+
+    @NonNull public static DI getInstance() {
+        if (instance == null) {
+            Crashlytics.log("DI instance cannot be null here. Something went wrong!");
+            throw new IllegalStateException("DI instance cannot be null here. Something went wrong!");
+        }
+        return instance;
+    }
+
+    private Context getContext() {
+        return context;
     }
 
     public @NonNull File getCacheDir() {
-        final File external = appContext.getExternalCacheDir();
-        return external != null ? external : appContext.getCacheDir();
+        final File external = getContext().getExternalCacheDir();
+        return external != null ? external : getContext().getCacheDir();
     }
 
     private Api api;

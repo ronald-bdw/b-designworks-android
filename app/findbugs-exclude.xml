@@ -1,9 +1,12 @@
 <FindBugsFilter>
     <!--android related-->
     <Match>
-        <Class name="~.*R\$.*" />
+        <Class name="~.*R\$.*"/>
     </Match>
     <Match>
-        <Class name="~.*Manifest\$.*" />
+        <Class name="~.*Manifest\$.*"/>
+    </Match>
+    <Match>
+        <Bug code="UwF"/>
     </Match>
 </FindBugsFilter>

@@ -19,5 +19,5 @@ deployment:
   production:
     branch: master
     commands:
-      - if [[ ! -z $CIRCLE_PULL_REQUEST ]] ; then ./gradlew assembleProductionDebug crashlyticsUploadDistributionProdutionDebug ; fi
+      - ./gradlew assembleProductionDebug crashlyticsUploadDistributionProdutionDebug
 

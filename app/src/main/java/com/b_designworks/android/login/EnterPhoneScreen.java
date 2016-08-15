@@ -1,5 +1,6 @@
 package com.b_designworks.android.login;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -31,7 +32,7 @@ public class EnterPhoneScreen extends BaseActivity {
         return new UiInfo(R.layout.screen_enter_phone);
     }
 
-    @Override protected void onCreate(@Nullable Bundle savedState) {
+    @SuppressLint("SetTextI18n") @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
         if (BuildConfig.DEBUG) {
             uiPhone.setText("+79625535458");

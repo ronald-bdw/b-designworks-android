@@ -41,4 +41,6 @@
     <string name="error_network">Check your network connection</string>
     <string name="loading">Loading</string>
     <string name="loading_sending_code">Sending code</string>
+    <string name="registration_hint_code">Code</string>
+    <string name="register_register">Register</string>
 </resources>

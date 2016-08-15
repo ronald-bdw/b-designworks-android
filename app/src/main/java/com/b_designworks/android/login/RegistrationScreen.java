@@ -1,5 +1,6 @@
 package com.b_designworks.android.login;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -50,7 +51,7 @@ public class RegistrationScreen extends BaseActivity {
     @Bind(R.id.email)      EditText uiEmail;
     @Bind(R.id.code)       EditText uiCode;
 
-    @Override protected void onCreate(@Nullable Bundle savedState) {
+    @SuppressLint("SetTextI18n") @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
         if (BuildConfig.DEBUG) {
             uiCode.setText("1234");
