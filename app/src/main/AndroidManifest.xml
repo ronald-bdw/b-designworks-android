@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme"
         >
         <activity
-            android:name=".login.SelectProviderScreen"
+            android:name=".login.EnterPhoneScreen"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -32,7 +32,7 @@
         <activity android:name=".settings.SettingsScreen"/>
         <activity android:name=".settings.PushNotificationsSettingsScreen"/>
         <activity android:name=".sync.SyncScreen"/>
-        <activity android:name=".registration.RegistrationScreen"/>
+        <activity android:name=".login.RegistrationScreen"/>
         <activity android:name=".profile.EditProfileScreen"/>
         <activity android:name=".AboutUsScreen"/>
 

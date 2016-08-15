@@ -8,7 +8,7 @@
     <string name="title_edit_profile">Edit profile</string>
     <string name="title_welcome">Welcome</string>
     <string name="edit_profile_first_name">First name</string>
-    <string name="edit_profile_second_name">Second name</string>
+    <string name="edit_profile_last_name">Last name</string>
     <string name="edit_profile_email">Email</string>
     <string name="edit_profile_phone">Phone</string>
     <string name="settings_edit_profile">Edit Profile</string>
@@ -20,7 +20,7 @@
     <string name="pushes_keywords_hint">Healthy sessions, walking, cycling</string>
     <string name="pushes_key_words">Key words</string>
     <string name="pushes_case_warning">Seperate words and phrases with commas.\nKey words are not case sensitive</string>
-    <string name="login_not_listed">Not listed. Click here</string>
+    <string name="login_not_listed">Not listed</string>
     <string name="next">Next</string>
     <string name="chat_drawer_profile">Profile</string>
     <string name="chat_drawer_push_notifications">Push notifications</string>
@@ -37,4 +37,8 @@
     <string name="profile_email">Email</string>
     <string name="edit_profile_change_photo">Change photo</string>
     <string name="about_us_text">Some text about the App… Messenger bag pop-up bicycle rights, brunch cliche freegan vice mixtape wayfares gentrify kickstarger.\n\nCountact us and Social Media</string>
+    <string name="welcome_hint_phone">Phone</string>
+    <string name="error_network">Check your network connection</string>
+    <string name="loading">Loading</string>
+    <string name="loading_sending_code">Sending code</string>
 </resources>

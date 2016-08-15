@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:orientation="vertical"
     android:background="@color/default_background"
     android:gravity="center"
+    android:orientation="vertical"
     >
 
     <include layout="@layout/logo"/>
@@ -16,29 +16,36 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_gravity="center"
-        android:layout_marginTop="80dp"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
+        android:layout_marginTop="80dp"
         android:background="@android:color/white"
         />
 
-    <TextView
-        android:id="@+id/not_listed"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/login_not_listed"
-        android:textStyle="bold"
-        android:layout_marginTop="8dp"
-        />
-
-    <Button
-        android:id="@+id/next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|bottom"
+        android:orientation="horizontal"
         android:layout_marginTop="48dp"
-        android:text="@string/next"
-        />
+        android:gravity="center"
+        >
+
+        <Button
+            android:id="@+id/not_listed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/login_not_listed"
+            />
+
+        <Button
+            android:id="@+id/next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:text="@string/next"
+            />
+
+    </LinearLayout>
 
 </LinearLayout>
