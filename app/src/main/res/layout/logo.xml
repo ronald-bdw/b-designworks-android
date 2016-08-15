@@ -10,5 +10,5 @@
     android:text="Logo placeholder"
     android:textAllCaps="true"
     android:textSize="20sp"
-    tools:showIn="@layout/screen_select_provider"
+    tools:showIn="@layout/screen_enter_phone"
     tools:ignore="HardcodedText"/>
