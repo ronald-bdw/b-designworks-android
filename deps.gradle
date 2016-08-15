@@ -4,7 +4,7 @@ ext {
             support            : '23.3.0',
             retrofit           : '2.0.2',
             espressoVersion    : '2.2.2',
-            BUILD_TOOLS_VERSION: '23.0.2',
+            BUILD_TOOLS_VERSION: '24.0.1',
             MIN_SDK_VERSION    : 15,
             TARGET_SDK_VERSION : 23
     ]
@@ -34,7 +34,9 @@ ext {
             espressoContrib: "com.android.support.test.espresso:espresso-contrib:$versions.espressoVersion",
             espressoIntents: "com.android.support.test.espresso:espresso-intents:$versions.espressoVersion",
             testRunner     : "com.android.support.test:runner:0.5",
-            testRules      : "com.android.support.test:rules:0.5"
+            testRules      : "com.android.support.test:rules:0.5",
+            junit          : "junit:junit:4.12",
+            mockito        : "org.mockito:mockito-core:1.+"
     ]
     supportLibs = supportDeps.values()
     retrofitLibs = retrofit.values()
