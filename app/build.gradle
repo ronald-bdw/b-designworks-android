@@ -32,12 +32,12 @@ android {
 
     productFlavors {
         staging {
-            buildConfigField "String", "API_URL", "\"https://example-staging.com\""
+            buildConfigField "String", "API_URL", "\"https://b-designworks.herokuapp.com/\""
             applicationIdSuffix ".staging"
         }
 
         production {
-            buildConfigField "String", "API_URL", "\"https://example.com\""
+            buildConfigField "String", "API_URL", "\"https://b-designworks.herokuapp.com/\""
         }
     }
 
@@ -92,6 +92,8 @@ repositories {
 dependencies {
     compile supportLibs
     compile rxJavaLibs
+    compile retrofitLibs
+    compile okHttpLibs
 
     compile 'com.jakewharton:butterknife:7.0.0' // view injection
     compile 'com.github.bumptech.glide:glide:3.7.0'

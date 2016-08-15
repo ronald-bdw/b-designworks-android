@@ -1,10 +1,21 @@
 package com.b_designworks.android;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 
+import com.b_designworks.android.utils.network.RxErrorHandlingCallAdapterFactory;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.File;
+
+import okhttp3.Cache;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Ilya Eremin on 14.03.2016.
@@ -15,8 +26,66 @@ import java.io.File;
  * then create new flavors: mock and producation and move these dependencies there
  */
 public class DI {
-    public static @NonNull File getCacheDir(@NonNull Context context) {
-        final File external = context.getExternalCacheDir();
-        return external != null ? external : context.getCacheDir();
+
+    @SuppressLint("StaticFieldLeak") private static Context appContext;
+
+    private static DI ourInstance = new DI();
+
+    public static DI getInstance() {
+        return ourInstance;
+    }
+
+    public static void initialize(@NonNull Context context) {
+        appContext = context;
+    }
+
+    public @NonNull File getCacheDir() {
+        final File external = appContext.getExternalCacheDir();
+        return external != null ? external : appContext.getCacheDir();
+    }
+
+    private Api api;
+
+    public @NonNull Api getApi() {
+        if (api == null) {
+            api = new Retrofit.Builder()
+                .client(getHttpClient())
+                .baseUrl(Api.BASE_URL)
+                .addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create())
+//            .addConverterFactory(EnumConverterFactory.create()) // this converter should be before gson converter
+                .addConverterFactory(GsonConverterFactory.create(getMapper()))
+                .build()
+                .create(Api.class);
+        }
+        return api;
+    }
+
+    private OkHttpClient okHttpClient;
+
+    private OkHttpClient getHttpClient() {
+        if (okHttpClient == null) {
+            OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
+            httpClientBuilder.cache(new Cache(getCacheDir(), 20 * 1024 * 1024));
+            if (BuildConfig.DEBUG) {
+                HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+                interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+                httpClientBuilder.addInterceptor(interceptor);
+            }
+            okHttpClient = httpClientBuilder.build();
+        }
+        return okHttpClient;
+
+    }
+
+    private Gson gson;
+
+    @NonNull public Gson getMapper() {
+        if (gson == null) {
+            gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create();
+        }
+        return gson;
+
     }
 }
