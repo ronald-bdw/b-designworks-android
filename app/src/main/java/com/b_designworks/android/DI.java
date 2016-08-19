@@ -92,6 +92,11 @@ public class DI {
             okHttpClient = httpClientBuilder.build();
         }
         return okHttpClient;
+    }
+
+    public UserManager getUserManager() {
+        return UserManager.getInstance(getStorage(), getApi());
+    }
 
     private IStorage getStorage() {
         return Storage.getInstance(PreferenceManager.getDefaultSharedPreferences(getContext()), getMapper());

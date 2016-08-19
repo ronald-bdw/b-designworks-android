@@ -42,7 +42,7 @@ public class UserManagerTest {
 
     @Before public void setUp() throws Exception {
         Api mockedApi = mock(Api.class);
-        when(mockedApi.getCode(any())).thenReturn(Observable.just(getFakeAuthResponse()));
+        when(mockedApi.sendMeCode(any())).thenReturn(Observable.just(getFakeAuthResponse()));
         when(mockedApi.register(anyString(), anyString(), anyString(), anyString(), eq(MY_FAKE_NUMBER), eq(MY_FAKE_NUMBER_CODE_ID)))
             .thenReturn(Observable.just(getFakeRegisterResponse()));
         userManager = UserManager.getInstance(new RuntimeStorage(), mockedApi);
