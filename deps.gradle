@@ -16,8 +16,10 @@ ext {
 //            gridLayout       : "com.android.support:gridlayout-v7:$versions.support"
     ]
     rxJava = [
-            rxJava   : 'io.reactivex:rxjava:1.1.6',
-            rxAndroid: 'io.reactivex:rxandroid:1.2.1'
+            rxJava               : 'io.reactivex:rxjava:1.1.6',
+            rxAndroid            : 'io.reactivex:rxandroid:1.2.1',
+            rxLifecycle          : 'com.trello:rxlifecycle:0.6.1',
+            rxLifecycleComponents: 'com.trello:rxlifecycle-components:0.6.1'
     ]
     retrofit = [
             retrofit     : "com.squareup.retrofit2:retrofit:$versions.retrofit",
