@@ -20,7 +20,7 @@ public interface Api {
 
     @FormUrlEncoded
     @POST(V1 + "auth_phone_codes")
-    Observable<AuthResponse> sendMeCode(@Field("phone_number") String phone);
+    Observable<AuthResponse> sendMeCode(@Field(encoded = true, value = "phone_number") String phone);
 
     @FormUrlEncoded
     @POST(V1 + "users") Observable<RegisterResponse> register(
@@ -28,14 +28,14 @@ public interface Api {
         @NonNull @Field(value = "last_name", encoded = true) String lastName,
         @NonNull @Field("email") String email,
         @NonNull @Field("sms_code") String code,
-        @NonNull @Field("phone_number") String phoneNumber,
+        @NonNull @Field(encoded = true, value = "phone_number") String phoneNumber,
         @NonNull @Field("auth_phone_code_id") String phoneCodeId
     );
 
     @FormUrlEncoded
     @POST(V1 + "users/sign_in") Observable<RegisterResponse> signIn(
         @NonNull @Field("sms_code") String code,
-        @NonNull @Field("phone_number") String phoneNumber,
+        @NonNull @Field(encoded = true, value = "phone_number") String phoneNumber,
         @NonNull @Field("auth_phone_code_id") String phoneCodeId
         );
 
