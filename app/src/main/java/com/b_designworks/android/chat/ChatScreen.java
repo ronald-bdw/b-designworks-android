@@ -12,7 +12,7 @@ import com.b_designworks.android.BaseActivity;
 import com.b_designworks.android.DI;
 import com.b_designworks.android.Navigator;
 import com.b_designworks.android.R;
-import com.b_designworks.android.UserManager;
+import com.b_designworks.android.UserInteractor;
 import com.b_designworks.android.utils.ui.UiInfo;
 
 import butterknife.Bind;
@@ -27,7 +27,7 @@ public class ChatScreen extends BaseActivity {
 
     private static final String TAG = "ChatScreen";
 
-    private UserManager userManager = DI.getInstance().getUserManager();
+    private UserInteractor userManager = DI.getInstance().getUserManager();
 
     @Bind(R.id.drawer) DrawerLayout uiDrawer;
 

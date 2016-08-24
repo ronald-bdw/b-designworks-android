@@ -14,17 +14,17 @@ import rx.functions.Func1;
 /**
  * Created by Ilya Eremin on 15.08.2016.
  */
-public class UserManager {
+public class UserInteractor {
 
-    private static volatile UserManager instance;
+    private static volatile UserInteractor instance;
 
-    public static UserManager getInstance(@NonNull IStorage storage, @NonNull Api api) {
-        UserManager localInstance = instance;
+    public static UserInteractor getInstance(@NonNull IStorage storage, @NonNull Api api) {
+        UserInteractor localInstance = instance;
         if (localInstance == null) {
-            synchronized (UserManager.class) {
+            synchronized (UserInteractor.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new UserManager(storage, api);
+                    instance = localInstance = new UserInteractor(storage, api);
                 }
             }
         }
@@ -40,7 +40,7 @@ public class UserManager {
     @NonNull private final IStorage storage;
     @NonNull private final Api      api;
 
-    private UserManager(@NonNull IStorage storage, @NonNull Api api) {
+    private UserInteractor(@NonNull IStorage storage, @NonNull Api api) {
         this.storage = storage;
         this.api = api;
     }

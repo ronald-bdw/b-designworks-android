@@ -15,7 +15,7 @@ import com.b_designworks.android.BaseActivity;
 import com.b_designworks.android.DI;
 import com.b_designworks.android.Navigator;
 import com.b_designworks.android.R;
-import com.b_designworks.android.UserManager;
+import com.b_designworks.android.UserInteractor;
 import com.b_designworks.android.utils.Bus;
 import com.b_designworks.android.utils.Rxs;
 import com.b_designworks.android.utils.network.ErrorUtils;
@@ -55,7 +55,7 @@ public class VerifyScreen extends BaseActivity {
     @Bind(R.id.verification_code) EditText uiVerificadtionCode;
     @Bind(R.id.progress)          View     uiProgress;
 
-    private UserManager userManager = DI.getInstance().getUserManager();
+    private UserInteractor userManager = DI.getInstance().getUserManager();
     private boolean userRegistered;
 
     @Nullable private Subscription verifyingCodeSubs;

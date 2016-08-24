@@ -13,7 +13,7 @@ import com.b_designworks.android.BaseActivity;
 import com.b_designworks.android.DI;
 import com.b_designworks.android.Navigator;
 import com.b_designworks.android.R;
-import com.b_designworks.android.UserManager;
+import com.b_designworks.android.UserInteractor;
 import com.b_designworks.android.utils.Rxs;
 import com.b_designworks.android.utils.Strings;
 import com.b_designworks.android.utils.network.CommonError;
@@ -51,7 +51,7 @@ public class RegistrationScreen extends BaseActivity {
         return new UiInfo(R.layout.screen_registration).setTitleRes(R.string.title_start_trial).enableBackButton();
     }
 
-    private UserManager userManager = DI.getInstance().getUserManager();
+    private UserInteractor userManager = DI.getInstance().getUserManager();
 
     private                                           String returnedVerificationCode;
     @Optional @InjectExtra(ARG_KEY_VERIFICATION_CODE) String argVerificationCode;
