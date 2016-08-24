@@ -45,21 +45,24 @@ android {
         }
     }
 
-//    signingConfigs {
-//        release {
-//            def props = new Properties()
-//            props.load(new FileInputStream(file("$rootDir/keys.properties")))
-//            storeFile file("$rootDir/your.jks")
-//            storePassword props['storePassword']
-//            keyAlias props['keyAlias']
-//            keyPassword props['keyPassword']
-//        }
-//    }
+    signingConfigs {
+        release {
+            def props = new Properties()
+            props.load(new FileInputStream(file("$rootDir/keystore.properties")))
+            storeFile file("$rootDir/keystore.jks")
+            storePassword props['storePassword']
+            keyAlias props['keyAlias']
+            keyPassword props['keyPassword']
+        }
+    }
 
     buildTypes {
-        debug {}
+        debug {
+            signingConfig signingConfigs.release
+        }
         release {
             minifyEnabled true
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
