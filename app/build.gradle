@@ -45,21 +45,24 @@ android {
         }
     }
 
-//    signingConfigs {
-//        release {
-//            def props = new Properties()
-//            props.load(new FileInputStream(file("$rootDir/keys.properties")))
-//            storeFile file("$rootDir/your.jks")
-//            storePassword props['storePassword']
-//            keyAlias props['keyAlias']
-//            keyPassword props['keyPassword']
-//        }
-//    }
+    signingConfigs {
+        release {
+            def props = new Properties()
+            props.load(new FileInputStream(file("$rootDir/keystore.properties")))
+            storeFile file("$rootDir/keystore.jks")
+            storePassword props['storePassword']
+            keyAlias props['keyAlias']
+            keyPassword props['keyPassword']
+        }
+    }
 
     buildTypes {
-        debug {}
+        debug {
+            signingConfig signingConfigs.release
+        }
         release {
             minifyEnabled true
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -108,6 +111,8 @@ dependencies {
 
     compile 'io.smooch:core:latest.release'
     compile 'io.smooch:ui:latest.release'
+
+    compile 'com.google.android.gms:play-services-fitness:9.4.0'
 
     testCompile androidTestsLibs
     compile('com.crashlytics.sdk.android:crashlytics:2.6.1@aar') {

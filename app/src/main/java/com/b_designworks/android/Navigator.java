@@ -14,6 +14,7 @@ import com.b_designworks.android.profile.EditProfileScreen;
 import com.b_designworks.android.profile.ProfileScreen;
 import com.b_designworks.android.settings.PushNotificationsSettingsScreen;
 import com.b_designworks.android.settings.SettingsScreen;
+import com.b_designworks.android.sync.GoogleFitScreen;
 import com.b_designworks.android.sync.SyncScreen;
 import com.b_designworks.android.trial.TrialScreen;
 
@@ -89,5 +90,9 @@ public class Navigator {
     public static void verifyAndReturnCode(@NonNull BaseActivity activity,
                                            @NonNull String phone) {
         activity.startActivityForResult(VerifyScreen.createIntent(activity, phone), RegistrationScreen.RESULT_KEY_FOR_VERIFYING);
+    }
+
+    public static void googleFit(@NonNull BaseActivity activity) {
+        activity.startActivity(new Intent(activity, GoogleFitScreen.class));
     }
 }
