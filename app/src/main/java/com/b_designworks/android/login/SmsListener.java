@@ -3,7 +3,6 @@ package com.b_designworks.android.login;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Telephony;
@@ -17,7 +16,6 @@ import com.b_designworks.android.utils.Bus;
 public class SmsListener extends BroadcastReceiver {
 
     public static final String KEY_PHRASE = "top_secret_phrase";
-    private SharedPreferences preferences;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -35,7 +33,7 @@ public class SmsListener extends BroadcastReceiver {
                         messages = new SmsMessage[pdus.length];
                     }
                     for (SmsMessage msg : messages) {
-                        String msg_from = msg.getOriginatingAddress();
+//                        String msg_from = msg.getOriginatingAddress();
                         String msgBody = msg.getMessageBody();
                         // TODO user real parser when it will be done
                         if (msgBody != null && msgBody.contains(KEY_PHRASE)) {

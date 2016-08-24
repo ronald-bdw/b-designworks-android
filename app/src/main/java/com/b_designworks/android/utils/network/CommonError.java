@@ -13,8 +13,8 @@ public class CommonError {
     private _Error error;
 
     public static class _Error {
-        String                    id;
-        int                       status;
+//        String                    id;
+//        int                       status;
         String                    error;
         Map<String, List<String>> validations;
     }

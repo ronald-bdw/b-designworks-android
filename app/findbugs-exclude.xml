@@ -9,4 +9,7 @@
     <Match>
         <Bug code="UwF"/>
     </Match>
+    <Match>
+        <Bug code="SBSC"/>
+    </Match>
 </FindBugsFilter>

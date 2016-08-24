@@ -73,6 +73,7 @@
     <string name="trial_start_trial">Start free 14-day trial now</string>
     <string name="verify_resend">Re-send</string>
     <string name="loading_sending_request_for_code">Requesting verification code</string>
+    <string name="verify_waiting_for_sms">Waiting for SMS</string>
 
     <string-array name="select_provider_options">
         <item>HBF</item>
