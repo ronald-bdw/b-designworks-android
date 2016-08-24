@@ -4,32 +4,53 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
+    android:background="@drawable/initial_screen_gradient"
     android:orientation="vertical"
-    android:background="@color/default_background"
-    android:gravity="center"
+    android:keepScreenOn="true"
     >
 
-    <include layout="@layout/logo"/>
+    <include layout="@layout/layout_toolbar"/>
 
-    <EditText
-        android:id="@+id/phone"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:inputType="phone"
-        android:layout_marginTop="80dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
-        android:background="@android:color/white"
-        android:hint="@string/welcome_hint_phone"
+        android:layout_height="match_parent"
         android:gravity="center"
-        />
+        android:orientation="vertical"
+        >
 
-    <Button
-        android:id="@+id/next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/next"
-        android:layout_marginTop="24dp"
-        />
+        <include layout="@layout/logo"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/enter_phone_description"
+            android:gravity="center"
+            android:layout_marginTop="24dp"
+            />
+
+        <EditText
+            android:id="@+id/phone"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:hint="@string/welcome_hint_phone"
+            android:inputType="phone"
+            android:layout_marginTop="16dp"
+            />
+
+        <Button
+            android:id="@+id/submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/submit"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/app_btn_filled"
+            android:textColor="@android:color/white"
+            />
+
+    </LinearLayout>
 
 </LinearLayout>

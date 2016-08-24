@@ -4,7 +4,7 @@
     <item
         android:id="@+id/right_panel"
         android:title="@string/menu_right"
-        android:icon="@drawable/ic_right_menu"
+        android:icon="@drawable/ic_hamburger"
         app:showAsAction="always"
         />
 

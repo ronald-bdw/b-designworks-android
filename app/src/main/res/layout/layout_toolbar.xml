@@ -5,6 +5,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="?android:actionBarSize"
-    android:background="@android:color/white"
-    app:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+    android:background="@color/app_accent"
+    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     />
