@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
 
     <application
         android:name=".App"
@@ -19,15 +20,15 @@
         <activity android:name=".InitialScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
         <activity android:name=".login.WelcomeScreen"/>
+        <activity android:name=".login.SelectProviderScreen"/>
         <activity android:name=".login.EnterPhoneScreen"/>
         <activity android:name=".chat.ChatScreen"/>
-        <activity android:name=".verification.VerifyScreen"/>
+        <activity android:name=".login.VerifyScreen"/>
         <activity android:name=".trial.TrialScreen"/>
         <activity android:name=".profile.ProfileScreen"/>
         <activity android:name=".settings.SettingsScreen"/>

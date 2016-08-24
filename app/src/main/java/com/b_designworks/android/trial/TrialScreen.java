@@ -28,7 +28,7 @@ public class TrialScreen extends BaseActivity {
     @Bind(R.id.dots)  CirclePageIndicator uiPagerIndicator;
 
     @NonNull @Override public UiInfo getUiInfo() {
-        return new UiInfo(R.layout.screen_trial).setTitleRes(R.string.title_welcome).enableBackButton();
+        return new UiInfo(R.layout.screen_trial).setTitleRes(R.string.app_name).enableBackButton();
     }
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
@@ -37,8 +37,8 @@ public class TrialScreen extends BaseActivity {
         uiPagerIndicator.setViewPager(uiPager);
     }
 
-    @OnClick(R.id.sign_up) void onSignUpClick() {
-        Navigator.signUp(context());
+    @OnClick(R.id.start_trial_now) void onSignUpClick() {
+        Navigator.registration(context());
     }
 
     public static class TrialPager extends PagerAdapter {
