@@ -37,6 +37,12 @@
         <activity android:name=".profile.EditProfileScreen"/>
         <activity android:name=".AboutUsScreen"/>
 
+        <receiver android:name=".login.SmsListener">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+            </intent-filter>
+        </receiver>
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="a58319df29eb3929f0ed864166f3c42deb476e66"
