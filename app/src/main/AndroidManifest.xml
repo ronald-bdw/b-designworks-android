@@ -37,6 +37,7 @@
         <activity android:name=".login.RegistrationScreen"/>
         <activity android:name=".profile.EditProfileScreen"/>
         <activity android:name=".AboutUsScreen"/>
+        <activity android:name=".sync.GoogleFitScreen"/>
 
         <receiver
             android:name=".login.SmsListener"
