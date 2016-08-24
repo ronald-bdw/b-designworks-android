@@ -31,10 +31,11 @@ public class UserManager {
         return localInstance;
     }
 
-    private static final String KEY_PHONE         = "phone";
-    private static final String KEY_PHONE_CODE_ID = "phoneCodeId";
-    private static final String KEY_TOKEN         = "token";
-    private static final String KEY_USER_ID       = "userId";
+    private static final String KEY_PHONE                   = "phone";
+    private static final String KEY_PHONE_CODE_ID           = "phoneCodeId";
+    private static final String KEY_TOKEN                   = "token";
+    private static final String KEY_USER_ID                 = "userId";
+    private static final String KEY_FIRST_VISIT_AFTER_LOGIN = "firstVisitAfterLogin";
 
     @NonNull private final IStorage storage;
     @NonNull private final Api      api;
@@ -79,5 +80,30 @@ public class UserManager {
 
     public String getUserId() {
         return storage.getString(KEY_USER_ID);
+    }
+
+    public boolean userHasToken() {
+        return storage.contains(KEY_TOKEN);
+    }
+
+    public void logout() {
+        storage.remove(KEY_TOKEN);
+        storage.remove(KEY_USER_ID);
+    }
+
+    public boolean firstVisitAfterLogin() {
+        return storage.getBoolean(KEY_FIRST_VISIT_AFTER_LOGIN, true);
+    }
+
+    public void trackFirstVisit() {
+        storage.putBoolean(KEY_FIRST_VISIT_AFTER_LOGIN, false);
+    }
+
+    public String getPhone() {
+        return storage.getString(KEY_PHONE);
+    }
+
+    public void clearAll() {
+        storage.clear();
     }
 }
