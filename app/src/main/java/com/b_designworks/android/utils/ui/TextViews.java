@@ -25,8 +25,8 @@ public class TextViews {
         return text1 != null && text2 != null && text1.equals(text2);
     }
 
-    @Nullable public static String textOf(@Nullable TextView tt) {
-        return tt == null ? null : tt.getText() == null ? null : tt.getText().toString();
+    @NonNull public static String textOf(@NonNull TextView tt) {
+        return tt.getText() == "" ? null : tt.getText().toString();
     }
 
     @Nullable public static String trimmedTextOf(@NonNull TextView tt) {
