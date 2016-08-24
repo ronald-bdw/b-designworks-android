@@ -35,6 +35,7 @@
     <issue id="RtlHardcoded" severity="ignore"/>
     <issue id="RtlSymmetry" severity="ignore"/>
     <issue id="RtlEnabled" severity="ignore"/>
+    <issue id="ButtonStyle" severity="ignore"/>
     <!--<issue id="UnusedIds" severity="ignore"/>-->
     <!--<issue id="IconColors" severity="ignore"/>-->
     <!--<issue id="RelativeOverlap" severity="ignore"/>-->

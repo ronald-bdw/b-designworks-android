@@ -3,4 +3,5 @@
     <color name="coach_message_bg">#cbf2f7</color>
     <color name="my_message_bg">#c9deb1</color>
     <color name="default_background">#e7e7e7</color>
+    <color name="app_accent">#29537c</color>
 </resources>

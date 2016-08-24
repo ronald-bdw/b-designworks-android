@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.b_designworks.android.BaseActivity;
 import com.b_designworks.android.Navigator;
 import com.b_designworks.android.R;
-import com.b_designworks.android.utils.UiInfo;
+import com.b_designworks.android.utils.ui.UiInfo;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import butterknife.Bind;
@@ -28,7 +28,7 @@ public class TrialScreen extends BaseActivity {
     @Bind(R.id.dots)  CirclePageIndicator uiPagerIndicator;
 
     @NonNull @Override public UiInfo getUiInfo() {
-        return new UiInfo(R.layout.screen_trial).setTitleRes(R.string.title_welcome).enableBackButton();
+        return new UiInfo(R.layout.screen_trial).setTitleRes(R.string.app_name).enableBackButton();
     }
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
@@ -37,8 +37,8 @@ public class TrialScreen extends BaseActivity {
         uiPagerIndicator.setViewPager(uiPager);
     }
 
-    @OnClick(R.id.sign_up) void onSignUpClick() {
-        Navigator.signUp(context());
+    @OnClick(R.id.start_trial_now) void onSignUpClick() {
+        Navigator.registration(context());
     }
 
     public static class TrialPager extends PagerAdapter {

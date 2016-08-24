@@ -1,4 +1,4 @@
-package com.b_designworks.android.utils;
+package com.b_designworks.android.utils.ui;
 
 import android.support.annotation.LayoutRes;
 import android.support.annotation.MenuRes;

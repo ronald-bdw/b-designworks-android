@@ -2,7 +2,7 @@ package com.b_designworks.android;
 
 import android.support.annotation.NonNull;
 
-import com.b_designworks.android.utils.UiInfo;
+import com.b_designworks.android.utils.ui.UiInfo;
 
 /**
  * Created by Ilya Eremin on 09.08.2016.

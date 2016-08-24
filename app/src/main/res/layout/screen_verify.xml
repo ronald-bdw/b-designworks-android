@@ -1,60 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:background="@color/default_background"
+
+    android:background="@drawable/initial_screen_gradient"
     >
 
-    <include layout="@layout/logo"/>
+    <include layout="@layout/layout_toolbar"/>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Provider logo"
-        android:padding="16dp"
-        android:background="#8bc34a"
-        android:textSize="18sp"
-        android:layout_marginTop="16dp"
-        tools:ignore="HardcodedText"
-        />
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/verify_enter_code"
-        android:textColor="@android:color/black"
-        android:layout_marginTop="24dp"
-        />
+        <include layout="@layout/logo"/>
 
+        <LinearLayout
+            android:id="@+id/progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            tools:visibility="visible"
+            >
 
-    <EditText
-        android:id="@+id/verification_code"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="0000000"
-        android:background="@android:color/white"
-        android:padding="16dp"
-        android:layout_marginTop="8dp"
-        tools:ignore="HardcodedText"/>
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/verify_you_will_get_code"
-        android:layout_marginTop="8dp"
-        />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/verify_waiting_for_sms"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/verify_enter_code"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="8dp"
+            >
+
+            <EditText
+                android:id="@+id/verification_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:gravity="center"
+                android:hint="0000000"
+                android:padding="16dp"
+                tools:ignore="HardcodedText"
+                android:layout_marginRight="12dp"
+                />
+
+            <Button
+                android:id="@+id/resend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/app_btn_border"
+                android:layout_marginLeft="12dp"
+                android:text="@string/verify_resend"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <Button
-        android:id="@+id/next"
+        android:id="@+id/submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/next"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="16dp"
         android:layout_marginTop="8dp"
-
+        android:background="@drawable/app_btn_filled"
+        android:text="@string/submit"
+        android:textColor="@android:color/white"
         />
 
-</LinearLayout>
+</FrameLayout>

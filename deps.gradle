@@ -1,10 +1,10 @@
 ext {
     versions = [
-            okHttp             : '3.3.1',
+            okHttp             : '3.4.1',
             support            : '23.3.0',
             retrofit           : '2.0.2',
             espressoVersion    : '2.2.2',
-            BUILD_TOOLS_VERSION: '23.0.2',
+            BUILD_TOOLS_VERSION: '24.0.1',
             MIN_SDK_VERSION    : 15,
             TARGET_SDK_VERSION : 23
     ]
@@ -16,8 +16,10 @@ ext {
 //            gridLayout       : "com.android.support:gridlayout-v7:$versions.support"
     ]
     rxJava = [
-            rxJava   : 'io.reactivex:rxjava:1.1.6',
-            rxAndroid: 'io.reactivex:rxandroid:1.2.1'
+            rxJava               : 'io.reactivex:rxjava:1.1.6',
+            rxAndroid            : 'io.reactivex:rxandroid:1.2.1',
+            rxLifecycle          : 'com.trello:rxlifecycle:0.6.1',
+            rxLifecycleComponents: 'com.trello:rxlifecycle-components:0.6.1'
     ]
     retrofit = [
             retrofit     : "com.squareup.retrofit2:retrofit:$versions.retrofit",
@@ -25,8 +27,8 @@ ext {
             gsonConverter: "com.squareup.retrofit2:converter-gson:$versions.retrofit"
     ]
     okHttp = [
-            logger: "com.squareup.okhttp3:logging-interceptor:$versions.okHttp",
-            self  : "com.squareup.okhttp3:okhttp:$versions.okHttp"
+            self  : "com.squareup.okhttp3:okhttp:$versions.okHttp",
+            logger: "com.squareup.okhttp3:logging-interceptor:$versions.okHttp"
     ]
     androidTests = [
             assertj        : 'com.squareup.assertj:assertj-android:1.0.0',
@@ -34,7 +36,9 @@ ext {
             espressoContrib: "com.android.support.test.espresso:espresso-contrib:$versions.espressoVersion",
             espressoIntents: "com.android.support.test.espresso:espresso-intents:$versions.espressoVersion",
             testRunner     : "com.android.support.test:runner:0.5",
-            testRules      : "com.android.support.test:rules:0.5"
+            testRules      : "com.android.support.test:rules:0.5",
+            junit          : "junit:junit:4.12",
+            mockito        : "org.mockito:mockito-core:1.+"
     ]
     supportLibs = supportDeps.values()
     retrofitLibs = retrofit.values()

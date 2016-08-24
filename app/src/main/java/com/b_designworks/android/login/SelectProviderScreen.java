@@ -12,17 +12,15 @@ import android.widget.Toast;
 import com.b_designworks.android.BaseActivity;
 import com.b_designworks.android.Navigator;
 import com.b_designworks.android.R;
-import com.b_designworks.android.utils.UiInfo;
+import com.b_designworks.android.utils.ui.UiInfo;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 
 /**
- * Created by Ilya Eremin on 03.08.2016.
+ * Created by Ilya Eremin on 12.08.2016.
  */
-public class SelectProviderScreen extends BaseActivity {
-
-    String[] data = {"one", "two", "three", "four", "five"};
+public class SelectProviderScreen extends BaseActivity{
 
     @Bind(R.id.select_provider_spinner) Spinner uiSelectProviderSpinner;
 
@@ -32,11 +30,10 @@ public class SelectProviderScreen extends BaseActivity {
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.select_provider_options));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         uiSelectProviderSpinner.setAdapter(adapter);
-        uiSelectProviderSpinner.setPrompt("Title");
         uiSelectProviderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -48,15 +45,15 @@ public class SelectProviderScreen extends BaseActivity {
         });
     }
 
+
     @OnClick(R.id.next) void onNextClick() {
-        if (uiSelectProviderSpinner.getSelectedItemPosition() >= 0) {
-            Navigator.verification(context());
+        if (uiSelectProviderSpinner.getSelectedItemPosition() == 0) {
+            Navigator.enterPhone(context());
+        } else if (uiSelectProviderSpinner.getSelectedItemPosition() == 1) {
+            Navigator.trialPage(context());
         } else {
-            Toast.makeText(SelectProviderScreen.this, "Please select provider", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context(), "Please select provider", Toast.LENGTH_SHORT).show();
         }
     }
 
-    @OnClick(R.id.not_listed) void onNotListedClick() {
-        Navigator.trialPage(context());
-    }
 }
