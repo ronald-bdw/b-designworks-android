@@ -22,21 +22,18 @@ import butterknife.OnClick;
  */
 public class SelectProviderScreen extends BaseActivity{
 
-    String[] data = {"one", "two", "three", "four", "five"};
-
     @Bind(R.id.select_provider_spinner) Spinner uiSelectProviderSpinner;
 
     @NonNull @Override public UiInfo getUiInfo() {
-        return new UiInfo(R.layout.screen_enter_phone);
+        return new UiInfo(R.layout.screen_select_provider);
     }
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, data);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.select_provider_options));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         uiSelectProviderSpinner.setAdapter(adapter);
-        uiSelectProviderSpinner.setPrompt("Title");
         uiSelectProviderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -50,14 +47,13 @@ public class SelectProviderScreen extends BaseActivity{
 
 
     @OnClick(R.id.next) void onNextClick() {
-        if (uiSelectProviderSpinner.getSelectedItemPosition() >= 0) {
-            Navigator.verification(context());
+        if (uiSelectProviderSpinner.getSelectedItemPosition() == 0) {
+            Navigator.enterPhone(context());
+        } else if (uiSelectProviderSpinner.getSelectedItemPosition() == 1) {
+            Navigator.trialPage(context());
         } else {
             Toast.makeText(context(), "Please select provider", Toast.LENGTH_SHORT).show();
         }
     }
 
-    @OnClick(R.id.not_listed) void onNotListedClick() {
-        Navigator.trialPage(context());
-    }
 }
