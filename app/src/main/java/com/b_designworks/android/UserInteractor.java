@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.b_designworks.android.login.models.AuthResponse;
-import com.b_designworks.android.login.models.RegisterResponse;
+import com.b_designworks.android.login.models.UserResponse;
 import com.b_designworks.android.utils.storage.IStorage;
 
 import rx.Observable;
@@ -15,6 +15,7 @@ import rx.functions.Func1;
  * Created by Ilya Eremin on 15.08.2016.
  */
 public class UserInteractor {
+
 
     private static volatile UserInteractor instance;
 
@@ -35,6 +36,9 @@ public class UserInteractor {
     private static final String KEY_PHONE_CODE_ID           = "phoneCodeId";
     private static final String KEY_TOKEN                   = "token";
     private static final String KEY_USER_ID                 = "userId";
+    private static final String KEY_FIRST_NAME              = "firstName";
+    private static final String KEY_LAST_NAME               = "lastName";
+    private static final String KEY_EMAIL                   = "email";
     private static final String KEY_FIRST_VISIT_AFTER_LOGIN = "firstVisitAfterLogin";
 
     @NonNull private final IStorage storage;
@@ -59,12 +63,18 @@ public class UserInteractor {
             .map(saveToken());
     }
 
-    @NonNull private Func1<RegisterResponse, Void> saveToken() {
+    @NonNull private Func1<UserResponse, Void> saveToken() {
         return result -> {
+            // TODO
             storage.remove(KEY_PHONE);
             storage.remove(KEY_PHONE_CODE_ID);
+
             storage.putString(KEY_TOKEN, result.getToken());
+            storage.putString(KEY_PHONE, result.getPhoneNumber());
             storage.putString(KEY_USER_ID, result.getId());
+            storage.putString(KEY_FIRST_NAME, result.getFirstName());
+            storage.putString(KEY_LAST_NAME, result.getLastName());
+            storage.putString(KEY_EMAIL, result.getEmail());
             return null;
         };
     }
@@ -103,7 +113,23 @@ public class UserInteractor {
         return storage.getString(KEY_PHONE);
     }
 
+    public String getFirstName() {
+        return storage.getString(KEY_FIRST_NAME);
+    }
+
+    public String getLastName() {
+        return storage.getString(KEY_LAST_NAME);
+    }
+
+    public String getEmail() {
+        return storage.getString(KEY_EMAIL);
+    }
+
     public void clearAll() {
         storage.clear();
+    }
+
+    public Observable<UserResponse> updateUser(@NonNull String firstName, @NonNull String lastName, @NonNull String email) {
+        return api.editProfile(storage.getString(KEY_USER_ID), firstName, lastName, email);
     }
 }
