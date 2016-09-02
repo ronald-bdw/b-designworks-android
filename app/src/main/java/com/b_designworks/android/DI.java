@@ -80,7 +80,7 @@ public class DI {
                 httpClientBuilder.addInterceptor(interceptor);
             }
             httpClientBuilder.addInterceptor(chain -> {
-                UserInteractor userInteractor = getUserManager();
+                UserInteractor userInteractor = getUserInteractor();
                 if (!TextUtils.isEmpty(userInteractor.getToken())) {
                     Request request = chain.request().newBuilder()
                         .addHeader("Authorization", "Bearer " + userInteractor.getToken())
@@ -94,7 +94,7 @@ public class DI {
         return okHttpClient;
     }
 
-    public UserInteractor getUserManager() {
+    public UserInteractor getUserInteractor() {
         return UserInteractor.getInstance(getStorage(), getApi());
     }
 

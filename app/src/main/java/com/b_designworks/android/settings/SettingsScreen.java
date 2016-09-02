@@ -30,7 +30,7 @@ public class SettingsScreen extends BaseActivity {
 
     @OnClick(R.id.logout) void onLogoutClick() {
         AreYouSureDialog.show(context(), R.string.warning_you_will_lose_all_data, () -> {
-            DI.getInstance().getUserManager().logout();
+            DI.getInstance().getUserInteractor().logout();
             Navigator.welcome(context());
         });
     }

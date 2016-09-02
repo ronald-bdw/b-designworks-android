@@ -51,7 +51,7 @@ public class RegistrationScreen extends BaseActivity {
         return new UiInfo(R.layout.screen_registration).setTitleRes(R.string.title_start_trial).enableBackButton();
     }
 
-    private UserInteractor userManager = DI.getInstance().getUserManager();
+    private UserInteractor userManager = DI.getInstance().getUserInteractor();
 
     private                                           String returnedVerificationCode;
     @Optional @InjectExtra(ARG_KEY_VERIFICATION_CODE) String argVerificationCode;
