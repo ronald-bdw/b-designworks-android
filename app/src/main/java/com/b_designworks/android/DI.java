@@ -83,7 +83,8 @@ public class DI {
                 UserInteractor userInteractor = getUserInteractor();
                 if (!TextUtils.isEmpty(userInteractor.getToken())) {
                     Request request = chain.request().newBuilder()
-                        .addHeader("Authorization", "Bearer " + userInteractor.getToken())
+                        .addHeader("X-User-Token", userInteractor.getToken())
+                        .addHeader("X-User-Phone-Number", userInteractor.getPhone())
                         .build();
                     return chain.proceed(request);
                 }
