@@ -1,7 +1,7 @@
 package com.b_designworks.android;
 
 import com.b_designworks.android.login.models.AuthResponse;
-import com.b_designworks.android.login.models.RegisterResponse;
+import com.b_designworks.android.login.models.UserResponse;
 import com.b_designworks.android.utils.MapperUtils;
 import com.b_designworks.android.utils.network.ErrorUtils;
 import com.b_designworks.android.utils.storage.RuntimeStorage;
@@ -34,8 +34,8 @@ public class UserManagerTest {
         return MapperUtils.getInstance().fromJson(FAKE_AUTH_RESPONSE, AuthResponse.class);
     }
 
-    private static RegisterResponse getFakeRegisterResponse() {
-        return MapperUtils.getInstance().fromJson(FAKE_REGISTER_RESPONSE, RegisterResponse.class);
+    private static UserResponse getFakeRegisterResponse() {
+        return MapperUtils.getInstance().fromJson(FAKE_REGISTER_RESPONSE, UserResponse.class);
     }
 
     UserInteractor userManager;
