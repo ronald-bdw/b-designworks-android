@@ -27,6 +27,7 @@ public class NetworkUtils {
                         .baseUrl(Api.BASE_URL)
                         .addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create())
 //                      .addConverterFactory(EnumConverterFactory.create()) // this converter should be before gson converter
+                        .addConverterFactory(StringConverterFactory.create())
                         .addConverterFactory(GsonConverterFactory.create(mapper))
                         .build()
                         .create(Api.class);
