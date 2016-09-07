@@ -39,7 +39,10 @@ public class UserInteractor {
     private static final String KEY_FIRST_NAME              = "firstName";
     private static final String KEY_LAST_NAME               = "lastName";
     private static final String KEY_EMAIL                   = "email";
+    private static final String KEY_AVATAR_URL              = "avatarUrl";
+    private static final String KEY_AVATAR_THUMB_URL        = "avatarThumbUrl";
     private static final String KEY_FIRST_VISIT_AFTER_LOGIN = "firstVisitAfterLogin";
+
 
     @NonNull private final IStorage storage;
     @NonNull private final Api      api;
@@ -69,14 +72,20 @@ public class UserInteractor {
             storage.remove(KEY_PHONE);
             storage.remove(KEY_PHONE_CODE_ID);
 
-            storage.putString(KEY_TOKEN, result.getToken());
-            storage.putString(KEY_PHONE, result.getPhoneNumber());
-            storage.putString(KEY_USER_ID, result.getId());
-            storage.putString(KEY_FIRST_NAME, result.getFirstName());
-            storage.putString(KEY_LAST_NAME, result.getLastName());
-            storage.putString(KEY_EMAIL, result.getEmail());
+            saveUser(result);
             return null;
         };
+    }
+
+    private void saveUser(UserResponse result) {
+        storage.putString(KEY_TOKEN, result.getToken());
+        storage.putString(KEY_PHONE, result.getPhoneNumber());
+        storage.putString(KEY_USER_ID, result.getId());
+        storage.putString(KEY_FIRST_NAME, result.getFirstName());
+        storage.putString(KEY_LAST_NAME, result.getLastName());
+        storage.putString(KEY_EMAIL, result.getEmail());
+        storage.putString(KEY_AVATAR_URL, result.getAvatarUrl());
+        storage.putString(KEY_AVATAR_THUMB_URL, result.getAvatarThumbUrl());
     }
 
     @Nullable public String getToken() {
@@ -129,7 +138,21 @@ public class UserInteractor {
         storage.clear();
     }
 
-    public Observable<UserResponse> updateUser(@NonNull String firstName, @NonNull String lastName, @NonNull String email) {
-        return api.editProfile(storage.getString(KEY_USER_ID), firstName, lastName, email);
+    public Observable<UserResponse> updateUser(@NonNull String firstName,
+                                               @NonNull String lastName,
+                                               @NonNull String email) {
+        return api.editProfile(storage.getString(KEY_USER_ID), firstName, lastName, email)
+            .map(result -> {
+                saveUser(result);
+                return result;
+            });
+    }
+
+    @Nullable public String getAvatarUrl() {
+        return storage.getString(KEY_AVATAR_URL);
+    }
+
+    @Nullable public String getAvatarThumbUrl() {
+        return storage.getString(KEY_AVATAR_THUMB_URL);
     }
 }
