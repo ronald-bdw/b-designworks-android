@@ -1,6 +1,7 @@
 package com.b_designworks.android;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.b_designworks.android.login.models.AuthResponse;
 import com.b_designworks.android.login.models.UserResponse;
@@ -46,10 +47,10 @@ public interface Api {
 
     @Multipart
     @PUT(V1 + "users/{id}") Observable<UserResponse> editProfile(
-        @Path("id") String id,
-        @Part("user[first_name]") String firstName,
-        @Part("user[last_name]") String lastName,
-        @Part("user[email]") String email
+        @NonNull @Path("id") String id,
+        @Nullable @Part("user[first_name]") String firstName,
+        @Nullable @Part("user[last_name]") String lastName,
+        @Nullable @Part("user[email]") String email
     );
 
 }
