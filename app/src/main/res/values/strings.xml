@@ -42,6 +42,7 @@
 
     <string name="loading">Loading</string>
     <string name="loading_sending_code">Sending verification code to the server</string>
+    <string name="loading_user_info">Sending user info to the server</string>
 
     <string name="registration_hint_code">Code</string>
     <string name="register_choose_your_plan">Choose your plan</string>
@@ -74,6 +75,8 @@
     <string name="verify_resend">Re-send</string>
     <string name="loading_sending_request_for_code">Requesting verification code</string>
     <string name="verify_waiting_for_sms">Waiting for SMS</string>
+    <string name="edit_profile_profile_updated">Profile has been updated</string>
+    <string name="cancel">Cancel</string>
 
     <string-array name="select_provider_options">
         <item>HBF</item>
