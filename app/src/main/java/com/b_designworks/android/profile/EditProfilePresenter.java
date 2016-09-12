@@ -32,7 +32,6 @@ public class EditProfilePresenter {
 
     public void updateUser() {
         if(updateProfileSubscribtion != null) return;
-        editProfileView.showProgressDialog();
         String email = editProfileView.getEmail();
         if (email.isEmpty()) {
             editProfileView.showEmailError(R.string.error_empty_email);
@@ -42,6 +41,7 @@ public class EditProfilePresenter {
             editProfileView.showEmailError(R.string.error_incorrect_email);
             return;
         }
+        editProfileView.showProgressDialog();
         updateProfileSubscribtion = userInteractor.updateUser(editProfileView.getFirstName(), editProfileView.getLastName(), email)
             .subscribeOn(Schedulers.io())
             .doOnTerminate(() -> {
