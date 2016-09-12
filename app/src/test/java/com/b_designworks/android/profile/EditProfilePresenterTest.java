@@ -48,6 +48,8 @@ public class EditProfilePresenterTest {
         when(editProfileView.getEmail()).thenReturn("cococo");
         editProfilePresenter.updateUser();
         verify(editProfileView).showEmailError(R.string.error_incorrect_email);
+        verify(editProfileView, never()).showProgressDialog();
+        verify(userInteractor, never()).updateUser(any(), any(), any());
     }
 
     @Test
@@ -56,6 +58,7 @@ public class EditProfilePresenterTest {
         editProfilePresenter.updateUser();
         verify(editProfileView).showEmailError(R.string.error_empty_email);
         verify(editProfileView, never()).showProgressDialog();
+        verify(userInteractor, never()).updateUser(any(), any(), any());
     }
 
     @Test
