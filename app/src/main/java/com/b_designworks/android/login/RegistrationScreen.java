@@ -155,10 +155,10 @@ public class RegistrationScreen extends BaseActivity {
         }
         if (textOf(uiEmail).isEmpty()) {
             hasError = true;
-            uiEmail.setError(getString(R.string.registration_error_fill_email));
+            uiEmail.setError(getString(R.string.error_empty_email));
         } else if (!Patterns.EMAIL_ADDRESS.matcher(textOf(uiEmail)).matches()) {
             hasError = true;
-            uiEmail.setError(getString(R.string.registration_error_fill_correct_email));
+            uiEmail.setError(getString(R.string.error_incorrect_email));
         }
         if (textOf(uiPhone).isEmpty()) {
             hasError = true;

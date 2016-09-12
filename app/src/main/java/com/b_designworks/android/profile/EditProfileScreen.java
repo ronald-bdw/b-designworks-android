@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -13,21 +14,19 @@ import android.widget.Toast;
 import com.b_designworks.android.BaseActivity;
 import com.b_designworks.android.DI;
 import com.b_designworks.android.R;
-import com.b_designworks.android.UserInteractor;
+import com.b_designworks.android.login.models.User;
 import com.b_designworks.android.utils.ImageLoader;
-import com.b_designworks.android.utils.Rxs;
 import com.b_designworks.android.utils.network.ErrorUtils;
 import com.b_designworks.android.utils.ui.SimpleLoadingDialog;
 import com.b_designworks.android.utils.ui.TextViews;
 import com.b_designworks.android.utils.ui.UiInfo;
 
 import butterknife.Bind;
-import rx.Subscription;
 
 /**
  * Created by Ilya Eremin on 04.08.2016.
  */
-public class EditProfileScreen extends BaseActivity {
+public class EditProfileScreen extends BaseActivity implements EditProfileView {
 
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_edit_profile)
@@ -43,45 +42,47 @@ public class EditProfileScreen extends BaseActivity {
     @Bind(R.id.last_name)         EditText  uiLastName;
     @Bind(R.id.email)             EditText  uiEmail;
 
-    private final UserInteractor userInteractor = DI.getInstance().getUserInteractor();
+    private EditProfilePresenter editProfilePresenter;
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
-        showUserInfo();
-        ImageLoader.load(context(), uiAvatar, userInteractor.getAvatarThumbUrl());
+        editProfilePresenter = new EditProfilePresenter(this, DI.getInstance().getUserInteractor());
+        editProfilePresenter.showUserInfo();
     }
 
-    private void showUserInfo() {
-        uiCurrentFullName.setText(getString(R.string.edit_profile_name_surname_pattern, userInteractor.getFirstName(), userInteractor.getLastName());
-        uiCurrentEmail.setText(userInteractor.getEmail());
-        uiFirstName.setText(userInteractor.getFirstName());
-        uiLastName.setText(userInteractor.getLastName());
-        uiEmail.setText(userInteractor.getEmail());
+    @Override public void showUserInfo(@NonNull User user) {
+        ImageLoader.load(context(), uiAvatar, user.getAvatar().getOriginal());
+        uiCurrentFullName.setText(getString(R.string.edit_profile_name_surname_pattern, user.getFirstName(), user.getLastName()));
+        uiCurrentEmail.setText(user.getEmail());
+        uiFirstName.setText(user.getFirstName());
+        uiLastName.setText(user.getLastName());
+        uiEmail.setText(user.getEmail());
     }
 
     @Nullable private ProgressDialog progressDialog;
-    @Nullable private Subscription   updateProfileSubscribtion;
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.save && updateProfileSubscribtion == null) {
-            showProgressDialog();
-            updateProfileSubscribtion = userInteractor.updateUser(TextViews.textOf(uiFirstName), TextViews.textOf(uiLastName), TextViews.textOf(uiEmail))
-                .compose(Rxs.doInBackgroundDeliverToUI())
-                .doOnEach(i -> {
-                    hideProgress();
-                    updateProfileSubscribtion = null;
-                })
-                .subscribe(result -> {
-                    showUserInfo();
-                    Toast.makeText(this, R.string.edit_profile_profile_updated, Toast.LENGTH_SHORT).show();
-                }, ErrorUtils.handle(context()));
+        if (item.getItemId() == R.id.save) {
+            editProfilePresenter.updateUser();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
     }
 
-    private void hideProgress() {
+    @Override @NonNull public String getEmail() {
+        return TextViews.textOf(uiEmail);
+    }
+
+    @Override @NonNull public String getLastName() {
+        return TextViews.textOf(uiLastName);
+    }
+
+    @Override @NonNull public String getFirstName() {
+        return TextViews.textOf(uiFirstName);
+    }
+
+    @Override public void hideProgress() {
         if (progressDialog != null) {
             progressDialog.dismiss();
         }
@@ -89,23 +90,30 @@ public class EditProfileScreen extends BaseActivity {
 
     @Override protected void onResume() {
         super.onResume();
-        if (updateProfileSubscribtion != null) {
-            showProgressDialog();
-        }
+        editProfilePresenter.onScreenShown();
     }
 
-    private void showProgressDialog() {
+    @Override public void showProgressDialog() {
         hideProgress();
         progressDialog = SimpleLoadingDialog.show(context(), getString(R.string.loading_user_info), () -> {
-            if (updateProfileSubscribtion != null && !updateProfileSubscribtion.isUnsubscribed()) {
-                updateProfileSubscribtion.unsubscribe();
-                updateProfileSubscribtion = null;
-            }
+            editProfilePresenter.cancelRequest();
         });
     }
 
+    @Override public void profileHasBeenUpdated() {
+        Toast.makeText(this, R.string.edit_profile_profile_updated, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override public void showError(Throwable error) {
+        ErrorUtils.handle(context(), error);
+    }
+
+    @Override public void showEmailError(@StringRes int errorResId) {
+        uiEmail.setError(getString(errorResId));
+    }
+
     @Override protected void onPause() {
-        hideProgress();
+        editProfilePresenter.onScreenHidden();
         super.onPause();
     }
 }

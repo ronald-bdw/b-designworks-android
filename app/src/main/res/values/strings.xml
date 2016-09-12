@@ -48,8 +48,8 @@
     <string name="register_choose_your_plan">Choose your plan</string>
     <string name="registration_error_fill_first_name">Enter first name</string>
     <string name="registration_error_fill_last_name">Enter last name</string>
-    <string name="registration_error_fill_email">Enter email</string>
-    <string name="registration_error_fill_correct_email">Enter valid email</string>
+    <string name="error_empty_email">Enter email</string>
+    <string name="error_incorrect_email">Enter valid email</string>
     <string name="registration_error_fill_code">Enter verification code</string>
     <string name="registration_error_fill_phone">Enter phone number</string>
     <string name="registration_loading">Creating account…</string>
