@@ -42,6 +42,7 @@ public class EditProfilePresenter {
             return;
         }
         editProfileView.showProgressDialog();
+        editProfileView.hideKeyboard();
         updateProfileSubscribtion = userInteractor.updateUser(editProfileView.getFirstName(), editProfileView.getLastName(), email)
             .subscribeOn(Schedulers.io())
             .doOnTerminate(() -> {

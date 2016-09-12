@@ -16,6 +16,7 @@ import com.b_designworks.android.DI;
 import com.b_designworks.android.R;
 import com.b_designworks.android.login.models.User;
 import com.b_designworks.android.utils.ImageLoader;
+import com.b_designworks.android.utils.Keyboard;
 import com.b_designworks.android.utils.network.ErrorUtils;
 import com.b_designworks.android.utils.ui.SimpleLoadingDialog;
 import com.b_designworks.android.utils.ui.TextViews;
@@ -80,6 +81,10 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
 
     @Override @NonNull public String getFirstName() {
         return TextViews.textOf(uiFirstName);
+    }
+
+    @Override public void hideKeyboard() {
+        Keyboard.hide(this);
     }
 
     @Override public void hideProgress() {

@@ -19,4 +19,5 @@ public interface EditProfileView {
     @NonNull String getEmail();
     @NonNull String getLastName();
     @NonNull String getFirstName();
+    void hideKeyboard();
 }
