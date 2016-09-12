@@ -55,7 +55,7 @@ public class VerifyScreen extends BaseActivity {
     @Bind(R.id.verification_code) EditText uiVerificadtionCode;
     @Bind(R.id.progress)          View     uiProgress;
 
-    private UserInteractor userManager = DI.getInstance().getUserManager();
+    private UserInteractor userManager = DI.getInstance().getUserInteractor();
     private boolean userRegistered;
 
     @Nullable private Subscription verifyingCodeSubs;

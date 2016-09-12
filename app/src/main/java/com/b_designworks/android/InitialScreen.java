@@ -11,7 +11,7 @@ public class InitialScreen extends AppCompatActivity {
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UserInteractor userManager = DI.getInstance().getUserManager();
+        UserInteractor userManager = DI.getInstance().getUserInteractor();
         if (userManager.userHasToken()) {
             Navigator.chat(this);
         } else {

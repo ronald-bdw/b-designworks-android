@@ -27,7 +27,7 @@ public class ChatScreen extends BaseActivity {
 
     private static final String TAG = "ChatScreen";
 
-    private UserInteractor userManager = DI.getInstance().getUserManager();
+    private UserInteractor userManager = DI.getInstance().getUserInteractor();
 
     @Bind(R.id.drawer) DrawerLayout uiDrawer;
 

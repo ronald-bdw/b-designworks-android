@@ -51,7 +51,7 @@ public class RegistrationScreen extends BaseActivity {
         return new UiInfo(R.layout.screen_registration).setTitleRes(R.string.title_start_trial).enableBackButton();
     }
 
-    private UserInteractor userManager = DI.getInstance().getUserManager();
+    private UserInteractor userManager = DI.getInstance().getUserInteractor();
 
     private                                           String returnedVerificationCode;
     @Optional @InjectExtra(ARG_KEY_VERIFICATION_CODE) String argVerificationCode;
@@ -155,10 +155,10 @@ public class RegistrationScreen extends BaseActivity {
         }
         if (textOf(uiEmail).isEmpty()) {
             hasError = true;
-            uiEmail.setError(getString(R.string.registration_error_fill_email));
+            uiEmail.setError(getString(R.string.error_empty_email));
         } else if (!Patterns.EMAIL_ADDRESS.matcher(textOf(uiEmail)).matches()) {
             hasError = true;
-            uiEmail.setError(getString(R.string.registration_error_fill_correct_email));
+            uiEmail.setError(getString(R.string.error_incorrect_email));
         }
         if (textOf(uiPhone).isEmpty()) {
             hasError = true;
