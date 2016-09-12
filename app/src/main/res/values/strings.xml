@@ -77,6 +77,8 @@
     <string name="verify_waiting_for_sms">Waiting for SMS</string>
     <string name="edit_profile_profile_updated">Profile has been updated</string>
     <string name="cancel">Cancel</string>
+    <string name="edit_profile_name_surname_pattern">%1$s %2$s</string>
+    <string name="save">Save</string>
 
     <string-array name="select_provider_options">
         <item>HBF</item>

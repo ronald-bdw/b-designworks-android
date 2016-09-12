@@ -52,7 +52,7 @@ public class EditProfileScreen extends BaseActivity {
     }
 
     private void showUserInfo() {
-        uiCurrentFullName.setText(userInteractor.getFirstName() + " " + userInteractor.getLastName());
+        uiCurrentFullName.setText(getString(R.string.edit_profile_name_surname_pattern, userInteractor.getFirstName(), userInteractor.getLastName());
         uiCurrentEmail.setText(userInteractor.getEmail());
         uiFirstName.setText(userInteractor.getFirstName());
         uiLastName.setText(userInteractor.getLastName());
