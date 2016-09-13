@@ -112,6 +112,8 @@ dependencies {
     compile 'io.smooch:core:latest.release'
     compile 'io.smooch:ui:latest.release'
 
+    compile "com.google.android.gms:play-services-auth:9.4.0"
+
     testCompile androidTestsLibs
     compile('com.crashlytics.sdk.android:crashlytics:2.6.1@aar') {
         transitive = true;
