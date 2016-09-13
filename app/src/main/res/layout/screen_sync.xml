@@ -9,6 +9,7 @@
     <include layout="@layout/layout_toolbar"/>
 
     <TextView
+        android:id="@+id/google_fit"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:text="@string/sync_google_fit"
