@@ -10,13 +10,14 @@ import android.view.MenuItem;
 
 import com.b_designworks.android.BaseActivity;
 import com.b_designworks.android.DI;
-import com.b_designworks.android.Navigator;
 import com.b_designworks.android.R;
 import com.b_designworks.android.UserInteractor;
+import com.b_designworks.android.utils.Bus;
 import com.b_designworks.android.utils.ui.UiInfo;
 
+import org.greenrobot.eventbus.Subscribe;
+
 import butterknife.Bind;
-import butterknife.OnClick;
 import io.smooch.core.Smooch;
 import io.smooch.ui.fragment.ConversationFragment;
 
@@ -27,7 +28,7 @@ public class ChatScreen extends BaseActivity {
 
     private static final String TAG = "ChatScreen";
 
-    private UserInteractor userManager = DI.getInstance().getUserInteractor();
+    private UserInteractor userInteractor = DI.getInstance().getUserInteractor();
 
     @Bind(R.id.drawer) DrawerLayout uiDrawer;
 
@@ -38,14 +39,18 @@ public class ChatScreen extends BaseActivity {
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
         if (savedState == null) {
-            if (userManager.firstVisitAfterLogin()) {
+            if (userInteractor.firstVisitAfterLogin()) {
                 Smooch.logout();
-                userManager.trackFirstVisit();
+                userInteractor.trackFirstVisit();
             }
-            Smooch.login(userManager.getUserId(), null);
-            Log.d(TAG, "Current user id  is: " + userManager.getUserId());
-            getSupportFragmentManager().beginTransaction().replace(R.id.chat_container, new ConversationFragment()).commit();
+            Smooch.login(userInteractor.getUserId(), null);
+            Log.d(TAG, "Current user id  is: " + userInteractor.getUserId());
+            getSupportFragmentManager().beginTransaction()
+                .replace(R.id.chat_container, new ConversationFragment())
+                .replace(R.id.side_panel_container, new ChatSidePanelFragment())
+                .commit();
         }
+
     }
 
     @Override public void onBackPressed() {
@@ -56,28 +61,22 @@ public class ChatScreen extends BaseActivity {
         }
     }
 
+    @Override protected void onResume() {
+        super.onResume();
+        Bus.subscribe(this);
+    }
+
+    @Subscribe public void onEvent(CloseDrawerEvent event) {
+        closeDrawer();
+    }
+
+    @Override protected void onPause() {
+        Bus.unsubscribe(this);
+        super.onPause();
+    }
+
     private void closeDrawer() {
         uiDrawer.closeDrawer(GravityCompat.END);
-    }
-
-    @OnClick(R.id.profile) void onProfileClick() {
-        closeDrawer();
-        Navigator.profile(context());
-    }
-
-    @OnClick(R.id.settings) void onSettingsClick() {
-        closeDrawer();
-        Navigator.settings(context());
-    }
-
-    @OnClick(R.id.push_notifications) void onPushNotificationsClick() {
-        closeDrawer();
-        Navigator.pushNotifications(context());
-    }
-
-    @OnClick(R.id.about_us) void onAboutUsClick() {
-        closeDrawer();
-        Navigator.aboutUs(context());
     }
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
