@@ -1,8 +1,6 @@
 package com.b_designworks.android.profile;
 
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,8 +30,16 @@ public class ProfileScreen extends BaseActivity {
     @Bind(R.id.current_full_name) TextView  uiCurrentFullName;
     @Bind(R.id.current_email)     TextView  uiCurrentEmail;
 
-    @Override protected void onCreate(@Nullable Bundle savedState) {
-        super.onCreate(savedState);
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.edit) {
+            Navigator.editProfile(context());
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override protected void onResume() {
+        super.onResume();
         User user = DI.getInstance().getUserInteractor().getUser();
         ImageLoader.load(this, uiAvatar, user.getAvatar().getOriginal());
         uiCurrentFullName.setText(getString(R.string.edit_profile_name_surname_pattern, user.getFirstName(), user.getLastName()));
@@ -41,13 +47,5 @@ public class ProfileScreen extends BaseActivity {
         uiCurrentEmail.setText(user.getEmail());
         uiPhone.setText(user.getPhoneNumber());
         setTitle(user.getFirstName());
-    }
-
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.edit) {
-            Navigator.editProfile(context());
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }
