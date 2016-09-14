@@ -104,6 +104,7 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'fr.avianey.com.viewpagerindicator:library:2.4.1.1@aar'
     compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.yalantis:ucrop:2.2.0'
 
     compile 'io.smooch:core:latest.release'
     compile 'io.smooch:ui:latest.release'
