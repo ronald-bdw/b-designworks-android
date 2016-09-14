@@ -20,79 +20,78 @@
             android:orientation="vertical"
             >
 
-            <ImageView
-                android:id="@+id/avatar"
+            <include layout="@layout/layout_user_info_header"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:text="@string/profile_email"
+                android:textColor="@color/app_accent"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                />
+
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/avatar_placeholder_big"
+                android:layout_height="1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/app_accent"
                 />
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:text="Dmitry"
-                android:gravity="center"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"
+                android:id="@+id/email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:gravity="end|center_vertical"
+                android:text="sexy_dmitry@gmail.com"
+                android:textColor="#686868"
                 tools:ignore="HardcodedText"
+                tools:text="example@email.com"
+                android:layout_marginTop="12dp"
+                android:textSize="16sp"
                 />
 
-            <LinearLayout
-                android:layout_width="match_parent"
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                >
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:text="@string/profile_phone"
+                android:textColor="@color/app_accent"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:text="@string/profile_email"
-                    android:gravity="center"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="48dp"
-                    android:layout_weight="1"
-                    android:text="sexy_dmitry@gmail.com"
-                    android:gravity="end|center_vertical"
-                    tools:ignore="HardcodedText"/>
-
-            </LinearLayout>
-
-            <LinearLayout
+            <View
                 android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/app_accent"
+                />
+
+            <TextView
+                android:id="@+id/phone"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                >
+                android:layout_marginLeft="24dp"
+                android:gravity="end|center_vertical"
+                android:textColor="#686868"
+                tools:ignore="HardcodedText"
+                tools:text="8912345678"
+                android:layout_marginTop="12dp"
+                android:textSize="16sp"
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:text="@string/profile_phone"
-                    android:gravity="center"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="48dp"
-                    android:layout_weight="1"
-                    android:text="+1234567890"
-                    android:gravity="end|center_vertical"
-                    tools:ignore="HardcodedText"
-                    />
-
-            </LinearLayout>
+                />
 
 
         </LinearLayout>
