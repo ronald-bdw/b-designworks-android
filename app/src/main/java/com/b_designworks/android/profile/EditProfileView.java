@@ -1,6 +1,7 @@
 package com.b_designworks.android.profile;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 
 import com.b_designworks.android.login.models.User;
@@ -15,6 +16,10 @@ public interface EditProfileView {
     void profileHasBeenUpdated();
     void showError(Throwable error);
     void showEmailError(@StringRes int errorResId);
+    void showAvatar(@Nullable String uri);
+    void showAvatarUploadingProgress();
+    void showUploadAvatarError(String avatarUrl);
+    void avatarSuccessfullyUploaded();
 
     @NonNull String getEmail();
     @NonNull String getLastName();

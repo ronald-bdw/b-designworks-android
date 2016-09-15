@@ -8,6 +8,7 @@ import com.b_designworks.android.login.models.User;
 import com.b_designworks.android.login.models.UserResponse;
 import com.b_designworks.android.utils.storage.IStorage;
 
+import okhttp3.MultipartBody;
 import rx.Observable;
 import rx.functions.Func1;
 
@@ -127,5 +128,9 @@ public class UserInteractor {
 
     public User getUser() {
         return storage.get(KEY_USER, User.class);
+    }
+
+    public Observable<UserResponse> uploadAvatar(MultipartBody.Part data) {
+        return api.uploadAvatar(getUserId(), data);
     }
 }

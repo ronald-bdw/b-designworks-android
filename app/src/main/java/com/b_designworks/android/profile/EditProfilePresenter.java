@@ -1,11 +1,18 @@
 package com.b_designworks.android.profile;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.b_designworks.android.R;
 import com.b_designworks.android.UserInteractor;
 import com.b_designworks.android.utils.EmailVerifier;
+import com.b_designworks.android.utils.Rxs;
 
+import java.io.File;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -31,7 +38,7 @@ public class EditProfilePresenter {
     @Nullable private Subscription updateProfileSubscribtion;
 
     public void updateUser() {
-        if(updateProfileSubscribtion != null) return;
+        if (updateProfileSubscribtion != null) return;
         String email = editProfileView.getEmail();
         if (email.isEmpty()) {
             editProfileView.showEmailError(R.string.error_empty_email);
@@ -44,16 +51,16 @@ public class EditProfilePresenter {
         editProfileView.showProgressDialog();
         editProfileView.hideKeyboard();
         updateProfileSubscribtion = userInteractor.updateUser(editProfileView.getFirstName(), editProfileView.getLastName(), email)
-            .subscribeOn(Schedulers.io())
-            .doOnTerminate(() -> {
-                editProfileView.hideProgress();
-                updateProfileSubscribtion = null;
-            })
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(result -> {
-                editProfileView.showUserInfo(result.getUser());
-                editProfileView.profileHasBeenUpdated();
-            }, editProfileView::showError);
+                .subscribeOn(Schedulers.io())
+                .doOnTerminate(() -> {
+                    editProfileView.hideProgress();
+                    updateProfileSubscribtion = null;
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(result -> {
+                    editProfileView.showUserInfo(result.getUser());
+                    editProfileView.profileHasBeenUpdated();
+                }, editProfileView::showError);
     }
 
     private boolean isCorrectEmailAdress(String email) {
@@ -78,4 +85,22 @@ public class EditProfilePresenter {
         }
     }
 
+    @NonNull Subscription uploadingSubscription;
+
+    public void updateAvatar(@Nullable String imageUrl) {
+        editProfileView.showAvatar(imageUrl);
+        RequestBody body = RequestBody.create(MediaType.parse("image/jpg"), new File(imageUrl));
+        editProfileView.showAvatarUploadingProgress();
+        uploadingSubscription = userInteractor.uploadAvatar(MultipartBody.Part.createFormData("user[avatar]", imageUrl, body))
+                .compose(Rxs.doInBackgroundDeliverToUI())
+                .subscribe(result -> {
+                    editProfileView.avatarSuccessfullyUploaded();
+                }, error -> {
+                    editProfileView.showUploadAvatarError(imageUrl);
+                });
+    }
+
+    public void userCancelAvatarUploading() {
+        editProfileView.showAvatar(userInteractor.getUser().getAvatar().getOriginal());
+    }
 }
