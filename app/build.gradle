@@ -92,6 +92,13 @@ repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 
+configurations.all {
+    resolutionStrategy {
+        force supportLibs
+        force "com.android.support:design:$versions.support"
+    }
+}
+
 tasks.whenTaskAdded { task ->
     if (task.name.equals("lint")) {
         task.enabled = false
@@ -115,10 +122,12 @@ dependencies {
     compile 'io.smooch:core:latest.release'
     compile 'io.smooch:ui:latest.release'
 
-    testCompile androidTestsLibs
     compile('com.crashlytics.sdk.android:crashlytics:2.6.1@aar') {
         transitive = true;
     }
+
+    testCompile androidTestsLibs
+    testCompile supportLibs
 }
 
 apply from: "quality.gradle"
