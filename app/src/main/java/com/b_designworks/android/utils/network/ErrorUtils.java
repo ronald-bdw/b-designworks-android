@@ -3,7 +3,7 @@ package com.b_designworks.android.utils.network;
 import android.content.Context;
 import android.util.Log;
 
-import com.b_designworks.android.utils.ui.SimpleOkDialog;
+import com.b_designworks.android.utils.ui.SimpleDialog;
 
 import rx.functions.Action1;
 
@@ -23,7 +23,7 @@ public class ErrorUtils {
 
     public static void handle(Context context, Throwable error) {
         if (error instanceof RetrofitException) {
-            SimpleOkDialog.show(context, (RetrofitException) error);
+            SimpleDialog.show(context, (RetrofitException) error);
         } else {
             ErrorUtils.logError(error);
         }
