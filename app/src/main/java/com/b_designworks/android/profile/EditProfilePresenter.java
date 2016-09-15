@@ -1,6 +1,5 @@
 package com.b_designworks.android.profile;
 
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.b_designworks.android.R;
@@ -85,12 +84,15 @@ public class EditProfilePresenter {
         }
     }
 
-    @NonNull Subscription uploadingSubscription;
+    @Nullable private Subscription uploadingSubscription;
 
     public void updateAvatar(@Nullable String imageUrl) {
         editProfileView.showAvatar(imageUrl);
         RequestBody body = RequestBody.create(MediaType.parse("image/jpg"), new File(imageUrl));
         editProfileView.showAvatarUploadingProgress();
+        if (uploadingSubscription != null) {
+            uploadingSubscription.unsubscribe();
+        }
         uploadingSubscription = userInteractor.uploadAvatar(MultipartBody.Part.createFormData("user[avatar]", imageUrl, body))
                 .compose(Rxs.doInBackgroundDeliverToUI())
                 .subscribe(result -> {
