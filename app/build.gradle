@@ -92,6 +92,12 @@ repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 
+tasks.whenTaskAdded { task ->
+    if (task.name.equals("lint")) {
+        task.enabled = false
+    }
+}
+
 dependencies {
     compile supportLibs
     compile rxJavaLibs
