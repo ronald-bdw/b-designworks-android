@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.getkeepsafe.dexcount'
 
 apply from: '../deps.gradle'
@@ -100,6 +101,10 @@ dependencies {
     compile rxJavaLibs
     compile retrofitLibs
     compile okHttpLibs
+
+    compile "com.google.dagger:dagger:$versions.dagger"
+    apt "com.google.dagger:dagger-compiler:$versions.dagger"
+    provided 'javax.annotation:jsr250-api:1.0'
 
     compile 'com.jakewharton:butterknife:7.0.0' // view injection
     compile 'com.github.bumptech.glide:glide:3.7.0'
