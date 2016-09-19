@@ -54,10 +54,10 @@ public interface Api {
     );
 
     @FormUrlEncoded
-    @POST(V1 + "/users/{id}") Observable<UserResponse> sendToken(
+    @POST(V1 + "/users/{id}") Observable<UserResponse> sendSecretCode(
         @NonNull @Part("id") String id,
         @NonNull @Field("provider") String provider,
-        @NonNull @Field("token") String token,
-        @NonNull @Field("refresh_token") String refreshToken);
+        @NonNull @Field("code") String code
+    );
 
 }
