@@ -53,4 +53,11 @@ public interface Api {
         @Nullable @Part("user[email]") String email
     );
 
+    @FormUrlEncoded
+    @POST(V1 + "/users/{id}") Observable<UserResponse> sendToken(
+        @NonNull @Part("id") String id,
+        @NonNull @Field("provider") String provider,
+        @NonNull @Field("token") String token,
+        @NonNull @Field("refresh_token") String refreshToken);
+
 }
