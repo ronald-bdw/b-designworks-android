@@ -42,7 +42,7 @@ public class UserInteractor {
     @NonNull private final IStorage storage;
     @NonNull private final Api      api;
 
-    private UserInteractor(@NonNull IStorage storage, @NonNull Api api) {
+    public UserInteractor(@NonNull IStorage storage, @NonNull Api api) {
         this.storage = storage;
         this.api = api;
     }

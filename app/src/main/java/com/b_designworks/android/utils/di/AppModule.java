@@ -1,13 +1,36 @@
 package com.b_designworks.android.utils.di;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
+import com.b_designworks.android.Api;
+import com.b_designworks.android.BuildConfig;
+import com.b_designworks.android.UserInteractor;
 import com.b_designworks.android.sync.GoogleFitInteractor;
+import com.b_designworks.android.utils.network.RxErrorHandlingCallAdapterFactory;
+import com.b_designworks.android.utils.network.StringConverterFactory;
+import com.b_designworks.android.utils.storage.IStorage;
+import com.b_designworks.android.utils.storage.Storage;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.File;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.Cache;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Ilya Eremin on 9/19/16.
@@ -29,8 +52,73 @@ public class AppModule {
 
     @Provides
     @Singleton
-    GoogleFitInteractor provideGoogleFitInteractor(){
+    GoogleFitInteractor provideGoogleFitInteractor(
+        @NonNull Api api, @NonNull UserInteractor userInteractor) {
+        return new GoogleFitInteractor(api, userInteractor);
+    }
 
+    @Provides
+    @Singleton
+    public OkHttpClient provideHttpClient(
+        @NonNull UserInteractor userInteractor, @NonNull File cachedDir) {
+        OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
+        httpClientBuilder.cache(new Cache(cachedDir, 20 * 1024 * 1024));
+        if (BuildConfig.DEBUG) {
+            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            httpClientBuilder.addInterceptor(interceptor);
+        }
+        httpClientBuilder.addInterceptor(chain -> {
+            if (!TextUtils.isEmpty(userInteractor.getToken())) {
+                Request request = chain.request().newBuilder()
+                    .addHeader("X-User-Token", userInteractor.getToken())
+                    .addHeader("X-User-Phone-Number", userInteractor.getPhone())
+                    .build();
+                return chain.proceed(request);
+            }
+            return chain.proceed(chain.request());
+        });
+        return httpClientBuilder.build();
+    }
+
+    @Provides
+    @Singleton
+    public UserInteractor providesUserInteractor(@NonNull IStorage storage, @NonNull Api api) {
+        return new UserInteractor(storage, api);
+    }
+
+    @Provides @Singleton
+    public IStorage providesStorage(@NonNull SharedPreferences sp, @NonNull Gson mapper) {
+        return new Storage(sp, mapper);
+    }
+
+    @Provides @Singleton public SharedPreferences providesSharedPrefs(@NonNull Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context);
+    }
+
+    @Provides @Singleton public Gson getMapper() {
+        return new GsonBuilder()
+            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+            .create();
+    }
+
+
+    @Provides @Singleton public File getCacheDir(@NonNull Context context) {
+        final File external = context.getExternalCacheDir();
+        return external != null ? external : context.getCacheDir();
+    }
+
+    @Provides @Singleton
+    public Api providesApi(@NonNull OkHttpClient httpClient, @NonNull Gson mapper) {
+        return new Retrofit.Builder()
+            .client(httpClient)
+            .baseUrl(Api.BASE_URL)
+            .addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create())
+//                      .addConverterFactory(EnumConverterFactory.create()) // this converter should be before gson converter
+            .addConverterFactory(StringConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(mapper))
+            .build()
+            .create(Api.class);
     }
 
 }
