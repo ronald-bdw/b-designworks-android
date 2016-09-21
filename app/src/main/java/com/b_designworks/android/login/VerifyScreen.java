@@ -6,39 +6,50 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
 import com.b_designworks.android.BaseActivity;
-import com.b_designworks.android.DI;
 import com.b_designworks.android.Navigator;
 import com.b_designworks.android.R;
-import com.b_designworks.android.UserInteractor;
 import com.b_designworks.android.utils.Bus;
-import com.b_designworks.android.utils.Rxs;
+import com.b_designworks.android.utils.di.Injector;
 import com.b_designworks.android.utils.network.ErrorUtils;
 import com.b_designworks.android.utils.ui.TextViews;
 import com.b_designworks.android.utils.ui.UiInfo;
 import com.f2prateek.dart.InjectExtra;
-import com.trello.rxlifecycle.ActivityEvent;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.OnClick;
-import rx.Subscription;
+import butterknife.OnEditorAction;
 
 /**
  * Created by Ilya Eremin on 03.08.2016.
  */
-public class VerifyScreen extends BaseActivity {
+public class VerifyScreen extends BaseActivity implements VerifyView {
+
+    private static final String ARG_KEY_PHONE = "phone";
+
+    private static final String KEY_USER_REGISTERED     = "userRegistered";
+    private static final String KEY_PROGRESS_VISIBILITY = "progressVisibility";
 
     private static final String RESULT_KEY_VERIFICATION_CODE = "verificationCode";
-    private static final String ARG_KEY_PHONE                = "phone";
-    private static final String KEY_USER_REGISTERED          = "userRegistered";
-    private static final String KEY_PROGRESS_VISIBILITY      = "progressVisibility";
+    private static final String RESULT_KEY_PHONE_CODE_ID     = "phoneCodeId";
+    private static final String RESULT_KEY_PHONE_NUMBER      = "phoneNumber";
+
+    public static String extractCodeFromResult(@NonNull Intent data) {
+        return data.getExtras().getString(RESULT_KEY_VERIFICATION_CODE);
+    }
+
+    public static String extractPhoneCodeIdFromResult(@NonNull Intent data) {
+        return data.getExtras().getString(RESULT_KEY_PHONE_CODE_ID);
+    }
 
     public static Intent createIntent(Context context, @NonNull String phone) {
         Intent intent = new Intent(context, VerifyScreen.class);
@@ -50,41 +61,37 @@ public class VerifyScreen extends BaseActivity {
         return new UiInfo(R.layout.screen_verify);
     }
 
+    @Inject VerifyPresenter verifyPresenter;
+
     @InjectExtra(ARG_KEY_PHONE) String argPhone;
 
     @Bind(R.id.verification_code) EditText uiVerificadtionCode;
-    @Bind(R.id.progress)          View     uiProgress;
+    @Bind(R.id.progress)          View     uiWaitingForSms;
 
-    private UserInteractor userManager = DI.getInstance().getUserInteractor();
     private boolean userRegistered;
-
-    @Nullable private Subscription verifyingCodeSubs;
 
     @SuppressWarnings("WrongConstant")
     @Override protected void restoreState(@NonNull Bundle savedState) {
         super.restoreState(savedState);
         userRegistered = savedState.getBoolean(KEY_USER_REGISTERED);
-        uiProgress.setVisibility(savedState.getInt(KEY_PROGRESS_VISIBILITY));
+        uiWaitingForSms.setVisibility(savedState.getInt(KEY_PROGRESS_VISIBILITY));
     }
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
+        Injector.inject(this);
+        verifyPresenter.attachView(this);
         if (savedState == null) {
-            requestCode();
+            verifyPresenter.requestCode(argPhone);
         }
     }
 
     @OnClick(R.id.submit) void onSubmitClick() {
-        String verificadtionCode = TextViews.textOf(uiVerificadtionCode);
-        if (!TextUtils.isEmpty(verificadtionCode)) {
-            handleCode(verificadtionCode);
-        } else {
-            uiVerificadtionCode.setError(getString(R.string.registration_error_fill_code));
-        }
+        verifyPresenter.handleSmsCode(TextViews.textOf(uiVerificadtionCode));
     }
 
     @OnClick(R.id.resend) void onResendClick() {
-        requestCode();
+        verifyPresenter.requestCode(argPhone);
     }
 
     @Override protected void onResume() {
@@ -93,92 +100,27 @@ public class VerifyScreen extends BaseActivity {
     }
 
     @Subscribe public void onEvent(SmsCodeEvent event) {
-        handleCode(event.getCode());
-    }
-
-    private void handleCode(@NonNull String code) {
-        dismissProgressDialog();
-        if (userRegistered) {
-            login(code);
-        } else {
-            if (getCallingActivity() != null) {
-                returnCodeToRegistrationScreen(code);
-            } else {
-                Navigator.registration(context(), code);
-            }
-        }
-    }
-
-    private void returnCodeToRegistrationScreen(@NonNull String code) {
-        Intent intent = new Intent();
-        intent.putExtra(RESULT_KEY_VERIFICATION_CODE, code);
-        setResult(RESULT_OK, intent);
-        finish();
+        verifyPresenter.handleSmsCode(event.getCode());
     }
 
     @Nullable private ProgressDialog authorizeProgressDialog;
-
-    @Nullable ProgressDialog progressDialog;
-    @Nullable Subscription   sendingSubscription;
-
-    private void requestCode() {
-        if (sendingSubscription != null) return;
-
-        progressDialog = ProgressDialog.show(context(), getString(R.string.loading), getString(R.string.loading_sending_request_for_code));
-        sendingSubscription = userManager.requestCode(argPhone)
-            .compose(bindUntilEvent(ActivityEvent.STOP))
-            .compose(Rxs.doInBackgroundDeliverToUI())
-            .doOnEach(i -> {
-                dismissProgressDialog();
-                sendingSubscription = null;
-            })
-            .subscribe(result -> {
-                userRegistered = result.isPhoneRegistered();
-                uiProgress.setVisibility(View.VISIBLE);
-            }, ErrorUtils.handle(context()));
-    }
-
-    private void dismissProgressDialog() {
-        if (progressDialog != null) {
-            progressDialog.dismiss();
-            progressDialog = null;
-        }
-    }
+    @Nullable private ProgressDialog requestVerificationCodeProgressDialog;
 
     @Override protected void onStop() {
-        dismissAuthorizeDialog();
-        dismissProgressDialog();
+        hideAuthProgressDialog();
+        hideRequestVerificationProgressDialog();
+        verifyPresenter.onShown();
         super.onStop();
     }
 
     @Override protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(KEY_USER_REGISTERED, userRegistered);
-        outState.putInt(KEY_PROGRESS_VISIBILITY, uiProgress.getVisibility());
-    }
-
-    private void login(@NonNull String verifyCode) {
-        if (verifyingCodeSubs != null && !verifyingCodeSubs.isUnsubscribed() || verifyingCodeSubs != null)
-            return;
-        authorizeProgressDialog = ProgressDialog.show(context(), getString(R.string.loading), getString(R.string.loading_sending_code));
-        verifyingCodeSubs = userManager.verifyCode(verifyCode)
-            .compose(Rxs.doInBackgroundDeliverToUI())
-            .compose(bindUntilEvent(ActivityEvent.STOP))
-            .doOnEach(i -> {
-                verifyingCodeSubs = null;
-                dismissAuthorizeDialog();
-            })
-            .subscribe(result -> Navigator.chat(context()), ErrorUtils.handle(context()));
-    }
-
-    private void dismissAuthorizeDialog() {
-        if (authorizeProgressDialog != null) {
-            authorizeProgressDialog.dismiss();
-            authorizeProgressDialog = null;
-        }
+        outState.putInt(KEY_PROGRESS_VISIBILITY, uiWaitingForSms.getVisibility());
     }
 
     @Override protected void onPause() {
+        verifyPresenter.onHidden();
         Bus.unsubscribe(this);
         super.onPause();
     }
@@ -191,7 +133,74 @@ public class VerifyScreen extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    public static String extractCodeFromResult(@NonNull Intent data) {
-        return data.getExtras().getString(RESULT_KEY_VERIFICATION_CODE);
+    @Override public void showRequestVerificationCodeProgressDialog() {
+        requestVerificationCodeProgressDialog = ProgressDialog.show(context(), getString(R.string.loading), getString(R.string.loading_sending_request_for_code));
+    }
+
+    @Override public void showWaitingForSmsProgress() {
+        uiWaitingForSms.setVisibility(View.VISIBLE);
+    }
+
+    @Override public void showError(Throwable error) {
+        ErrorUtils.handle(context(), error);
+    }
+
+    @Override public void hideRequestVerificationProgressDialog() {
+        if (requestVerificationCodeProgressDialog != null) {
+            requestVerificationCodeProgressDialog.dismiss();
+            requestVerificationCodeProgressDialog = null;
+        }
+    }
+
+    @Override public void showVerificationCodeError() {
+        uiVerificadtionCode.setError(getString(R.string.registration_error_fill_code));
+    }
+
+    @Override public void showAuthorizationProgressDialog() {
+        authorizeProgressDialog = ProgressDialog.show(context(), getString(R.string.loading), getString(R.string.loading_sending_code));
+    }
+
+    @Override public void hideAuthProgressDialog() {
+        if (authorizeProgressDialog != null) {
+            authorizeProgressDialog.dismiss();
+            authorizeProgressDialog = null;
+        }
+    }
+
+    @OnEditorAction(R.id.verification_code) boolean onEnterClick(int actionId) {
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            onSubmitClick();
+            return true;
+        }
+        return false;
+    }
+
+    @Override public void openChatScreen() {
+        Navigator.chat(context());
+    }
+
+    @Override public void openRegistrationScreen(
+        @NonNull String code, @NonNull String phoneNumber, @NonNull String phoneCodeId) {
+        if (getCallingActivity() != null) {
+            returnCodeToRegistrationScreen(code, phoneNumber, phoneCodeId);
+        } else {
+            Navigator.registration(context(), code, phoneNumber, phoneCodeId);
+        }
+    }
+
+    private void returnCodeToRegistrationScreen(@NonNull String code,
+                                                @NonNull String phoneCodeId,
+                                                @NonNull String phoneNumber) {
+        Intent intent = new Intent();
+        intent.putExtra(RESULT_KEY_VERIFICATION_CODE, code);
+        intent.putExtra(RESULT_KEY_PHONE_CODE_ID, phoneCodeId);
+        intent.putExtra(RESULT_KEY_PHONE_NUMBER, phoneNumber);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
+    @Override protected void onDestroy() {
+        verifyPresenter.detachView();
+        super.onDestroy();
     }
 }
