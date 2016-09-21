@@ -17,22 +17,6 @@ import rx.functions.Func1;
  */
 public class UserInteractor {
 
-
-    private static volatile UserInteractor instance;
-
-    public static UserInteractor getInstance(@NonNull IStorage storage, @NonNull Api api) {
-        UserInteractor localInstance = instance;
-        if (localInstance == null) {
-            synchronized (UserInteractor.class) {
-                localInstance = instance;
-                if (localInstance == null) {
-                    instance = localInstance = new UserInteractor(storage, api);
-                }
-            }
-        }
-        return localInstance;
-    }
-
     private static final String KEY_USER                    = "user";
     private static final String KEY_PHONE                   = "phone";
     private static final String KEY_PHONE_CODE_ID           = "phoneCodeId";

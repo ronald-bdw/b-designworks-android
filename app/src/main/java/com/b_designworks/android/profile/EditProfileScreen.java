@@ -43,11 +43,11 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
     @Bind(R.id.last_name)         EditText  uiLastName;
     @Bind(R.id.email)             EditText  uiEmail;
 
-    private EditProfilePresenter editProfilePresenter;
+    @Inject EditProfilePresenter editProfilePresenter;
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
-        editProfilePresenter = new EditProfilePresenter(this, DI.getInstance().getUserInteractor());
+        Injector.inject(this);
         editProfilePresenter.showUserInfo();
     }
 

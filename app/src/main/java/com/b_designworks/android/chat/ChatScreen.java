@@ -9,13 +9,15 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.b_designworks.android.BaseActivity;
-import com.b_designworks.android.DI;
 import com.b_designworks.android.R;
 import com.b_designworks.android.UserInteractor;
 import com.b_designworks.android.utils.Bus;
+import com.b_designworks.android.utils.di.Injector;
 import com.b_designworks.android.utils.ui.UiInfo;
 
 import org.greenrobot.eventbus.Subscribe;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import io.smooch.core.Smooch;
@@ -28,7 +30,7 @@ public class ChatScreen extends BaseActivity {
 
     private static final String TAG = "ChatScreen";
 
-    private UserInteractor userInteractor = DI.getInstance().getUserInteractor();
+    @Inject UserInteractor userInteractor;
 
     @Bind(R.id.drawer) DrawerLayout uiDrawer;
 
@@ -38,6 +40,7 @@ public class ChatScreen extends BaseActivity {
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
+        Injector.inject(this);
         if (savedState == null) {
             if (userInteractor.firstVisitAfterLogin()) {
                 Smooch.logout();

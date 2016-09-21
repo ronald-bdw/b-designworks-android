@@ -5,16 +5,18 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 
 import com.b_designworks.android.Api;
 import com.b_designworks.android.BuildConfig;
 import com.b_designworks.android.UserInteractor;
+import com.b_designworks.android.login.VerifyPresenter;
+import com.b_designworks.android.profile.EditProfilePresenter;
 import com.b_designworks.android.sync.GoogleFitInteractor;
 import com.b_designworks.android.utils.network.RxErrorHandlingCallAdapterFactory;
 import com.b_designworks.android.utils.network.StringConverterFactory;
 import com.b_designworks.android.utils.storage.IStorage;
 import com.b_designworks.android.utils.storage.Storage;
+import com.b_designworks.android.utils.storage.UserSettings;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -46,7 +48,7 @@ public class AppModule {
 
     @Provides
     @Singleton
-    Application providesApplication() {
+    Context providesApplication() {
         return mApplication;
     }
 
@@ -59,8 +61,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public OkHttpClient provideHttpClient(
-        @NonNull UserInteractor userInteractor, @NonNull File cachedDir) {
+    public OkHttpClient provideHttpClient(@NonNull UserSettings userSettings,
+                                          @NonNull File cachedDir) {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
         httpClientBuilder.cache(new Cache(cachedDir, 20 * 1024 * 1024));
         if (BuildConfig.DEBUG) {
@@ -69,10 +71,10 @@ public class AppModule {
             httpClientBuilder.addInterceptor(interceptor);
         }
         httpClientBuilder.addInterceptor(chain -> {
-            if (!TextUtils.isEmpty(userInteractor.getToken())) {
+            if (userSettings.userHasToken()) {
                 Request request = chain.request().newBuilder()
-                    .addHeader("X-User-Token", userInteractor.getToken())
-                    .addHeader("X-User-Phone-Number", userInteractor.getPhone())
+                    .addHeader("X-User-Token", userSettings.getToken())
+                    .addHeader("X-User-Phone-Number", userSettings.getPhone())
                     .build();
                 return chain.proceed(request);
             }
@@ -83,8 +85,16 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public UserInteractor providesUserInteractor(@NonNull IStorage storage, @NonNull Api api) {
-        return new UserInteractor(storage, api);
+    public UserSettings providesUserSettings(@NonNull IStorage storage) {
+        return new UserSettings(storage);
+    }
+
+    @Provides
+    @Singleton
+    public UserInteractor providesUserInteractor(@NonNull IStorage storage,
+                                                 @NonNull UserSettings userSettings,
+                                                 @NonNull Api api) {
+        return new UserInteractor(storage, userSettings, api);
     }
 
     @Provides @Singleton
@@ -102,7 +112,6 @@ public class AppModule {
             .create();
     }
 
-
     @Provides @Singleton public File getCacheDir(@NonNull Context context) {
         final File external = context.getExternalCacheDir();
         return external != null ? external : context.getCacheDir();
@@ -114,11 +123,20 @@ public class AppModule {
             .client(httpClient)
             .baseUrl(Api.BASE_URL)
             .addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create())
-//                      .addConverterFactory(EnumConverterFactory.create()) // this converter should be before gson converter
             .addConverterFactory(StringConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(mapper))
             .build()
             .create(Api.class);
+    }
+
+    @Provides @Singleton
+    public EditProfilePresenter provideEditProfilePresenter(UserInteractor userInteractor) {
+        return new EditProfilePresenter(userInteractor);
+    }
+
+    @Provides @Singleton
+    public VerifyPresenter provideVerifyPresenter(UserInteractor userInteractor) {
+        return new VerifyPresenter(userInteractor);
     }
 
 }

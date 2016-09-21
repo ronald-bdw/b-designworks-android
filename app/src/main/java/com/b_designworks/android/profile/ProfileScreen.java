@@ -1,17 +1,22 @@
 package com.b_designworks.android.profile;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.b_designworks.android.BaseActivity;
-import com.b_designworks.android.DI;
 import com.b_designworks.android.Navigator;
 import com.b_designworks.android.R;
+import com.b_designworks.android.UserInteractor;
 import com.b_designworks.android.login.models.User;
 import com.b_designworks.android.utils.ImageLoader;
+import com.b_designworks.android.utils.di.Injector;
 import com.b_designworks.android.utils.ui.UiInfo;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 
@@ -19,6 +24,8 @@ import butterknife.Bind;
  * Created by Ilya Eremin on 04.08.2016.
  */
 public class ProfileScreen extends BaseActivity {
+
+    @Inject UserInteractor userInteractor;
 
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_profile).enableBackButton().setMenuRes(R.menu.profile);
@@ -30,6 +37,11 @@ public class ProfileScreen extends BaseActivity {
     @Bind(R.id.current_full_name) TextView  uiCurrentFullName;
     @Bind(R.id.current_email)     TextView  uiCurrentEmail;
 
+    @Override protected void onCreate(@Nullable Bundle savedState) {
+        super.onCreate(savedState);
+        Injector.inject(this);
+    }
+
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.edit) {
             Navigator.editProfile(context());
@@ -40,7 +52,7 @@ public class ProfileScreen extends BaseActivity {
 
     @Override protected void onResume() {
         super.onResume();
-        User user = DI.getInstance().getUserInteractor().getUser();
+        User user = userInteractor.getUser();
         ImageLoader.load(this, uiAvatar, user.getAvatar().getOriginal());
         uiCurrentFullName.setText(getString(R.string.edit_profile_name_surname_pattern, user.getFirstName(), user.getLastName()));
         uiEmail.setText(user.getEmail());

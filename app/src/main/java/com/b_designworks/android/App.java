@@ -18,7 +18,6 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        DI.initialize(this);
         // Dagger%COMPONENT_NAME%
         appComponent = DaggerAppComponent.builder()
 //             list of modules that are part of this component need to be created here too
