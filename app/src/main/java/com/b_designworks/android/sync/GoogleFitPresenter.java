@@ -106,9 +106,6 @@ public class GoogleFitPresenter {
     }
 
     public void onShown() {
-        if (view != null) {
-            view.enableIntegrationButton(mClient.isConnected());
-        }
     }
 
     public void detachView() {

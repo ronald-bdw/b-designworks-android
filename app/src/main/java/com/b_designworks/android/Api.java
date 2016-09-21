@@ -54,10 +54,9 @@ public interface Api {
     );
 
     @FormUrlEncoded
-    @POST(V1 + "/users/{id}") Observable<UserResponse> sendSecretCode(
-        @NonNull @Part("id") String id,
-        @NonNull @Field("provider") String provider,
-        @NonNull @Field("code") String code
+    @POST(V1 + "/fitness_tokens") Observable<UserResponse> sendSecretCode(
+        @NonNull @Field("authorization_code") String code,
+        @NonNull @Field("source") String provider
     );
 
 }
