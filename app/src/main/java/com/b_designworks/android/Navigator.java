@@ -35,10 +35,6 @@ public class Navigator {
         context.startActivity(new Intent(context, TrialScreen.class));
     }
 
-    public static void verification(@NonNull Context context) {
-        context.startActivity(new Intent(context, VerifyScreen.class));
-    }
-
     public static void verification(@NonNull Context context, String phone) {
         context.startActivity(VerifyScreen.createIntent(context, phone));
     }
@@ -79,8 +75,8 @@ public class Navigator {
         context.startActivity(new Intent(context, SelectProviderScreen.class));
     }
 
-    public static void registration(@NonNull Context context, @NonNull String code) {
-        context.startActivity(RegistrationScreen.createIntent(context, code));
+    public static void registration(@NonNull Context context, @NonNull String code, @NonNull String phoneNumber, @NonNull String phoneCodeId) {
+        context.startActivity(RegistrationScreen.createIntent(context, code, phoneNumber, phoneCodeId));
     }
 
     public static void registration(@NonNull Context context) {
