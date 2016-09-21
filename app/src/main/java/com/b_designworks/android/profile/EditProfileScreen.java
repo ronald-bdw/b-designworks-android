@@ -12,15 +12,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.b_designworks.android.BaseActivity;
-import com.b_designworks.android.DI;
 import com.b_designworks.android.R;
 import com.b_designworks.android.login.models.User;
 import com.b_designworks.android.utils.ImageLoader;
 import com.b_designworks.android.utils.Keyboard;
+import com.b_designworks.android.utils.di.Injector;
 import com.b_designworks.android.utils.network.ErrorUtils;
 import com.b_designworks.android.utils.ui.SimpleLoadingDialog;
 import com.b_designworks.android.utils.ui.TextViews;
 import com.b_designworks.android.utils.ui.UiInfo;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 
@@ -48,6 +50,7 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
         Injector.inject(this);
+        editProfilePresenter.attachView(this);
         editProfilePresenter.showUserInfo();
     }
 
@@ -120,5 +123,10 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
     @Override protected void onPause() {
         editProfilePresenter.onScreenHidden();
         super.onPause();
+    }
+
+    @Override protected void onDestroy() {
+        editProfilePresenter.detachView();
+        super.onDestroy();
     }
 }

@@ -16,44 +16,48 @@ import rx.schedulers.Schedulers;
 
 public class EditProfilePresenter {
 
-    private final EditProfileView editProfileView;
-    private final UserInteractor  userInteractor;
+    @Nullable private EditProfileView view;
 
-    public EditProfilePresenter(EditProfileView editProfileView, UserInteractor userInteractor) {
-        this.editProfileView = editProfileView;
+    private final UserInteractor userInteractor;
+
+    public EditProfilePresenter(UserInteractor userInteractor) {
         this.userInteractor = userInteractor;
     }
 
+    public void attachView(EditProfileView view) {
+        this.view = view;
+    }
+
     public void showUserInfo() {
-        editProfileView.showUserInfo(userInteractor.getUser());
+        view.showUserInfo(userInteractor.getUser());
     }
 
     @Nullable private Subscription updateProfileSubscribtion;
 
     public void updateUser() {
-        if(updateProfileSubscribtion != null) return;
-        String email = editProfileView.getEmail();
+        if (updateProfileSubscribtion != null) return;
+        String email = view.getEmail();
         if (email.isEmpty()) {
-            editProfileView.showEmailError(R.string.error_empty_email);
+            view.showEmailError(R.string.error_empty_email);
             return;
         }
         if (!isCorrectEmailAdress(email)) {
-            editProfileView.showEmailError(R.string.error_incorrect_email);
+            view.showEmailError(R.string.error_incorrect_email);
             return;
         }
-        editProfileView.showProgressDialog();
-        editProfileView.hideKeyboard();
-        updateProfileSubscribtion = userInteractor.updateUser(editProfileView.getFirstName(), editProfileView.getLastName(), email)
+        view.showProgressDialog();
+        view.hideKeyboard();
+        updateProfileSubscribtion = userInteractor.updateUser(view.getFirstName(), view.getLastName(), email)
             .subscribeOn(Schedulers.io())
             .doOnTerminate(() -> {
-                editProfileView.hideProgress();
+                view.hideProgress();
                 updateProfileSubscribtion = null;
             })
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(result -> {
-                editProfileView.showUserInfo(result.getUser());
-                editProfileView.profileHasBeenUpdated();
-            }, editProfileView::showError);
+                view.showUserInfo(result.getUser());
+                view.profileHasBeenUpdated();
+            }, view::showError);
     }
 
     private boolean isCorrectEmailAdress(String email) {
@@ -63,12 +67,12 @@ public class EditProfilePresenter {
 
     public void onScreenShown() {
         if (updateProfileSubscribtion != null) {
-            editProfileView.showProgressDialog();
+            view.showProgressDialog();
         }
     }
 
     public void onScreenHidden() {
-        editProfileView.hideProgress();
+        view.hideProgress();
     }
 
     public void cancelRequest() {
@@ -76,6 +80,10 @@ public class EditProfilePresenter {
             updateProfileSubscribtion.unsubscribe();
             updateProfileSubscribtion = null;
         }
+    }
+
+    public void detachView() {
+        this.view = null;
     }
 
 }
