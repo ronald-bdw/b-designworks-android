@@ -1,14 +1,17 @@
 package com.b_designworks.android.settings;
 
 import android.support.annotation.NonNull;
+import android.widget.ImageView;
 
 import com.b_designworks.android.BaseActivity;
 import com.b_designworks.android.DI;
 import com.b_designworks.android.Navigator;
 import com.b_designworks.android.R;
+import com.b_designworks.android.utils.ImageLoader;
 import com.b_designworks.android.utils.ui.AreYouSureDialog;
 import com.b_designworks.android.utils.ui.UiInfo;
 
+import butterknife.Bind;
 import butterknife.OnClick;
 
 /**
@@ -18,6 +21,13 @@ public class SettingsScreen extends BaseActivity {
 
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_settings).enableBackButton().setTitleRes(R.string.title_settings);
+    }
+
+    @Bind(R.id.avatar) ImageView uiAvatar;
+
+    @Override protected void onResume() {
+        super.onResume();
+        ImageLoader.load(context(), uiAvatar, DI.getInstance().getUserInteractor().getUser().getAvatar().getOriginal());
     }
 
     @OnClick(R.id.sync) void onSyncClick(){

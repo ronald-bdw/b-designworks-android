@@ -96,6 +96,7 @@ public class EditProfilePresenter {
         uploadingSubscription = userInteractor.uploadAvatar(MultipartBody.Part.createFormData("user[avatar]", imageUrl, body))
                 .compose(Rxs.doInBackgroundDeliverToUI())
                 .subscribe(result -> {
+                    userInteractor.saveUser(result.getUser());
                     editProfileView.avatarSuccessfullyUploaded();
                 }, error -> {
                     editProfileView.showUploadAvatarError(imageUrl);
