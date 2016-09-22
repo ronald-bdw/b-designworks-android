@@ -1,5 +1,6 @@
 package com.b_designworks.android.profile;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,6 +24,7 @@ import com.b_designworks.android.utils.ui.SimpleDialog;
 import com.b_designworks.android.utils.ui.SimpleLoadingDialog;
 import com.b_designworks.android.utils.ui.TextViews;
 import com.b_designworks.android.utils.ui.UiInfo;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -123,10 +125,18 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
     }
 
     @OnClick(R.id.change_avatar) void onChangeAvatarClick() {
-        TedBottomPicker tedBottomPicker = new TedBottomPicker.Builder(this)
-                .setOnImageSelectedListener(uri -> editProfilePresenter.updateAvatar(uri.getPath()))
-                .create();
-        tedBottomPicker.show(getSupportFragmentManager());
+        RxPermissions.getInstance(this)
+            .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            .subscribe(granted -> {
+                if (granted) {
+                    TedBottomPicker tedBottomPicker = new TedBottomPicker.Builder(this)
+                        .setOnImageSelectedListener(uri -> editProfilePresenter.updateAvatar(uri.getPath()))
+                        .create();
+                    tedBottomPicker.show(getSupportFragmentManager());
+                } else {
+                    // TODO
+                }
+            });
     }
 
     public void showAvatar(@Nullable String imageUrl) {

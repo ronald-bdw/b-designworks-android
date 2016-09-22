@@ -118,6 +118,7 @@ dependencies {
     compile 'fr.avianey.com.viewpagerindicator:library:2.4.1.1@aar'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'gun0912.ted:tedbottompicker:1.0.3'
+    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar'
 
     compile 'io.smooch:core:latest.release'
     compile 'io.smooch:ui:latest.release'
