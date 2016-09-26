@@ -39,7 +39,8 @@
         <activity android:name=".AboutUsScreen"/>
         <activity android:name=".sync.GoogleFitScreen"/>
 
-        <activity android:name=".sync.FitbitScreen">
+        <activity android:name=".sync.FitbitScreen"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
