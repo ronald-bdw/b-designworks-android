@@ -39,6 +39,15 @@
         <activity android:name=".AboutUsScreen"/>
         <activity android:name=".sync.GoogleFitScreen"/>
 
+        <activity android:name=".sync.FitbitScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:host="pearup.com" android:scheme="pearup" />
+            </intent-filter>
+        </activity>
+
         <receiver
             android:name=".login.SmsListener"
             android:permission="android.permission.BROADCAST_SMS"
