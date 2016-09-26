@@ -34,7 +34,7 @@ public class EditProfilePresenterTest {
     @Rule public RxSchedulersOverrideRule rxRule = new RxSchedulersOverrideRule();
 
     @Mock EditProfileView editProfileView;
-    @Mock UserInteractor userInteractor;
+    @Mock UserInteractor  userInteractor;
 
     private EditProfilePresenter editProfilePresenter;
 
@@ -92,5 +92,20 @@ public class EditProfilePresenterTest {
         editProfilePresenter.updateUser();
         editProfilePresenter.updateUser();
         verify(editProfileView).showProgressDialog();
+    }
+
+    @Test public void testAvatarUploadingSuccessfully() throws Exception {
+        when(userInteractor.uploadAvatar(any())).thenReturn(Observable.just(new UserResponse()));
+        editProfilePresenter.updateAvatar("");
+        verify(editProfileView).showAvatarUploadingProgress();
+        verify(editProfileView).showAvatar("");
+        verify(editProfileView).avatarSuccessfullyUploaded();
+    }
+
+    @Test public void testAvatarUploadingFail() throws Exception {
+        when(userInteractor.uploadAvatar(any())).thenReturn(Observable.error(new Exception()));
+        editProfilePresenter.updateAvatar("");
+        verify(editProfileView).showAvatarUploadingProgress();
+        verify(editProfileView).showUploadAvatarError("");
     }
 }

@@ -1,11 +1,13 @@
 package com.b_designworks.android.profile;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,13 +20,17 @@ import com.b_designworks.android.utils.ImageLoader;
 import com.b_designworks.android.utils.Keyboard;
 import com.b_designworks.android.utils.di.Injector;
 import com.b_designworks.android.utils.network.ErrorUtils;
+import com.b_designworks.android.utils.ui.SimpleDialog;
 import com.b_designworks.android.utils.ui.SimpleLoadingDialog;
 import com.b_designworks.android.utils.ui.TextViews;
 import com.b_designworks.android.utils.ui.UiInfo;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import butterknife.OnClick;
+import gun0912.tedbottompicker.TedBottomPicker;
 
 /**
  * Created by Ilya Eremin on 04.08.2016.
@@ -33,17 +39,18 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
 
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_edit_profile)
-            .enableBackButton()
-            .setTitleRes(R.string.title_edit_profile)
-            .setMenuRes(R.menu.edit_profile);
+                .enableBackButton()
+                .setTitleRes(R.string.title_edit_profile)
+                .setMenuRes(R.menu.edit_profile);
     }
 
-    @Bind(R.id.avatar)            ImageView uiAvatar;
-    @Bind(R.id.current_full_name) TextView  uiCurrentFullName;
-    @Bind(R.id.current_email)     TextView  uiCurrentEmail;
-    @Bind(R.id.first_name)        EditText  uiFirstName;
-    @Bind(R.id.last_name)         EditText  uiLastName;
-    @Bind(R.id.email)             EditText  uiEmail;
+    @Bind(R.id.avatar)                    ImageView uiAvatar;
+    @Bind(R.id.avatar_uploading_progress) View      uiAvatarUploadingProgress;
+    @Bind(R.id.current_full_name)         TextView  uiCurrentFullName;
+    @Bind(R.id.current_email)             TextView  uiCurrentEmail;
+    @Bind(R.id.first_name)                EditText  uiFirstName;
+    @Bind(R.id.last_name)                 EditText  uiLastName;
+    @Bind(R.id.email)                     EditText  uiEmail;
 
     @Inject EditProfilePresenter editProfilePresenter;
 
@@ -55,7 +62,7 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
     }
 
     @Override public void showUserInfo(@NonNull User user) {
-        ImageLoader.load(context(), uiAvatar, user.getAvatar().getOriginal());
+        showAvatar(user.getAvatar().getOriginal());
         uiCurrentFullName.setText(getString(R.string.edit_profile_name_surname_pattern, user.getFirstName(), user.getLastName()));
         uiCurrentEmail.setText(user.getEmail());
         uiFirstName.setText(user.getFirstName());
@@ -118,6 +125,40 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
 
     @Override public void showEmailError(@StringRes int errorResId) {
         uiEmail.setError(getString(errorResId));
+    }
+
+    @OnClick(R.id.change_avatar) void onChangeAvatarClick() {
+        RxPermissions.getInstance(this)
+            .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            .subscribe(granted -> {
+                if (granted) {
+                    TedBottomPicker tedBottomPicker = new TedBottomPicker.Builder(this)
+                        .setOnImageSelectedListener(uri -> editProfilePresenter.updateAvatar(uri.getPath()))
+                        .create();
+                    tedBottomPicker.show(getSupportFragmentManager());
+                } else {
+                    Toast.makeText(this, R.string.edit_profile_error_access_storage, Toast.LENGTH_SHORT).show();
+                }
+            });
+    }
+
+    public void showAvatar(@Nullable String imageUrl) {
+        ImageLoader.load(context(), uiAvatar, imageUrl);
+    }
+
+    @Override public void showAvatarUploadingProgress() {
+        uiAvatarUploadingProgress.setVisibility(View.VISIBLE);
+    }
+
+    @Override public void showUploadAvatarError(@Nullable String avatarUrl) {
+        uiAvatarUploadingProgress.setVisibility(View.GONE);
+        SimpleDialog.show(context(), getString(R.string.error), getString(R.string.error_uploading_photo),
+                getString(R.string.retry), () -> editProfilePresenter.updateAvatar(avatarUrl),
+                getString(R.string.cancel), () -> editProfilePresenter.userCancelAvatarUploading());
+    }
+
+    @Override public void avatarSuccessfullyUploaded() {
+        uiAvatarUploadingProgress.setVisibility(View.GONE);
     }
 
     @Override protected void onPause() {

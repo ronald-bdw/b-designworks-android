@@ -3,17 +3,20 @@ package com.b_designworks.android.settings;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.widget.ImageView;
 
 import com.b_designworks.android.BaseActivity;
 import com.b_designworks.android.Navigator;
 import com.b_designworks.android.R;
 import com.b_designworks.android.UserInteractor;
 import com.b_designworks.android.utils.di.Injector;
+import com.b_designworks.android.utils.ImageLoader;
 import com.b_designworks.android.utils.ui.AreYouSureDialog;
 import com.b_designworks.android.utils.ui.UiInfo;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
 import butterknife.OnClick;
 
 /**
@@ -22,6 +25,8 @@ import butterknife.OnClick;
 public class SettingsScreen extends BaseActivity {
 
     @Inject UserInteractor userInteractor;
+
+    @Bind(R.id.avatar) ImageView uiAvatar;
 
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_settings).enableBackButton().setTitleRes(R.string.title_settings);
@@ -32,7 +37,12 @@ public class SettingsScreen extends BaseActivity {
         Injector.inject(this);
     }
 
-    @OnClick(R.id.sync) void onSyncClick() {
+    @Override protected void onResume() {
+        super.onResume();
+        ImageLoader.load(context(), uiAvatar, userInteractor.getUser().getAvatar().getOriginal());
+    }
+
+    @OnClick(R.id.sync) void onSyncClick(){
         Navigator.sync(context());
     }
 

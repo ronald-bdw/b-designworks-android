@@ -8,6 +8,11 @@ import com.b_designworks.android.login.models.UserResponse;
 import com.b_designworks.android.utils.storage.IStorage;
 import com.b_designworks.android.utils.storage.UserSettings;
 
+import java.io.File;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import rx.Observable;
 import rx.functions.Func1;
 
@@ -89,12 +94,17 @@ public class UserInteractor {
             });
     }
 
-    private void saveUser(@NonNull User user) {
+    public void saveUser(@NonNull User user) {
         storage.put(KEY_USER, user);
         userSettings.saveAuthInfo(user.getAuthenticationToken(), user.getPhoneNumber());
     }
 
     public User getUser() {
         return storage.get(KEY_USER, User.class);
+    }
+
+    public Observable<UserResponse> uploadAvatar(String imageUrl) {
+        RequestBody body = RequestBody.create(MediaType.parse("image/jpg"), new File(imageUrl));
+        return api.uploadAvatar(getUserId(), MultipartBody.Part.createFormData("user[avatar]", imageUrl, body));
     }
 }

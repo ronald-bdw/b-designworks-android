@@ -5,16 +5,14 @@ ext {
             retrofit           : '2.0.2',
             espressoVersion    : '2.2.2',
             BUILD_TOOLS_VERSION: '24.0.1',
-            MIN_SDK_VERSION    : 15,
+            MIN_SDK_VERSION    : 16,
             TARGET_SDK_VERSION : 23,
             dagger             : "2.5"
     ]
     supportDeps = [
             appcompatV7      : "com.android.support:appcompat-v7:$versions.support",
-//            design           : "com.android.support:design:$versions.support",
             recyclerView     : "com.android.support:recyclerview-v7:$versions.support",
-            supportAnnotation: "com.android.support:support-annotations:$versions.support",
-//            gridLayout       : "com.android.support:gridlayout-v7:$versions.support"
+            supportAnnotation: "com.android.support:support-annotations:$versions.support"
     ]
     rxJava = [
             rxJava               : 'io.reactivex:rxjava:1.1.6',

@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import com.b_designworks.android.R;
 import com.b_designworks.android.UserInteractor;
 import com.b_designworks.android.utils.EmailVerifier;
+import com.b_designworks.android.utils.Rxs;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -86,4 +87,27 @@ public class EditProfilePresenter {
         this.view = null;
     }
 
+    @Nullable private Subscription uploadingSubscription;
+
+    public void updateAvatar(@Nullable String imageUrl) {
+        if (view != null) {
+            view.showAvatar(imageUrl);
+            view.showAvatarUploadingProgress();
+        }
+        if (uploadingSubscription != null) {
+            uploadingSubscription.unsubscribe();
+        }
+        uploadingSubscription = userInteractor.uploadAvatar(imageUrl)
+                .compose(Rxs.doInBackgroundDeliverToUI())
+                .subscribe(result -> {
+                    userInteractor.saveUser(result.getUser());
+                    view.avatarSuccessfullyUploaded();
+                }, error -> {
+                    view.showUploadAvatarError(imageUrl);
+                });
+    }
+
+    public void userCancelAvatarUploading() {
+        view.showAvatar(userInteractor.getUser().getAvatar().getOriginal());
+    }
 }

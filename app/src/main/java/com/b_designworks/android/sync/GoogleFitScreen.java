@@ -11,7 +11,7 @@ import com.b_designworks.android.BaseActivity;
 import com.b_designworks.android.R;
 import com.b_designworks.android.utils.di.Injector;
 import com.b_designworks.android.utils.network.ErrorUtils;
-import com.b_designworks.android.utils.ui.SimpleOkDialog;
+import com.b_designworks.android.utils.ui.SimpleDialog;
 import com.b_designworks.android.utils.ui.UiInfo;
 import com.google.android.gms.common.ConnectionResult;
 
@@ -71,7 +71,7 @@ public class GoogleFitScreen extends BaseActivity implements GoogleFitView {
     }
 
     @Override public void showInternetConnectionError() {
-        SimpleOkDialog.networkProblem(context());
+        SimpleDialog.networkProblem(context());
     }
 
     @Override public void showGoogleServiceDisconected() {

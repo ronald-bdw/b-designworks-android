@@ -19,7 +19,7 @@ import com.b_designworks.android.utils.di.Injector;
 import com.b_designworks.android.utils.network.CommonError;
 import com.b_designworks.android.utils.network.ErrorUtils;
 import com.b_designworks.android.utils.network.RetrofitException;
-import com.b_designworks.android.utils.ui.SimpleOkDialog;
+import com.b_designworks.android.utils.ui.SimpleDialog;
 import com.b_designworks.android.utils.ui.UiInfo;
 import com.f2prateek.dart.InjectExtra;
 import com.f2prateek.dart.Optional;
@@ -127,7 +127,7 @@ public class RegistrationScreen extends BaseActivity {
                         for (String key : parsedError.getValidations().keySet()) {
                             String errorMsg = Strings.listToString(parsedError.getValidations().get(key));
                             if (key.equals("sms_code")) {
-                                SimpleOkDialog.show(context(), "Incorrect verification code, try again");
+                                SimpleDialog.withOkBtn(context(), "Incorrect verification code, try again");
                                 finish();
 //                                uiCode.setError(Strings.listToString(parsedError.getValidations().get(key)));
                             } else if (key.equals("email")) {
@@ -136,7 +136,7 @@ public class RegistrationScreen extends BaseActivity {
                         }
                     }
                     if (((RetrofitException) error).getKind() == RetrofitException.Kind.NETWORK) {
-                        SimpleOkDialog.networkProblem(context());
+                        SimpleDialog.networkProblem(context());
                     }
                 } else {
                     ErrorUtils.handle(context(), error);
