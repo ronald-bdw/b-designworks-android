@@ -1,14 +1,18 @@
 package com.b_designworks.android;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.b_designworks.android.login.models.AuthResponse;
 import com.b_designworks.android.login.models.User;
 import com.b_designworks.android.login.models.UserResponse;
 import com.b_designworks.android.utils.storage.IStorage;
+import com.b_designworks.android.utils.storage.UserSettings;
 
+import java.io.File;
+
+import okhttp3.MediaType;
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import rx.Observable;
 import rx.functions.Func1;
 
@@ -18,78 +22,46 @@ import rx.functions.Func1;
  */
 public class UserInteractor {
 
-
-    private static volatile UserInteractor instance;
-
-    public static UserInteractor getInstance(@NonNull IStorage storage, @NonNull Api api) {
-        UserInteractor localInstance = instance;
-        if (localInstance == null) {
-            synchronized (UserInteractor.class) {
-                localInstance = instance;
-                if (localInstance == null) {
-                    instance = localInstance = new UserInteractor(storage, api);
-                }
-            }
-        }
-        return localInstance;
-    }
-
     private static final String KEY_USER                    = "user";
-    private static final String KEY_PHONE                   = "phone";
-    private static final String KEY_PHONE_CODE_ID           = "phoneCodeId";
     private static final String KEY_FIRST_VISIT_AFTER_LOGIN = "firstVisitAfterLogin";
 
+    @NonNull private final IStorage     storage;
+    @NonNull private final UserSettings userSettings;
+    @NonNull private final Api          api;
 
-    @NonNull private final IStorage storage;
-    @NonNull private final Api      api;
-
-    private UserInteractor(@NonNull IStorage storage, @NonNull Api api) {
+    public UserInteractor(@NonNull IStorage storage,
+                          @NonNull UserSettings userSettings,
+                          @NonNull Api api) {
         this.storage = storage;
+        this.userSettings = userSettings;
         this.api = api;
     }
 
     public Observable<AuthResponse> requestCode(@NonNull String phone) {
-        return api.sendMeCode(phone).map(result -> {
-            storage.putString(KEY_PHONE, phone);
-            storage.putString(KEY_PHONE_CODE_ID, result.getPhoneCodeId());
-            return result;
-        });
+        return api.sendMeCode(phone);
     }
 
     public Observable<Void> register(@NonNull String firstName, @NonNull String lastName,
-                                     @NonNull String email, @NonNull String code) {
-        return api.register(firstName, lastName, email, code, storage.getString(KEY_PHONE), storage.getString(KEY_PHONE_CODE_ID))
+                                     @NonNull String email, @NonNull String code,
+                                     @NonNull String phone, @NonNull String phoneCodeId) {
+        return api.register(firstName, lastName, email, code, phone, phoneCodeId)
             .map(saveUser());
     }
 
-    public Observable<Void> verifyCode(@NonNull String verificationCode) {
-        return api.signIn(verificationCode, storage.getString(KEY_PHONE), storage.getString(KEY_PHONE_CODE_ID))
+    public Observable<Object> verifyCode(@NonNull String verificationCode, @NonNull String phone, @NonNull String phoneCodeId) {
+        return api.signIn(verificationCode, phone, phoneCodeId)
             .map(saveUser());
     }
 
     @NonNull private Func1<UserResponse, Void> saveUser() {
         return result -> {
-            storage.remove(KEY_PHONE);
-            storage.remove(KEY_PHONE_CODE_ID);
             saveUser(result.getUser());
             return null;
         };
     }
 
-
-    @Nullable public String getToken() {
-        User user = getUser();
-        return user == null ? null : user.getAuthenticationToken();
-    }
-
-
     public String getUserId() {
         return getUser().getId();
-    }
-
-    public boolean userHasToken() {
-        User user = getUser();
-        return user != null && user.getAuthenticationToken() != null;
     }
 
     public void logout() {
@@ -124,13 +96,15 @@ public class UserInteractor {
 
     public void saveUser(@NonNull User user) {
         storage.put(KEY_USER, user);
+        userSettings.saveAuthInfo(user.getAuthenticationToken(), user.getPhoneNumber());
     }
 
     public User getUser() {
         return storage.get(KEY_USER, User.class);
     }
 
-    public Observable<UserResponse> uploadAvatar(MultipartBody.Part data) {
-        return api.uploadAvatar(getUserId(), data);
+    public Observable<UserResponse> uploadAvatar(String imageUrl) {
+        RequestBody body = RequestBody.create(MediaType.parse("image/jpg"), new File(imageUrl));
+        return api.uploadAvatar(getUserId(), MultipartBody.Part.createFormData("user[avatar]", imageUrl, body));
     }
 }

@@ -34,7 +34,7 @@ public class Storage implements IStorage {
     private final SharedPreferences sp;
     private final Gson              gson;
 
-    protected Storage(SharedPreferences sp, Gson gson) {
+    public Storage(SharedPreferences sp, Gson gson) {
         this.sp = sp;
         this.gson = gson;
     }

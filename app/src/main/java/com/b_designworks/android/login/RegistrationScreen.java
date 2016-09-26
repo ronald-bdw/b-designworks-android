@@ -10,12 +10,12 @@ import android.util.Patterns;
 import android.widget.EditText;
 
 import com.b_designworks.android.BaseActivity;
-import com.b_designworks.android.DI;
 import com.b_designworks.android.Navigator;
 import com.b_designworks.android.R;
 import com.b_designworks.android.UserInteractor;
 import com.b_designworks.android.utils.Rxs;
 import com.b_designworks.android.utils.Strings;
+import com.b_designworks.android.utils.di.Injector;
 import com.b_designworks.android.utils.network.CommonError;
 import com.b_designworks.android.utils.network.ErrorUtils;
 import com.b_designworks.android.utils.network.RetrofitException;
@@ -24,6 +24,8 @@ import com.b_designworks.android.utils.ui.UiInfo;
 import com.f2prateek.dart.InjectExtra;
 import com.f2prateek.dart.Optional;
 import com.trello.rxlifecycle.ActivityEvent;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -38,12 +40,17 @@ public class RegistrationScreen extends BaseActivity {
 
     public static final int RESULT_KEY_FOR_VERIFYING = 5544;
 
-    private static final String ARG_KEY_VERIFICATION_CODE      = "verificationCode";
+    private static final String ARG_KEY_VERIFICATION_CODE = "argVerificationCode";
+    private static final String ARG_PHONE_NUMBER          = "argPhoneNumber";
+    private static final String ARG_PHONE_CODE_ID         = "argPhoneCodeId";
+
     private static final String KEY_RETURNED_VERIFICATION_CODE = "returnedVerificationCode";
 
-    public static Intent createIntent(Context context, String verificationCode) {
+    public static Intent createIntent(Context context, String verificationCode, String phoneNumber, String phoneCodeId) {
         Intent intent = new Intent(context, RegistrationScreen.class);
         intent.putExtra(ARG_KEY_VERIFICATION_CODE, verificationCode);
+        intent.putExtra(ARG_PHONE_NUMBER, phoneNumber);
+        intent.putExtra(ARG_PHONE_CODE_ID, phoneCodeId);
         return intent;
     }
 
@@ -51,10 +58,14 @@ public class RegistrationScreen extends BaseActivity {
         return new UiInfo(R.layout.screen_registration).setTitleRes(R.string.title_start_trial).enableBackButton();
     }
 
-    private UserInteractor userManager = DI.getInstance().getUserInteractor();
+    @Inject UserInteractor userInteractor;
 
-    private                                           String returnedVerificationCode;
+    private String returnedVerificationCode;
+    private String returnedPhoneCodeId;
+
     @Optional @InjectExtra(ARG_KEY_VERIFICATION_CODE) String argVerificationCode;
+    @InjectExtra(ARG_PHONE_NUMBER)                    String argPhoneNumber;
+    @InjectExtra(ARG_PHONE_CODE_ID)                   String argPhoneCodeId;
 
     @Bind(R.id.first_name) EditText uiFirstName;
     @Bind(R.id.last_name)  EditText uiLastName;
@@ -71,8 +82,9 @@ public class RegistrationScreen extends BaseActivity {
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
+        Injector.inject(this);
         if (savedState == null) {
-            uiPhone.setText(userManager.getPhone());
+            uiPhone.setText(argPhoneNumber);
         }
     }
 
@@ -98,7 +110,7 @@ public class RegistrationScreen extends BaseActivity {
 
     private void performRegistration(@NonNull String verificationCode) {
         progressDialog = ProgressDialog.show(context(), getString(R.string.loading), getString(R.string.loading_sending_code));
-        progressSubs = userManager.register(textOf(uiFirstName), textOf(uiLastName), textOf(uiEmail), verificationCode)
+        progressSubs = userInteractor.register(textOf(uiFirstName), textOf(uiLastName), textOf(uiEmail), verificationCode, argPhoneNumber, argPhoneCodeId)
             .compose(bindUntilEvent(ActivityEvent.STOP))
             .compose(Rxs.doInBackgroundDeliverToUI())
             .doOnEach(i -> {
@@ -175,6 +187,7 @@ public class RegistrationScreen extends BaseActivity {
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == RESULT_KEY_FOR_VERIFYING) {
             returnedVerificationCode = VerifyScreen.extractCodeFromResult(data);
+            returnedPhoneCodeId = VerifyScreen.extractPhoneCodeIdFromResult(data);
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }

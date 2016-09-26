@@ -12,6 +12,7 @@ buildscript {
         classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
         classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.5.5'
         classpath 'io.fabric.tools:gradle:1.+'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     }
     configurations.classpath.exclude group: 'com.android.tools.external.lombok'
 }

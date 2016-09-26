@@ -14,17 +14,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.b_designworks.android.BaseActivity;
-import com.b_designworks.android.DI;
 import com.b_designworks.android.R;
 import com.b_designworks.android.login.models.User;
 import com.b_designworks.android.utils.ImageLoader;
 import com.b_designworks.android.utils.Keyboard;
+import com.b_designworks.android.utils.di.Injector;
 import com.b_designworks.android.utils.network.ErrorUtils;
 import com.b_designworks.android.utils.ui.SimpleDialog;
 import com.b_designworks.android.utils.ui.SimpleLoadingDialog;
 import com.b_designworks.android.utils.ui.TextViews;
 import com.b_designworks.android.utils.ui.UiInfo;
 import com.tbruyelle.rxpermissions.RxPermissions;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -50,11 +52,12 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
     @Bind(R.id.last_name)                 EditText  uiLastName;
     @Bind(R.id.email)                     EditText  uiEmail;
 
-    private EditProfilePresenter editProfilePresenter;
+    @Inject EditProfilePresenter editProfilePresenter;
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
-        editProfilePresenter = new EditProfilePresenter(this, DI.getInstance().getUserInteractor());
+        Injector.inject(this);
+        editProfilePresenter.attachView(this);
         editProfilePresenter.showUserInfo();
     }
 
@@ -161,5 +164,10 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
     @Override protected void onPause() {
         editProfilePresenter.onScreenHidden();
         super.onPause();
+    }
+
+    @Override protected void onDestroy() {
+        editProfilePresenter.detachView();
+        super.onDestroy();
     }
 }

@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.getkeepsafe.dexcount'
 
 apply from: '../deps.gradle'
@@ -46,21 +47,24 @@ android {
         }
     }
 
-//    signingConfigs {
-//        release {
-//            def props = new Properties()
-//            props.load(new FileInputStream(file("$rootDir/keys.properties")))
-//            storeFile file("$rootDir/your.jks")
-//            storePassword props['storePassword']
-//            keyAlias props['keyAlias']
-//            keyPassword props['keyPassword']
-//        }
-//    }
+    signingConfigs {
+        release {
+            def props = new Properties()
+            props.load(new FileInputStream(file("$rootDir/keystore.properties")))
+            storeFile file("$rootDir/keystore.jks")
+            storePassword props['storePassword']
+            keyAlias props['keyAlias']
+            keyPassword props['keyPassword']
+        }
+    }
 
     buildTypes {
-        debug {}
+        debug {
+            signingConfig signingConfigs.release
+        }
         release {
             minifyEnabled true
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -112,6 +116,10 @@ dependencies {
     compile retrofitLibs
     compile okHttpLibs
 
+    compile "com.google.dagger:dagger:$versions.dagger"
+    apt "com.google.dagger:dagger-compiler:$versions.dagger"
+    provided 'javax.annotation:jsr250-api:1.0'
+
     compile 'com.jakewharton:butterknife:7.0.0' // view injection
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.f2prateek.dart:dart:1.1.0' // activity arguments arguments inject
@@ -124,6 +132,9 @@ dependencies {
     compile 'io.smooch:core:latest.release'
     compile 'io.smooch:ui:latest.release'
 
+    compile "com.google.android.gms:play-services-auth:9.4.0"
+
+    testCompile androidTestsLibs
     compile('com.crashlytics.sdk.android:crashlytics:2.6.1@aar') {
         transitive = true;
     }

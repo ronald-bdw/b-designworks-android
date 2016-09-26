@@ -59,4 +59,10 @@ public interface Api {
     Observable<UserResponse> uploadAvatar(@NonNull @Path("id") String id,
                                           @NonNull @Part MultipartBody.Part data);
 
+    @FormUrlEncoded
+    @POST(V1 + "/fitness_tokens") Observable<UserResponse> sendSecretCode(
+        @NonNull @Field("authorization_code") String code,
+        @NonNull @Field("source") String provider
+    );
+
 }

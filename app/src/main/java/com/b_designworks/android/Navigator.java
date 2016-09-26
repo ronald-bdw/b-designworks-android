@@ -14,6 +14,7 @@ import com.b_designworks.android.profile.EditProfileScreen;
 import com.b_designworks.android.profile.ProfileScreen;
 import com.b_designworks.android.settings.PushNotificationsSettingsScreen;
 import com.b_designworks.android.settings.SettingsScreen;
+import com.b_designworks.android.sync.GoogleFitScreen;
 import com.b_designworks.android.sync.SyncScreen;
 import com.b_designworks.android.trial.TrialScreen;
 
@@ -32,10 +33,6 @@ public class Navigator {
 
     public static void trialPage(@NonNull Context context) {
         context.startActivity(new Intent(context, TrialScreen.class));
-    }
-
-    public static void verification(@NonNull Context context) {
-        context.startActivity(new Intent(context, VerifyScreen.class));
     }
 
     public static void verification(@NonNull Context context, String phone) {
@@ -78,8 +75,8 @@ public class Navigator {
         context.startActivity(new Intent(context, SelectProviderScreen.class));
     }
 
-    public static void registration(@NonNull Context context, @NonNull String code) {
-        context.startActivity(RegistrationScreen.createIntent(context, code));
+    public static void registration(@NonNull Context context, @NonNull String code, @NonNull String phoneNumber, @NonNull String phoneCodeId) {
+        context.startActivity(RegistrationScreen.createIntent(context, code, phoneNumber, phoneCodeId));
     }
 
     public static void registration(@NonNull Context context) {
@@ -89,5 +86,9 @@ public class Navigator {
     public static void verifyAndReturnCode(@NonNull BaseActivity activity,
                                            @NonNull String phone) {
         activity.startActivityForResult(VerifyScreen.createIntent(activity, phone), RegistrationScreen.RESULT_KEY_FOR_VERIFYING);
+    }
+
+    public static void googleFit(@NonNull BaseActivity activity) {
+        activity.startActivity(new Intent(activity, GoogleFitScreen.class));
     }
 }

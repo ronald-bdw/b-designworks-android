@@ -9,13 +9,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.b_designworks.android.DI;
 import com.b_designworks.android.Navigator;
 import com.b_designworks.android.R;
 import com.b_designworks.android.UserInteractor;
 import com.b_designworks.android.login.models.User;
 import com.b_designworks.android.utils.Bus;
 import com.b_designworks.android.utils.ImageLoader;
+import com.b_designworks.android.utils.di.Injector;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,11 +29,17 @@ import butterknife.OnClick;
 
 public class ChatSidePanelFragment extends Fragment {
 
-    private UserInteractor userInteractor = DI.getInstance().getUserInteractor();
+
+    @Inject UserInteractor userInteractor;
 
     @Bind(R.id.avatar)    ImageView uiAvatar;
     @Bind(R.id.full_name) TextView  uiFullname;
     @Bind(R.id.email)     TextView  uiEmail;
+
+    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Injector.inject(this);
+    }
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater,
                                                  @Nullable ViewGroup container,

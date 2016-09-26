@@ -7,11 +7,6 @@ import com.b_designworks.android.UserInteractor;
 import com.b_designworks.android.utils.EmailVerifier;
 import com.b_designworks.android.utils.Rxs;
 
-import java.io.File;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -22,44 +17,48 @@ import rx.schedulers.Schedulers;
 
 public class EditProfilePresenter {
 
-    private final EditProfileView editProfileView;
-    private final UserInteractor  userInteractor;
+    @Nullable private EditProfileView view;
 
-    public EditProfilePresenter(EditProfileView editProfileView, UserInteractor userInteractor) {
-        this.editProfileView = editProfileView;
+    private final UserInteractor userInteractor;
+
+    public EditProfilePresenter(UserInteractor userInteractor) {
         this.userInteractor = userInteractor;
     }
 
+    public void attachView(EditProfileView view) {
+        this.view = view;
+    }
+
     public void showUserInfo() {
-        editProfileView.showUserInfo(userInteractor.getUser());
+        view.showUserInfo(userInteractor.getUser());
     }
 
     @Nullable private Subscription updateProfileSubscribtion;
 
     public void updateUser() {
         if (updateProfileSubscribtion != null) return;
-        String email = editProfileView.getEmail();
+        String email = view.getEmail();
         if (email.isEmpty()) {
-            editProfileView.showEmailError(R.string.error_empty_email);
+            view.showEmailError(R.string.error_empty_email);
             return;
         }
         if (!isCorrectEmailAdress(email)) {
-            editProfileView.showEmailError(R.string.error_incorrect_email);
+            view.showEmailError(R.string.error_incorrect_email);
             return;
         }
-        editProfileView.showProgressDialog();
-        editProfileView.hideKeyboard();
-        updateProfileSubscribtion = userInteractor.updateUser(editProfileView.getFirstName(), editProfileView.getLastName(), email)
-                .subscribeOn(Schedulers.io())
-                .doOnTerminate(() -> {
-                    editProfileView.hideProgress();
-                    updateProfileSubscribtion = null;
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result -> {
-                    editProfileView.showUserInfo(result.getUser());
-                    editProfileView.profileHasBeenUpdated();
-                }, editProfileView::showError);
+        view.showProgressDialog();
+        view.hideKeyboard();
+        updateProfileSubscribtion = userInteractor.updateUser(view.getFirstName(), view.getLastName(), email)
+            .subscribeOn(Schedulers.io())
+            .doOnTerminate(() -> {
+                view.hideProgress();
+                updateProfileSubscribtion = null;
+            })
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(result -> {
+                view.showUserInfo(result.getUser());
+                view.profileHasBeenUpdated();
+            }, view::showError);
     }
 
     private boolean isCorrectEmailAdress(String email) {
@@ -69,12 +68,12 @@ public class EditProfilePresenter {
 
     public void onScreenShown() {
         if (updateProfileSubscribtion != null) {
-            editProfileView.showProgressDialog();
+            view.showProgressDialog();
         }
     }
 
     public void onScreenHidden() {
-        editProfileView.hideProgress();
+        view.hideProgress();
     }
 
     public void cancelRequest() {
@@ -84,26 +83,31 @@ public class EditProfilePresenter {
         }
     }
 
+    public void detachView() {
+        this.view = null;
+    }
+
     @Nullable private Subscription uploadingSubscription;
 
     public void updateAvatar(@Nullable String imageUrl) {
-        editProfileView.showAvatar(imageUrl);
-        RequestBody body = RequestBody.create(MediaType.parse("image/jpg"), new File(imageUrl));
-        editProfileView.showAvatarUploadingProgress();
+        if (view != null) {
+            view.showAvatar(imageUrl);
+            view.showAvatarUploadingProgress();
+        }
         if (uploadingSubscription != null) {
             uploadingSubscription.unsubscribe();
         }
-        uploadingSubscription = userInteractor.uploadAvatar(MultipartBody.Part.createFormData("user[avatar]", imageUrl, body))
+        uploadingSubscription = userInteractor.uploadAvatar(imageUrl)
                 .compose(Rxs.doInBackgroundDeliverToUI())
                 .subscribe(result -> {
                     userInteractor.saveUser(result.getUser());
-                    editProfileView.avatarSuccessfullyUploaded();
+                    view.avatarSuccessfullyUploaded();
                 }, error -> {
-                    editProfileView.showUploadAvatarError(imageUrl);
+                    view.showUploadAvatarError(imageUrl);
                 });
     }
 
     public void userCancelAvatarUploading() {
-        editProfileView.showAvatar(userInteractor.getUser().getAvatar().getOriginal());
+        view.showAvatar(userInteractor.getUser().getAvatar().getOriginal());
     }
 }

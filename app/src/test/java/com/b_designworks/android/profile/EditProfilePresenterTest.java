@@ -40,7 +40,8 @@ public class EditProfilePresenterTest {
 
 
     @Before public void setUp() throws Exception {
-        editProfilePresenter = new EditProfilePresenter(editProfileView, userInteractor);
+        editProfilePresenter = new EditProfilePresenter(userInteractor);
+        editProfilePresenter.attachView(editProfileView);
     }
 
     @Test

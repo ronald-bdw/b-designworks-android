@@ -6,7 +6,8 @@ ext {
             espressoVersion    : '2.2.2',
             BUILD_TOOLS_VERSION: '24.0.1',
             MIN_SDK_VERSION    : 16,
-            TARGET_SDK_VERSION : 23
+            TARGET_SDK_VERSION : 23,
+            dagger             : "2.5"
     ]
     supportDeps = [
             appcompatV7      : "com.android.support:appcompat-v7:$versions.support",
