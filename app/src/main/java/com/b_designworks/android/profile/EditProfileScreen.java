@@ -134,7 +134,7 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
                         .create();
                     tedBottomPicker.show(getSupportFragmentManager());
                 } else {
-                    Toast.makeText(this, R.string.edit_profile_error_acces_storage, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.edit_profile_error_access_storage, Toast.LENGTH_SHORT).show();
                 }
             });
     }
