@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import com.b_designworks.android.login.models.AuthResponse;
 import com.b_designworks.android.login.models.UserResponse;
 
+import okhttp3.MultipartBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Multipart;
@@ -52,5 +53,10 @@ public interface Api {
         @Nullable @Part("user[last_name]") String lastName,
         @Nullable @Part("user[email]") String email
     );
+
+    @Multipart
+    @PUT(V1 + "users/{id}")
+    Observable<UserResponse> uploadAvatar(@NonNull @Path("id") String id,
+                                          @NonNull @Part MultipartBody.Part data);
 
 }

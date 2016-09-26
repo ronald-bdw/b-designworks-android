@@ -1,1 +1,1 @@
-include ':app', ':multitype_recyclerview_adapter'
+include ':app'

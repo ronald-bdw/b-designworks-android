@@ -22,6 +22,7 @@ android {
 
         ext.betaDistributionReleaseNotes = LAST_COMMIT_MESSAGE
         ext.betaDistributionNotifications = true
+        ext.betaDistributionGroupAliases = "Fitness app"
 
         applicationId APPLICATION_ID
         versionCode 1
@@ -92,6 +93,19 @@ repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 
+configurations.all {
+    resolutionStrategy {
+        force supportLibs
+        force "com.android.support:design:$versions.support"
+    }
+}
+
+tasks.whenTaskAdded { task ->
+    if (task.name.equals("lint")) {
+        task.enabled = false
+    }
+}
+
 dependencies {
     compile supportLibs
     compile rxJavaLibs
@@ -102,17 +116,20 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.f2prateek.dart:dart:1.1.0' // activity arguments arguments inject
     compile 'de.hdodenhof:circleimageview:2.1.0'
-    compile project(':multitype_recyclerview_adapter')
     compile 'fr.avianey.com.viewpagerindicator:library:2.4.1.1@aar'
     compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'gun0912.ted:tedbottompicker:1.0.3'
+    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar'
 
     compile 'io.smooch:core:latest.release'
     compile 'io.smooch:ui:latest.release'
 
-    testCompile androidTestsLibs
     compile('com.crashlytics.sdk.android:crashlytics:2.6.1@aar') {
         transitive = true;
     }
+
+    testCompile androidTestsLibs
+    testCompile supportLibs
 }
 
 apply from: "quality.gradle"
