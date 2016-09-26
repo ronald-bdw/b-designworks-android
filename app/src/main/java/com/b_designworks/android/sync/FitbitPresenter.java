@@ -3,8 +3,6 @@ package com.b_designworks.android.sync;
 import com.b_designworks.android.UserInteractor;
 import com.b_designworks.android.utils.Rxs;
 
-import rx.Subscription;
-
 /**
  * Created by Ilya Eremin on 9/26/16.
  */
@@ -19,15 +17,10 @@ public class FitbitPresenter {
         this.userInteractor = userInteractor;
     }
 
-    private Subscription sendingFitbitCodeSubs;
-
     public void handleCode(String code) {
         view.showSendingFitbitCodeProgress();
-        sendingFitbitCodeSubs = userInteractor.integrateFitbit(code)
-            .doOnTerminate(() -> {
-                sendingFitbitCodeSubs = null;
-                view.dismissSendingFitbitCodeProgress();
-            })
+        userInteractor.integrateFitbit(code)
+            .doOnTerminate(view::dismissSendingFitbitCodeProgress)
             .compose(Rxs.doInBackgroundDeliverToUI())
             .subscribe(result -> view.fitbitSuccessfullyIntegrated(), view::showError);
     }
