@@ -73,7 +73,8 @@ public class VerifyPresenter {
     @Nullable private Subscription verifyingCodeSubs;
 
     private void login(@NonNull String verifyCode) {
-        if (verifyingCodeSubs != null && !verifyingCodeSubs.isUnsubscribed() || verifyingCodeSubs != null)
+        if (verifyingCodeSubs != null && !verifyingCodeSubs.isUnsubscribed() || verifyingCodeSubs != null
+            || phoneNumber == null || phoneCodeId == null)
             return;
         if (view != null) {
             view.showAuthorizationProgressDialog();
@@ -86,7 +87,15 @@ public class VerifyPresenter {
                 }
             })
             .compose(Rxs.doInBackgroundDeliverToUI())
-            .subscribe(result -> view.openChatScreen(), view::showError);
+            .subscribe(result -> {
+                if (view != null) {
+                    view.openChatScreen();
+                }
+            }, error -> {
+                if (view != null) {
+                    view.showError(error);
+                }
+            });
     }
 
     public void detachView() {

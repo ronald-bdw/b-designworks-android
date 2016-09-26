@@ -57,7 +57,7 @@ public class UserManagerTest {
         userManager.requestCode(MY_FAKE_NUMBER)
             .subscribe(ignoreResult -> {
             }, ErrorUtils.onError());
-        userManager.register("Danny", "Makaskill", "example@mail.com", "1234", "any phone", "123")
+        userManager.register("Danny", "Makaskill", "example@mail.com", "1234", MY_FAKE_NUMBER, MY_FAKE_NUMBER_CODE_ID)
             .subscribe(ignoreResult -> {
             }, ErrorUtils.onError());
         Assert.assertEquals(FAKE_TOKEN, userSettings.getToken());

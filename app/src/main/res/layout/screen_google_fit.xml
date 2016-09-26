@@ -13,7 +13,7 @@
         android:layout_gravity="center"
         android:layout_marginLeft="16dp"
         android:background="@drawable/app_btn_filled"
-        android:text="Integrate Google Fit"
+        android:text="@string/integration_google_fit"
         android:textColor="@android:color/white"
         />
 

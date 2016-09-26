@@ -82,6 +82,7 @@
     <string name="edit">Edit</string>
     <string name="google_fit_token_retrieved">Google fit has been integrated</string>
     <string name="google_fit_fail_to_retrieve_token">Integration has been failed. Try again</string>
+    <string name="integration_google_fit">Integrate Google Fit</string>
 
     <string-array name="select_provider_options">
         <item>HBF</item>
