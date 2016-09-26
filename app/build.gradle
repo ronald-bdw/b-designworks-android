@@ -31,6 +31,7 @@ android {
 
         def gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
         buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
+        buildConfigField "String", "FITBIT_APP_ID", "\"227ZMJ\""
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
