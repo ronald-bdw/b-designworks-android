@@ -12,6 +12,7 @@ import com.b_designworks.android.login.VerifyScreen;
 import com.b_designworks.android.profile.EditProfileScreen;
 import com.b_designworks.android.profile.ProfileScreen;
 import com.b_designworks.android.settings.SettingsScreen;
+import com.b_designworks.android.sync.FitbitScreen;
 import com.b_designworks.android.sync.GoogleFitScreen;
 
 /**
@@ -57,5 +58,9 @@ public class Injector {
 
     public static void inject(SettingsScreen settingsScreen) {
         getAppComponent(settingsScreen).inject(settingsScreen);
+    }
+
+    public static void inject(FitbitScreen fitbitScreen) {
+        getAppComponent(fitbitScreen).inject(fitbitScreen);
     }
 }

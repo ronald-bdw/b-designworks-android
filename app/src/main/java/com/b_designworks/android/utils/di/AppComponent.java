@@ -8,6 +8,7 @@ import com.b_designworks.android.login.VerifyScreen;
 import com.b_designworks.android.profile.EditProfileScreen;
 import com.b_designworks.android.profile.ProfileScreen;
 import com.b_designworks.android.settings.SettingsScreen;
+import com.b_designworks.android.sync.FitbitScreen;
 import com.b_designworks.android.sync.GoogleFitScreen;
 
 import javax.inject.Singleton;
@@ -30,4 +31,5 @@ public interface AppComponent {
     void inject(EditProfileScreen editProfileScreen);
     void inject(ProfileScreen profileScreen);
     void inject(SettingsScreen settingsScreen);
+    void inject(FitbitScreen fitbitScreen);
 }
