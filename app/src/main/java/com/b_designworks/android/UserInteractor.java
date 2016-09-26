@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.b_designworks.android.login.models.AuthResponse;
 import com.b_designworks.android.login.models.User;
 import com.b_designworks.android.login.models.UserResponse;
+import com.b_designworks.android.sync.Provider;
 import com.b_designworks.android.utils.storage.IStorage;
 import com.b_designworks.android.utils.storage.UserSettings;
 
@@ -48,7 +49,8 @@ public class UserInteractor {
             .map(saveUser());
     }
 
-    public Observable<Object> verifyCode(@NonNull String verificationCode, @NonNull String phone, @NonNull String phoneCodeId) {
+    public Observable<Object> verifyCode(
+        @NonNull String verificationCode, @NonNull String phone, @NonNull String phoneCodeId) {
         return api.signIn(verificationCode, phone, phoneCodeId)
             .map(saveUser());
     }
@@ -106,5 +108,11 @@ public class UserInteractor {
     public Observable<UserResponse> uploadAvatar(String imageUrl) {
         RequestBody body = RequestBody.create(MediaType.parse("image/jpg"), new File(imageUrl));
         return api.uploadAvatar(getUserId(), MultipartBody.Part.createFormData("user[avatar]", imageUrl, body));
+    }
+
+
+    public Observable<Object> integrateFitbit(@NonNull String code) {
+        return api.integrateFitnessApp(code, Provider.FITBIT)
+            .map(result -> null);
     }
 }

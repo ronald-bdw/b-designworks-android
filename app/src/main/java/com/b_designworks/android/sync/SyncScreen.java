@@ -22,4 +22,8 @@ public class SyncScreen extends BaseActivity {
         Navigator.googleFit(this);
     }
 
+    @OnClick(R.id.fitbit) void onFitbitClick() {
+        Navigator.fitbit(this);
+    }
+
 }

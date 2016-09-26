@@ -2,6 +2,7 @@ package com.b_designworks.android;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 
 import com.b_designworks.android.chat.ChatScreen;
@@ -14,6 +15,7 @@ import com.b_designworks.android.profile.EditProfileScreen;
 import com.b_designworks.android.profile.ProfileScreen;
 import com.b_designworks.android.settings.PushNotificationsSettingsScreen;
 import com.b_designworks.android.settings.SettingsScreen;
+import com.b_designworks.android.sync.FitbitScreen;
 import com.b_designworks.android.sync.GoogleFitScreen;
 import com.b_designworks.android.sync.SyncScreen;
 import com.b_designworks.android.trial.TrialScreen;
@@ -75,7 +77,9 @@ public class Navigator {
         context.startActivity(new Intent(context, SelectProviderScreen.class));
     }
 
-    public static void registration(@NonNull Context context, @NonNull String code, @NonNull String phoneNumber, @NonNull String phoneCodeId) {
+    public static void registration(
+        @NonNull Context context,
+        @NonNull String code, @NonNull String phoneNumber, @NonNull String phoneCodeId) {
         context.startActivity(RegistrationScreen.createIntent(context, code, phoneNumber, phoneCodeId));
     }
 
@@ -90,5 +94,13 @@ public class Navigator {
 
     public static void googleFit(@NonNull BaseActivity activity) {
         activity.startActivity(new Intent(activity, GoogleFitScreen.class));
+    }
+
+    public static void fitbit(@NonNull Context context) {
+        context.startActivity(new Intent(context, FitbitScreen.class));
+    }
+
+    public static void openUrl(@NonNull Context context, @NonNull String url) {
+        context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
     }
 }

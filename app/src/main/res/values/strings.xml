@@ -87,6 +87,9 @@
     <string name="error_uploading_photo">While photo uploading</string>
     <string name="retry">Retry</string>
     <string name="edit_profile_error_access_storage">Application needs storage access to pick photo</string>
+    <string name="integration_fitbit">Integrate with fitbit</string>
+    <string name="sending_fitbit_code">Sending fitbit code to the server</string>
+    <string name="fitbit_integration_successful">Fitbit has been integrated</string>
 
     <string-array name="select_provider_options">
         <item>HBF</item>
