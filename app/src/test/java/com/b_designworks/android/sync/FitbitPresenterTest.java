@@ -38,7 +38,6 @@ public class FitbitPresenterTest {
         when(userInteractor.integrateFitbit(FITBIT_CORRECT_AUTH_CODE)).thenReturn(Observable.just(new Object()));
         when(userInteractor.integrateFitbit(FITBIT_INCORRECT_AUTH_CODE)).thenReturn(Observable.error(new Throwable()));
         fitbitPresenter = new FitbitPresenter(fitbitView, userInteractor);
-
     }
 
     @Test

@@ -30,7 +30,7 @@ public class FitbitScreen extends BaseActivity implements FitbitView {
     private static final String GETTING_CODE_URL = "https://www.fitbit.com/oauth2/" +
         "authorize?response_type=code" +
         "&client_id=" + BuildConfig.FITBIT_APP_ID +
-        "&redirect_uri=pearup%3A%2F%2Fpearup.com" +
+//        "&redirect_uri=pearup%3A%2F%2Fpearup.com"+
         "&scope=activity";
 
     private static final String KEY_FITBIT_CODE = "fitbitCode";
@@ -55,10 +55,19 @@ public class FitbitScreen extends BaseActivity implements FitbitView {
         Injector.inject(this);
         fitbitPresenter = new FitbitPresenter(this, userInteractor);
         Intent intent = getIntent();
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
         if (intent != null && intent.getData() != null) {
             code = intent.getData().getQueryParameter("code");
             fitbitPresenter.handleCode(code);
         }
+    }
+
+    @Override protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handleIntent(intent);
     }
 
     @Override public void dismissSendingFitbitCodeProgress() {
