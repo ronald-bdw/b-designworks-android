@@ -91,4 +91,8 @@ public class Navigator {
     public static void googleFit(@NonNull BaseActivity activity) {
         activity.startActivity(new Intent(activity, GoogleFitScreen.class));
     }
+
+    public static void fitbit(@NonNull Context context) {
+        context.startActivity(new Intent(context, FitbitScreen.class));
+    }
 }
