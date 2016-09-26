@@ -32,11 +32,11 @@ public class SettingsScreen extends BaseActivity {
         Injector.inject(this);
     }
 
-    @OnClick(R.id.sync) void onSyncClick(){
+    @OnClick(R.id.sync) void onSyncClick() {
         Navigator.sync(context());
     }
 
-    @OnClick(R.id.edit_profile) void onEditProfileClick(){
+    @OnClick(R.id.edit_profile) void onEditProfileClick() {
         Navigator.editProfile(context());
     }
 

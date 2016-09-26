@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
+import com.b_designworks.android.utils.Rxs;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -92,7 +93,13 @@ public class GoogleFitPresenter {
             if (result.isSuccess()) {
                 GoogleSignInAccount acct = result.getSignInAccount();
                 if (acct != null) {
-                    interactor.sendGoogleCodeToServer(acct.getServerAuthCode());
+                    interactor.sendGoogleCodeToServer(acct.getServerAuthCode())
+                        .compose(Rxs.doInBackgroundDeliverToUI())
+                        .subscribe(integrationResult -> {
+                            System.out.println(integrationResult);
+                        }, error -> {
+                            view.onError(error);
+                        });
                     if (view != null) {
                         view.codeRetrievedSuccessfull();
                     }
