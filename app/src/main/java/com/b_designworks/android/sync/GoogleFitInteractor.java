@@ -23,6 +23,6 @@ public class GoogleFitInteractor {
     }
 
     public Observable<UserResponse> sendGoogleCodeToServer(String serverAuthCode) {
-        return api.sendSecretCode(serverAuthCode, "googlefit");
+        return api.integrateFitnessApp(serverAuthCode, Provider.GOOGLE_FIT);
     }
 }

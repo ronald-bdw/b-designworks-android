@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.b_designworks.android.login.models.AuthResponse;
 import com.b_designworks.android.login.models.UserResponse;
+import com.b_designworks.android.sync.Provider;
 
 import okhttp3.MultipartBody;
 import retrofit2.http.Field;
@@ -60,9 +61,9 @@ public interface Api {
                                           @NonNull @Part MultipartBody.Part data);
 
     @FormUrlEncoded
-    @POST(V1 + "/fitness_tokens") Observable<UserResponse> sendSecretCode(
+    @POST(V1 + "/fitness_tokens") Observable<UserResponse> integrateFitnessApp(
         @NonNull @Field("authorization_code") String code,
-        @NonNull @Field("source") String provider
+        @NonNull @Field("source") Provider provider
     );
 
 }
