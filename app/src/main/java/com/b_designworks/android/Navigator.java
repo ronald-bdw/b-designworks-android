@@ -111,4 +111,8 @@ public class Navigator {
     public static void tour2(@NonNull Context context) {
         context.startActivity(new Intent(context, TourScreen2UploadAvatar.class));
     }
+
+    public static void tour3(@NonNull Context context) {
+        context.startActivity(new Intent(context, TourScreen3PushNotifications.class));
+    }
 }
