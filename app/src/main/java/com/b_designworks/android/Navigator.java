@@ -18,6 +18,11 @@ import com.b_designworks.android.settings.SettingsScreen;
 import com.b_designworks.android.sync.FitbitScreen;
 import com.b_designworks.android.sync.GoogleFitScreen;
 import com.b_designworks.android.sync.SyncScreen;
+import com.b_designworks.android.tour_app.TourScreen1Profile;
+import com.b_designworks.android.tour_app.TourScreen2UploadAvatar;
+import com.b_designworks.android.tour_app.TourScreen3PushNotifications;
+import com.b_designworks.android.tour_app.TourScreen4FitnessApps;
+import com.b_designworks.android.tour_app.TourScreen5Socials;
 import com.b_designworks.android.trial.TrialScreen;
 
 /**
@@ -92,8 +97,8 @@ public class Navigator {
         activity.startActivityForResult(VerifyScreen.createIntent(activity, phone), RegistrationScreen.RESULT_KEY_FOR_VERIFYING);
     }
 
-    public static void googleFit(@NonNull BaseActivity activity) {
-        activity.startActivity(new Intent(activity, GoogleFitScreen.class));
+    public static void googleFit(@NonNull Context context) {
+        context.startActivity(new Intent(context, GoogleFitScreen.class));
     }
 
     public static void fitbit(@NonNull Context context) {
