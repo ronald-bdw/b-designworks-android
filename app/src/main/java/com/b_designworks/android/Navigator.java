@@ -107,4 +107,8 @@ public class Navigator {
     public static void tour(Context context) {
         context.startActivity(clearStack(new Intent(context, TourScreen1Profile.class)));
     }
+
+    public static void tour2(@NonNull Context context) {
+        context.startActivity(new Intent(context, TourScreen2UploadAvatar.class));
+    }
 }

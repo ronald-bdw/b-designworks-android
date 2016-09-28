@@ -91,9 +91,12 @@
     <string name="sending_fitbit_code">Sending fitbit code to the server</string>
     <string name="fitbit_integration_successful">Fitbit has been integrated</string>
     <string name="title_tour_1">Step 1 of 5</string>
+    <string name="title_tour_2">Step 2 of 5</string>
     <string name="tour_1_title">Hello!\nWelcome to Pearup!</string>
     <string name="tour_1_description">Few things to get started and we will\nguide you through it</string>
     <string name="tour_1_description_2">Let start by confirming/setting your\nprofile information. Click Next when\nyou have completed it</string>
+    <string name="tour_2_title">Upload your\nprofile photo</string>
+    <string name="tour_2_description">Choose a photo for profile photo.</string>
 
     <string-array name="select_provider_options">
         <item>HBF</item>

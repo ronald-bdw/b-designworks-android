@@ -100,7 +100,6 @@ public class EditProfilePresenter {
         uploadingSubscription = userInteractor.uploadAvatar(imageUrl)
                 .compose(Rxs.doInBackgroundDeliverToUI())
                 .subscribe(result -> {
-                    userInteractor.saveUser(result.getUser());
                     view.avatarSuccessfullyUploaded();
                 }, error -> {
                     view.showUploadAvatarError(imageUrl);
