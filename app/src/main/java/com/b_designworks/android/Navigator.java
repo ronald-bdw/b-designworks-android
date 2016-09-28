@@ -103,4 +103,8 @@ public class Navigator {
     public static void openUrl(@NonNull Context context, @NonNull String url) {
         context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
     }
+
+    public static void tour(Context context) {
+        context.startActivity(clearStack(new Intent(context, TourScreen1Profile.class)));
+    }
 }

@@ -49,6 +49,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".tour_app.TourScreen1Profile"/>
         <receiver
             android:name=".login.SmsListener"
             android:permission="android.permission.BROADCAST_SMS"
