@@ -115,4 +115,8 @@ public class Navigator {
     public static void tour3(@NonNull Context context) {
         context.startActivity(new Intent(context, TourScreen3PushNotifications.class));
     }
+
+    public static void tour4(@NonNull Context context) {
+        context.startActivity(new Intent(context, TourScreen4FitnessApps.class));
+    }
 }

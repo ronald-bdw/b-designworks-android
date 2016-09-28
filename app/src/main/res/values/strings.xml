@@ -93,6 +93,7 @@
     <string name="title_tour_1">Step 1 of 5</string>
     <string name="title_tour_2">Step 2 of 5</string>
     <string name="title_tour_3">Step 3 of 5</string>
+    <string name="title_tour_4">Step 4 of 5</string>
     <string name="tour_1_title">Hello!\nWelcome to Pearup!</string>
     <string name="tour_1_description">Few things to get started and we will\nguide you through it</string>
     <string name="tour_1_description_2">Let start by confirming/setting your\nprofile information. Click Next when\nyou have completed it</string>
@@ -100,6 +101,8 @@
     <string name="tour_2_description">Choose a photo for profile photo.</string>
     <string name="tour_3_title">Turn on your\nnotifications.</string>
     <string name="tour_3_description">In order to us to assist you better,\nplease ensure to turn on your\nnotifications under your phone\'s settings.</string>
+    <string name="tour_4_title">Track your steps with\nfitbit/google fit</string>
+    <string name="tour_4_description">We are nearly there... to understand\nyour active level better, please\nensure to sync your device with\nour app</string>
 
     <string-array name="select_provider_options">
         <item>HBF</item>
