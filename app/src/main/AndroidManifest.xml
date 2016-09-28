@@ -53,6 +53,8 @@
         <activity android:name=".tour_app.TourScreen2UploadAvatar"/>
         <activity android:name=".tour_app.TourScreen3PushNotifications"/>
         <activity android:name=".tour_app.TourScreen4FitnessApps"/>
+        <activity android:name=".tour_app.TourScreen5Socials"/>
+
         <receiver
             android:name=".login.SmsListener"
             android:permission="android.permission.BROADCAST_SMS"
