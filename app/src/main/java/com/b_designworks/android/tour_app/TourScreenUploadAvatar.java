@@ -25,6 +25,7 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.OnClick;
 import gun0912.tedbottompicker.TedBottomPicker;
+import rx.Subscription;
 
 /**
  * Created by Ilya Eremin on 9/28/16.
@@ -48,7 +49,6 @@ public class TourScreenUploadAvatar extends BaseActivity {
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
         Injector.inject(this);
-        showAvatar(userInteractor.getUser().getAvatar().getOriginal());
     }
 
     @OnClick(R.id.skip) void onSkipClick() {
@@ -78,17 +78,34 @@ public class TourScreenUploadAvatar extends BaseActivity {
             });
     }
 
+    @Nullable private Subscription uploadAvatarSubs;
+
     private void updateAvatar(String url) {
+        if(uploadAvatarSubs != null) return;
         showAvatar(url);
         showAvatarUploadingProgress();
 
-        userInteractor.uploadAvatar(url)
+        uploadAvatarSubs = userInteractor.uploadAvatar(url)
             .compose(Rxs.doInBackgroundDeliverToUI())
             .subscribe(result -> {
                 avatarSuccessfullyUploaded();
             }, error -> {
                 showUploadAvatarError(url);
             });
+    }
+
+    @Override protected void onResume() {
+        super.onResume();
+        showAvatar(userInteractor.getUser().getAvatar().getThumb());
+        uiProgress.setVisibility(View.GONE);
+    }
+
+    @Override protected void onStop() {
+        if (uploadAvatarSubs != null && !uploadAvatarSubs.isUnsubscribed()) {
+            uploadAvatarSubs.unsubscribe();
+            uploadAvatarSubs = null;
+        }
+        super.onStop();
     }
 
     private void avatarSuccessfullyUploaded() {
