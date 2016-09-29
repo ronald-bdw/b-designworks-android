@@ -91,11 +91,11 @@
     <string name="sending_fitbit_code">Sending fitbit code to the server</string>
     <string name="fitbit_integration_successful">Fitbit has been integrated</string>
     <string name="skip">Skip</string>
-    <string name="title_tour_1">Step 1 of 5</string>
-    <string name="title_tour_2">Step 2 of 5</string>
-    <string name="title_tour_3">Step 3 of 5</string>
-    <string name="title_tour_4">Step 4 of 5</string>
-    <string name="title_tour_5">Step 5 of 5</string>
+
+    <string name="title_tour_1_page">Step 1 of 4</string>
+    <string name="title_tour_2_page">Step 2 of 4</string>
+    <string name="title_tour_3_page">Step 3 of 4</string>
+    <string name="title_tour_4_page">Step 4 of 4</string>
     <string name="finish">Finish</string>
     <string name="tour_1_title">Hello!\nWelcome to Pearup!</string>
     <string name="tour_1_description">Few things to get started and we will\nguide you through it</string>

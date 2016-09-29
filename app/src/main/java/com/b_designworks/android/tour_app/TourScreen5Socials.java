@@ -16,9 +16,9 @@ import butterknife.OnClick;
 public class TourScreen5Socials extends BaseActivity {
 
     @NonNull @Override public UiInfo getUiInfo() {
-        return new UiInfo(R.layout.screen_tour_5)
+        return new UiInfo(R.layout.screen_tour_socials)
             .enableBackButton()
-            .setTitleRes(R.string.title_tour_5);
+            .setTitleRes(R.string.title_tour_4_page);
     }
 
     @OnClick(R.id.finish) void onFinishClick() {

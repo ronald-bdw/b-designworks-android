@@ -57,7 +57,6 @@
 
         <activity android:name=".tour_app.TourScreen1Profile"/>
         <activity android:name=".tour_app.TourScreen2UploadAvatar"/>
-        <activity android:name=".tour_app.TourScreen3PushNotifications"/>
         <activity android:name=".tour_app.TourScreen4FitnessApps"/>
         <activity android:name=".tour_app.TourScreen5Socials"/>
 

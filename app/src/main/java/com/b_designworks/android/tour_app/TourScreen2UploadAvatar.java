@@ -33,9 +33,9 @@ import gun0912.tedbottompicker.TedBottomPicker;
 public class TourScreen2UploadAvatar extends BaseActivity {
 
     @NonNull @Override public UiInfo getUiInfo() {
-        return new UiInfo(R.layout.screen_tour_2)
+        return new UiInfo(R.layout.screen_tour_upload_avatar)
             .enableBackButton()
-            .setTitleRes(R.string.title_tour_2)
+            .setTitleRes(R.string.title_tour_2_page)
             .setMenuRes(R.menu.menu_with_next_btn);
     }
 
@@ -52,12 +52,12 @@ public class TourScreen2UploadAvatar extends BaseActivity {
     }
 
     @OnClick(R.id.skip) void onSkipClick() {
-        Navigator.tour3(context());
+        Navigator.tourFitnessApps(context());
     }
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.next) {
-            Navigator.tour3(context());
+            Navigator.tourFitnessApps(context());
             return true;
         }
         return super.onOptionsItemSelected(item);

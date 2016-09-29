@@ -20,7 +20,6 @@ import com.b_designworks.android.sync.GoogleFitScreen;
 import com.b_designworks.android.sync.SyncScreen;
 import com.b_designworks.android.tour_app.TourScreen1Profile;
 import com.b_designworks.android.tour_app.TourScreen2UploadAvatar;
-import com.b_designworks.android.tour_app.TourScreen3PushNotifications;
 import com.b_designworks.android.tour_app.TourScreen4FitnessApps;
 import com.b_designworks.android.tour_app.TourScreen5Socials;
 import com.b_designworks.android.trial.TrialScreen;
@@ -113,19 +112,15 @@ public class Navigator {
         context.startActivity(clearStack(new Intent(context, TourScreen1Profile.class)));
     }
 
-    public static void tour2(@NonNull Context context) {
+    public static void tourUploadAvatar(@NonNull Context context) {
         context.startActivity(new Intent(context, TourScreen2UploadAvatar.class));
     }
 
-    public static void tour3(@NonNull Context context) {
-        context.startActivity(new Intent(context, TourScreen3PushNotifications.class));
-    }
-
-    public static void tour4(@NonNull Context context) {
+    public static void tourFitnessApps(@NonNull Context context) {
         context.startActivity(new Intent(context, TourScreen4FitnessApps.class));
     }
 
-    public static void tour5(@NonNull Context context) {
+    public static void tourSocials(@NonNull Context context) {
         context.startActivity(new Intent(context, TourScreen5Socials.class));
     }
 

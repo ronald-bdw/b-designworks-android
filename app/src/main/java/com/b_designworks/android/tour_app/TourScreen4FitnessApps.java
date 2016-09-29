@@ -17,15 +17,15 @@ import butterknife.OnClick;
 public class TourScreen4FitnessApps extends BaseActivity {
 
     @NonNull @Override public UiInfo getUiInfo() {
-        return new UiInfo(R.layout.screen_tour_4)
-            .setTitleRes(R.string.title_tour_4)
+        return new UiInfo(R.layout.screen_tour_fitness_apps)
+            .setTitleRes(R.string.title_tour_3_page)
             .enableBackButton()
             .setMenuRes(R.menu.menu_with_next_btn);
     }
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.next) {
-            Navigator.tour5(context());
+            Navigator.tourSocials(context());
         }
         return super.onOptionsItemSelected(item);
     }
@@ -39,6 +39,6 @@ public class TourScreen4FitnessApps extends BaseActivity {
     }
 
     @OnClick(R.id.skip) void onSkipClick() {
-        Navigator.tour5(context());
+        Navigator.tourSocials(context());
     }
 }
