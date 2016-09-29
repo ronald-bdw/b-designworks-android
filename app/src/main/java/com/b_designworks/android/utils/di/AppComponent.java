@@ -10,8 +10,8 @@ import com.b_designworks.android.profile.ProfileScreen;
 import com.b_designworks.android.settings.SettingsScreen;
 import com.b_designworks.android.sync.FitbitScreen;
 import com.b_designworks.android.sync.GoogleFitScreen;
-import com.b_designworks.android.tour_app.TourScreen1Profile;
-import com.b_designworks.android.tour_app.TourScreen2UploadAvatar;
+import com.b_designworks.android.tour_app.TourScreenProfile;
+import com.b_designworks.android.tour_app.TourScreenUploadAvatar;
 
 import javax.inject.Singleton;
 
@@ -34,6 +34,6 @@ public interface AppComponent {
     void inject(ProfileScreen profileScreen);
     void inject(SettingsScreen settingsScreen);
     void inject(FitbitScreen fitbitScreen);
-    void inject(TourScreen1Profile tourScreen1Profile);
-    void inject(TourScreen2UploadAvatar tourScreen2UploadAvatar);
+    void inject(TourScreenProfile tourScreenProfile);
+    void inject(TourScreenUploadAvatar tourScreenUploadAvatar);
 }

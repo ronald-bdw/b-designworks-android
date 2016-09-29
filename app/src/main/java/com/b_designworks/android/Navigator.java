@@ -18,10 +18,10 @@ import com.b_designworks.android.settings.SettingsScreen;
 import com.b_designworks.android.sync.FitbitScreen;
 import com.b_designworks.android.sync.GoogleFitScreen;
 import com.b_designworks.android.sync.SyncScreen;
-import com.b_designworks.android.tour_app.TourScreen1Profile;
-import com.b_designworks.android.tour_app.TourScreen2UploadAvatar;
-import com.b_designworks.android.tour_app.TourScreen4FitnessApps;
-import com.b_designworks.android.tour_app.TourScreen5Socials;
+import com.b_designworks.android.tour_app.TourScreenFitnessApps;
+import com.b_designworks.android.tour_app.TourScreenProfile;
+import com.b_designworks.android.tour_app.TourScreenUploadAvatar;
+import com.b_designworks.android.tour_app.TourScreenSocials;
 import com.b_designworks.android.trial.TrialScreen;
 
 /**
@@ -109,19 +109,19 @@ public class Navigator {
     }
 
     public static void tour(Context context) {
-        context.startActivity(clearStack(new Intent(context, TourScreen1Profile.class)));
+        context.startActivity(clearStack(new Intent(context, TourScreenProfile.class)));
     }
 
     public static void tourUploadAvatar(@NonNull Context context) {
-        context.startActivity(new Intent(context, TourScreen2UploadAvatar.class));
+        context.startActivity(new Intent(context, TourScreenUploadAvatar.class));
     }
 
     public static void tourFitnessApps(@NonNull Context context) {
-        context.startActivity(new Intent(context, TourScreen4FitnessApps.class));
+        context.startActivity(new Intent(context, TourScreenFitnessApps.class));
     }
 
     public static void tourSocials(@NonNull Context context) {
-        context.startActivity(new Intent(context, TourScreen5Socials.class));
+        context.startActivity(new Intent(context, TourScreenSocials.class));
     }
 
 }

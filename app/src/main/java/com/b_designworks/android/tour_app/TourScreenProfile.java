@@ -30,7 +30,7 @@ import static com.b_designworks.android.utils.ui.TextViews.textOf;
  * Created by Ilya Eremin on 9/28/16.
  */
 
-public class TourScreen1Profile extends BaseActivity {
+public class TourScreenProfile extends BaseActivity {
 
     @Bind(R.id.first_name) TextView uiFirstName;
     @Bind(R.id.last_name)  TextView uiLastName;

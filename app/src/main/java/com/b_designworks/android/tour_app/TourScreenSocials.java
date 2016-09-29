@@ -13,7 +13,7 @@ import butterknife.OnClick;
 /**
  * Created by Ilya Eremin on 9/28/16.
  */
-public class TourScreen5Socials extends BaseActivity {
+public class TourScreenSocials extends BaseActivity {
 
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_tour_socials)

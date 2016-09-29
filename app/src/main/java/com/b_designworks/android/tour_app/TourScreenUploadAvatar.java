@@ -30,7 +30,7 @@ import gun0912.tedbottompicker.TedBottomPicker;
  * Created by Ilya Eremin on 9/28/16.
  */
 
-public class TourScreen2UploadAvatar extends BaseActivity {
+public class TourScreenUploadAvatar extends BaseActivity {
 
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_tour_upload_avatar)

@@ -21,9 +21,9 @@
             >
 
             <TextView
-                android:layout_marginTop="16dp"
-                android:text="@string/tour_1_title"
                 style="@style/tour_caption_style"
+                android:layout_marginTop="16dp"
+                android:text="@string/tour_profile_title"
                 />
 
             <TextView
@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:gravity="center"
-                android:text="@string/tour_1_description"
+                android:text="@string/tour_profile_description"
                 />
 
             <TextView
@@ -39,41 +39,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:gravity="center_horizontal"
-                android:text="@string/tour_1_description_2"
+                android:text="@string/tour_profile_description_2"
                 />
 
             <include layout="@layout/layout_profile_fields"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/next"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="24dp"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal"
-                >
-
-                <Button
-                    android:id="@+id/skip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="8dp"
-                    android:background="@drawable/app_btn_border"
-                    android:text="@string/skip"
-                    />
-
-                <Button
-                    android:id="@+id/next"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|center"
-                    android:layout_marginLeft="8dp"
-                    android:background="@drawable/app_btn_filled"
-                    android:text="@string/next"
-                    android:textColor="@android:color/white"
-                    />
-
-            </LinearLayout>
+                android:background="@drawable/app_btn_filled"
+                android:text="@string/next"
+                android:textColor="@android:color/white"
+                />
 
         </LinearLayout>
 

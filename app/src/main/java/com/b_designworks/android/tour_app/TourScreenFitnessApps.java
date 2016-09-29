@@ -14,7 +14,7 @@ import butterknife.OnClick;
  * Created by Ilya Eremin on 9/28/16.
  */
 
-public class TourScreen4FitnessApps extends BaseActivity {
+public class TourScreenFitnessApps extends BaseActivity {
 
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_tour_fitness_apps)

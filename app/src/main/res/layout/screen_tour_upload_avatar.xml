@@ -11,7 +11,7 @@
     <TextView
         style="@style/tour_caption_style"
         android:layout_marginTop="16dp"
-        android:text="@string/tour_2_title"
+        android:text="@string/tour_upload_avatar_title"
         />
 
     <TextView
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16sp"
-        android:text="@string/tour_2_description"
+        android:text="@string/tour_upload_avatar_description"
         />
 
     <FrameLayout

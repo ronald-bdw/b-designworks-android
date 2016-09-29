@@ -11,16 +11,23 @@
     <TextView
         style="@style/tour_caption_style"
         android:layout_marginTop="16dp"
-        android:text="@string/tour_4_title"
+        android:text="@string/tour_socials_title"
         />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="12dp"
         android:gravity="center_horizontal"
-        android:text="@string/tour_4_description"
+        android:text="@string/tour_socials_description"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:autoLink="web"
+        android:text="@string/tour_socials_fb_link"
         />
 
     <FrameLayout
@@ -30,35 +37,44 @@
         >
 
         <ImageView
-            android:id="@+id/fitbit"
+            android:id="@+id/facebook"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_gravity="center"
             android:layout_marginRight="40dp"
-            android:src="@drawable/ic_fitbit"
+            android:src="@drawable/ic_facebook_big"
             />
 
         <ImageView
-            android:id="@+id/google_fit"
+            android:id="@+id/twitter"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_gravity="center"
             android:layout_marginLeft="40dp"
-            android:src="@drawable/ic_google_fit"
+            android:src="@drawable/ic_twitter_big"
             />
 
     </FrameLayout>
 
-    <Button
-        android:id="@+id/skip"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="24dp"
+        android:gravity="center_horizontal"
+        android:text="@string/tour_socials_description_2"
+        />
+
+    <Button
+        android:id="@+id/finish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
         android:layout_marginBottom="16dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="8dp"
-        android:background="@drawable/app_btn_border"
-        android:text="@string/skip"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/app_btn_filled"
+        android:text="@string/finish"
+        android:textColor="@android:color/white"
         />
 
 </LinearLayout>
