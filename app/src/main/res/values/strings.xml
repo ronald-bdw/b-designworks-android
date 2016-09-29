@@ -105,7 +105,7 @@
     <string name="tour_3_title">Turn on your\nnotifications.</string>
     <string name="tour_3_description">In order to us to assist you better,\nplease ensure to turn on your\nnotifications under your phone\'s settings.</string>
     <string name="tour_4_title">Track your steps with\nfitbit/google fit</string>
-    <string name="tour_4_description">We are nearly there... to understand\nyour active level better, please\nensure to sync your device with\nour app</string>
+    <string name="tour_4_description">We are nearly there… to understand\nyour active level better, please\nensure to sync your device with\nour app</string>
     <string name="tour_5_title">Looks like you are\nall set!</string>
     <string name="tour_5_description">One of our coach will contact you\nshortly. Meanwhile, you can follow us\non Facebook for more tips to\nget active</string>
     <string name="tour_5_fb_link">facebook.com/pearupapp</string>
