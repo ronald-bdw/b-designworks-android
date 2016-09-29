@@ -18,7 +18,7 @@ public class ImageLoader {
         if (TextUtils.isEmpty(url)) {
             Glide.with(context).load(R.drawable.avatar_placeholder).into(iv);
         } else {
-            Glide.with(context).load(url).into(iv);
+            Glide.with(context).load(url).placeholder(R.drawable.avatar_placeholder).into(iv);
         }
     }
 

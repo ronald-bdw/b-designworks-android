@@ -90,6 +90,24 @@
     <string name="integration_fitbit">Integrate with fitbit</string>
     <string name="sending_fitbit_code">Sending fitbit code to the server</string>
     <string name="fitbit_integration_successful">Fitbit has been integrated</string>
+    <string name="skip">Skip</string>
+
+    <string name="title_tour_1_page">Step 1 of 4</string>
+    <string name="title_tour_2_page">Step 2 of 4</string>
+    <string name="title_tour_3_page">Step 3 of 4</string>
+    <string name="title_tour_4_page">Step 4 of 4</string>
+    <string name="finish">Finish</string>
+    <string name="tour_profile_title">Hello!\nWelcome to Pearup!</string>
+    <string name="tour_profile_description">Few things to get started and we will\nguide you through it</string>
+    <string name="tour_profile_description_2">Let start by confirming/setting your\nprofile information. Click Next when\nyou have completed it</string>
+    <string name="tour_upload_avatar_title">Upload your\nprofile photo</string>
+    <string name="tour_upload_avatar_description">Choose a photo for profile photo.</string>
+    <string name="tour_fitness_app_title">Track your steps with\nfitbit/google fit</string>
+    <string name="tour_fitness_app_description">We are nearly there… to understand\nyour active level better, please\nensure to sync your device with\nour app</string>
+    <string name="tour_socials_title">Looks like you are\nall set!</string>
+    <string name="tour_socials_description">One of our coach will contact you\nshortly. Meanwhile, you can follow us\non Facebook for more tips to\nget active</string>
+    <string name="tour_socials_fb_link">facebook.com/pearupapp</string>
+    <string name="tour_socials_description_2">Or you can share this app with your\nfamily and friends to enjoy the FREE 14-day trial.</string>
 
     <string-array name="select_provider_options">
         <item>HBF</item>

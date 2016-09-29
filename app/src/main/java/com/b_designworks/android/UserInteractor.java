@@ -107,7 +107,10 @@ public class UserInteractor {
 
     public Observable<UserResponse> uploadAvatar(String imageUrl) {
         RequestBody body = RequestBody.create(MediaType.parse("image/jpg"), new File(imageUrl));
-        return api.uploadAvatar(getUserId(), MultipartBody.Part.createFormData("user[avatar]", imageUrl, body));
+        return api.uploadAvatar(getUserId(), MultipartBody.Part.createFormData("user[avatar]", imageUrl, body)).map(result -> {
+            saveUser(result.getUser());
+            return result;
+        });
     }
 
 

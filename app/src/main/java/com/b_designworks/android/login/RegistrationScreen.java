@@ -119,7 +119,7 @@ public class RegistrationScreen extends BaseActivity {
                 dismissProgressDialog();
             })
             .subscribe(result -> {
-                Navigator.chat(context());
+                Navigator.tour(context());
             }, error -> {
                 if (error instanceof RetrofitException) {
                     CommonError parsedError = ((RetrofitException) error).getErrorBodyAs(CommonError.class);

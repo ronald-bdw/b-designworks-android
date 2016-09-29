@@ -18,6 +18,10 @@ import com.b_designworks.android.settings.SettingsScreen;
 import com.b_designworks.android.sync.FitbitScreen;
 import com.b_designworks.android.sync.GoogleFitScreen;
 import com.b_designworks.android.sync.SyncScreen;
+import com.b_designworks.android.tour_app.TourScreenFitnessApps;
+import com.b_designworks.android.tour_app.TourScreenProfile;
+import com.b_designworks.android.tour_app.TourScreenUploadAvatar;
+import com.b_designworks.android.tour_app.TourScreenSocials;
 import com.b_designworks.android.trial.TrialScreen;
 
 /**
@@ -92,8 +96,8 @@ public class Navigator {
         activity.startActivityForResult(VerifyScreen.createIntent(activity, phone), RegistrationScreen.RESULT_KEY_FOR_VERIFYING);
     }
 
-    public static void googleFit(@NonNull BaseActivity activity) {
-        activity.startActivity(new Intent(activity, GoogleFitScreen.class));
+    public static void googleFit(@NonNull Context context) {
+        context.startActivity(new Intent(context, GoogleFitScreen.class));
     }
 
     public static void fitbit(@NonNull Context context) {
@@ -103,4 +107,21 @@ public class Navigator {
     public static void openUrl(@NonNull Context context, @NonNull String url) {
         context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
     }
+
+    public static void tour(Context context) {
+        context.startActivity(clearStack(new Intent(context, TourScreenProfile.class)));
+    }
+
+    public static void tourUploadAvatar(@NonNull Context context) {
+        context.startActivity(new Intent(context, TourScreenUploadAvatar.class));
+    }
+
+    public static void tourFitnessApps(@NonNull Context context) {
+        context.startActivity(new Intent(context, TourScreenFitnessApps.class));
+    }
+
+    public static void tourSocials(@NonNull Context context) {
+        context.startActivity(new Intent(context, TourScreenSocials.class));
+    }
+
 }
