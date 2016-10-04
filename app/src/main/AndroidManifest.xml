@@ -82,7 +82,7 @@
         </service>
 
         <service
-            android:name=".MyFirebaseInstanceIDService">
+            android:name=".chat.pushes.PushInstanceIdService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
