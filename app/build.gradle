@@ -91,6 +91,15 @@ android {
         lintConfig file("$projectDir/lint.xml")
         warningsAsErrors true
     }
+
+    configurations.all {
+        resolutionStrategy {
+            force supportLibs
+            force "com.android.support:design:$versions.support"
+            force "com.android.support:support-annotations:$versions.support"
+            force "com.android.support:support-v4:$versions.support"
+        }
+    }
 }
 
 repositories {
@@ -98,24 +107,12 @@ repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 
-configurations.all {
-    resolutionStrategy {
-        force supportLibs
-        force "com.android.support:design:$versions.support"
-    }
-}
-
-tasks.whenTaskAdded { task ->
-    if (task.name.equals("lint")) {
-        task.enabled = false
-    }
-}
-
 dependencies {
     compile supportLibs
     compile rxJavaLibs
     compile retrofitLibs
     compile okHttpLibs
+    compile googleServicesLibs
 
     compile "com.google.dagger:dagger:$versions.dagger"
     apt "com.google.dagger:dagger-compiler:$versions.dagger"
@@ -133,8 +130,6 @@ dependencies {
     compile 'io.smooch:core:latest.release'
     compile 'io.smooch:ui:latest.release'
 
-    compile "com.google.android.gms:play-services-auth:9.4.0"
-
     testCompile androidTestsLibs
     compile('com.crashlytics.sdk.android:crashlytics:2.6.1@aar') {
         transitive = true;
@@ -144,4 +139,11 @@ dependencies {
     testCompile supportLibs
 }
 
+tasks.whenTaskAdded { task ->
+    if (task.name.equals("lint")) {
+        task.enabled = false
+    }
+}
+
 apply from: "quality.gradle"
+apply plugin: 'com.google.gms.google-services'
