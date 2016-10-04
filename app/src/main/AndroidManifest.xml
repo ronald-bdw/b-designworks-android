@@ -75,7 +75,7 @@
             />
 
         <service
-            android:name=".MyFirebaseMessagingService">
+            android:name=".chat.pushes.PushNotificationsHandlerService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>

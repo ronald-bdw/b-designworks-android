@@ -7,6 +7,7 @@ import com.b_designworks.android.App;
 import com.b_designworks.android.InitialScreen;
 import com.b_designworks.android.chat.ChatScreen;
 import com.b_designworks.android.chat.ChatSidePanelFragment;
+import com.b_designworks.android.chat.pushes.PushNotificationsHandlerService;
 import com.b_designworks.android.login.RegistrationScreen;
 import com.b_designworks.android.login.VerifyScreen;
 import com.b_designworks.android.profile.EditProfileScreen;
@@ -72,5 +73,9 @@ public class Injector {
 
     public static void inject(TourScreenUploadAvatar tourScreenUploadAvatar) {
         getAppComponent(tourScreenUploadAvatar).inject(tourScreenUploadAvatar);
+    }
+
+    public static void inject(PushNotificationsHandlerService pushNotificationsHandlerService) {
+        ((App) pushNotificationsHandlerService.getApplicationContext()).getAppComponent().inject(pushNotificationsHandlerService);
     }
 }
