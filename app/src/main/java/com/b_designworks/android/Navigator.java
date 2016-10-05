@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 
 import com.b_designworks.android.chat.ChatScreen;
 import com.b_designworks.android.login.EnterPhoneScreen;
+import com.b_designworks.android.login.functional_area.FunctionalToAreaCodeScreen;
 import com.b_designworks.android.login.RegistrationScreen;
 import com.b_designworks.android.login.SelectProviderScreen;
 import com.b_designworks.android.login.VerifyScreen;
@@ -124,4 +125,7 @@ public class Navigator {
         context.startActivity(new Intent(context, TourScreenSocials.class));
     }
 
+    public static void areaCode(@NonNull EnterPhoneScreen enterPhoneScreen, int requestCode) {
+        enterPhoneScreen.startActivityForResult(new Intent(enterPhoneScreen, FunctionalToAreaCodeScreen.class), requestCode);
+    }
 }
