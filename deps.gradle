@@ -1,13 +1,14 @@
 ext {
     versions = [
-            okHttp             : '3.4.1',
-            support            : '23.3.0',
-            retrofit           : '2.0.2',
-            espressoVersion    : '2.2.2',
-            BUILD_TOOLS_VERSION: '24.0.1',
-            MIN_SDK_VERSION    : 16,
-            TARGET_SDK_VERSION : 23,
-            dagger             : "2.5"
+            okHttp               : '3.4.1',
+            support              : '23.3.0',
+            googleServicesVersion: '9.6.1',
+            retrofit             : '2.0.2',
+            espressoVersion      : '2.2.2',
+            BUILD_TOOLS_VERSION  : '24.0.1',
+            MIN_SDK_VERSION      : 16,
+            TARGET_SDK_VERSION   : 23,
+            dagger               : "2.5"
     ]
     supportDeps = [
             appcompatV7      : "com.android.support:appcompat-v7:$versions.support",
@@ -39,9 +40,16 @@ ext {
             junit          : "junit:junit:4.12",
             mockito        : "org.mockito:mockito-core:1.+"
     ]
+    googleServices = [
+            core            : "com.google.firebase:firebase-core:$versions.googleServicesVersion",
+            messaging       : "com.google.firebase:firebase-messaging:$versions.googleServicesVersion",
+            auth            : "com.google.firebase:firebase-auth:$versions.googleServicesVersion",
+            playServicesAuth: "com.google.android.gms:play-services-auth:$versions.googleServicesVersion"
+    ]
     supportLibs = supportDeps.values()
     retrofitLibs = retrofit.values()
     okHttpLibs = okHttp.values()
     rxJavaLibs = rxJava.values()
     androidTestsLibs = androidTests.values() + supportLibs
+    googleServicesLibs = googleServices.values()
 }

@@ -32,7 +32,7 @@ public class App extends Application {
     }
 
     protected void setUpServices() {
-        Smooch.init(this, "833kwj0z5wkvt82tpgfbbqn3z");
+        Smooch.init(this, "eiw2afikzfabehcj65ilhnp7q");
         setUpCrashMonitoring();
     }
 
