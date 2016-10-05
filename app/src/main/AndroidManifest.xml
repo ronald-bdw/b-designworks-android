@@ -74,5 +74,23 @@
             android:value="a58319df29eb3929f0ed864166f3c42deb476e66"
             />
 
+        <service
+            android:name=".chat.pushes.PushNotificationsHandlerService"
+            android:exported="false"
+            >
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".chat.pushes.PushInstanceIdService"
+            android:exported="false"
+            >
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
     </application>
 </manifest>
