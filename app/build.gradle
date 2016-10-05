@@ -34,7 +34,6 @@ android {
         buildConfigField "String", "FITBIT_APP_ID", "\"227ZMJ\""
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
 
     productFlavors {

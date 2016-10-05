@@ -47,5 +47,6 @@
     <issue id="Typos" severity="ignore"/>
     <issue id="ShowToast" severity="ignore"/>
     <issue id="Registered" severity="ignore"/>
+    <issue id="IconColors" severity="ignore"/>
 
 </lint>
