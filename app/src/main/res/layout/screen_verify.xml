@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:background="@drawable/initial_screen_gradient"
     >
 
@@ -71,10 +70,9 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
                 android:gravity="center"
-                android:hint="0000000"
+                android:hint="@string/verify_code_format_hint"
                 android:imeOptions="actionDone"
                 android:padding="16dp"
-                tools:ignore="HardcodedText"
                 android:layout_marginRight="12dp"
                 android:maxLines="1"
                 android:inputType="numberDecimal"
