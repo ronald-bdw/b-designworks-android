@@ -23,6 +23,7 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import io.smooch.core.Smooch;
+import io.smooch.core.User;
 import io.smooch.ui.fragment.ConversationFragment;
 
 /**
@@ -48,7 +49,13 @@ public class ChatScreen extends BaseActivity {
                 Smooch.logout();
                 userInteractor.trackFirstVisit();
             }
+            com.b_designworks.android.login.models.User user = userInteractor.getUser();
+
             Smooch.login(userInteractor.getUserId(), null);
+            User.getCurrentUser().setEmail(user.getEmail());
+            User.getCurrentUser().setFirstName(user.getFirstName());
+            User.getCurrentUser().setLastName(user.getId());
+
             Log.d(TAG, "Current user id  is: " + userInteractor.getUserId());
             getSupportFragmentManager().beginTransaction()
                 .replace(R.id.chat_container, new ConversationFragment())
