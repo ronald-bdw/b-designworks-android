@@ -17,7 +17,6 @@ public class UserSettings {
         this.storage = storage;
     }
 
-
     public void saveAuthInfo(@NonNull String token, @NonNull String phone) {
         storage.putString(KEY_TOKEN, token);
         storage.putString(KEY_PHONE, phone);
@@ -27,15 +26,16 @@ public class UserSettings {
         return storage.contains(KEY_TOKEN);
     }
 
-    public void clearAll() {
-        storage.clear();
-    }
-
     public String getToken() {
         return storage.getString(KEY_TOKEN);
     }
 
     public String getPhone() {
         return storage.getString(KEY_PHONE);
+    }
+
+    public void clear() {
+        storage.remove(KEY_TOKEN);
+        storage.remove(KEY_PHONE);
     }
 }

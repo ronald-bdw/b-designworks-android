@@ -22,7 +22,6 @@ public class InitialScreen extends AppCompatActivity {
         if (userSettings.userHasToken()) {
             Navigator.chat(this);
         } else {
-            userSettings.clearAll();
             Navigator.welcome(this);
         }
         finish();
