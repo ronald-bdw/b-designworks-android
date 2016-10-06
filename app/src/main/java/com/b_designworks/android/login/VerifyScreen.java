@@ -15,6 +15,7 @@ import com.b_designworks.android.BaseActivity;
 import com.b_designworks.android.Navigator;
 import com.b_designworks.android.R;
 import com.b_designworks.android.utils.Bus;
+import com.b_designworks.android.utils.Keyboard;
 import com.b_designworks.android.utils.di.Injector;
 import com.b_designworks.android.utils.network.ErrorUtils;
 import com.b_designworks.android.utils.ui.TextViews;
@@ -87,6 +88,7 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
     }
 
     @OnClick(R.id.submit) void onSubmitClick() {
+        Keyboard.hide(this);
         verifyPresenter.handleSmsCode(TextViews.textOf(uiVerificadtionCode));
     }
 
