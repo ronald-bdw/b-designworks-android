@@ -16,6 +16,7 @@ import com.b_designworks.android.Navigator;
 import com.b_designworks.android.R;
 import com.b_designworks.android.login.functional_area.FunctionalToAreaCodeScreen;
 import com.b_designworks.android.login.functional_area.Area;
+import com.b_designworks.android.utils.Keyboard;
 import com.b_designworks.android.utils.ui.TextViews;
 import com.b_designworks.android.utils.ui.UiInfo;
 
@@ -61,6 +62,7 @@ public class EnterPhoneScreen extends BaseActivity {
         String areaCode = TextViews.textOf(uiAreaCode);
         if (!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(areaCode)) {
             // TODO what if phone number has incorrect format
+            Keyboard.hide(this);
             Navigator.verification(context(), areaCode + phone);
         } else {
             uiPhone.setError(getString(R.string.registration_error_fill_phone));
