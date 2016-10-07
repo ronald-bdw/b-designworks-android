@@ -108,6 +108,8 @@
     <string name="tour_socials_description">One of our coach will contact you\nshortly. Meanwhile, you can follow us\non Facebook for more tips to\nget active</string>
     <string name="tour_socials_fb_link">facebook.com/pearupapp</string>
     <string name="tour_socials_description_2">Or you can share this app with your\nfamily and friends to enjoy the FREE 14-day trial.</string>
+    <string name="welcome_hint_area_code">Area code</string>
+    <string name="verify_code_format_hint">0000</string>
 
     <string-array name="select_provider_options">
         <item>HBF</item>

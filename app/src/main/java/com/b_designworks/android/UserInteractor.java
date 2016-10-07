@@ -68,6 +68,7 @@ public class UserInteractor {
 
     public void logout() {
         storage.remove(KEY_USER);
+        userSettings.clear();
     }
 
     public boolean firstVisitAfterLogin() {

@@ -28,7 +28,7 @@ public class GoogleFitPresenter {
 
     private static final String TAG                  = "GoogleFitPresenter";
     private static final int    REQUEST_CODE_SIGN_IN = 5599;
-    private static final String SERVER_KEY           = "326598618018-m18iigq8qr141cbgc7sv933p3m982sum.apps.googleusercontent.com";
+    private static final String SERVER_KEY           = "1031731430214-cgrtpcni90gh3lmmr3fem5nihb4b3iuk.apps.googleusercontent.com";
 
     @Nullable private GoogleFitView view;
 

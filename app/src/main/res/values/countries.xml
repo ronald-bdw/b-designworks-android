@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="countries" translatable="false">1876;JM;Jamaica;XXX XXXX\n
+1869;KN;Saint Kitts &amp;amp; Nevis;XXX XXXX\n
+1868;TT;Trinidad &amp; Tobago;XXX XXXX\n
+1784;VC;Saint Vincent &amp; the Grenadines;XXX XXXX\n
+1767;DM;Dominica;XXX XXXX\n
+1758;LC;Saint Lucia;XXX XXXX\n
+1721;SX;Sint Maarten;XXX XXXX\n
+1684;AS;American Samoa;XXX XXXX\n
+1671;GU;Guam;XXX XXXX\n
+1670;MP;Northern Mariana Islands;XXX XXXX\n
+1664;MS;Montserrat;XXX XXXX\n
+1649;TC;Turks &amp; Caicos Islands;XXX XXXX\n
+1473;GD;Grenada;XXX XXXX\n
+1441;BM;Bermuda;XXX XXXX\n
+1345;KY;Cayman Islands;XXX XXXX\n
+1340;VI;US Virgin Islands;XXX XXXX\n
+1284;VG;British Virgin Islands;XXX XXXX\n
+1268;AG;Antigua &amp; Barbuda;XXX XXXX\n
+1264;AI;Anguilla;XXX XXXX\n
+1246;BB;Barbados;XXX XXXX\n
+1242;BS;Bahamas;XXX XXXX\n
+998;UZ;Uzbekistan;XX XXXXXXX\n
+996;KG;Kyrgyzstan;XXX XXXXXX\n
+995;GE;Georgia;XXX XXX XXX\n
+994;AZ;Azerbaijan;XX XXX XXXX\n
+993;TM;Turkmenistan;XX XXXXXX\n
+992;TJ;Tajikistan;XX XXX XXXX\n
+977;NP;Nepal;XX XXXX XXXX\n
+976;MN;Mongolia;XX XX XXXX\n
+975;BT;Bhutan;XX XXX XXX\n
+974;QA;Qatar;XX XXX XXX\n
+973;BH;Bahrain;XXXX XXXX\n
+972;IL;Israel;XX XXX XXXX\n
+971;AE;United Arab Emirates;XX XXX XXXX\n
+970;PS;Palestine;XXX XX XXXX\n
+968;OM;Oman;XXXX XXXX\n
+967;YE;Yemen;XXX XXX XXX\n
+966;SA;Saudi Arabia;XX XXX XXXX\n
+965;KW;Kuwait;XXXX XXXX\n
+964;IQ;Iraq;XXX XXX XXXX\n
+963;SY;Syria;XXX XXX XXX\n
+962;JO;Jordan;X XXXX XXXX\n
+961;LB;Lebanon\n
+960;MV;Maldives;XXX XXXX\n
+886;TW;Taiwan;XXX XXX XXX\n
+880;BD;Bangladesh\n
+856;LA;Laos;XX XX XXX XXX\n
+855;KH;Cambodia\n
+853;MO;Macau;XXXX XXXX\n
+852;HK;Hong Kong;X XXX XXXX\n
+850;KP;North Korea\n
+692;MH;Marshall Islands\n
+691;FM;Micronesia\n
+690;TK;Tokelau\n
+689;PF;French Polynesia\n
+688;TV;Tuvalu\n
+687;NC;New Caledonia\n
+686;KI;Kiribati\n
+685;WS;Samoa\n
+683;NU;Niue\n
+682;CK;Cook Islands\n
+681;WF;Wallis &amp; Futuna\n
+680;PW;Palau\n
+679;FJ;Fiji\n
+678;VU;Vanuatu\n
+677;SB;Solomon Islands\n
+676;TO;Tonga\n
+675;PG;Papua New Guinea\n
+674;NR;Nauru\n
+673;BN;Brunei Darussalam;XXX XXXX\n
+672;NF;Norfolk Island\n
+670;TL;Timor-Leste\n
+599;BQ;Bonaire, Sint Eustatius &amp; Saba\n
+599;CW;Curaçao\n
+598;UY;Uruguay;X XXX XXXX\n
+597;SR;Suriname;XXX XXXX\n
+596;MQ;Martinique\n
+595;PY;Paraguay;XXX XXX XXX\n
+594;GF;French Guiana\n
+593;EC;Ecuador;XX XXX XXXX\n
+592;GY;Guyana\n
+591;BO;Bolivia;X XXX XXXX\n
+590;GP;Guadeloupe;XXX XX XX XX\n
+509;HT;Haiti\n
+508;PM;Saint Pierre &amp; Miquelon\n
+507;PA;Panama;XXXX XXXX\n
+506;CR;Costa Rica;XXXX XXXX\n
+505;NI;Nicaragua;XXXX XXXX\n
+504;HN;Honduras;XXXX XXXX\n
+503;SV;El Salvador;XXXX XXXX\n
+502;GT;Guatemala;X XXX XXXX\n
+501;BZ;Belize\n
+500;FK;Falkland Islands\n
+423;LI;Liechtenstein\n
+421;SK;Slovakia;XXX XXX XXX\n
+420;CZ;Czech Republic;XXX XXX XXX\n
+389;MK;Macedonia;XX XXX XXX\n
+387;BA;Bosnia &amp; Herzegovina;XX XXX XXX\n
+386;SI;Slovenia;XX XXX XXX\n
+385;HR;Croatia\n
+382;ME;Montenegro\n
+381;RS;Serbia;XX XXX XXXX\n
+380;UA;Ukraine;XX XXX XX XX\n
+378;SM;San Marino;XXX XXX XXXX\n
+377;MC;Monaco;XXXX XXXX\n
+376;AD;Andorra;XX XX XX\n
+375;BY;Belarus;XX XXX XXXX\n
+374;AM;Armenia;XX XXX XXX\n
+373;MD;Moldova;XX XXX XXX\n
+372;EE;Estonia\n
+371;LV;Latvia;XXX XXXXX\n
+370;LT;Lithuania;XXX XXXXX\n
+359;BG;Bulgaria\n
+358;FI;Finland\n
+357;CY;Cyprus;XXXX XXXX\n
+356;MT;Malta;XX XX XX XX\n
+355;AL;Albania;XX XXX XXXX\n
+354;IS;Iceland;XXX XXXX\n
+353;IE;Ireland;XX XXX XXXX\n
+352;LU;Luxembourg\n
+351;PT;Portugal;X XXXX XXXX\n
+350;GI;Gibraltar;XXXX XXXX\n
+299;GL;Greenland;XXX XXX\n
+298;FO;Faroe Islands;XXX XXX\n
+297;AW;Aruba;XXX XXXX\n
+291;ER;Eritrea;X XXX XXX\n
+290;SH;Saint Helena;XX XXX\n
+269;KM;Comoros;XXX XXXX\n
+268;SZ;Swaziland;XXXX XXXX\n
+267;BW;Botswana;XX XXX XXX\n
+266;LS;Lesotho;XX XXX XXX\n
+265;MW;Malawi;77 XXX XXXX\n
+264;NA;Namibia;XX XXX XXXX\n
+263;ZW;Zimbabwe;XX XXX XXXX\n
+262;RE;Réunion;XXX XXX XXX\n
+261;MG;Madagascar;XX XX XXX XX\n
+260;ZM;Zambia;XX XXX XXXX\n
+258;MZ;Mozambique;XX XXX XXXX\n
+257;BI;Burundi;XX XX XXXX\n
+256;UG;Uganda;XX XXX XXXX\n
+255;TZ;Tanzania;XX XXX XXXX\n
+254;KE;Kenya;XXX XXX XXX\n
+253;DJ;Djibouti;XX XX XX XX\n
+252;SO;Somalia;XX XXX XXX\n
+251;ET;Ethiopia;XX XXX XXXX\n
+250;RW;Rwanda;XXX XXX XXX\n
+249;SD;Sudan;XX XXX XXXX\n
+248;SC;Seychelles;X XX XX XX\n
+247;SH;Saint Helena;XXXX\n
+246;IO;Diego Garcia;XXX XXXX\n
+245;GW;Guinea-Bissau;XXX XXXX\n
+244;AO;Angola;XXX XXX XXX\n
+243;CD;Congo (Dem. Rep.);XX XXX XXXX\n
+242;CG;Congo (Rep.);XX XXX XXXX\n
+241;GA;Gabon;X XX XX XX\n
+240;GQ;Equatorial Guinea;XXX XXX XXX\n
+239;ST;São Tomé &amp; Príncipe;XX XXXXX\n
+238;CV;Cape Verde;XXX XXXX\n
+237;CM;Cameroon;XXXX XXXX\n
+236;CF;Central African Rep.;XX XX XX XX\n
+235;TD;Chad;XX XX XX XX\n
+234;NG;Nigeria\n
+233;GH;Ghana\n
+232;SL;Sierra Leone;XX XXX XXX\n
+231;LR;Liberia\n
+230;MU;Mauritius\n
+229;BJ;Benin;XX XXX XXX\n
+228;TG;Togo;XX XXX XXX\n
+227;NE;Niger;XX XX XX XX\n
+226;BF;Burkina Faso;XX XX XX XX\n
+225;CI;Côte d`Ivoire;XX XXX XXX\n
+224;GN;Guinea;XXX XXX XXX\n
+223;ML;Mali;XXXX XXXX\n
+222;MR;Mauritania;XXXX XXXX\n
+221;SN;Senegal;XX XXX XXXX\n
+220;GM;Gambia;XXX XXXX\n
+218;LY;Libya;XX XXX XXXX\n
+216;TN;Tunisia;XX XXX XXX\n
+213;DZ;Algeria;XXX XX XX XX\n
+212;MA;Morocco;XX XXX XXXX\n
+211;SS;South Sudan;XX XXX XXXX\n
+98;IR;Iran;XXX XXX XXXX\n
+95;MM;Myanmar\n
+94;LK;Sri Lanka;XX XXX XXXX\n
+93;AF;Afghanistan;XXX XXX XXX\n
+92;PK;Pakistan;XXX XXX XXXX\n
+91;IN;India;XXXXX XXXXX\n
+90;TR;Turkey;XXX XXX XXXX\n
+86;CN;China;XXX XXXX XXXX\n
+84;VN;Vietnam\n
+82;KR;South Korea\n
+81;JP;Japan;XX XXXX XXXX\n
+66;TH;Thailand;X XXXX XXXX\n
+65;SG;Singapore;XXXX XXXX\n
+64;NZ;New Zealand\n
+63;PH;Philippines;XXX XXX XXXX\n
+62;ID;Indonesia\n
+61;AU;Australia;XXX XXX XXX\n
+60;MY;Malaysia\n
+58;VE;Venezuela;XXX XXX XXXX\n
+57;CO;Colombia;XXX XXX XXXX\n
+56;CL;Chile;X XXXX XXXX\n
+55;BR;Brazil;XX XXXXX XXXX\n
+54;AR;Argentina\n
+53;CU;Cuba;XXXX XXXX\n
+52;MX;Mexico\n
+51;PE;Peru;XXX XXX XXX\n
+49;DE;Germany\n
+48;PL;Poland;XX XXX XXXX\n
+47;NO;Norway;XXXX XXXX\n
+46;SE;Sweden;XX XXX XXXX\n
+45;DK;Denmark;XXXX XXXX\n
+44;GB;United Kingdom;XXXX XXXXXX\n
+43;AT;Austria\n
+42;YL;Y-land\n
+41;CH;Switzerland;XX XXX XXXX\n
+40;RO;Romania;XXX XXX XXX\n
+39;IT;Italy\n
+36;HU;Hungary;XXX XXX XXX\n
+34;ES;Spain;XXX XXX XXX\n
+33;FR;France;X XX XX XX XX\n
+32;BE;Belgium;XXX XX XX XX\n
+31;NL;Netherlands;X XX XX XX XX\n
+30;GR;Greece;XXX XXX XXXX\n
+27;ZA;South Africa;XX XXX XXXX\n
+20;EG;Egypt;XX XXXX XXXX\n
+7;KZ;Kazakhstan;XXX XXX XX XX\n
+7;RU;Russian Federation;XXX XXX XXXX\n
+1;PR;Puerto Rico;XXX XXX XXXX\n
+1;DO;Dominican Rep.;XXX XXX XXXX\n
+1;CA;Canada;XXX XXX XXXX\n
+1;US;USA;XXX XXX XXXX</string>
+</resources>
