@@ -70,6 +70,7 @@ public class ChatSidePanelFragment extends Fragment {
 
     @OnClick(R.id.share) void onShareClick() {
         Navigator.share(getContext(), "Sharing text here");
+        Bus.event(CloseDrawerEvent.EVENT);
     }
 
     @OnClick(R.id.about_us) void onAboutUsClick() {
