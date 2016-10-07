@@ -128,4 +128,11 @@ public class Navigator {
     public static void areaCode(@NonNull EnterPhoneScreen enterPhoneScreen, int requestCode) {
         enterPhoneScreen.startActivityForResult(new Intent(enterPhoneScreen, FunctionalToAreaCodeScreen.class), requestCode);
     }
+
+    public static void share(@NonNull Context context, @NonNull String text) {
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, text);
+        context.startActivity(Intent.createChooser(sharingIntent, context.getString(R.string.share_using)));
+    }
 }
