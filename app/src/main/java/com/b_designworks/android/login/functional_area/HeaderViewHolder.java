@@ -14,10 +14,10 @@ import rx.functions.Func1;
  */
 class HeaderViewHolder extends BaseHolder<String> {
 
-    public static Func1<ViewGroup, HeaderViewHolder> HOLDER_CREATOR = viewGroup
+    final static Func1<ViewGroup, HeaderViewHolder> HOLDER_CREATOR = viewGroup
         -> new HeaderViewHolder(inflate(viewGroup, R.layout.item_header));
 
-    public HeaderViewHolder(View itemView) {
+    private HeaderViewHolder(View itemView) {
         super(itemView);
     }
 

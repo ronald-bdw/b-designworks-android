@@ -17,14 +17,14 @@ import rx.functions.Func1;
  */
 public class AreaViewHolder extends BaseHolder<Area> {
 
-    public static Func1<ViewGroup, AreaViewHolder> HOLDER_CREATOR = viewGroup
+    final static Func1<ViewGroup, AreaViewHolder> HOLDER_CREATOR = viewGroup
         -> new AreaViewHolder(inflate(viewGroup, R.layout.item_area));
 
     @Bind(R.id.country) TextView uiCountry;
     @Bind(R.id.code)    TextView uiCode;
     private             Area     area;
 
-    public AreaViewHolder(View itemView) {
+    private AreaViewHolder(View itemView) {
         super(itemView);
         itemView.setOnClickListener(onClick -> Bus.event(new OnAreaSelectedEvent(area)));
     }
