@@ -110,6 +110,7 @@
     <string name="tour_socials_description_2">Or you can share this app with your\nfamily and friends to enjoy the FREE 14-day trial.</string>
     <string name="welcome_hint_area_code">Area code</string>
     <string name="verify_code_format_hint">0000</string>
+    <string name="share">Share</string>
 
     <string-array name="select_provider_options">
         <item>HBF</item>
