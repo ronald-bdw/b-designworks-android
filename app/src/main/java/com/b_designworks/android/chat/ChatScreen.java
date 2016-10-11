@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -137,6 +138,7 @@ public class ChatScreen extends ConversationActivity {
 
         ((View) uiInputText.getParent()).setBackgroundColor(0xFFECF3FA);
         findViewById(R.id.Smooch_btnCamera).setVisibility(View.GONE);
+        ((ImageView) findViewById(R.id.Smooch_btnSend)).setImageResource(R.drawable.ic_send);
         Bus.subscribe(this);
     }
 
