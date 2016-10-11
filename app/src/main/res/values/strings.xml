@@ -112,6 +112,8 @@
     <string name="verify_code_format_hint">0000</string>
     <string name="share">Share</string>
     <string name="share_using">Share with…</string>
+    <string name="error_incorrect_phone">Please check your number and try again</string>
+    <string name="progress_verifying_phone_number">Verifying phone number</string>
 
     <string-array name="select_provider_options">
         <item>HBF</item>
