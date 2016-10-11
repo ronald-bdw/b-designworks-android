@@ -8,8 +8,6 @@
     >
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -66,29 +64,29 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:paddingBottom="24dp"
             android:layout_marginTop="24dp"
+            android:orientation="horizontal"
+            android:paddingBottom="24dp"
             >
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="4dp"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:src="@drawable/about_us_2"
-                android:layout_marginRight="4dp"
                 />
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:src="@drawable/about_us_3"
-                android:layout_marginLeft="4dp"
                 />
 
         </LinearLayout>
