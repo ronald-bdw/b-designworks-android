@@ -4,6 +4,7 @@ import com.b_designworks.android.InitialScreen;
 import com.b_designworks.android.chat.ChatScreen;
 import com.b_designworks.android.chat.ChatSidePanelFragment;
 import com.b_designworks.android.chat.pushes.PushNotificationsHandlerService;
+import com.b_designworks.android.login.EnterPhoneScreen;
 import com.b_designworks.android.login.RegistrationScreen;
 import com.b_designworks.android.login.VerifyScreen;
 import com.b_designworks.android.profile.EditProfileScreen;
@@ -38,4 +39,5 @@ public interface AppComponent {
     void inject(TourScreenProfile tourScreenProfile);
     void inject(TourScreenUploadAvatar tourScreenUploadAvatar);
     void inject(PushNotificationsHandlerService pushNotificationsHandlerService);
+    void inject(EnterPhoneScreen enterPhoneScreen);
 }

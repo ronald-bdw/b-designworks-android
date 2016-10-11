@@ -8,6 +8,7 @@ import com.b_designworks.android.InitialScreen;
 import com.b_designworks.android.chat.ChatScreen;
 import com.b_designworks.android.chat.ChatSidePanelFragment;
 import com.b_designworks.android.chat.pushes.PushNotificationsHandlerService;
+import com.b_designworks.android.login.EnterPhoneScreen;
 import com.b_designworks.android.login.RegistrationScreen;
 import com.b_designworks.android.login.VerifyScreen;
 import com.b_designworks.android.profile.EditProfileScreen;
@@ -77,5 +78,9 @@ public class Injector {
 
     public static void inject(PushNotificationsHandlerService pushNotificationsHandlerService) {
         ((App) pushNotificationsHandlerService.getApplicationContext()).getAppComponent().inject(pushNotificationsHandlerService);
+    }
+
+    public static void inject(@NonNull EnterPhoneScreen enterPhoneScreen) {
+        ((App) enterPhoneScreen.getApplicationContext()).getAppComponent().inject(enterPhoneScreen);
     }
 }

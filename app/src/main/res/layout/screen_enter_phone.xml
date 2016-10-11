@@ -72,6 +72,7 @@
             android:background="@drawable/edit_text_bg_with_border"
             android:gravity="center_vertical"
             android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:hint="@string/welcome_hint_phone"
             android:imeOptions="actionDone"
             android:inputType="phone"
