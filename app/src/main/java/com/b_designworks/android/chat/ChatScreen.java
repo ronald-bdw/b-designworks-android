@@ -5,13 +5,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -26,6 +23,9 @@ import org.greenrobot.eventbus.Subscribe;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.smooch.core.Smooch;
 import io.smooch.core.User;
 import io.smooch.ui.ConversationActivity;
@@ -37,7 +37,8 @@ public class ChatScreen extends ConversationActivity {
 
     @Inject UserInteractor userInteractor;
 
-    private DrawerLayout uiDrawer;
+    @Bind(R.id.drawer)        DrawerLayout uiDrawer;
+    @Bind(R.id.provider_logo) ImageView    uiProviderLogo;
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
@@ -58,7 +59,7 @@ public class ChatScreen extends ConversationActivity {
             User.getCurrentUser().setLastName(user.getId());
 
             getSupportFragmentManager().beginTransaction()
-                .replace(R.id.chat_right_panel, new ChatSidePanelFragment())
+                .replace(R.id.side_panel_container, new ChatSidePanelFragment())
                 .commit();
         }
         uiDrawer.addDrawerListener(new DrawerLayout.DrawerListener() {
@@ -75,41 +76,22 @@ public class ChatScreen extends ConversationActivity {
     }
 
     private void customizeSmoochInterface() {
-        uiDrawer = new DrawerLayout(this);
+        ViewGroup rootView = ((ViewGroup) findViewById(android.R.id.content));
+        View oldChatLayout = rootView.getChildAt(0);
+        rootView.removeView(oldChatLayout);
 
-        final FrameLayout rightSidePanelCountainer = new FrameLayout(this);
-        final FrameLayout chatContainer = new FrameLayout(this);
+        View newChatLayout = LayoutInflater.from(this).inflate(R.layout.screen_chat, rootView);
+        ((ViewGroup) newChatLayout.findViewById(R.id.chat_container)).addView(oldChatLayout);
 
-        rightSidePanelCountainer.setId(R.id.chat_right_panel);
-        DrawerLayout.LayoutParams lp = new DrawerLayout.LayoutParams(AndroidUtils.dp(240), LinearLayout.LayoutParams.MATCH_PARENT);
-        lp.gravity = Gravity.END;
-        rightSidePanelCountainer.setLayoutParams(lp);
-
-        ViewGroup contentView = ((ViewGroup) findViewById(android.R.id.content));
-        ViewGroup rootView = (ViewGroup) contentView.getChildAt(0);
-        contentView.removeView(rootView);
-        rootView.setBackgroundColor(Color.WHITE);
-        chatContainer.addView(rootView, new DrawerLayout.LayoutParams(DrawerLayout.LayoutParams.MATCH_PARENT, DrawerLayout.LayoutParams.MATCH_PARENT));
-        View uiActionBar = LayoutInflater.from(this).inflate(R.layout.layout_chat_action_bar, chatContainer);
-        uiActionBar.findViewById(R.id.menu).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View onClick) {
-                if (uiDrawer.isDrawerOpen(GravityCompat.END)) {
-                    ChatScreen.this.closeDrawer();
-                } else {
-                    uiDrawer.openDrawer(GravityCompat.END);
-                }
-            }
-        });
-
-        // TODO decide show or not hbf logo, need info from server side
-
-        uiDrawer.addView(chatContainer, new DrawerLayout.LayoutParams(DrawerLayout.LayoutParams.MATCH_PARENT, DrawerLayout.LayoutParams.MATCH_PARENT));
-        uiDrawer.addView(rightSidePanelCountainer);
-        contentView.addView(uiDrawer);
+        ButterKnife.bind(this);
     }
 
-    private void showUserName(String username) {
-        ((TextView) findViewById(R.id.full_name)).setText(username);
+    @OnClick(R.id.menu) void onMenuClick() {
+        if (uiDrawer.isDrawerOpen(GravityCompat.END)) {
+            ChatScreen.this.closeDrawer();
+        } else {
+            uiDrawer.openDrawer(GravityCompat.END);
+        }
     }
 
     @Override public void onBackPressed() {
@@ -142,6 +124,15 @@ public class ChatScreen extends ConversationActivity {
         ((ImageView) findViewById(R.id.Smooch_btnSend)).setImageResource(R.drawable.ic_send);
 
         showUserName(userInteractor.getFullName());
+        setUpProviderLogo();
+    }
+
+    private void showUserName(String username) {
+        ((TextView) findViewById(R.id.full_name)).setText(username);
+    }
+
+    private void setUpProviderLogo() {
+        // TODO
     }
 
     @Subscribe public void onEvent(CloseDrawerEvent event) {
