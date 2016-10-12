@@ -99,6 +99,7 @@ public class ChatScreen extends ConversationActivity {
         rootView.setBackgroundColor(Color.WHITE);
         chatContainer.addView(rootView, new DrawerLayout.LayoutParams(DrawerLayout.LayoutParams.MATCH_PARENT, DrawerLayout.LayoutParams.MATCH_PARENT));
         uiActionBar = LayoutInflater.from(this).inflate(R.layout.layout_chat_action_bar, chatContainer);
+        ((TextView) uiActionBar.findViewById(R.id.full_name)).setText(userInteractor.getFullName());
         uiActionBar.findViewById(R.id.menu).setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View onClick) {
                 if (uiDrawer.isDrawerOpen(GravityCompat.END)) {

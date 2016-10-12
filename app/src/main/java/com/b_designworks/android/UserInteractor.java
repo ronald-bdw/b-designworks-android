@@ -119,4 +119,9 @@ public class UserInteractor {
         return api.integrateFitnessApp(code, Provider.FITBIT)
             .map(result -> null);
     }
+
+    public String getFullName() {
+        User user = getUser();
+        return user.getFirstName() + " " + user.getLastName();
+    }
 }
