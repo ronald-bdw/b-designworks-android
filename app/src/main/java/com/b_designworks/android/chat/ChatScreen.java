@@ -38,13 +38,12 @@ public class ChatScreen extends ConversationActivity {
     @Inject UserInteractor userInteractor;
 
     private DrawerLayout uiDrawer;
-    private View         uiActionBar;
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
         Injector.inject(this);
 
-        addRightPanel();
+        customizeSmoochInterface();
 
         if (savedState == null) {
             if (userInteractor.firstVisitAfterLogin()) {
@@ -67,22 +66,15 @@ public class ChatScreen extends ConversationActivity {
                 Keyboard.hide(ChatScreen.this);
             }
 
-            @Override public void onDrawerOpened(View drawerView) {
+            @Override public void onDrawerOpened(View drawerView) {}
 
-            }
+            @Override public void onDrawerClosed(View drawerView) {}
 
-            @Override public void onDrawerClosed(View drawerView) {
-
-            }
-
-            @Override public void onDrawerStateChanged(int newState) {
-
-            }
+            @Override public void onDrawerStateChanged(int newState) {}
         });
-
     }
 
-    private void addRightPanel() {
+    private void customizeSmoochInterface() {
         uiDrawer = new DrawerLayout(this);
 
         final FrameLayout rightSidePanelCountainer = new FrameLayout(this);
@@ -98,8 +90,7 @@ public class ChatScreen extends ConversationActivity {
         contentView.removeView(rootView);
         rootView.setBackgroundColor(Color.WHITE);
         chatContainer.addView(rootView, new DrawerLayout.LayoutParams(DrawerLayout.LayoutParams.MATCH_PARENT, DrawerLayout.LayoutParams.MATCH_PARENT));
-        uiActionBar = LayoutInflater.from(this).inflate(R.layout.layout_chat_action_bar, chatContainer);
-        ((TextView) uiActionBar.findViewById(R.id.full_name)).setText(userInteractor.getFullName());
+        View uiActionBar = LayoutInflater.from(this).inflate(R.layout.layout_chat_action_bar, chatContainer);
         uiActionBar.findViewById(R.id.menu).setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View onClick) {
                 if (uiDrawer.isDrawerOpen(GravityCompat.END)) {
@@ -109,11 +100,16 @@ public class ChatScreen extends ConversationActivity {
                 }
             }
         });
+
         // TODO decide show or not hbf logo, need info from server side
 
         uiDrawer.addView(chatContainer, new DrawerLayout.LayoutParams(DrawerLayout.LayoutParams.MATCH_PARENT, DrawerLayout.LayoutParams.MATCH_PARENT));
         uiDrawer.addView(rightSidePanelCountainer);
         contentView.addView(uiDrawer);
+    }
+
+    private void showUserName(String username) {
+        ((TextView) findViewById(R.id.full_name)).setText(username);
     }
 
     @Override public void onBackPressed() {
@@ -126,7 +122,10 @@ public class ChatScreen extends ConversationActivity {
 
     @Override public void onResume() {
         super.onResume();
-        // the only way to customize smooch UI
+        Bus.subscribe(this);
+
+        // we could not customize part of the UI in on create because not all necessary views present in the hierarcy
+        // that's the reason why we split customize process between onCreate/onResume
         findViewById(R.id.scrollView).setBackgroundResource(R.drawable.white_with_round_corners);
         View uiInputText = findViewById(R.id.Smooch_inputText);
         uiInputText.setBackgroundColor(Color.WHITE);
@@ -141,7 +140,8 @@ public class ChatScreen extends ConversationActivity {
         ((View) uiInputText.getParent()).setBackgroundColor(0xFFECF3FA);
         findViewById(R.id.Smooch_btnCamera).setVisibility(View.GONE);
         ((ImageView) findViewById(R.id.Smooch_btnSend)).setImageResource(R.drawable.ic_send);
-        Bus.subscribe(this);
+
+        showUserName(userInteractor.getFullName());
     }
 
     @Subscribe public void onEvent(CloseDrawerEvent event) {
