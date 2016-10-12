@@ -5,18 +5,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.b_designworks.android.R;
 import com.b_designworks.android.UserInteractor;
@@ -41,6 +38,7 @@ public class ChatScreen extends ConversationActivity {
     @Inject UserInteractor userInteractor;
 
     private DrawerLayout uiDrawer;
+    private View         uiActionBar;
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
@@ -100,18 +98,21 @@ public class ChatScreen extends ConversationActivity {
         contentView.removeView(rootView);
         rootView.setBackgroundColor(Color.WHITE);
         chatContainer.addView(rootView, new DrawerLayout.LayoutParams(DrawerLayout.LayoutParams.MATCH_PARENT, DrawerLayout.LayoutParams.MATCH_PARENT));
-        LayoutInflater.from(this).inflate(R.layout.layout_toolbar, chatContainer);
-        Toolbar uiToolbar = (Toolbar) chatContainer.findViewById(R.id.toolbar);
-        setSupportActionBar(uiToolbar);
+        uiActionBar = LayoutInflater.from(this).inflate(R.layout.layout_chat_action_bar, chatContainer);
+        uiActionBar.findViewById(R.id.menu).setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View onClick) {
+                if (uiDrawer.isDrawerOpen(GravityCompat.END)) {
+                    ChatScreen.this.closeDrawer();
+                } else {
+                    uiDrawer.openDrawer(GravityCompat.END);
+                }
+            }
+        });
+        // TODO decide show or not hbf logo, need info from server side
+
         uiDrawer.addView(chatContainer, new DrawerLayout.LayoutParams(DrawerLayout.LayoutParams.MATCH_PARENT, DrawerLayout.LayoutParams.MATCH_PARENT));
         uiDrawer.addView(rightSidePanelCountainer);
         contentView.addView(uiDrawer);
-    }
-
-    @Override public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.chat, menu);
-        return true;
     }
 
     @Override public void onBackPressed() {
@@ -153,19 +154,5 @@ public class ChatScreen extends ConversationActivity {
 
     private void closeDrawer() {
         uiDrawer.closeDrawer(GravityCompat.END);
-    }
-
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.right_panel:
-                if (uiDrawer.isDrawerOpen(GravityCompat.END)) {
-                    closeDrawer();
-                } else {
-                    uiDrawer.openDrawer(GravityCompat.END);
-                }
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 }
