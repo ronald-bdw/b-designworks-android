@@ -115,6 +115,10 @@
     <string name="error_incorrect_phone">Please check your number and try again</string>
     <string name="progress_verifying_phone_number">Verifying phone number</string>
 
+    <string name="Smooch_startOfConversation"/>
+    <string name="Smooch_welcome"/>
+    <string name="Smooch_messageHint">Input chat message</string>
+
     <string-array name="select_provider_options">
         <item>HBF</item>
         <item>I do not have a provider</item>

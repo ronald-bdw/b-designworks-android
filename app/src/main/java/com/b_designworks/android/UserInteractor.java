@@ -126,4 +126,9 @@ public class UserInteractor {
             return response.getUser();
         });
     }
+
+    public String getFullName() {
+        User user = getUser();
+        return user.getFirstName() + " " + user.getLastName();
+    }
 }
