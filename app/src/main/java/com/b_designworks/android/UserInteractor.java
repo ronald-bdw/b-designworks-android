@@ -120,6 +120,13 @@ public class UserInteractor {
             .map(result -> null);
     }
 
+    public Observable<User> updateUserProfile() {
+        return api.currentUser().map(response -> {
+            saveUser(response.getUser());
+            return response.getUser();
+        });
+    }
+
     public String getFullName() {
         User user = getUser();
         return user.getFirstName() + " " + user.getLastName();
