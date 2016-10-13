@@ -132,7 +132,7 @@ public class ChatScreen extends ConversationActivity {
     }
 
     private void setUpProviderLogo() {
-        // TODO
+        // TODO show provider logo in uiProviderLogo view or hide it if there is no provider
     }
 
     @Subscribe public void onEvent(CloseDrawerEvent event) {
