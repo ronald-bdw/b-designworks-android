@@ -119,4 +119,11 @@ public class UserInteractor {
         return api.integrateFitnessApp(code, Provider.FITBIT)
             .map(result -> null);
     }
+
+    public Observable<User> updateUserProfile() {
+        return api.currentUser().map(response -> {
+            saveUser(response.getUser());
+            return response.getUser();
+        });
+    }
 }
