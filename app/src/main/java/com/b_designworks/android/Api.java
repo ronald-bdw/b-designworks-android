@@ -10,6 +10,7 @@ import com.b_designworks.android.sync.Provider;
 import okhttp3.MultipartBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -29,6 +30,8 @@ public interface Api {
     @POST(V1 + "auth_phone_codes")
     Observable<AuthResponse> sendMeCode(
         @Field("phone_number") String phone);
+
+    @GET(V1 + "users/account") Observable<UserResponse> currentUser();
 
     @FormUrlEncoded
     @POST(V1 + "users") Observable<UserResponse> register(

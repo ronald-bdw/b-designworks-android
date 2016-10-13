@@ -15,6 +15,8 @@ import com.b_designworks.android.UserInteractor;
 import com.b_designworks.android.login.models.User;
 import com.b_designworks.android.utils.Bus;
 import com.b_designworks.android.utils.ImageLoader;
+import com.b_designworks.android.utils.Logger;
+import com.b_designworks.android.utils.Rxs;
 import com.b_designworks.android.utils.di.Injector;
 
 import javax.inject.Inject;
@@ -39,11 +41,23 @@ public class ChatSidePanelFragment extends Fragment {
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Injector.inject(this);
+        userInteractor.updateUserProfile()
+            .compose(Rxs.doInBackgroundDeliverToUI())
+            .subscribe(this::showUser, Logger::e);
     }
 
-    @Nullable @Override public View onCreateView(LayoutInflater inflater,
-                                                 @Nullable ViewGroup container,
-                                                 @Nullable Bundle savedInstanceState) {
+    private void showUser(User user) {
+        if (getContext() != null) {
+            ImageLoader.load(getContext(), uiAvatar, user.getAvatar().getOriginal());
+            uiFullname.setText(getString(R.string.edit_profile_name_surname_pattern, user.getFirstName(), user.getLastName()));
+            uiEmail.setText(user.getEmail());
+        }
+    }
+
+    @Nullable @Override
+    public View onCreateView(LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.layout_chat_side_panel, container, false);
         ButterKnife.bind(this, rootView);
         return rootView;
@@ -52,10 +66,7 @@ public class ChatSidePanelFragment extends Fragment {
 
     @Override public void onResume() {
         super.onResume();
-        User user = userInteractor.getUser();
-        ImageLoader.load(getContext(), uiAvatar, user.getAvatar().getOriginal());
-        uiFullname.setText(getString(R.string.edit_profile_name_surname_pattern, user.getFirstName(), user.getLastName()));
-        uiEmail.setText(user.getEmail());
+        showUser(userInteractor.getUser());
     }
 
     @OnClick(R.id.profile) void onProfileClick() {
