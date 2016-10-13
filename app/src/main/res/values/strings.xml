@@ -31,7 +31,7 @@
     <string name="verify_enter_code">If you did not automatically redirect after receiving sms please enter verification code below</string>
     <string name="sync_google_fit">Google Fit</string>
     <string name="sync_fitbit">Fitbit</string>
-    <string name="settings_logout">Logout</string>
+    <string name="settings_logout">Log Out</string>
     <string name="settings_sync">Sync</string>
     <string name="profile_phone">Phone</string>
     <string name="profile_email">Email</string>
@@ -118,6 +118,7 @@
     <string name="Smooch_startOfConversation"/>
     <string name="Smooch_welcome"/>
     <string name="Smooch_messageHint">Input chat message</string>
+    <string name="settings_show_notifications">Show notifications</string>
 
     <string-array name="select_provider_options">
         <item>HBF</item>
