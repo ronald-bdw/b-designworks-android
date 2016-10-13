@@ -15,9 +15,9 @@ import com.b_designworks.android.UserInteractor;
 import com.b_designworks.android.login.models.User;
 import com.b_designworks.android.utils.Bus;
 import com.b_designworks.android.utils.ImageLoader;
+import com.b_designworks.android.utils.Logger;
 import com.b_designworks.android.utils.Rxs;
 import com.b_designworks.android.utils.di.Injector;
-import com.nostra13.universalimageloader.utils.L;
 
 import javax.inject.Inject;
 
@@ -43,7 +43,7 @@ public class ChatSidePanelFragment extends Fragment {
         Injector.inject(this);
         userInteractor.updateUserProfile()
             .compose(Rxs.doInBackgroundDeliverToUI())
-            .subscribe(this::showUser, L::e);
+            .subscribe(this::showUser, Logger::e);
     }
 
     private void showUser(User user) {
