@@ -22,7 +22,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/bg_edit_profile"
-        android:inputType="text"
+        android:inputType="textCapWords"
         />
 
     <TextView
@@ -43,7 +43,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/bg_edit_profile"
-        android:inputType="text"
+        android:inputType="textCapWords"
         />
 
     <TextView
