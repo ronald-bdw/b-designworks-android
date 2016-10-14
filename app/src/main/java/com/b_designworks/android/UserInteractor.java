@@ -25,6 +25,7 @@ public class UserInteractor {
 
     private static final String KEY_USER                    = "user";
     private static final String KEY_FIRST_VISIT_AFTER_LOGIN = "firstVisitAfterLogin";
+    private static final String KEY_NOTIFICATIONS_ENABLED   = "notificationsState";
 
     @NonNull private final IStorage     storage;
     @NonNull private final UserSettings userSettings;
@@ -130,5 +131,13 @@ public class UserInteractor {
     public String getFullName() {
         User user = getUser();
         return user.getFirstName() + " " + user.getLastName();
+    }
+
+    public boolean isNotificationsEnabled(){
+        return storage.getBoolean(KEY_NOTIFICATIONS_ENABLED, false);
+    }
+
+    public void setNotificationsEnabled(boolean enabled){
+        storage.putBoolean(KEY_NOTIFICATIONS_ENABLED, enabled);
     }
 }
