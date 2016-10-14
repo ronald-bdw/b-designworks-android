@@ -133,11 +133,11 @@ public class UserInteractor {
         return user.getFirstName() + " " + user.getLastName();
     }
 
-    public boolean isNotificationsEnabled(){
+    public boolean isNotificationsEnabled() {
         return storage.getBoolean(KEY_NOTIFICATIONS_ENABLED, false);
     }
 
-    public void setNotificationsEnabled(boolean enabled){
+    public void setNotificationsEnabled(boolean enabled) {
         storage.putBoolean(KEY_NOTIFICATIONS_ENABLED, enabled);
     }
 }
