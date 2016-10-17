@@ -139,6 +139,10 @@ public class ChatScreen extends ConversationActivity {
         closeDrawer();
     }
 
+    @Subscribe public void onEvent(UserProfileUpdateEvent event) {
+        showUserName(userInteractor.getFullName());
+    }
+
     @Override public void onPause() {
         Bus.unsubscribe(this);
         super.onPause();
