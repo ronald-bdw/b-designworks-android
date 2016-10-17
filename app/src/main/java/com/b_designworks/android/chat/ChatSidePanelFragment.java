@@ -19,8 +19,6 @@ import com.b_designworks.android.utils.Logger;
 import com.b_designworks.android.utils.Rxs;
 import com.b_designworks.android.utils.di.Injector;
 
-import org.greenrobot.eventbus.EventBus;
-
 import javax.inject.Inject;
 
 import butterknife.Bind;
@@ -45,7 +43,12 @@ public class ChatSidePanelFragment extends Fragment {
         Injector.inject(this);
         userInteractor.updateUserProfile()
             .compose(Rxs.doInBackgroundDeliverToUI())
-            .subscribe(this::showUser, Logger::e);
+            .subscribe(this::updateUserProfile, Logger::e);
+    }
+
+    private void updateUserProfile(User user){
+        showUser(user);
+        Bus.event(UserProfileUpdatedEvent.EVENT);
     }
 
     private void showUser(User user) {
@@ -53,7 +56,6 @@ public class ChatSidePanelFragment extends Fragment {
             ImageLoader.load(getContext(), uiAvatar, user.getAvatar().getOriginal());
             uiFullname.setText(getString(R.string.edit_profile_name_surname_pattern, user.getFirstName(), user.getLastName()));
             uiEmail.setText(user.getEmail());
-            Bus.event(UserProfileUpdateEvent.EVENT);
         }
     }
 
