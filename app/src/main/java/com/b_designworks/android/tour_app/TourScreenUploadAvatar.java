@@ -52,12 +52,12 @@ public class TourScreenUploadAvatar extends BaseActivity {
     }
 
     @OnClick(R.id.skip) void onSkipClick() {
-        Navigator.tourFitnessApps(context());
+        Navigator.chat(context());
     }
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.next) {
-            Navigator.tourFitnessApps(context());
+            Navigator.chat(context());
             return true;
         }
         return super.onOptionsItemSelected(item);
