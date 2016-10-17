@@ -122,4 +122,11 @@
         <item>HBF</item>
         <item>I do not have a provider</item>
     </string-array>
+
+    <string-array name="trial_titles">
+        <item>Welcome to Pearup!</item>
+        <item>Personalized Coach</item>
+        <item>Getting active tips</item>
+        <item>Free 14 day trial</item>
+    </string-array>
 </resources>
