@@ -28,8 +28,7 @@ public class SettingsScreen extends BaseActivity {
 
     @Inject UserInteractor userInteractor;
 
-    @Bind(R.id.avatar) ImageView uiAvatar;
-
+    @Bind(R.id.avatar)               ImageView    uiAvatar;
     @Bind(R.id.notifications_toggle) ToggleButton uiNotificationsToggle;
 
     @NonNull @Override public UiInfo getUiInfo() {
@@ -65,6 +64,7 @@ public class SettingsScreen extends BaseActivity {
     @OnCheckedChanged(R.id.notifications_toggle) void onNotificationsToggleCheckedChanged(boolean isChecked){
         userInteractor.setNotificationsEnabled(isChecked);
     }
+
     private void showNotificationsToggleIsChecked(){
         uiNotificationsToggle.setChecked(userInteractor.isNotificationsEnabled());
     }

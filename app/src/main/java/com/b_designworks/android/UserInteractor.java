@@ -25,7 +25,7 @@ public class UserInteractor {
 
     private static final String KEY_USER                    = "user";
     private static final String KEY_FIRST_VISIT_AFTER_LOGIN = "firstVisitAfterLogin";
-    private static final String KEY_NOTIFICATIONS_ENABLED   = "notificationsState";
+    private static final String KEY_NOTIFICATIONS_ENABLED   = "notificationsEnabled";
 
     @NonNull private final IStorage     storage;
     @NonNull private final UserSettings userSettings;
