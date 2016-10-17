@@ -2,10 +2,12 @@ package com.b_designworks.android;
 
 import android.support.annotation.NonNull;
 
+import com.b_designworks.android.chat.UserProfileUpdatedEvent;
 import com.b_designworks.android.login.models.AuthResponse;
 import com.b_designworks.android.login.models.User;
 import com.b_designworks.android.login.models.UserResponse;
 import com.b_designworks.android.sync.Provider;
+import com.b_designworks.android.utils.Bus;
 import com.b_designworks.android.utils.storage.IStorage;
 import com.b_designworks.android.utils.storage.UserSettings;
 
@@ -123,6 +125,7 @@ public class UserInteractor {
     public Observable<User> updateUserProfile() {
         return api.currentUser().map(response -> {
             saveUser(response.getUser());
+            Bus.event(UserProfileUpdatedEvent.EVENT);
             return response.getUser();
         });
     }

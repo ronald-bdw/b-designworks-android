@@ -43,12 +43,7 @@ public class ChatSidePanelFragment extends Fragment {
         Injector.inject(this);
         userInteractor.updateUserProfile()
             .compose(Rxs.doInBackgroundDeliverToUI())
-            .subscribe(this::updateUserProfile, Logger::e);
-    }
-
-    private void updateUserProfile(User user){
-        showUser(user);
-        Bus.event(UserProfileUpdatedEvent.EVENT);
+            .subscribe(this::showUser, Logger::e);
     }
 
     private void showUser(User user) {
