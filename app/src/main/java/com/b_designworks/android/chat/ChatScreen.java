@@ -139,7 +139,7 @@ public class ChatScreen extends ConversationActivity {
         closeDrawer();
     }
 
-    @Subscribe public void onEvent(UserProfileUpdateEvent event) {
+    @Subscribe public void onEvent(UserProfileUpdatedEvent event) {
         showUserName(userInteractor.getFullName());
     }
 
