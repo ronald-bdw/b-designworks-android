@@ -118,6 +118,7 @@
     <string name="Smooch_startOfConversation"/>
     <string name="Smooch_welcome"/>
     <string name="Smooch_messageHint">Input chat message</string>
+    <string name="show_notifications">Show Notifications</string>
 
     <string-array name="select_provider_options">
         <item>HBF</item>
