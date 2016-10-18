@@ -53,36 +53,39 @@ public class GoogleFitPresenter {
             .requestServerAuthCode(SERVER_KEY, false)
             .build();
 
-        mClient = new GoogleApiClient.Builder(context)
-            .addApi(Auth.GOOGLE_SIGN_IN_API, signInRequest)
-            .addConnectionCallbacks(
-                new GoogleApiClient.ConnectionCallbacks() {
-                    @Override
-                    public void onConnected(Bundle bundle) {
-                        view.enableIntegrationButton(true);
-                    }
+        if (mClient == null) {
+            mClient = new GoogleApiClient.Builder(context)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, signInRequest)
+                .addConnectionCallbacks(
+                    new GoogleApiClient.ConnectionCallbacks() {
+                        @Override
+                        public void onConnected(Bundle bundle) {
+                            view.enableIntegrationButton(true);
+                        }
 
-                    @Override
-                    public void onConnectionSuspended(int i) {
-                        if (i == GoogleApiClient.ConnectionCallbacks.CAUSE_NETWORK_LOST) {
-                            if (view != null) {
-                                view.showInternetConnectionError();
-                            }
-                        } else if (i == GoogleApiClient.ConnectionCallbacks.CAUSE_SERVICE_DISCONNECTED) {
-                            if (view != null) {
-                                view.showGoogleServiceDisconected();
+                        @Override
+                        public void onConnectionSuspended(int i) {
+                            if (i == GoogleApiClient.ConnectionCallbacks.CAUSE_NETWORK_LOST) {
+                                if (view != null) {
+                                    view.showInternetConnectionError();
+                                }
+                            } else if (i == GoogleApiClient.ConnectionCallbacks.CAUSE_SERVICE_DISCONNECTED) {
+                                if (view != null) {
+                                    view.showGoogleServiceDisconected();
+                                }
                             }
                         }
                     }
-                }
-            )
-            .enableAutoManage(activity, 0, result -> {
-                Log.i(TAG, "Google Play services connection failed. Cause: " + result.toString());
-                if (view != null) {
-                    view.onGoogleServicesError(result);
-                }
-            })
-            .build();
+                )
+                .enableAutoManage(activity, 0, result -> {
+                    Log.i(TAG, "Google Play services connection failed. Cause: " + result.toString());
+                    if (view != null) {
+                        view.onGoogleServicesError(result);
+                    }
+                })
+                .build();
+        }
+
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mClient);
         activity.startActivityForResult(signInIntent, REQUEST_CODE_SIGN_IN);
     }
@@ -117,5 +120,11 @@ public class GoogleFitPresenter {
 
     public void detachView() {
         view = null;
+    }
+
+    public void logout(){
+        if(mClient!=null) {
+            Auth.GoogleSignInApi.signOut(mClient);
+        }
     }
 }
