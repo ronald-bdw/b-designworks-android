@@ -8,27 +8,60 @@
 
     <include layout="@layout/layout_toolbar"/>
 
-    <TextView
+    <LinearLayout
         android:id="@+id/google_fit"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:text="@string/sync_google_fit"
-        android:gravity="center_vertical"
-        android:paddingLeft="16dp"
-        android:textSize="16sp"
+        android:orientation="horizontal"
         android:background="@android:color/white"
-        />
+        >
 
-    <TextView
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/sync_google_fit"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:textSize="16sp"
+            />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/google_fit_switch_compat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/fitbit"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:text="@string/sync_fitbit"
-        android:gravity="center_vertical"
-        android:paddingLeft="16dp"
-        android:textSize="16sp"
+        android:orientation="horizontal"
         android:background="@android:color/white"
         android:layout_marginTop="1dp"
-        />
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/sync_fitbit"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:textSize="16sp"
+            />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/fitbit_switch_compat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            />
+
+    </LinearLayout>
+
 
 </LinearLayout>
