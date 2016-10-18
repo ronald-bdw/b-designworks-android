@@ -12,6 +12,7 @@ import com.b_designworks.android.profile.ProfileScreen;
 import com.b_designworks.android.settings.SettingsScreen;
 import com.b_designworks.android.sync.FitbitScreen;
 import com.b_designworks.android.sync.GoogleFitScreen;
+import com.b_designworks.android.sync.SyncScreen;
 import com.b_designworks.android.tour_app.TourScreenProfile;
 import com.b_designworks.android.tour_app.TourScreenUploadAvatar;
 
@@ -40,4 +41,5 @@ public interface AppComponent {
     void inject(TourScreenUploadAvatar tourScreenUploadAvatar);
     void inject(PushNotificationsHandlerService pushNotificationsHandlerService);
     void inject(EnterPhoneScreen enterPhoneScreen);
+    void inject(SyncScreen syncScreen);
 }

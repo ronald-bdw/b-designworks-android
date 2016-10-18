@@ -16,6 +16,7 @@ import com.b_designworks.android.profile.ProfileScreen;
 import com.b_designworks.android.settings.SettingsScreen;
 import com.b_designworks.android.sync.FitbitScreen;
 import com.b_designworks.android.sync.GoogleFitScreen;
+import com.b_designworks.android.sync.SyncScreen;
 import com.b_designworks.android.tour_app.TourScreenProfile;
 import com.b_designworks.android.tour_app.TourScreenUploadAvatar;
 
@@ -74,6 +75,10 @@ public class Injector {
 
     public static void inject(TourScreenUploadAvatar tourScreenUploadAvatar) {
         getAppComponent(tourScreenUploadAvatar).inject(tourScreenUploadAvatar);
+    }
+
+    public static void inject(SyncScreen syncScreen) {
+        getAppComponent(syncScreen).inject(syncScreen);
     }
 
     public static void inject(PushNotificationsHandlerService pushNotificationsHandlerService) {
