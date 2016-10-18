@@ -68,8 +68,7 @@ public class ProfileScreen extends BaseActivity implements SwipeRefreshLayout.On
         userInteractor.updateUserProfile()
             .compose(Rxs.doInBackgroundDeliverToUI())
             .doOnTerminate(() -> uiSwipeRefreshLayout.setRefreshing(false))
-            .doOnError((e) -> ErrorUtils.handle(context(), e))
-            .subscribe(this::showUser, Logger::e);
+            .subscribe(this::showUser, ErrorUtils.handle(context()));
     }
 
     private void tuneSwipeRefreshLayout() {
