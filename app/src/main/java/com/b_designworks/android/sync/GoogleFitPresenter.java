@@ -11,13 +11,10 @@ import android.util.Log;
 
 import com.b_designworks.android.utils.Bus;
 import com.b_designworks.android.utils.Rxs;
-import com.b_designworks.android.utils.network.ErrorUtils;
 import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.proxy.AuthApiStatusCodes;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
@@ -63,7 +60,7 @@ public class GoogleFitPresenter {
                 new GoogleApiClient.ConnectionCallbacks() {
                     @Override
                     public void onConnected(Bundle bundle) {
-                        view.enableIntegrationButton(true);
+                        view.enableIntegrationContainer(true);
                     }
 
                     @Override

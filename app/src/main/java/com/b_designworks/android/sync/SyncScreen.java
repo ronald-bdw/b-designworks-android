@@ -84,7 +84,7 @@ public class SyncScreen extends BaseActivity implements GoogleFitView {
             result.getErrorMessage(), Toast.LENGTH_LONG).show();
     }
 
-    @Override public void enableIntegrationButton(boolean enabled) {
+    @Override public void enableIntegrationContainer(boolean enabled) {
         uiSyncContainer.setEnabled(enabled);
     }
 
