@@ -36,7 +36,7 @@ public class GoogleFitScreen extends BaseActivity implements GoogleFitView {
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
         Injector.inject(this);
-        googleFitPresenter.attachView(this);
+        googleFitPresenter.attachView(this, this);
     }
 
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {

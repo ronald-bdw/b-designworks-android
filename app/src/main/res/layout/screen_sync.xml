@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/sync_container"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,17 +13,17 @@
         android:id="@+id/google_fit"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:orientation="horizontal"
         android:background="@android:color/white"
+        android:orientation="horizontal"
         >
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/sync_google_fit"
             android:gravity="center_vertical"
             android:paddingLeft="16dp"
+            android:text="@string/sync_google_fit"
             android:textSize="16sp"
             />
 
@@ -39,18 +40,18 @@
         android:id="@+id/fitbit"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:orientation="horizontal"
-        android:background="@android:color/white"
         android:layout_marginTop="1dp"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
         >
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/sync_fitbit"
             android:gravity="center_vertical"
             android:paddingLeft="16dp"
+            android:text="@string/sync_fitbit"
             android:textSize="16sp"
             />
 

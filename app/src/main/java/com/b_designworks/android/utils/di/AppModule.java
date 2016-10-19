@@ -54,9 +54,9 @@ public class AppModule {
 
     @Provides
     @Singleton
-    GoogleFitInteractor provideGoogleFitInteractor(
-        @NonNull Api api) {
-        return new GoogleFitInteractor(api);
+    GoogleFitInteractor provideGoogleFitInteractor(@NonNull IStorage storage,
+                                                   @NonNull Api api) {
+        return new GoogleFitInteractor(storage, api);
     }
 
     @Provides

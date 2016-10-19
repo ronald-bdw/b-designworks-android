@@ -9,11 +9,15 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
+import com.b_designworks.android.utils.Bus;
 import com.b_designworks.android.utils.Rxs;
+import com.b_designworks.android.utils.network.ErrorUtils;
 import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.proxy.AuthApiStatusCodes;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
@@ -42,50 +46,50 @@ public class GoogleFitPresenter {
         this.context = context;
     }
 
-    public void attachView(GoogleFitView view) {
+    public void attachView(GoogleFitView view, @NonNull FragmentActivity activity) {
         this.view = view;
+        buildGoogleFitClient(activity);
     }
 
-    public void startIntegrate(@NonNull FragmentActivity activity) {
+    private void buildGoogleFitClient(@NonNull FragmentActivity activity) {
         GoogleSignInOptions signInRequest = new GoogleSignInOptions
             .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestScopes(new Scope(Scopes.FITNESS_ACTIVITY_READ))
             .requestServerAuthCode(SERVER_KEY, false)
             .build();
+        mClient = new GoogleApiClient.Builder(context)
+            .addApi(Auth.GOOGLE_SIGN_IN_API, signInRequest)
+            .addConnectionCallbacks(
+                new GoogleApiClient.ConnectionCallbacks() {
+                    @Override
+                    public void onConnected(Bundle bundle) {
+                        view.enableIntegrationButton(true);
+                    }
 
-        if (mClient == null) {
-            mClient = new GoogleApiClient.Builder(context)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, signInRequest)
-                .addConnectionCallbacks(
-                    new GoogleApiClient.ConnectionCallbacks() {
-                        @Override
-                        public void onConnected(Bundle bundle) {
-                            view.enableIntegrationButton(true);
-                        }
-
-                        @Override
-                        public void onConnectionSuspended(int i) {
-                            if (i == GoogleApiClient.ConnectionCallbacks.CAUSE_NETWORK_LOST) {
-                                if (view != null) {
-                                    view.showInternetConnectionError();
-                                }
-                            } else if (i == GoogleApiClient.ConnectionCallbacks.CAUSE_SERVICE_DISCONNECTED) {
-                                if (view != null) {
-                                    view.showGoogleServiceDisconected();
-                                }
+                    @Override
+                    public void onConnectionSuspended(int i) {
+                        if (i == GoogleApiClient.ConnectionCallbacks.CAUSE_NETWORK_LOST) {
+                            if (view != null) {
+                                view.showInternetConnectionError();
+                            }
+                        } else if (i == GoogleApiClient.ConnectionCallbacks.CAUSE_SERVICE_DISCONNECTED) {
+                            if (view != null) {
+                                view.showGoogleServiceDisconected();
                             }
                         }
                     }
-                )
-                .enableAutoManage(activity, 0, result -> {
-                    Log.i(TAG, "Google Play services connection failed. Cause: " + result.toString());
-                    if (view != null) {
-                        view.onGoogleServicesError(result);
-                    }
-                })
-                .build();
-        }
+                }
+            )
+            .enableAutoManage(activity, 0, result -> {
+                Log.i(TAG, "Google Play services connection failed. Cause: " + result.toString());
+                if (view != null) {
+                    view.onGoogleServicesError(result);
+                }
+            })
+            .build();
+    }
 
+    public void startIntegrate(@NonNull FragmentActivity activity) {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mClient);
         activity.startActivityForResult(signInIntent, REQUEST_CODE_SIGN_IN);
     }
@@ -103,6 +107,8 @@ public class GoogleFitPresenter {
                         }, error -> {
                             view.onError(error);
                         });
+                    interactor.setGoogleFitAuthorizationEnabled(true);
+                    Bus.event(GoogleFitAuthorizationEnabledEvent.EVENT);
                     if (view != null) {
                         view.codeRetrievedSuccessfull();
                     }
@@ -120,11 +126,18 @@ public class GoogleFitPresenter {
 
     public void detachView() {
         view = null;
+        mClient = null;
     }
 
-    public void logout(){
-        if(mClient!=null) {
+    public void logout() {
+        if (mClient != null) {
             Auth.GoogleSignInApi.signOut(mClient);
+            interactor.setGoogleFitAuthorizationEnabled(false);
+            Bus.event(GoogleFitAuthorizationEnabledEvent.EVENT);
         }
+    }
+
+    public boolean isAuthorized() {
+        return interactor.isGoogleFitAuthorizationEnabled();
     }
 }
