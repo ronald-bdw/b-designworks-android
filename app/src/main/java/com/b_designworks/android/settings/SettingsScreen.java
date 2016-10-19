@@ -3,8 +3,8 @@ package com.b_designworks.android.settings;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.SwitchCompat;
 import android.widget.ImageView;
-import android.widget.ToggleButton;
 
 import com.b_designworks.android.BaseActivity;
 import com.b_designworks.android.Navigator;
@@ -28,8 +28,8 @@ public class SettingsScreen extends BaseActivity {
 
     @Inject UserInteractor userInteractor;
 
-    @Bind(R.id.avatar)               ImageView    uiAvatar;
-    @Bind(R.id.notifications_toggle) ToggleButton uiNotificationsToggle;
+    @Bind(R.id.avatar)                      ImageView    uiAvatar;
+    @Bind(R.id.notifications_switch_compat) SwitchCompat uiNotificationsSwitchCompat;
 
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_settings).enableBackButton().setTitleRes(R.string.title_settings);
@@ -38,7 +38,7 @@ public class SettingsScreen extends BaseActivity {
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
         Injector.inject(this);
-        showNotificationsToggleIsChecked();
+        showNotificationsSwitchCompatIsChecked();
     }
 
     @Override protected void onResume() {
@@ -46,7 +46,7 @@ public class SettingsScreen extends BaseActivity {
         ImageLoader.load(context(), uiAvatar, userInteractor.getUser().getAvatar().getOriginal());
     }
 
-    @OnClick(R.id.sync) void onSyncClick(){
+    @OnClick(R.id.sync) void onSyncClick() {
         Navigator.sync(context());
     }
 
@@ -61,12 +61,13 @@ public class SettingsScreen extends BaseActivity {
         });
     }
 
-    @OnCheckedChanged(R.id.notifications_toggle) void onNotificationsToggleCheckedChanged(boolean isChecked){
+    @OnCheckedChanged(R.id.notifications_switch_compat)
+    void onNotificationsSwitchCompatCheckedChanged(boolean isChecked) {
         userInteractor.setNotificationsEnabled(isChecked);
     }
 
-    private void showNotificationsToggleIsChecked(){
-        uiNotificationsToggle.setChecked(userInteractor.isNotificationsEnabled());
+    private void showNotificationsSwitchCompatIsChecked() {
+        uiNotificationsSwitchCompat.setChecked(userInteractor.isNotificationsEnabled());
     }
 
 }
