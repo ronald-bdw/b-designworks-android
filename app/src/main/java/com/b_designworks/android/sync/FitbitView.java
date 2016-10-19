@@ -7,5 +7,5 @@ public interface FitbitView {
     void showSendingFitbitCodeProgress();
     void dismissSendingFitbitCodeProgress();
     void fitbitSuccessfullyIntegrated();
-    void showError(Throwable error);
+    void onError(Throwable error);
 }

@@ -1,5 +1,6 @@
 package com.b_designworks.android.sync;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,12 +10,15 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.b_designworks.android.BaseActivity;
+import com.b_designworks.android.BuildConfig;
 import com.b_designworks.android.Navigator;
 import com.b_designworks.android.R;
+import com.b_designworks.android.UserInteractor;
 import com.b_designworks.android.utils.Bus;
 import com.b_designworks.android.utils.di.Injector;
 import com.b_designworks.android.utils.network.ErrorUtils;
 import com.b_designworks.android.utils.ui.SimpleDialog;
+import com.b_designworks.android.utils.ui.SimpleLoadingDialog;
 import com.b_designworks.android.utils.ui.UiInfo;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
@@ -25,17 +29,32 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import rx.Subscription;
 
 /**
  * Created by Ilya Eremin on 04.08.2016.
  */
-public class SyncScreen extends BaseActivity implements GoogleFitView {
+public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitView {
+
+    private static final String GETTING_CODE_URL = "https://www.fitbit.com/oauth2/" +
+        "authorize?response_type=code" +
+        "&client_id=" + BuildConfig.FITBIT_APP_ID +
+//        "&redirect_uri=pearup%3A%2F%2Fpearup.com"+
+        "&scope=activity";
+
+    private static final String KEY_FITBIT_CODE = "fitbitCode";
 
     @Bind(R.id.sync_container)           View         uiSyncContainer;
     @Bind(R.id.google_fit_switch_compat) SwitchCompat uiGoogleFitSC;
     @Bind(R.id.fitbit_switch_compat)     SwitchCompat uiFitBitSC;
 
+    @Inject UserInteractor     userInteractor;
     @Inject GoogleFitPresenter googleFitPresenter;
+
+    @Nullable         String          code;
+    @Nullable         Subscription    sendingFitbitCodeSubs;
+    @Nullable private ProgressDialog  progressDialog;
+    private           FitbitPresenter fitbitPresenter;
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
@@ -43,6 +62,10 @@ public class SyncScreen extends BaseActivity implements GoogleFitView {
         Bus.subscribe(this);
         googleFitPresenter.attachView(this, this);
         uiGoogleFitSC.setChecked(googleFitPresenter.isAuthorized());
+
+        fitbitPresenter = new FitbitPresenter(this, userInteractor);
+        Intent intent = getIntent();
+        handleIntent(intent);
     }
 
     @NonNull @Override public UiInfo getUiInfo() {
@@ -58,19 +81,10 @@ public class SyncScreen extends BaseActivity implements GoogleFitView {
     }
 
     @OnClick(R.id.fitbit) void onFitbitClick() {
-        Navigator.fitbit(this);
+        Navigator.openUrl(context(), GETTING_CODE_URL);
     }
 
-    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        googleFitPresenter.handleResponse(requestCode, resultCode, data);
-    }
-
-    @Override protected void onResume() {
-        super.onResume();
-        googleFitPresenter.onShown();
-    }
-
+    //Google Fit
     @Override public void codeRetrievedSuccessfull() {
         Toast.makeText(this, R.string.google_fit_token_retrieved, Toast.LENGTH_SHORT).show();
     }
@@ -100,6 +114,67 @@ public class SyncScreen extends BaseActivity implements GoogleFitView {
         ErrorUtils.handle(context(), error);
     }
 
+    //FitBit
+    @Override public void showSendingFitbitCodeProgress() {
+        progressDialog = SimpleLoadingDialog.show(context(), getString(R.string.sending_fitbit_code), () -> {
+            if (sendingFitbitCodeSubs != null) {
+                sendingFitbitCodeSubs.unsubscribe();
+                sendingFitbitCodeSubs = null;
+            }
+        });
+    }
+
+    @Override public void dismissSendingFitbitCodeProgress() {
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+            progressDialog = null;
+        }
+    }
+
+    @Override public void fitbitSuccessfullyIntegrated() {
+        Toast.makeText(context(), R.string.fitbit_integration_successful, Toast.LENGTH_SHORT).show();
+    }
+
+    private void handleIntent(Intent intent) {
+        if (intent != null && intent.getData() != null) {
+            code = intent.getData().getQueryParameter("code");
+            fitbitPresenter.handleCode(code);
+        }
+    }
+
+    @Override protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handleIntent(intent);
+    }
+
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        googleFitPresenter.handleResponse(requestCode, resultCode, data);
+    }
+
+    @Override protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(KEY_FITBIT_CODE, code);
+    }
+
+    @Override protected void restoreState(@NonNull Bundle savedState) {
+        super.restoreState(savedState);
+        code = savedState.getString(KEY_FITBIT_CODE);
+    }
+
+    @Override protected void onResume() {
+        super.onResume();
+        googleFitPresenter.onShown();
+    }
+
+    @Override protected void onStop() {
+        if (sendingFitbitCodeSubs != null) {
+            sendingFitbitCodeSubs.unsubscribe();
+            sendingFitbitCodeSubs = null;
+        }
+        super.onStop();
+    }
+
     @Override protected void onDestroy() {
         googleFitPresenter.detachView();
         Bus.unsubscribe(this);
@@ -109,5 +184,4 @@ public class SyncScreen extends BaseActivity implements GoogleFitView {
     @Subscribe public void onEvent(GoogleFitAuthorizationEnabledEvent event) {
         uiGoogleFitSC.setChecked(googleFitPresenter.isAuthorized());
     }
-
 }

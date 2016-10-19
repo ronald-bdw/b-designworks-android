@@ -82,7 +82,7 @@ public class FitbitScreen extends BaseActivity implements FitbitView {
         finish();
     }
 
-    @Override public void showError(Throwable error) {
+    @Override public void onError(Throwable error) {
         ErrorUtils.handle(context(), error);
     }
 

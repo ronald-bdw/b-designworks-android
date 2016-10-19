@@ -54,7 +54,7 @@ public class FitbitPresenterTest {
         verify(fitbitView).showSendingFitbitCodeProgress();
         verify(fitbitView).dismissSendingFitbitCodeProgress();
         verify(fitbitView, never()).fitbitSuccessfullyIntegrated();
-        verify(fitbitView).showError(any());
+        verify(fitbitView).onError(any());
     }
 
 }

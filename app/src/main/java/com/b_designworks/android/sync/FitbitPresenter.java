@@ -22,6 +22,6 @@ public class FitbitPresenter {
         userInteractor.integrateFitbit(code)
             .doOnTerminate(view::dismissSendingFitbitCodeProgress)
             .compose(Rxs.doInBackgroundDeliverToUI())
-            .subscribe(result -> view.fitbitSuccessfullyIntegrated(), view::showError);
+            .subscribe(result -> view.fitbitSuccessfullyIntegrated(), view::onError);
     }
 }
