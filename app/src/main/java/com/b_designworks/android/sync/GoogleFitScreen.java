@@ -80,7 +80,7 @@ public class GoogleFitScreen extends BaseActivity implements GoogleFitView {
     }
 
     @Override public void userCancelIntegration() {
-        Logger.dToast("User cancel google fit integration", context());
+        Logger.dToast(context(), "User cancel google fit integration");
         finish();
     }
 

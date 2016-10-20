@@ -16,6 +16,7 @@ import com.b_designworks.android.UserInteractor;
 import com.b_designworks.android.login.models.User;
 import com.b_designworks.android.sync.GoogleFitPresenter;
 import com.b_designworks.android.sync.GoogleFitView;
+import com.b_designworks.android.utils.Logger;
 import com.b_designworks.android.utils.Rxs;
 import com.b_designworks.android.utils.di.Injector;
 import com.b_designworks.android.utils.network.ErrorUtils;
@@ -126,32 +127,33 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView {
     }
 
     @Override public void errorWhileRetrievingCode() {
-        Toast.makeText(this, "error while retrieving code", Toast.LENGTH_SHORT).show();
+       Logger.dToast(this, "error while retrieving code");
     }
 
     @Override public void onGoogleServicesError(ConnectionResult result) {
-        Toast.makeText(this, "onGoogleServicesError: ", Toast.LENGTH_SHORT).show();
+       Logger.dToast(this, "onGoogleServicesError: " + result.getErrorMessage());
     }
 
     @Override public void showInternetConnectionError() {
-        Toast.makeText(this, "showInternetConnectionError: ", Toast.LENGTH_SHORT).show();
+       Logger.dToast(this, "showInternetConnectionError: ");
     }
 
     @Override public void showGoogleServiceDisconected() {
-        Toast.makeText(this, "showGoogleServiceDisconected", Toast.LENGTH_SHORT).show();
+       Logger.dToast(this, "showGoogleServiceDisconected");
     }
 
     @Override public void onError(Throwable error) {
-        Toast.makeText(this, "On error", Toast.LENGTH_SHORT).show();
+       Logger.dToast(this, "On error" + error.getMessage());
     }
 
     @Override public void userCancelIntegration() {
-        Toast.makeText(this, "User canceled google git integration", Toast.LENGTH_SHORT).show();
+        Logger.dToast(context(), "User canceled google git integration");
+        Navigator.tourUploadAvatar(context());
     }
 
     @Override protected void onDestroy() {
-        googleFitPresenter.detachView();
         googleFitPresenter.disconnect(this);
+        googleFitPresenter.detachView();
         super.onDestroy();
     }
 

@@ -22,7 +22,7 @@ public class Logger {
         Log.i(TAG, msg);
     }
 
-    public static void dToast(@NonNull String msg, @NonNull Context context) {
+    public static void dToast(@NonNull Context context, @NonNull String msg) {
         if (BuildConfig.DEBUG && !BuildConfig.FLAVOR.equals("production")) {
             Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
         }
