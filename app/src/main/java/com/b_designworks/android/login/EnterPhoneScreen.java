@@ -96,7 +96,7 @@ public class EnterPhoneScreen extends BaseActivity {
                     if (!result.isPhoneRegistered()) {
                         uiPhone.setError(getString(R.string.error_phone_not_registered));
                     } else {
-                        Navigator.verification(context(), areaCode + phone);
+                        Navigator.verification(context(), areaCode + phone, result.getPhoneCodeId());
                     }
                 }, error -> {
                     if (error instanceof RetrofitException) {
