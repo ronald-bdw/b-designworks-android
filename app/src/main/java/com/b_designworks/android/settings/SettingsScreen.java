@@ -18,7 +18,6 @@ import com.b_designworks.android.utils.ui.UiInfo;
 import javax.inject.Inject;
 
 import butterknife.Bind;
-import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 /**
@@ -61,9 +60,8 @@ public class SettingsScreen extends BaseActivity {
         });
     }
 
-    @OnCheckedChanged(R.id.notifications_toggle)
-    void onNotificationsToggleCheckedChanged(boolean isChecked) {
-        userInteractor.setNotificationsEnabled(isChecked);
+    @OnClick(R.id.notifications_toggle) void onNotificationClick(SwitchCompat view) {
+        userInteractor.setNotificationsEnabled(view.isChecked());
     }
 
 }
