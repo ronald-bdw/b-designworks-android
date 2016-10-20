@@ -2,10 +2,12 @@ package com.b_designworks.android;
 
 import android.support.annotation.NonNull;
 
+import com.b_designworks.android.chat.UserProfileUpdatedEvent;
 import com.b_designworks.android.login.models.AuthResponse;
 import com.b_designworks.android.login.models.User;
 import com.b_designworks.android.login.models.UserResponse;
 import com.b_designworks.android.sync.Provider;
+import com.b_designworks.android.utils.Bus;
 import com.b_designworks.android.utils.storage.IStorage;
 import com.b_designworks.android.utils.storage.UserSettings;
 
@@ -25,6 +27,7 @@ public class UserInteractor {
 
     private static final String KEY_USER                    = "user";
     private static final String KEY_FIRST_VISIT_AFTER_LOGIN = "firstVisitAfterLogin";
+    private static final String KEY_NOTIFICATIONS_ENABLED   = "notificationsEnabled";
 
     @NonNull private final IStorage     storage;
     @NonNull private final UserSettings userSettings;
@@ -123,6 +126,7 @@ public class UserInteractor {
     public Observable<User> updateUserProfile() {
         return api.currentUser().map(response -> {
             saveUser(response.getUser());
+            Bus.event(UserProfileUpdatedEvent.EVENT);
             return response.getUser();
         });
     }
@@ -130,5 +134,13 @@ public class UserInteractor {
     public String getFullName() {
         User user = getUser();
         return user.getFirstName() + " " + user.getLastName();
+    }
+
+    public boolean isNotificationsEnabled() {
+        return storage.getBoolean(KEY_NOTIFICATIONS_ENABLED, true);
+    }
+
+    public void setNotificationsEnabled(boolean enabled) {
+        storage.putBoolean(KEY_NOTIFICATIONS_ENABLED, enabled);
     }
 }

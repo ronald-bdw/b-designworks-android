@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 
 import com.b_designworks.android.R;
+import com.b_designworks.android.UserInteractor;
 import com.b_designworks.android.chat.ChatScreen;
 import com.b_designworks.android.utils.di.Injector;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -26,6 +27,7 @@ public class PushNotificationsHandlerService extends FirebaseMessagingService {
     private static final String TAG = "PushNotificationsHandle";
 
     @Inject Gson mapper;
+    @Inject UserInteractor userInteractor;
 
     @Override public void onCreate() {
         super.onCreate();
@@ -34,26 +36,28 @@ public class PushNotificationsHandlerService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        String jsonMessage = remoteMessage.getData().get("message");
-        PushMessage pushMessage = mapper.fromJson(jsonMessage, PushMessage.class);
+        if(userInteractor.isNotificationsEnabled()) {
+            String jsonMessage = remoteMessage.getData().get("message");
+            PushMessage pushMessage = mapper.fromJson(jsonMessage, PushMessage.class);
 
-        Intent intent = new Intent(this, ChatScreen.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);
-        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            Intent intent = new Intent(this, ChatScreen.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);
+            Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-            .setSmallIcon(R.drawable.ic_launcher)
-            .setContentTitle(pushMessage.getName())
-            .setContentText(pushMessage.getText())
-            .setAutoCancel(true)
-            .setSound(defaultSoundUri)
-            .setContentIntent(pendingIntent);
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.ic_launcher)
+                .setContentTitle(pushMessage.getName())
+                .setContentText(pushMessage.getText())
+                .setAutoCancel(true)
+                .setSound(defaultSoundUri)
+                .setContentIntent(pendingIntent);
 
-        NotificationManager notificationManager =
-            (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+            notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        }
     }
 
 }

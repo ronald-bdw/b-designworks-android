@@ -20,6 +20,7 @@ import com.b_designworks.android.utils.Keyboard;
 import com.b_designworks.android.utils.di.Injector;
 
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import javax.inject.Inject;
 
@@ -137,6 +138,11 @@ public class ChatScreen extends ConversationActivity {
 
     @Subscribe public void onEvent(CloseDrawerEvent event) {
         closeDrawer();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(UserProfileUpdatedEvent event) {
+        showUserName(userInteractor.getFullName());
     }
 
     @Override public void onPause() {

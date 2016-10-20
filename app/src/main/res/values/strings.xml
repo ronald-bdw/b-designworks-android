@@ -116,6 +116,7 @@
     <string name="Smooch_startOfConversation"/>
     <string name="Smooch_welcome"/>
     <string name="Smooch_messageHint">Input chat message</string>
+    <string name="show_notifications">Show Notifications</string>
     <string name="settings_show_notifications">Show notifications</string>
     <string name="error_phone_taken">Phone number already taken</string>
     <string name="error_phone_not_registered">Phone is not registered yet</string>
