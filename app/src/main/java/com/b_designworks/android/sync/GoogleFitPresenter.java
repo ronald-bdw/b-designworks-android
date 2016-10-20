@@ -121,8 +121,10 @@ public class GoogleFitPresenter {
     }
 
     public void disconnect(@NonNull FragmentActivity activity) {
-        mClient.stopAutoManage(activity);
-        mClient.disconnect();
+        if (mClient != null) {
+            mClient.stopAutoManage(activity);
+            mClient.disconnect();
+        }
     }
 
     public void onShown() {
