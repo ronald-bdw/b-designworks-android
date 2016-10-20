@@ -131,4 +131,11 @@
         <item>Getting active tips</item>
         <item>Free 14 day trial</item>
     </string-array>
+    <string-array name="trial_descriptions">
+        <item>Some text about the App… Messenger bag pop-up bicycle rights, brunch cliche freegan vice mixtape wayfarers gentrify kickstarter.</item>
+        <item>Description 2</item>
+        <item>Description 3</item>
+        <item>Description 4</item>
+    </string-array>
+
 </resources>
