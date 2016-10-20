@@ -8,6 +8,8 @@ import com.b_designworks.android.login.models.UserResponse;
 import com.b_designworks.android.sync.Provider;
 
 import okhttp3.MultipartBody;
+import okhttp3.ResponseBody;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -69,4 +71,10 @@ public interface Api {
         @NonNull @Field("source") Provider provider
     );
 
+    @FormUrlEncoded
+    @POST("v1/notifications") Observable<ResponseBody> userEnabledPushNotifications(
+        @Field("notification[kind]") String kind
+    );
+
+    @DELETE("v1/notifications/message_push") Observable<ResponseBody> userDisabledPushNotificatinos();
 }
