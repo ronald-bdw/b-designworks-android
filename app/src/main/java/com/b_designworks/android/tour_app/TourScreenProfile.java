@@ -1,6 +1,7 @@
 package com.b_designworks.android.tour_app;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,10 +14,13 @@ import com.b_designworks.android.Navigator;
 import com.b_designworks.android.R;
 import com.b_designworks.android.UserInteractor;
 import com.b_designworks.android.login.models.User;
+import com.b_designworks.android.sync.GoogleFitPresenter;
+import com.b_designworks.android.sync.GoogleFitView;
 import com.b_designworks.android.utils.Rxs;
 import com.b_designworks.android.utils.di.Injector;
 import com.b_designworks.android.utils.network.ErrorUtils;
 import com.b_designworks.android.utils.ui.UiInfo;
+import com.google.android.gms.common.ConnectionResult;
 
 import javax.inject.Inject;
 
@@ -30,13 +34,14 @@ import static com.b_designworks.android.utils.ui.TextViews.textOf;
  * Created by Ilya Eremin on 9/28/16.
  */
 
-public class TourScreenProfile extends BaseActivity {
+public class TourScreenProfile extends BaseActivity implements GoogleFitView {
 
     @Bind(R.id.first_name) TextView uiFirstName;
     @Bind(R.id.last_name)  TextView uiLastName;
     @Bind(R.id.email)      TextView uiEmail;
 
-    @Inject UserInteractor userInteractor;
+    @Inject UserInteractor     userInteractor;
+    @Inject GoogleFitPresenter googleFitPresenter;
 
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_tour_profile)
@@ -51,6 +56,7 @@ public class TourScreenProfile extends BaseActivity {
         uiFirstName.setText(user.getFirstName());
         uiLastName.setText(user.getLastName());
         uiEmail.setText(user.getEmail());
+        googleFitPresenter.attachView(this);
     }
 
     @Nullable private Subscription   updateProfileSubs;
@@ -76,11 +82,15 @@ public class TourScreenProfile extends BaseActivity {
                 .compose(Rxs.doInBackgroundDeliverToUI())
                 .subscribe(result -> {
                     Toast.makeText(context(), R.string.edit_profile_profile_updated, Toast.LENGTH_SHORT).show();
-                    Navigator.tourUploadAvatar(context());
+                    integrateGoogleFit();
                 }, ErrorUtils.handle(context()));
         } else {
-            Navigator.tourUploadAvatar(context());
+            integrateGoogleFit();
         }
+    }
+
+    private void integrateGoogleFit() {
+        googleFitPresenter.startIntegrate(this);
     }
 
     private void hideProgress() {
@@ -108,6 +118,46 @@ public class TourScreenProfile extends BaseActivity {
 
     @OnClick(R.id.next) void onSubmitClick() {
         sendInfoAndMoveToNextScreen();
+    }
+
+    @Override public void codeRetrievedSuccessfull() {
+        Toast.makeText(this, R.string.google_fit_token_retrieved, Toast.LENGTH_SHORT).show();
+        Navigator.tourUploadAvatar(context());
+    }
+
+    @Override public void errorWhileRetrievingCode() {
+        Toast.makeText(this, "error while retrieving code", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override public void onGoogleServicesError(ConnectionResult result) {
+        Toast.makeText(this, "onGoogleServicesError: ", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override public void showInternetConnectionError() {
+        Toast.makeText(this, "showInternetConnectionError: ", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override public void showGoogleServiceDisconected() {
+        Toast.makeText(this, "showGoogleServiceDisconected", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override public void onError(Throwable error) {
+        Toast.makeText(this, "On error", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override public void userCancelIntegration() {
+        Toast.makeText(this, "User canceled google git integration", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override protected void onDestroy() {
+        googleFitPresenter.detachView();
+        googleFitPresenter.disconnect(this);
+        super.onDestroy();
+    }
+
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        googleFitPresenter.handleResponse(requestCode, resultCode, data);
     }
 
 }
