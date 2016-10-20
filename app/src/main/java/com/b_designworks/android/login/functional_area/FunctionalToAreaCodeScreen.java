@@ -32,7 +32,9 @@ public class FunctionalToAreaCodeScreen extends BaseActivity {
     public static final String KEY_SELECTED_AREA = "selectedArea";
 
     @NonNull @Override public UiInfo getUiInfo() {
-        return new UiInfo(R.layout.screen_country_code);
+        return new UiInfo(R.layout.screen_country_code)
+            .enableBackButton()
+            .setTitleRes(R.string.title_area_code);
     }
 
     @Bind(R.id.list) RecyclerView uiList;
