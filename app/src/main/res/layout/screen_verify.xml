@@ -5,9 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/initial_screen_gradient"
+    android:keepScreenOn="true"
     >
 
     <include layout="@layout/layout_toolbar"/>
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/app_btn_filled"
+        android:text="@string/submit"
+        android:textColor="@android:color/white"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,8 +39,6 @@
             android:layout_marginTop="16dp"
             android:gravity="center"
             android:orientation="horizontal"
-            android:visibility="gone"
-            tools:visibility="visible"
             >
 
             <ProgressBar
@@ -90,17 +101,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/app_btn_filled"
-        android:text="@string/submit"
-        android:textColor="@android:color/white"
-        />
 
 </FrameLayout>

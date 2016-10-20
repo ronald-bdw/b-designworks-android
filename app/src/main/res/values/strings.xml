@@ -33,7 +33,7 @@
     <string name="sync_fitbit">Fitbit</string>
     <string name="settings_logout">Log Out</string>
     <string name="settings_sync">Sync</string>
-    <string name="profile_phone">Phone</string>
+    <string name="profile_phone">Phone number</string>
     <string name="profile_email">Email</string>
     <string name="edit_profile_change_photo">Change photo</string>
     <string name="about_us_text">Some text about the App… Messenger bag pop-up bicycle rights, brunch cliche freegan vice mixtape wayfares gentrify kickstarger.\n\nCountact us and Social Media</string>
@@ -110,15 +110,18 @@
     <string name="verify_code_format_hint">0000</string>
     <string name="share">Share</string>
     <string name="share_using">Share with…</string>
-    <string name="error_incorrect_phone">Please check your number and try again</string>
+    <string name="error_incorrect_phone">Invalid phone format</string>
     <string name="progress_verifying_phone_number">Verifying phone number</string>
 
     <string name="Smooch_startOfConversation"/>
     <string name="Smooch_welcome"/>
     <string name="Smooch_messageHint">Input chat message</string>
     <string name="settings_show_notifications">Show notifications</string>
+    <string name="error_phone_taken">Phone number already taken</string>
     <string name="error_phone_not_registered">Phone is not registered yet</string>
     <string name="title_area_code">Area code</string>
+    <string name="error_incorrect_verification_code">Incorrect verification code</string>
+    <string name="try_again">Try again</string>
 
     <string-array name="select_provider_options">
         <item>HBF</item>

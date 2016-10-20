@@ -1,18 +1,22 @@
 package com.b_designworks.android.login;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.BuildConfig;
 import android.util.Patterns;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
 import com.b_designworks.android.BaseActivity;
 import com.b_designworks.android.Navigator;
 import com.b_designworks.android.R;
 import com.b_designworks.android.UserInteractor;
+import com.b_designworks.android.utils.Keyboard;
 import com.b_designworks.android.utils.Rxs;
 import com.b_designworks.android.utils.Strings;
 import com.b_designworks.android.utils.di.Injector;
@@ -21,14 +25,15 @@ import com.b_designworks.android.utils.network.ErrorUtils;
 import com.b_designworks.android.utils.network.RetrofitException;
 import com.b_designworks.android.utils.ui.SimpleDialog;
 import com.b_designworks.android.utils.ui.UiInfo;
-import com.f2prateek.dart.InjectExtra;
-import com.f2prateek.dart.Optional;
 import com.trello.rxlifecycle.ActivityEvent;
+
+import java.util.Random;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
 import rx.Subscription;
 
 import static com.b_designworks.android.utils.ui.TextViews.textOf;
@@ -45,6 +50,9 @@ public class RegistrationScreen extends BaseActivity {
     private static final String ARG_PHONE_CODE_ID         = "argPhoneCodeId";
 
     private static final String KEY_RETURNED_VERIFICATION_CODE = "returnedVerificationCode";
+    private static final String KEY_PHONE_CODE_ID              = "phoneCodeId";
+
+    private ProgressDialog phoneVerificationDialog;
 
     public static Intent createIntent(Context context, String verificationCode, String phoneNumber, String phoneCodeId) {
         Intent intent = new Intent(context, RegistrationScreen.class);
@@ -60,12 +68,9 @@ public class RegistrationScreen extends BaseActivity {
 
     @Inject UserInteractor userInteractor;
 
-    private String returnedVerificationCode;
-    private String returnedPhoneCodeId;
-
-    @Optional @InjectExtra(ARG_KEY_VERIFICATION_CODE) String argVerificationCode;
-    @InjectExtra(ARG_PHONE_NUMBER)                    String argPhoneNumber;
-    @InjectExtra(ARG_PHONE_CODE_ID)                   String argPhoneCodeId;
+    @Nullable private String verifiedPhoneNumber;
+    @Nullable private String returnedVerificationCode;
+    @Nullable private String returnedPhoneCodeId;
 
     @Bind(R.id.first_name) EditText uiFirstName;
     @Bind(R.id.last_name)  EditText uiLastName;
@@ -78,43 +83,56 @@ public class RegistrationScreen extends BaseActivity {
     @Override protected void restoreState(@NonNull Bundle savedState) {
         super.restoreState(savedState);
         returnedVerificationCode = savedState.getString(KEY_RETURNED_VERIFICATION_CODE);
+        returnedPhoneCodeId = savedState.getString(KEY_PHONE_CODE_ID);
     }
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
         Injector.inject(this);
         if (savedState == null) {
-            uiPhone.setText(argPhoneNumber);
+            if (BuildConfig.DEBUG) {
+                fillFakeData();
+            }
         }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void fillFakeData() {
+        int randomNumber = new Random().nextInt(10000);
+        uiFirstName.setText("Test");
+        uiLastName.setText("User" + randomNumber);
+        uiEmail.setText("example" + randomNumber);
+        uiPhone.setText("+796255" + randomNumber);
     }
 
     @Override protected void onResume() {
         super.onResume();
-        if (returnedVerificationCode != null) {
+        if (returnedVerificationCode != null && textOf(uiPhone).equals(verifiedPhoneNumber)) {
             performRegistration(returnedVerificationCode);
         }
     }
 
     @OnClick(R.id.choose_your_plan) void onRegisterClick() {
+        tryRegistration();
+    }
+
+    private void tryRegistration() {
+        Keyboard.hide(this);
         if (progressSubs != null || !fieldVerificationPassed()) return;
-        if (getVerificationCode() != null) {
-            performRegistration(getVerificationCode());
+        if (returnedVerificationCode != null && textOf(uiPhone).equals(verifiedPhoneNumber)) {
+            performRegistration(returnedVerificationCode);
         } else {
-            Navigator.verifyAndReturnCode(this, textOf(uiPhone));
+            verifyPhone();
         }
     }
 
-    @Nullable private String getVerificationCode() {
-        return returnedVerificationCode == null ? argVerificationCode : returnedVerificationCode;
-    }
-
     private void performRegistration(@NonNull String verificationCode) {
-        progressDialog = ProgressDialog.show(context(), getString(R.string.loading), getString(R.string.loading_sending_code));
-        progressSubs = userInteractor.register(textOf(uiFirstName), textOf(uiLastName), textOf(uiEmail), verificationCode, argPhoneNumber, argPhoneCodeId)
+        showRegistrationDialog();
+        progressSubs = userInteractor.register(textOf(uiFirstName), textOf(uiLastName),
+            textOf(uiEmail), verificationCode, textOf(uiPhone), returnedPhoneCodeId)
             .compose(bindUntilEvent(ActivityEvent.STOP))
             .compose(Rxs.doInBackgroundDeliverToUI())
             .doOnEach(i -> {
-                returnedVerificationCode = null;
                 progressSubs = null;
                 dismissProgressDialog();
             })
@@ -127,11 +145,13 @@ public class RegistrationScreen extends BaseActivity {
                         for (String key : parsedError.getValidations().keySet()) {
                             String errorMsg = Strings.listToString(parsedError.getValidations().get(key));
                             if (key.equals("sms_code")) {
-                                SimpleDialog.withOkBtn(context(), "Incorrect verification code, try again");
-                                finish();
-//                                uiCode.setError(Strings.listToString(parsedError.getValidations().get(key)));
+                                SimpleDialog.show(context(), null, getString(R.string.error_incorrect_verification_code),
+                                    getString(R.string.try_again), () -> {
+                                        Navigator.verifyAndReturnCode(this, textOf(uiPhone), returnedPhoneCodeId, false);
+                                    });
                             } else if (key.equals("email")) {
                                 uiEmail.setError(errorMsg);
+                                uiEmail.requestFocus();
                             }
                         }
                     }
@@ -142,6 +162,52 @@ public class RegistrationScreen extends BaseActivity {
                     ErrorUtils.handle(context(), error);
                 }
             });
+    }
+
+    private void showRegistrationDialog() {
+        progressDialog = ProgressDialog.show(context(), getString(R.string.loading),
+            getString(R.string.loading_sending_code), true, true);
+        progressDialog.setOnCancelListener(dialog -> {
+            if (progressSubs != null && !progressSubs.isUnsubscribed()) {
+                progressSubs.unsubscribe();
+            }
+        });
+    }
+
+    private void verifyPhone() {
+        showPhoneVerificationDialog();
+        userInteractor.requestCode(textOf(uiPhone))
+            .doOnTerminate(() -> {
+                if (phoneVerificationDialog != null) {
+                    phoneVerificationDialog.dismiss();
+                    phoneVerificationDialog = null;
+                }
+            })
+            .compose(Rxs.doInBackgroundDeliverToUI())
+            .subscribe(result -> {
+                if (result.isPhoneRegistered()) {
+                    uiPhone.setError(getString(R.string.error_phone_taken));
+                } else {
+                    Navigator.verifyAndReturnCode(this, textOf(uiPhone), result.getPhoneCodeId(), false);
+                }
+            }, error -> {
+                if (error instanceof RetrofitException) {
+                    CommonError parsedError = ((RetrofitException) error).getErrorBodyAs(CommonError.class);
+                    if (parsedError != null && parsedError.getValidations() != null) {
+                        if (parsedError.getMessage().contains("number")) {
+                            uiPhone.setError(getString(R.string.error_incorrect_phone));
+                        }
+                    }
+                } else {
+                    ErrorUtils.handle(context(), error);
+                }
+            });
+    }
+
+    private void showPhoneVerificationDialog() {
+        phoneVerificationDialog = ProgressDialog.show(context(),
+            getString(R.string.loading),
+            getString(R.string.progress_verifying_phone_number));
     }
 
     private void dismissProgressDialog() {
@@ -179,15 +245,25 @@ public class RegistrationScreen extends BaseActivity {
         return !hasError;
     }
 
+    @OnEditorAction(R.id.phone) boolean onEnterClick(int actionId) {
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            tryRegistration();
+            return true;
+        }
+        return false;
+    }
+
     @Override protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(KEY_RETURNED_VERIFICATION_CODE, returnedVerificationCode);
+        outState.putString(KEY_PHONE_CODE_ID, returnedPhoneCodeId);
     }
 
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == RESULT_KEY_FOR_VERIFYING) {
             returnedVerificationCode = VerifyScreen.extractCodeFromResult(data);
             returnedPhoneCodeId = VerifyScreen.extractPhoneCodeIdFromResult(data);
+            verifiedPhoneNumber = VerifyScreen.extractPhone(data);
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }

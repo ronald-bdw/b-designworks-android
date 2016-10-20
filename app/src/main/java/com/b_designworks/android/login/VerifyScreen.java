@@ -35,26 +35,22 @@ import butterknife.OnEditorAction;
  */
 public class VerifyScreen extends BaseActivity implements VerifyView {
 
-    private static final String ARG_KEY_PHONE = "phone";
+    private static final String ARG_KEY_PHONE         = "phone";
+    private static final String ARG_KEY_PHONE_CODE_ID = "phoneCodeId";
 
-    private static final String KEY_USER_REGISTERED     = "userRegistered";
     private static final String KEY_PROGRESS_VISIBILITY = "progressVisibility";
 
     private static final String RESULT_KEY_VERIFICATION_CODE = "verificationCode";
     private static final String RESULT_KEY_PHONE_CODE_ID     = "phoneCodeId";
     private static final String RESULT_KEY_PHONE_NUMBER      = "phoneNumber";
+    private static final String ARG_KEY_PHONE_REGISTERED     = "userRegistered";
 
-    public static String extractCodeFromResult(@NonNull Intent data) {
-        return data.getExtras().getString(RESULT_KEY_VERIFICATION_CODE);
-    }
-
-    public static String extractPhoneCodeIdFromResult(@NonNull Intent data) {
-        return data.getExtras().getString(RESULT_KEY_PHONE_CODE_ID);
-    }
-
-    public static Intent createIntent(Context context, @NonNull String phone) {
+    public static Intent createIntent(@NonNull Context context, @NonNull String phone,
+                                      @NonNull String phoneCodeId, boolean phoneRegistered) {
         Intent intent = new Intent(context, VerifyScreen.class);
         intent.putExtra(ARG_KEY_PHONE, phone);
+        intent.putExtra(ARG_KEY_PHONE_CODE_ID, phoneCodeId);
+        intent.putExtra(ARG_KEY_PHONE_REGISTERED, phoneRegistered);
         return intent;
     }
 
@@ -64,17 +60,16 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
 
     @Inject VerifyPresenter verifyPresenter;
 
-    @InjectExtra(ARG_KEY_PHONE) String argPhone;
+    @InjectExtra(ARG_KEY_PHONE)            String  argPhone;
+    @InjectExtra(ARG_KEY_PHONE_CODE_ID)    String  argPhoneCodeId;
+    @InjectExtra(ARG_KEY_PHONE_REGISTERED) boolean argPhoneRegistered;
 
-    @Bind(R.id.verification_code) EditText uiVerificadtionCode;
+    @Bind(R.id.verification_code) EditText uiVerificationCode;
     @Bind(R.id.progress)          View     uiWaitingForSms;
-
-    private boolean userRegistered;
 
     @SuppressWarnings("WrongConstant")
     @Override protected void restoreState(@NonNull Bundle savedState) {
         super.restoreState(savedState);
-        userRegistered = savedState.getBoolean(KEY_USER_REGISTERED);
         uiWaitingForSms.setVisibility(savedState.getInt(KEY_PROGRESS_VISIBILITY));
     }
 
@@ -83,13 +78,16 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
         Injector.inject(this);
         verifyPresenter.attachView(this);
         if (savedState == null) {
-            verifyPresenter.requestCode(argPhone);
+            verifyPresenter.setPhone(argPhone);
+            verifyPresenter.setPhoneCodeId(argPhoneCodeId);
+            verifyPresenter.setPhoneRegistered(argPhoneRegistered);
+            showWaitingForSmsProgress();
         }
     }
 
     @OnClick(R.id.submit) void onSubmitClick() {
         Keyboard.hide(this);
-        verifyPresenter.handleSmsCode(TextViews.textOf(uiVerificadtionCode));
+        verifyPresenter.handleSmsCode(TextViews.textOf(uiVerificationCode));
     }
 
     @OnClick(R.id.resend) void onResendClick() {
@@ -117,7 +115,6 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
 
     @Override protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean(KEY_USER_REGISTERED, userRegistered);
         outState.putInt(KEY_PROGRESS_VISIBILITY, uiWaitingForSms.getVisibility());
     }
 
@@ -155,7 +152,7 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
     }
 
     @Override public void showVerificationCodeError() {
-        uiVerificadtionCode.setError(getString(R.string.registration_error_fill_code));
+        uiVerificationCode.setError(getString(R.string.registration_error_fill_code));
     }
 
     @Override public void showAuthorizationProgressDialog() {
@@ -181,8 +178,9 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
         Navigator.chat(context());
     }
 
-    @Override public void openRegistrationScreen(
-        @NonNull String code, @NonNull String phoneNumber, @NonNull String phoneCodeId) {
+    @Override public void openRegistrationScreen(@NonNull String code,
+                                                 @NonNull String phoneNumber,
+                                                 @NonNull String phoneCodeId) {
         if (getCallingActivity() != null) {
             returnCodeToRegistrationScreen(code, phoneNumber, phoneCodeId);
         } else {
@@ -191,8 +189,8 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
     }
 
     private void returnCodeToRegistrationScreen(@NonNull String code,
-                                                @NonNull String phoneCodeId,
-                                                @NonNull String phoneNumber) {
+                                                @NonNull String phoneNumber,
+                                                @NonNull String phoneCodeId) {
         Intent intent = new Intent();
         intent.putExtra(RESULT_KEY_VERIFICATION_CODE, code);
         intent.putExtra(RESULT_KEY_PHONE_CODE_ID, phoneCodeId);
@@ -204,5 +202,17 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
     @Override protected void onDestroy() {
         verifyPresenter.detachView();
         super.onDestroy();
+    }
+
+    public static String extractCodeFromResult(@NonNull Intent data) {
+        return data.getExtras().getString(RESULT_KEY_VERIFICATION_CODE);
+    }
+
+    public static String extractPhoneCodeIdFromResult(@NonNull Intent data) {
+        return data.getExtras().getString(RESULT_KEY_PHONE_CODE_ID);
+    }
+
+    public static String extractPhone(Intent data) {
+        return data.getExtras().getString(RESULT_KEY_PHONE_NUMBER);
     }
 }

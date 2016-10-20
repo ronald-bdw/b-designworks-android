@@ -7,14 +7,13 @@ import android.support.annotation.NonNull;
 
 import com.b_designworks.android.chat.ChatScreen;
 import com.b_designworks.android.login.EnterPhoneScreen;
-import com.b_designworks.android.login.functional_area.FunctionalToAreaCodeScreen;
 import com.b_designworks.android.login.RegistrationScreen;
 import com.b_designworks.android.login.SelectProviderScreen;
 import com.b_designworks.android.login.VerifyScreen;
 import com.b_designworks.android.login.WelcomeScreen;
+import com.b_designworks.android.login.functional_area.FunctionalToAreaCodeScreen;
 import com.b_designworks.android.profile.EditProfileScreen;
 import com.b_designworks.android.profile.ProfileScreen;
-import com.b_designworks.android.settings.PushNotificationsSettingsScreen;
 import com.b_designworks.android.settings.SettingsScreen;
 import com.b_designworks.android.sync.FitbitScreen;
 import com.b_designworks.android.sync.GoogleFitScreen;
@@ -40,8 +39,8 @@ public class Navigator {
         context.startActivity(new Intent(context, TrialScreen.class));
     }
 
-    public static void verification(@NonNull Context context, String phone) {
-        context.startActivity(VerifyScreen.createIntent(context, phone));
+    public static void verification(@NonNull Context context, String phone, String phoneCodeId) {
+        context.startActivity(VerifyScreen.createIntent(context, phone, phoneCodeId, true));
     }
 
     public static void chat(@NonNull Context context) {
@@ -58,10 +57,6 @@ public class Navigator {
 
     public static void settings(@NonNull Context context) {
         context.startActivity(new Intent(context, SettingsScreen.class));
-    }
-
-    public static void pushNotifications(@NonNull Context context) {
-        context.startActivity(new Intent(context, PushNotificationsSettingsScreen.class));
     }
 
     public static void sync(@NonNull Context context) {
@@ -90,8 +85,13 @@ public class Navigator {
     }
 
     public static void verifyAndReturnCode(@NonNull BaseActivity activity,
-                                           @NonNull String phone) {
-        activity.startActivityForResult(VerifyScreen.createIntent(activity, phone), RegistrationScreen.RESULT_KEY_FOR_VERIFYING);
+                                           @NonNull String phone,
+                                           @NonNull String phoneCodeId,
+                                           boolean phoneRegistered) {
+        activity.startActivityForResult(
+            VerifyScreen.createIntent(activity, phone, phoneCodeId, phoneRegistered),
+            RegistrationScreen.RESULT_KEY_FOR_VERIFYING
+        );
     }
 
     public static void googleFit(@NonNull Context context) {
