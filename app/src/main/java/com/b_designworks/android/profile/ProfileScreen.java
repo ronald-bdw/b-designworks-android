@@ -71,11 +71,6 @@ public class ProfileScreen extends BaseActivity implements SwipeRefreshLayout.On
             .subscribe(this::showUser, ErrorUtils.handle(context()));
     }
 
-    private void tuneSwipeRefreshLayout() {
-        uiSwipeRefreshLayout.setOnRefreshListener(this);
-        uiSwipeRefreshLayout.setColorSchemeResources(R.color.app_accent);
-    }
-
     private void showUser(User user) {
         if (context() != null) {
             ImageLoader.load(this, uiAvatar, user.getAvatar().getThumb());
@@ -85,5 +80,12 @@ public class ProfileScreen extends BaseActivity implements SwipeRefreshLayout.On
             uiPhone.setText(user.getPhoneNumber());
             setTitle(user.getFirstName());
         }
+        showUser(userInteractor.getUser());
     }
+
+    private void tuneSwipeRefreshLayout() {
+        uiSwipeRefreshLayout.setOnRefreshListener(this);
+        uiSwipeRefreshLayout.setColorSchemeResources(R.color.app_accent);
+    }
+
 }
