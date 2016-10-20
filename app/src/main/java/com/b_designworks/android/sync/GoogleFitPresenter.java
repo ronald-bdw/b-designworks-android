@@ -53,13 +53,15 @@ public class GoogleFitPresenter {
             .requestServerAuthCode(SERVER_KEY, false)
             .build();
 
+        if (mClient != null) {
+            mClient.stopAutoManage(activity);
+        }
         mClient = new GoogleApiClient.Builder(context)
             .addApi(Auth.GOOGLE_SIGN_IN_API, signInRequest)
             .addConnectionCallbacks(
                 new GoogleApiClient.ConnectionCallbacks() {
                     @Override
                     public void onConnected(Bundle bundle) {
-                        view.enableIntegrationButton(true);
                     }
 
                     @Override
@@ -88,28 +90,39 @@ public class GoogleFitPresenter {
     }
 
     public void handleResponse(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE_SIGN_IN & resultCode == Activity.RESULT_OK) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            if (result.isSuccess()) {
-                GoogleSignInAccount acct = result.getSignInAccount();
-                if (acct != null) {
-                    interactor.sendGoogleCodeToServer(acct.getServerAuthCode())
-                        .compose(Rxs.doInBackgroundDeliverToUI())
-                        .subscribe(integrationResult -> {
-                            System.out.println(integrationResult);
-                        }, error -> {
-                            view.onError(error);
-                        });
-                    if (view != null) {
-                        view.codeRetrievedSuccessfull();
+        if (requestCode == REQUEST_CODE_SIGN_IN) {
+            if (resultCode == Activity.RESULT_OK) {
+                GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+                if (result.isSuccess()) {
+                    GoogleSignInAccount acct = result.getSignInAccount();
+                    if (acct != null) {
+                        interactor.sendGoogleCodeToServer(acct.getServerAuthCode())
+                            .compose(Rxs.doInBackgroundDeliverToUI())
+                            .subscribe(integrationResult -> {
+                                System.out.println(integrationResult);
+                            }, error -> {
+                                view.onError(error);
+                            });
+                        if (view != null) {
+                            view.codeRetrievedSuccessfull();
+                        }
+                    } else {
+                        if (view != null) {
+                            view.errorWhileRetrievingCode();
+                        }
                     }
-                } else {
-                    if (view != null) {
-                        view.errorWhileRetrievingCode();
-                    }
+                }
+            } else {
+                if (view != null) {
+                    view.userCancelIntegration();
                 }
             }
         }
+    }
+
+    public void disconnect(@NonNull FragmentActivity activity) {
+        mClient.stopAutoManage(activity);
+        mClient.disconnect();
     }
 
     public void onShown() {
