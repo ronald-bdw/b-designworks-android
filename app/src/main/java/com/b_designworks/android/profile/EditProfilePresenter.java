@@ -107,6 +107,6 @@ public class EditProfilePresenter {
     }
 
     public void userCancelAvatarUploading() {
-        view.showAvatar(userInteractor.getUser().getAvatar().getOriginal());
+        view.showAvatar(userInteractor.getUser().getAvatar().getThumb());
     }
 }

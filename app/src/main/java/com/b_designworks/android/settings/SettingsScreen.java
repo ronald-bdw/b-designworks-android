@@ -43,7 +43,7 @@ public class SettingsScreen extends BaseActivity {
 
     @Override protected void onResume() {
         super.onResume();
-        ImageLoader.load(context(), uiAvatar, userInteractor.getUser().getAvatar().getOriginal());
+        ImageLoader.load(context(), uiAvatar, userInteractor.getUser().getAvatar().getThumb());
     }
 
     @OnClick(R.id.sync) void onSyncClick() {

@@ -48,7 +48,7 @@ public class ChatSidePanelFragment extends Fragment {
 
     private void showUser(User user) {
         if (getContext() != null) {
-            ImageLoader.load(getContext(), uiAvatar, user.getAvatar().getOriginal());
+            ImageLoader.load(getContext(), uiAvatar, user.getAvatar().getThumb());
             uiFullname.setText(getString(R.string.edit_profile_name_surname_pattern, user.getFirstName(), user.getLastName()));
             uiEmail.setText(user.getEmail());
         }

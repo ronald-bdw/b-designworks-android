@@ -62,7 +62,7 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
     }
 
     @Override public void showUserInfo(@NonNull User user) {
-        showAvatar(user.getAvatar().getOriginal());
+        showAvatar(user.getAvatar().getThumb());
         uiCurrentFullName.setText(getString(R.string.edit_profile_name_surname_pattern, user.getFirstName(), user.getLastName()));
         uiCurrentEmail.setText(user.getEmail());
         uiFirstName.setText(user.getFirstName());

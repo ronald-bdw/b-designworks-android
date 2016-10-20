@@ -78,7 +78,7 @@ public class ProfileScreen extends BaseActivity implements SwipeRefreshLayout.On
 
     private void showUser(User user) {
         if (context() != null) {
-            ImageLoader.load(this, uiAvatar, user.getAvatar().getOriginal());
+            ImageLoader.load(this, uiAvatar, user.getAvatar().getThumb());
             uiCurrentFullName.setText(getString(R.string.edit_profile_name_surname_pattern, user.getFirstName(), user.getLastName()));
             uiEmail.setText(user.getEmail());
             uiCurrentEmail.setText(user.getEmail());

@@ -116,7 +116,7 @@ public class TourScreenUploadAvatar extends BaseActivity {
         uiProgress.setVisibility(View.GONE);
         SimpleDialog.show(context(), getString(R.string.error), getString(R.string.error_uploading_photo),
             getString(R.string.retry), () -> updateAvatar(url),
-            getString(R.string.cancel), () -> showAvatar(userInteractor.getUser().getAvatar().getOriginal()));
+            getString(R.string.cancel), () -> showAvatar(userInteractor.getUser().getAvatar().getThumb()));
     }
 
     private void showAvatarUploadingProgress() {
