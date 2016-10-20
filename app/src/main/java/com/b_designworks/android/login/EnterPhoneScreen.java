@@ -93,7 +93,11 @@ public class EnterPhoneScreen extends BaseActivity {
                 })
                 .compose(Rxs.doInBackgroundDeliverToUI())
                 .subscribe(result -> {
-                    Navigator.verification(context(), areaCode + phone);
+                    if (!result.isPhoneRegistered()) {
+                        uiPhone.setError(getString(R.string.error_phone_not_registered));
+                    } else {
+                        Navigator.verification(context(), areaCode + phone);
+                    }
                 }, error -> {
                     if (error instanceof RetrofitException) {
                         RetrofitException retrofitError = (RetrofitException) error;

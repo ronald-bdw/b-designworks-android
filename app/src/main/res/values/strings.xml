@@ -117,6 +117,7 @@
     <string name="Smooch_welcome"/>
     <string name="Smooch_messageHint">Input chat message</string>
     <string name="settings_show_notifications">Show notifications</string>
+    <string name="error_phone_not_registered">Phone is not registered yet</string>
     <string name="title_area_code">Area code</string>
 
     <string-array name="select_provider_options">
