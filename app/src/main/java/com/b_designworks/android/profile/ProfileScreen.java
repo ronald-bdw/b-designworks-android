@@ -7,16 +7,13 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.b_designworks.android.BaseActivity;
 import com.b_designworks.android.Navigator;
 import com.b_designworks.android.R;
 import com.b_designworks.android.UserInteractor;
 import com.b_designworks.android.login.models.User;
-import com.b_designworks.android.utils.Bus;
 import com.b_designworks.android.utils.ImageLoader;
-import com.b_designworks.android.utils.Logger;
 import com.b_designworks.android.utils.Rxs;
 import com.b_designworks.android.utils.di.Injector;
 import com.b_designworks.android.utils.network.ErrorUtils;
@@ -80,7 +77,6 @@ public class ProfileScreen extends BaseActivity implements SwipeRefreshLayout.On
             uiPhone.setText(user.getPhoneNumber());
             setTitle(user.getFirstName());
         }
-        showUser(userInteractor.getUser());
     }
 
     private void tuneSwipeRefreshLayout() {
