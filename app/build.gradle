@@ -39,7 +39,7 @@ android {
     productFlavors {
         staging {
             buildConfigField "String", "API_URL", "\"https://b-designworks.herokuapp.com/\""
-            applicationIdSuffix ".staging"
+            applicationIdSuffix ".test_in_apps"
         }
 
         production {
@@ -131,6 +131,8 @@ dependencies {
 
     compile 'com.timehop.stickyheadersrecyclerview:library:0.4.3@aar'
     compile 'com.simplecityapps:recyclerview-fastscroll:1.0.11'
+
+    compile 'com.anjlab.android.iab.v3:library:1.0.+'
 
     testCompile androidTestsLibs
     compile('com.crashlytics.sdk.android:crashlytics:2.6.1@aar') {
