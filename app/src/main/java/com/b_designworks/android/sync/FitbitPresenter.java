@@ -19,9 +19,9 @@ public class FitbitPresenter {
 
     public void handleCode(String code) {
         view.showSendingFitbitCodeProgress();
-        userInteractor.integrateFitbit(code)
-            .doOnTerminate(view::dismissSendingFitbitCodeProgress)
-            .compose(Rxs.doInBackgroundDeliverToUI())
-            .subscribe(result -> view.fitbitSuccessfullyIntegrated(), view::onError);
+        userInteractor.integrateFitbit(code);
+//            .doOnTerminate(view::dismissSendingFitbitCodeProgress)
+//            .compose(Rxs.doInBackgroundDeliverToUI())
+//            .subscribe(result -> view.fitbitSuccessfullyIntegrated(), view::onError);
     }
 }

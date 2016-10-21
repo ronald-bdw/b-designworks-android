@@ -11,6 +11,7 @@ public class User {
     private String email;
     private String phoneNumber;
     private Avatar avatar;
+    private Integration[] integrations;
 
     public Avatar getAvatar() {
         return avatar;
@@ -38,5 +39,13 @@ public class User {
 
     public String getPhoneNumber() {
         return phoneNumber;
+    }
+
+    public Integration[] getIntegrations() {
+        return integrations;
+    }
+
+    public void setIntegrations(Integration[] integrations) {
+        this.integrations = integrations;
     }
 }

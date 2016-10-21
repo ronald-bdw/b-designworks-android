@@ -20,10 +20,10 @@ import com.b_designworks.android.utils.network.ErrorUtils;
 import com.b_designworks.android.utils.ui.SimpleDialog;
 import com.b_designworks.android.utils.ui.SimpleLoadingDialog;
 import com.b_designworks.android.utils.ui.UiInfo;
-import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
 
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import javax.inject.Inject;
 
@@ -61,7 +61,8 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
         Injector.inject(this);
         Bus.subscribe(this);
         googleFitPresenter.attachView(this, this);
-        uiGoogleFitSC.setChecked(googleFitPresenter.isAuthorized());
+        uiGoogleFitSC.setChecked(userInteractor.isGoogleFitAuthEnabled());
+        uiFitBitSC.setChecked(userInteractor.isFitBitAuthEnabled());
 
         fitbitPresenter = new FitbitPresenter(this, userInteractor);
         Intent intent = getIntent();
@@ -73,7 +74,7 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
     }
 
     @OnClick(R.id.google_fit) void onGoogleFitClick() {
-        if (googleFitPresenter.isAuthorized()) {
+        if (userInteractor.isGoogleFitAuthEnabled()) {
             googleFitPresenter.logout();
         } else {
             googleFitPresenter.startIntegrate(this);
@@ -81,7 +82,13 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
     }
 
     @OnClick(R.id.fitbit) void onFitbitClick() {
-        Navigator.openUrl(context(), GETTING_CODE_URL);
+
+        if(userInteractor.isFitBitAuthEnabled()){
+            //TODO
+            userInteractor.removeFitnessToken(userInteractor.getUser().getIntegrations()[1].getFitnessTokenId());
+        } else {
+            Navigator.openUrl(context(), GETTING_CODE_URL);
+        }
     }
 
     //Google Fit
@@ -181,7 +188,12 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
         super.onDestroy();
     }
 
-    @Subscribe public void onEvent(GoogleFitAuthorizationEnabledEvent event) {
-        uiGoogleFitSC.setChecked(googleFitPresenter.isAuthorized());
+    @Subscribe(threadMode = ThreadMode.MAIN) public void onEvent(GoogleFitAuthorizationEnabledEvent event) {
+        uiGoogleFitSC.setChecked(userInteractor.isGoogleFitAuthEnabled());
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN) public void onEvent(FitBitAuthorizationEnabled event){
+        uiFitBitSC.setChecked(userInteractor.isFitBitAuthEnabled());
+    }
+
 }

@@ -9,7 +9,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
+import com.b_designworks.android.UserInteractor;
+import com.b_designworks.android.login.models.Integration;
+import com.b_designworks.android.login.models.User;
 import com.b_designworks.android.utils.Bus;
+import com.b_designworks.android.utils.Logger;
 import com.b_designworks.android.utils.Rxs;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -33,13 +37,17 @@ public class GoogleFitPresenter {
 
     @Nullable private GoogleFitView view;
 
-    private final GoogleFitInteractor interactor;
+    private final UserInteractor      userInteractor;
+    private final GoogleFitInteractor googleFitInteractor;
     private final Context             context;
     private       GoogleApiClient     mClient;
 
     @Inject
-    public GoogleFitPresenter(@NonNull GoogleFitInteractor interactor, @NonNull Context context) {
-        this.interactor = interactor;
+    public GoogleFitPresenter(@NonNull UserInteractor userInteractor,
+                              @NonNull GoogleFitInteractor googleFitInteractor,
+                              @NonNull Context context) {
+        this.userInteractor = userInteractor;
+        this.googleFitInteractor = googleFitInteractor;
         this.context = context;
     }
 
@@ -97,15 +105,7 @@ public class GoogleFitPresenter {
             if (result.isSuccess()) {
                 GoogleSignInAccount acct = result.getSignInAccount();
                 if (acct != null) {
-                    interactor.sendGoogleCodeToServer(acct.getServerAuthCode())
-                        .compose(Rxs.doInBackgroundDeliverToUI())
-                        .subscribe(integrationResult -> {
-                            System.out.println(integrationResult);
-                        }, error -> {
-                            view.onError(error);
-                        });
-                    interactor.setGoogleFitAuthorizationEnabled(true);
-                    Bus.event(GoogleFitAuthorizationEnabledEvent.EVENT);
+                    userInteractor.integrateGoogleFit(acct.getServerAuthCode());
                     if (view != null) {
                         view.codeRetrievedSuccessfull();
                     }
@@ -127,14 +127,20 @@ public class GoogleFitPresenter {
     }
 
     public void logout() {
-        if (mClient != null) {
+        String tokenId = getGoogleFitTokenId();
+        if (mClient != null && tokenId!=null) {
+            userInteractor.removeFitnessToken(tokenId);
             Auth.GoogleSignInApi.signOut(mClient);
-            interactor.setGoogleFitAuthorizationEnabled(false);
-            Bus.event(GoogleFitAuthorizationEnabledEvent.EVENT);
         }
     }
 
-    public boolean isAuthorized() {
-        return interactor.isGoogleFitAuthorizationEnabled();
+    private @Nullable String getGoogleFitTokenId() {
+        String id = null;
+        for (Integration integration : userInteractor.getUser().getIntegrations()) {
+            if (integration.getName().equals("Googlefit")) {
+                id = integration.getFitnessTokenId();
+            }
+        }
+        return id;
     }
 }

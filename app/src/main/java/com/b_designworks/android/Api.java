@@ -4,10 +4,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.b_designworks.android.login.models.AuthResponse;
+import com.b_designworks.android.login.models.FitToken;
 import com.b_designworks.android.login.models.UserResponse;
 import com.b_designworks.android.sync.Provider;
 
 import okhttp3.MultipartBody;
+import okhttp3.ResponseBody;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -17,6 +20,8 @@ import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import rx.Observable;
+
+import static com.b_designworks.android.Api.V1;
 
 /**
  * Created by Ilya Eremin on 12.08.2016.
@@ -64,9 +69,12 @@ public interface Api {
                                           @NonNull @Part MultipartBody.Part data);
 
     @FormUrlEncoded
-    @POST(V1 + "/fitness_tokens") Observable<UserResponse> integrateFitnessApp(
+    @POST(V1 + "/fitness_tokens") Observable<FitToken> integrateFitnessApp(
         @NonNull @Field("authorization_code") String code,
         @NonNull @Field("source") Provider provider
     );
 
+    @DELETE(V1 + "fitness_tokens/{id}") Observable<FitToken> deleteFitnessToken(
+        @NonNull @Path("id") String id
+    );
 }

@@ -17,6 +17,14 @@
         android:orientation="horizontal"
         >
 
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="8dp"
+            android:background="@drawable/ic_google_fit"
+            />
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -44,6 +52,14 @@
         android:background="@android:color/white"
         android:orientation="horizontal"
         >
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="8dp"
+            android:background="@drawable/ic_fitbit"
+            />
 
         <TextView
             android:layout_width="0dp"

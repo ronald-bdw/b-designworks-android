@@ -51,4 +51,8 @@ public class UserResponse {
         return user.getAvatar() == null ? null : user.getAvatar().getThumb();
     }
 
+    public Integration[] getIntegrations(){
+        return user.getIntegrations();
+    }
+
 }
