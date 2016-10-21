@@ -119,7 +119,7 @@
     <string name="show_notifications">Show Notifications</string>
     <string name="settings_show_notifications">Show notifications</string>
     <string name="error_phone_taken">Phone number already taken</string>
-    <string name="error_phone_not_registered">Phone is not registered yet</string>
+    <string name="error_phone_not_registered">Phone number is not registered yet</string>
     <string name="title_area_code">Area code</string>
     <string name="error_incorrect_verification_code">Incorrect verification code</string>
     <string name="try_again">Try again</string>
