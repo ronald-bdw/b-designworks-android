@@ -1,88 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/default_background"
+    xmlns:tools="http://schemas.android.com/tools"
     >
 
     <include layout="@layout/layout_toolbar"/>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="96dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/settings_item_height"
+        android:layout_marginTop="?actionBarSize"
         android:background="@android:color/white"
-        android:layout_marginTop="1dp"
         >
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/avatar"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:src="@drawable/avatar_placeholder"
-            android:layout_marginLeft="16dp"
-            />
-
-        <TextView
-            android:id="@+id/edit_profile"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/settings_edit_profile"
-            android:padding="16dp"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:textColor="@android:color/black"
-            />
-        
-    </LinearLayout>
-    
-    <TextView
-        android:id="@+id/sync"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:text="@string/settings_sync"
-        android:gravity="center_vertical"
-        android:paddingLeft="16dp"
-        android:background="@android:color/white"
-        android:layout_marginTop="1dp"
-        />
+            android:orientation="vertical"
+            >
 
-    <TextView
-        android:id="@+id/logout"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:text="@string/settings_logout"
-        android:gravity="center_vertical"
-        android:paddingLeft="16dp"
-        android:layout_marginTop="1dp"
-        android:background="@android:color/white"
-        />
+            <LinearLayout
+                android:id="@+id/edit_profile"
+                style="@style/settings_item_container"
+                >
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/avatar"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginLeft="16dp"
+                    tools:src="@drawable/avatar_placeholder"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="@string/settings_edit_profile"
+                    android:textColor="@color/settings_font"
+                    />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#C7C7CD"
+                />
+
+            <LinearLayout
+                android:id="@+id/notifications"
+                style="@style/settings_item_container"
+                >
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginLeft="16dp"
+                    android:src="@drawable/ic_notifications"
+                    />
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/notifications_toggle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:text="@string/settings_show_notifications"
+                    android:textColor="@color/settings_font"
+                    />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#C7C7CD"
+                />
+
+            <LinearLayout
+                android:id="@+id/sync"
+                style="@style/settings_item_container"
+                >
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginLeft="16dp"
+                    android:src="@drawable/ic_sync"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="16dp"
+                    android:text="@string/settings_sync"
+                    android:textColor="@color/settings_font"
+                    />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#C7C7CD"
+                />
+
+        </LinearLayout>
+
+    </ScrollView>
 
     <LinearLayout
-        android:id="@+id/notifications"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:orientation="horizontal"
-        android:paddingLeft="16dp"
-        android:layout_marginTop="1dp"
-        android:background="@android:color/white">
+        android:id="@+id/logout"
+        style="@style/settings_item_container"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:background="#29547D"
+        >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:text="@string/show_notifications"
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginLeft="16dp"
+            android:src="@drawable/ic_logout"
             />
 
-        <ToggleButton
-            android:id="@+id/notifications_toggle"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"/>
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/settings_item_height"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="1dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:text="@string/settings_logout"
+            android:textColor="@android:color/white"
+            />
 
     </LinearLayout>
 
-
-</LinearLayout>
+</FrameLayout>

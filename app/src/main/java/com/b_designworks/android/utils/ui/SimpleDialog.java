@@ -22,16 +22,23 @@ public class SimpleDialog {
     }
 
     private static void withOkBtn(
-            @NonNull Context context,
-            @Nullable String title, String message) {
+        @NonNull Context context,
+        @Nullable String title, String message) {
         show(context, title, message, context.getString(android.R.string.yes), null, null, null);
     }
 
     public static void show(
-            @NonNull Context context,
-            @Nullable String title, String message,
-            @NonNull String firstButtonLabel, @Nullable Action0 firstBtnAction,
-            @Nullable String secondBtnLabel, @Nullable Action0 secondBtnAction) {
+        @NonNull Context context,
+        @Nullable String title, String message,
+        @NonNull String buttonLabel, @Nullable Action0 action) {
+        show(context, title, message, buttonLabel, action, null, null);
+    }
+
+    public static void show(
+        @NonNull Context context,
+        @Nullable String title, String message,
+        @NonNull String firstButtonLabel, @Nullable Action0 firstBtnAction,
+        @Nullable String secondBtnLabel, @Nullable Action0 secondBtnAction) {
         DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
             switch (which) {
                 case DialogInterface.BUTTON_POSITIVE:
@@ -50,9 +57,9 @@ public class SimpleDialog {
         };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context)
-                .setTitle(title)
-                .setMessage(message)
-                .setPositiveButton(firstButtonLabel, dialogClickListener);
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton(firstButtonLabel, dialogClickListener);
         if (secondBtnLabel != null) {
             builder.setNegativeButton(secondBtnLabel, dialogClickListener);
         }

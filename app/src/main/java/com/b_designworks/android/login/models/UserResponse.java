@@ -1,7 +1,5 @@
 package com.b_designworks.android.login.models;
 
-import android.support.annotation.Nullable;
-
 /**
  * Created by Ilya Eremin on 15.08.2016.
  */
@@ -41,14 +39,6 @@ public class UserResponse {
 
     public String getId() {
         return user.getId();
-    }
-
-    @Nullable public String getAvatarUrl() {
-        return user.getAvatar() == null ? null : user.getAvatar().getOriginal();
-    }
-
-    @Nullable public String getAvatarThumbUrl() {
-        return user.getAvatar() == null ? null : user.getAvatar().getThumb();
     }
 
 }

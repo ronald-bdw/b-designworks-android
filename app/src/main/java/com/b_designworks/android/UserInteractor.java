@@ -18,6 +18,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import rx.Observable;
 import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 
 /**
@@ -101,6 +102,7 @@ public class UserInteractor {
     }
 
     public void saveUser(@NonNull User user) {
+        Bus.event(UserProfileUpdatedEvent.EVENT);
         storage.put(KEY_USER, user);
         userSettings.saveAuthInfo(user.getAuthenticationToken(), user.getPhoneNumber());
     }
@@ -126,7 +128,6 @@ public class UserInteractor {
     public Observable<User> updateUserProfile() {
         return api.currentUser().map(response -> {
             saveUser(response.getUser());
-            Bus.event(UserProfileUpdatedEvent.EVENT);
             return response.getUser();
         });
     }
@@ -137,10 +138,18 @@ public class UserInteractor {
     }
 
     public boolean isNotificationsEnabled() {
-        return storage.getBoolean(KEY_NOTIFICATIONS_ENABLED, false);
+        return storage.getBoolean(KEY_NOTIFICATIONS_ENABLED, true);
     }
 
     public void setNotificationsEnabled(boolean enabled) {
         storage.putBoolean(KEY_NOTIFICATIONS_ENABLED, enabled);
+        if (enabled) {
+            api.userEnabledPushNotifications("message_push")
+                .subscribeOn(Schedulers.io())
+                .subscribe(result -> {}, ignoreError -> {});
+        } else {
+            api.userDisabledPushNotificatinos().subscribeOn(Schedulers.io())
+                .subscribe(result -> {}, ignoreError -> {});
+        }
     }
 }

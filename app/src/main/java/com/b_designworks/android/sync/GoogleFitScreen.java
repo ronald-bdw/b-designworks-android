@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.b_designworks.android.BaseActivity;
 import com.b_designworks.android.R;
+import com.b_designworks.android.utils.Logger;
 import com.b_designworks.android.utils.di.Injector;
 import com.b_designworks.android.utils.network.ErrorUtils;
 import com.b_designworks.android.utils.ui.SimpleDialog;
@@ -55,6 +56,7 @@ public class GoogleFitScreen extends BaseActivity implements GoogleFitView {
 
     @Override public void codeRetrievedSuccessfull() {
         Toast.makeText(this, R.string.google_fit_token_retrieved, Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     @Override public void errorWhileRetrievingCode() {
@@ -66,24 +68,24 @@ public class GoogleFitScreen extends BaseActivity implements GoogleFitView {
             result.getErrorMessage(), Toast.LENGTH_LONG).show();
     }
 
-    @Override public void enableIntegrationButton(boolean enabled) {
-        uiStartIntegration.setEnabled(enabled);
-    }
-
     @Override public void showInternetConnectionError() {
         SimpleDialog.networkProblem(context());
     }
 
     @Override public void showGoogleServiceDisconected() {
-
     }
 
     @Override public void onError(Throwable error) {
         ErrorUtils.handle(context(), error);
     }
 
+    @Override public void userCancelIntegration() {
+        Logger.dToast(context(), "User cancel google fit integration");
+        finish();
+    }
+
     @Override protected void onDestroy() {
-        googleFitPresenter.detachView();
+        googleFitPresenter.detachView(this);
         super.onDestroy();
     }
 }

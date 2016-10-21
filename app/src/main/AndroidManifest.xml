@@ -58,8 +58,6 @@
 
         <activity android:name=".tour_app.TourScreenProfile"/>
         <activity android:name=".tour_app.TourScreenUploadAvatar"/>
-        <activity android:name=".tour_app.TourScreenFitnessApps"/>
-        <activity android:name=".tour_app.TourScreenSocials"/>
 
         <receiver
             android:name=".login.SmsListener"

@@ -13,27 +13,24 @@
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
         android:scaleType="centerCrop"
-        android:src="@drawable/legs"
+        android:src="@drawable/trial_bg"
         />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginBottom="16dp"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="144dp"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginTop="96dp"
         android:background="@color/default_background"
         android:orientation="vertical"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="24dp"
         >
 
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
-            android:layout_height="152dp"
+            android:layout_height="match_parent"
             />
 
     </LinearLayout>

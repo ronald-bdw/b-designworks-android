@@ -2,6 +2,7 @@ package com.b_designworks.android;
 
 import com.b_designworks.android.login.models.AuthResponse;
 import com.b_designworks.android.login.models.UserResponse;
+import com.b_designworks.android.utils.Bus;
 import com.b_designworks.android.utils.MapperUtils;
 import com.b_designworks.android.utils.network.ErrorUtils;
 import com.b_designworks.android.utils.storage.RuntimeStorage;
@@ -54,6 +55,7 @@ public class UserManagerTest {
 
     @Test
     public void testRegister() throws Exception {
+        Bus.DISABLE_FOR_TEST = true;
         userManager.requestCode(MY_FAKE_NUMBER)
             .subscribe(ignoreResult -> {
             }, ErrorUtils.onError());

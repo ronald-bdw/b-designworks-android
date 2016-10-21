@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
 
@@ -64,7 +65,8 @@ public class AppModule {
     public OkHttpClient provideHttpClient(@NonNull UserSettings userSettings,
                                           @NonNull File cachedDir) {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
-        httpClientBuilder.cache(new Cache(cachedDir, 20 * 1024 * 1024));
+        httpClientBuilder.cache(new Cache(cachedDir, 20 * 1024 * 1024))
+            .writeTimeout(60, TimeUnit.SECONDS);
         if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
