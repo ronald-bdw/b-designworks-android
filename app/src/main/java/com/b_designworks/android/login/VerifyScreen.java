@@ -35,15 +35,15 @@ import butterknife.OnEditorAction;
  */
 public class VerifyScreen extends BaseActivity implements VerifyView {
 
-    private static final String ARG_KEY_PHONE         = "phone";
-    private static final String ARG_KEY_PHONE_CODE_ID = "phoneCodeId";
+    private static final String ARG_KEY_PHONE            = "phone";
+    private static final String ARG_KEY_PHONE_CODE_ID    = "phoneCodeId";
+    private static final String ARG_KEY_PHONE_REGISTERED = "userRegistered";
 
     private static final String KEY_PROGRESS_VISIBILITY = "progressVisibility";
 
     private static final String RESULT_KEY_VERIFICATION_CODE = "verificationCode";
     private static final String RESULT_KEY_PHONE_CODE_ID     = "phoneCodeId";
     private static final String RESULT_KEY_PHONE_NUMBER      = "phoneNumber";
-    private static final String ARG_KEY_PHONE_REGISTERED     = "userRegistered";
 
     public static Intent createIntent(@NonNull Context context, @NonNull String phone,
                                       @NonNull String phoneCodeId, boolean phoneRegistered) {
