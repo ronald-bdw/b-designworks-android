@@ -85,8 +85,7 @@ public class GoogleFitScreen extends BaseActivity implements GoogleFitView {
     }
 
     @Override protected void onDestroy() {
-        googleFitPresenter.disconnect(this);
-        googleFitPresenter.detachView();
+        googleFitPresenter.detachView(this);
         super.onDestroy();
     }
 }

@@ -120,17 +120,14 @@ public class GoogleFitPresenter {
         }
     }
 
-    public void disconnect(@NonNull FragmentActivity activity) {
+    public void onShown() {
+    }
+
+    public void detachView(@NonNull FragmentActivity activity) {
         if (mClient != null) {
             mClient.stopAutoManage(activity);
             mClient.disconnect();
         }
-    }
-
-    public void onShown() {
-    }
-
-    public void detachView() {
         view = null;
     }
 }
