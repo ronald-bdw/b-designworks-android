@@ -46,8 +46,8 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
     private static final String KEY_FITBIT_CODE = "fitbitCode";
 
     @Bind(R.id.sync_container)           View         uiSyncContainer;
-    @Bind(R.id.google_fit_switch_compat) SwitchCompat uiGoogleFitSC;
-    @Bind(R.id.fitbit_switch_compat)     SwitchCompat uiFitBitSC;
+    @Bind(R.id.google_fit_switch_compat) SwitchCompat uiGoogleFit;
+    @Bind(R.id.fitbit_switch_compat)     SwitchCompat uiFitBit;
 
     @Inject UserInteractor     userInteractor;
     @Inject GoogleFitPresenter googleFitPresenter;
@@ -63,9 +63,8 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
         Bus.subscribe(this);
         googleFitPresenter.attachView(this, this);
         fitbitPresenter.attach(this);
-        uiGoogleFitSC.setChecked(userInteractor.isGoogleFitAuthEnabled());
-        uiFitBitSC.setChecked(userInteractor.isFitBitAuthEnabled());
-
+        uiGoogleFit.setChecked(userInteractor.isGoogleFitAuthEnabled());
+        uiFitBit.setChecked(userInteractor.isFitBitAuthEnabled());
         Intent intent = getIntent();
         handleIntent(intent);
     }
@@ -196,12 +195,12 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(GoogleFitAuthorizationStateChangedEvent event) {
-        uiGoogleFitSC.setChecked(userInteractor.isGoogleFitAuthEnabled());
+        uiGoogleFit.setChecked(userInteractor.isGoogleFitAuthEnabled());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(FitBitAuthorizationStateChangedEvent event) {
-        uiFitBitSC.setChecked(userInteractor.isFitBitAuthEnabled());
+        uiFitBit.setChecked(userInteractor.isFitBitAuthEnabled());
     }
 
 }
