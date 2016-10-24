@@ -34,9 +34,9 @@ public class GoogleFitPresenter {
 
     @Nullable private GoogleFitView view;
 
-    private final UserInteractor      userInteractor;
-    private final Context             context;
-    private       GoogleApiClient     mClient;
+    private final UserInteractor  userInteractor;
+    private final Context         context;
+    private       GoogleApiClient mClient;
 
     @Inject
     public GoogleFitPresenter(@NonNull UserInteractor userInteractor,
@@ -95,7 +95,7 @@ public class GoogleFitPresenter {
 
     public void handleResponse(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_SIGN_IN) {
-            if(resultCode == Activity.RESULT_OK) {
+            if (resultCode == Activity.RESULT_OK) {
                 GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
                 if (result.isSuccess()) {
                     GoogleSignInAccount acct = result.getSignInAccount();
@@ -139,7 +139,7 @@ public class GoogleFitPresenter {
 
     public void logout() {
         String tokenId = getGoogleFitTokenId();
-        if (mClient != null && tokenId!=null) {
+        if (mClient != null && tokenId != null) {
             userInteractor.removeFitnessToken(tokenId);
             Auth.GoogleSignInApi.signOut(mClient);
         }

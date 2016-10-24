@@ -53,9 +53,9 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
     @Inject GoogleFitPresenter googleFitPresenter;
     @Inject FitbitPresenter    fitbitPresenter;
 
-    @Nullable         String          code;
-    @Nullable         Subscription    sendingFitbitCodeSubs;
-    @Nullable private ProgressDialog  progressDialog;
+    @Nullable         String         code;
+    @Nullable         Subscription   sendingFitbitCodeSubs;
+    @Nullable private ProgressDialog progressDialog;
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);

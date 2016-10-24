@@ -7,8 +7,8 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public enum Provider {
-    @SerializedName("Fitbit") FITBIT("fitbit"),
-    @SerializedName("Googlefit") GOOGLE_FIT("googlefit");
+    @SerializedName("Fitbit")FITBIT("fitbit"),
+    @SerializedName("Googlefit")GOOGLE_FIT("googlefit");
 
     String name;
 

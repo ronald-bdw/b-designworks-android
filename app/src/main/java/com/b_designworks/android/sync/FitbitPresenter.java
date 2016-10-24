@@ -13,7 +13,7 @@ import com.b_designworks.android.utils.Rxs;
 public class FitbitPresenter {
 
     @Nullable private FitbitView     view;
-    private final UserInteractor userInteractor;
+    private final     UserInteractor userInteractor;
 
 
     public FitbitPresenter(UserInteractor userInteractor) {
@@ -37,7 +37,6 @@ public class FitbitPresenter {
                 });
     }
 
-
     private @Nullable String getFitBitTokenId() {
         String id = null;
         for (Integration integration : userInteractor.getUser().getIntegrations()) {
@@ -50,7 +49,7 @@ public class FitbitPresenter {
 
     public void logout() {
         String tokenId = getFitBitTokenId();
-        if (tokenId!=null) {
+        if (tokenId != null) {
             userInteractor.removeFitnessToken(tokenId);
         }
     }
@@ -58,5 +57,4 @@ public class FitbitPresenter {
     public void detach() {
         view = null;
     }
-
 }
