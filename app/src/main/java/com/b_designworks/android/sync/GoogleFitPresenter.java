@@ -38,16 +38,13 @@ public class GoogleFitPresenter {
     @Nullable private GoogleFitView view;
 
     private final UserInteractor      userInteractor;
-    private final GoogleFitInteractor googleFitInteractor;
     private final Context             context;
     private       GoogleApiClient     mClient;
 
     @Inject
     public GoogleFitPresenter(@NonNull UserInteractor userInteractor,
-                              @NonNull GoogleFitInteractor googleFitInteractor,
                               @NonNull Context context) {
         this.userInteractor = userInteractor;
-        this.googleFitInteractor = googleFitInteractor;
         this.context = context;
     }
 
@@ -100,23 +97,33 @@ public class GoogleFitPresenter {
     }
 
     public void handleResponse(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE_SIGN_IN & resultCode == Activity.RESULT_OK) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            if (result.isSuccess()) {
-                GoogleSignInAccount acct = result.getSignInAccount();
-                if (acct != null) {
-                    userInteractor.integrateGoogleFit(acct.getServerAuthCode())
-                        .compose(Rxs.doInBackgroundDeliverToUI())
-                        .subscribe(
-                            fitToken -> userInteractor.saveGoogleFitTokenLocally(fitToken.getId()),
-                            view::onError);
-                    if (view != null) {
-                        view.codeRetrievedSuccessfull();
+        if (requestCode == REQUEST_CODE_SIGN_IN) {
+            if(resultCode == Activity.RESULT_OK) {
+                GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+                if (result.isSuccess()) {
+                    GoogleSignInAccount acct = result.getSignInAccount();
+                    if (acct != null) {
+                        userInteractor.integrateGoogleFit(acct.getServerAuthCode())
+                            .compose(Rxs.doInBackgroundDeliverToUI())
+                            .subscribe(
+                                fitToken -> userInteractor.saveGoogleFitTokenLocally(fitToken.getId()),
+                                (error) -> {
+                                    if (view != null) {
+                                        view.onError(error);
+                                    }
+                                });
+                        if (view != null) {
+                            view.codeRetrievedSuccessfull();
+                        }
+                    } else {
+                        if (view != null) {
+                            view.errorWhileRetrievingCode();
+                        }
                     }
-                } else {
-                    if (view != null) {
-                        view.errorWhileRetrievingCode();
-                    }
+                }
+            } else {
+                if (view != null) {
+                    view.userCancelIntegration();
                 }
             }
         }
@@ -125,9 +132,12 @@ public class GoogleFitPresenter {
     public void onShown() {
     }
 
-    public void detachView() {
+    public void detachView(@NonNull FragmentActivity activity) {
+        if (mClient != null) {
+            mClient.stopAutoManage(activity);
+            mClient.disconnect();
+        }
         view = null;
-        mClient = null;
     }
 
     public void logout() {

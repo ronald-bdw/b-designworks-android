@@ -3,6 +3,7 @@ package com.b_designworks.android;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.b_designworks.android.chat.UserProfileUpdatedEvent;
 import com.b_designworks.android.login.models.AuthResponse;
 import com.b_designworks.android.login.models.FitToken;
 import com.b_designworks.android.login.models.Integration;
@@ -24,6 +25,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import rx.Observable;
 import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 
 /**
@@ -107,6 +109,7 @@ public class UserInteractor {
     }
 
     public void saveUser(@NonNull User user) {
+        Bus.event(UserProfileUpdatedEvent.EVENT);
         storage.put(KEY_USER, user);
         userSettings.saveAuthInfo(user.getAuthenticationToken(), user.getPhoneNumber());
     }
@@ -144,11 +147,19 @@ public class UserInteractor {
     }
 
     public boolean isNotificationsEnabled() {
-        return storage.getBoolean(KEY_NOTIFICATIONS_ENABLED, false);
+        return storage.getBoolean(KEY_NOTIFICATIONS_ENABLED, true);
     }
 
     public void setNotificationsEnabled(boolean enabled) {
         storage.putBoolean(KEY_NOTIFICATIONS_ENABLED, enabled);
+        if (enabled) {
+            api.userEnabledPushNotifications("message_push")
+                .subscribeOn(Schedulers.io())
+                .subscribe(result -> {}, ignoreError -> {});
+        } else {
+            api.userDisabledPushNotificatinos().subscribeOn(Schedulers.io())
+                .subscribe(result -> {}, ignoreError -> {});
+        }
     }
 
     public void removeFitnessToken(@NonNull String id) {

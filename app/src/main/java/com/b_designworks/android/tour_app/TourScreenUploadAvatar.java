@@ -52,12 +52,12 @@ public class TourScreenUploadAvatar extends BaseActivity {
     }
 
     @OnClick(R.id.skip) void onSkipClick() {
-        Navigator.tourFitnessApps(context());
+        Navigator.chat(context());
     }
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.next) {
-            Navigator.tourFitnessApps(context());
+            Navigator.chat(context());
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -116,7 +116,7 @@ public class TourScreenUploadAvatar extends BaseActivity {
         uiProgress.setVisibility(View.GONE);
         SimpleDialog.show(context(), getString(R.string.error), getString(R.string.error_uploading_photo),
             getString(R.string.retry), () -> updateAvatar(url),
-            getString(R.string.cancel), () -> showAvatar(userInteractor.getUser().getAvatar().getOriginal()));
+            getString(R.string.cancel), () -> showAvatar(userInteractor.getUser().getAvatar().getThumb()));
     }
 
     private void showAvatarUploadingProgress() {

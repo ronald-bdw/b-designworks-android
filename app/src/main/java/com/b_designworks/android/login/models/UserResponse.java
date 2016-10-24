@@ -45,14 +45,6 @@ public class UserResponse {
         return user.getId();
     }
 
-    @Nullable public String getAvatarUrl() {
-        return user.getAvatar() == null ? null : user.getAvatar().getOriginal();
-    }
-
-    @Nullable public String getAvatarThumbUrl() {
-        return user.getAvatar() == null ? null : user.getAvatar().getThumb();
-    }
-
     public List<Integration> getIntegrations(){
         return user.getIntegrations();
     }

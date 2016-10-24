@@ -7,22 +7,17 @@ import android.support.annotation.NonNull;
 
 import com.b_designworks.android.chat.ChatScreen;
 import com.b_designworks.android.login.EnterPhoneScreen;
-import com.b_designworks.android.login.functional_area.FunctionalToAreaCodeScreen;
 import com.b_designworks.android.login.RegistrationScreen;
 import com.b_designworks.android.login.SelectProviderScreen;
 import com.b_designworks.android.login.VerifyScreen;
 import com.b_designworks.android.login.WelcomeScreen;
+import com.b_designworks.android.login.functional_area.FunctionalToAreaCodeScreen;
 import com.b_designworks.android.profile.EditProfileScreen;
 import com.b_designworks.android.profile.ProfileScreen;
-import com.b_designworks.android.settings.PushNotificationsSettingsScreen;
 import com.b_designworks.android.settings.SettingsScreen;
-import com.b_designworks.android.sync.FitbitScreen;
-import com.b_designworks.android.sync.GoogleFitScreen;
 import com.b_designworks.android.sync.SyncScreen;
-import com.b_designworks.android.tour_app.TourScreenFitnessApps;
 import com.b_designworks.android.tour_app.TourScreenProfile;
 import com.b_designworks.android.tour_app.TourScreenUploadAvatar;
-import com.b_designworks.android.tour_app.TourScreenSocials;
 import com.b_designworks.android.trial.TrialScreen;
 
 /**
@@ -42,8 +37,8 @@ public class Navigator {
         context.startActivity(new Intent(context, TrialScreen.class));
     }
 
-    public static void verification(@NonNull Context context, String phone) {
-        context.startActivity(VerifyScreen.createIntent(context, phone));
+    public static void verification(@NonNull Context context, String phone, String phoneCodeId) {
+        context.startActivity(VerifyScreen.createIntent(context, phone, phoneCodeId, true));
     }
 
     public static void chat(@NonNull Context context) {
@@ -62,10 +57,6 @@ public class Navigator {
         context.startActivity(new Intent(context, SettingsScreen.class));
     }
 
-    public static void pushNotifications(@NonNull Context context) {
-        context.startActivity(new Intent(context, PushNotificationsSettingsScreen.class));
-    }
-
     public static void sync(@NonNull Context context) {
         context.startActivity(new Intent(context, SyncScreen.class));
     }
@@ -82,9 +73,8 @@ public class Navigator {
         context.startActivity(new Intent(context, SelectProviderScreen.class));
     }
 
-    public static void registration(
-        @NonNull Context context,
-        @NonNull String code, @NonNull String phoneNumber, @NonNull String phoneCodeId) {
+    public static void registration(@NonNull Context context, @NonNull String code,
+                                    @NonNull String phoneNumber, @NonNull String phoneCodeId) {
         context.startActivity(RegistrationScreen.createIntent(context, code, phoneNumber, phoneCodeId));
     }
 
@@ -93,16 +83,13 @@ public class Navigator {
     }
 
     public static void verifyAndReturnCode(@NonNull BaseActivity activity,
-                                           @NonNull String phone) {
-        activity.startActivityForResult(VerifyScreen.createIntent(activity, phone), RegistrationScreen.RESULT_KEY_FOR_VERIFYING);
-    }
-
-    public static void googleFit(@NonNull Context context) {
-        context.startActivity(new Intent(context, GoogleFitScreen.class));
-    }
-
-    public static void fitbit(@NonNull Context context) {
-        context.startActivity(new Intent(context, FitbitScreen.class));
+                                           @NonNull String phone,
+                                           @NonNull String phoneCodeId,
+                                           boolean phoneRegistered) {
+        activity.startActivityForResult(
+            VerifyScreen.createIntent(activity, phone, phoneCodeId, phoneRegistered),
+            RegistrationScreen.RESULT_KEY_FOR_VERIFYING
+        );
     }
 
     public static void openUrl(@NonNull Context context, @NonNull String url) {
@@ -115,14 +102,6 @@ public class Navigator {
 
     public static void tourUploadAvatar(@NonNull Context context) {
         context.startActivity(new Intent(context, TourScreenUploadAvatar.class));
-    }
-
-    public static void tourFitnessApps(@NonNull Context context) {
-        context.startActivity(new Intent(context, TourScreenFitnessApps.class));
-    }
-
-    public static void tourSocials(@NonNull Context context) {
-        context.startActivity(new Intent(context, TourScreenSocials.class));
     }
 
     public static void areaCode(@NonNull EnterPhoneScreen enterPhoneScreen, int requestCode) {

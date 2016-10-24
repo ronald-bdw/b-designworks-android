@@ -21,8 +21,6 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 import rx.Observable;
 
-import static com.b_designworks.android.Api.V1;
-
 /**
  * Created by Ilya Eremin on 12.08.2016.
  */
@@ -77,4 +75,11 @@ public interface Api {
     @DELETE(V1 + "fitness_tokens/{id}") Observable<FitToken> deleteFitnessToken(
         @NonNull @Path("id") String id
     );
+
+    @FormUrlEncoded
+    @POST("v1/notifications") Observable<ResponseBody> userEnabledPushNotifications(
+        @Field("notification[kind]") String kind
+    );
+
+    @DELETE("v1/notifications/message_push") Observable<ResponseBody> userDisabledPushNotificatinos();
 }

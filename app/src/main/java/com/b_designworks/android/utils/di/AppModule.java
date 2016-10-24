@@ -11,7 +11,8 @@ import com.b_designworks.android.BuildConfig;
 import com.b_designworks.android.UserInteractor;
 import com.b_designworks.android.login.VerifyPresenter;
 import com.b_designworks.android.profile.EditProfilePresenter;
-import com.b_designworks.android.sync.GoogleFitInteractor;
+import com.b_designworks.android.sync.FitbitPresenter;
+import com.b_designworks.android.sync.GoogleFitPresenter;
 import com.b_designworks.android.utils.network.RxErrorHandlingCallAdapterFactory;
 import com.b_designworks.android.utils.network.StringConverterFactory;
 import com.b_designworks.android.utils.storage.IStorage;
@@ -22,6 +23,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
 
@@ -54,17 +56,11 @@ public class AppModule {
 
     @Provides
     @Singleton
-    GoogleFitInteractor provideGoogleFitInteractor(@NonNull IStorage storage,
-                                                   @NonNull Api api) {
-        return new GoogleFitInteractor(storage, api);
-    }
-
-    @Provides
-    @Singleton
     public OkHttpClient provideHttpClient(@NonNull UserSettings userSettings,
                                           @NonNull File cachedDir) {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
-        httpClientBuilder.cache(new Cache(cachedDir, 20 * 1024 * 1024));
+        httpClientBuilder.cache(new Cache(cachedDir, 20 * 1024 * 1024))
+            .writeTimeout(60, TimeUnit.SECONDS);
         if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -139,4 +135,11 @@ public class AppModule {
         return new VerifyPresenter(userInteractor);
     }
 
+    @Provides @Singleton public FitbitPresenter provideFitbitPresenter(UserInteractor userInteractor) {
+        return new FitbitPresenter(userInteractor);
+    }
+
+    @Provides @Singleton public GoogleFitPresenter provideGoogleFitPresenter(UserInteractor userInteractor){
+        return new GoogleFitPresenter(userInteractor, mApplication);
+    }
 }

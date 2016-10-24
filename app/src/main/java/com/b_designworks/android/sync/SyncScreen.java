@@ -15,6 +15,7 @@ import com.b_designworks.android.Navigator;
 import com.b_designworks.android.R;
 import com.b_designworks.android.UserInteractor;
 import com.b_designworks.android.utils.Bus;
+import com.b_designworks.android.utils.Logger;
 import com.b_designworks.android.utils.di.Injector;
 import com.b_designworks.android.utils.network.ErrorUtils;
 import com.b_designworks.android.utils.ui.SimpleDialog;
@@ -50,18 +51,18 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
 
     @Inject UserInteractor     userInteractor;
     @Inject GoogleFitPresenter googleFitPresenter;
+    @Inject FitbitPresenter    fitbitPresenter;
 
     @Nullable         String          code;
     @Nullable         Subscription    sendingFitbitCodeSubs;
     @Nullable private ProgressDialog  progressDialog;
-    private           FitbitPresenter fitbitPresenter;
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
         Injector.inject(this);
         Bus.subscribe(this);
         googleFitPresenter.attachView(this, this);
-        fitbitPresenter = new FitbitPresenter(this, userInteractor);
+        fitbitPresenter.attach(this);
         uiGoogleFitSC.setChecked(userInteractor.isGoogleFitAuthEnabled());
         uiFitBitSC.setChecked(userInteractor.isFitBitAuthEnabled());
 
@@ -83,7 +84,7 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
 
     @OnClick(R.id.fitbit) void onFitbitClick() {
 
-        if(userInteractor.isFitBitAuthEnabled()){
+        if (userInteractor.isFitBitAuthEnabled()) {
             fitbitPresenter.logout();
         } else {
             Navigator.openUrl(context(), GETTING_CODE_URL);
@@ -118,6 +119,11 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
 
     @Override public void onError(Throwable error) {
         ErrorUtils.handle(context(), error);
+    }
+
+    @Override public void userCancelIntegration() {
+        Logger.dToast(context(), "User cancel google fit integration");
+        finish();
     }
 
     //FitBit
@@ -182,16 +188,19 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
     }
 
     @Override protected void onDestroy() {
-        googleFitPresenter.detachView();
+        googleFitPresenter.detachView(this);
+        fitbitPresenter.detach();
         Bus.unsubscribe(this);
         super.onDestroy();
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN) public void onEvent(GoogleFitAuthorizationStateChangedEvent event) {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(GoogleFitAuthorizationStateChangedEvent event) {
         uiGoogleFitSC.setChecked(userInteractor.isGoogleFitAuthEnabled());
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN) public void onEvent(FitBitAuthorizationStateChangedEvent event){
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(FitBitAuthorizationStateChangedEvent event) {
         uiFitBitSC.setChecked(userInteractor.isFitBitAuthEnabled());
     }
 

@@ -30,12 +30,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:textColor="#ECC933"
             android:textSize="16sp"
             android:textStyle="bold"
             tools:text="Vladimir Eremin\nololo"
-            android:gravity="center"
-
             />
 
         <TextView
@@ -51,11 +52,11 @@
             android:id="@+id/settings"
             android:layout_width="match_parent"
             android:layout_height="64dp"
+            android:layout_marginTop="36dp"
             android:background="@drawable/side_menu_item_bg"
             android:orientation="horizontal"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:layout_marginTop="36dp"
             >
 
             <ImageView
@@ -68,11 +69,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="12dp"
                 android:gravity="center_vertical"
                 android:text="@string/chat_drawer_settings"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
-                android:layout_marginLeft="12dp"
                 />
 
         </LinearLayout>
@@ -97,11 +98,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="12dp"
                 android:gravity="center_vertical"
                 android:text="@string/share"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
-                android:layout_marginLeft="12dp"
                 />
 
         </LinearLayout>
@@ -130,10 +131,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:layout_marginLeft="12dp"
             android:gravity="center_vertical"
             android:text="@string/chat_drawer_about_us"
             android:textColor="@android:color/white"
-            android:layout_marginLeft="12dp"
             />
 
     </LinearLayout>

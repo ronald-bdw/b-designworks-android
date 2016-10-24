@@ -56,6 +56,18 @@ public class VerifyPresenter {
             }, view::showError);
     }
 
+    public void setPhoneCodeId(@NonNull String phoneCodeId) {
+        this.phoneCodeId = phoneCodeId;
+    }
+
+    public void setPhoneRegistered(boolean userRegistered) {
+        this.userRegistered = userRegistered;
+    }
+
+    public void setPhone(String phone) {
+        this.phoneNumber = phone;
+    }
+
     public void handleSmsCode(String verificadtionCode) {
         if (!Strings.isEmpty(verificadtionCode)) {
             if (userRegistered) {
@@ -122,4 +134,5 @@ public class VerifyPresenter {
             view.showAuthorizationProgressDialog();
         }
     }
+
 }

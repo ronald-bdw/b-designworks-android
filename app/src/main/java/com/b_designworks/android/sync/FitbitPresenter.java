@@ -1,5 +1,6 @@
 package com.b_designworks.android.sync;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.b_designworks.android.UserInteractor;
@@ -13,13 +14,16 @@ import com.google.android.gms.auth.api.Auth;
  */
 public class FitbitPresenter {
 
-    private final FitbitView     view;
+    @Nullable private FitbitView     view;
     private final UserInteractor userInteractor;
 
 
-    public FitbitPresenter(FitbitView view, UserInteractor userInteractor) {
-        this.view = view;
+    public FitbitPresenter(UserInteractor userInteractor) {
         this.userInteractor = userInteractor;
+    }
+
+    public void attach(@NonNull FitbitView view) {
+        this.view = view;
     }
 
     public void handleCode(String code) {
@@ -27,7 +31,12 @@ public class FitbitPresenter {
         userInteractor.integrateFitbit(code)
             .compose(Rxs.doInBackgroundDeliverToUI())
             .doOnTerminate(view::dismissSendingFitbitCodeProgress)
-            .subscribe(fitToken -> userInteractor.saveFitBitTokenLocally(fitToken.getId()), view::onError);
+            .subscribe(fitToken -> userInteractor.saveFitBitTokenLocally(fitToken.getId()),
+                (error) -> {
+                    if (view != null) {
+                        view.onError(error);
+                    }
+                });
     }
 
 
@@ -46,6 +55,10 @@ public class FitbitPresenter {
         if (tokenId!=null) {
             userInteractor.removeFitnessToken(tokenId);
         }
+    }
+
+    public void detach() {
+        view = null;
     }
 
 }

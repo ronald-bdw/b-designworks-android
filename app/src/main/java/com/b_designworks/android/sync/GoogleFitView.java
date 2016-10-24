@@ -13,4 +13,5 @@ public interface GoogleFitView {
     void showInternetConnectionError();
     void showGoogleServiceDisconected();
     void onError(Throwable error);
+    void userCancelIntegration();
 }

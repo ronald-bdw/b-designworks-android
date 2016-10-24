@@ -1,6 +1,8 @@
 package com.b_designworks.android.trial;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
@@ -8,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.b_designworks.android.BaseActivity;
@@ -33,7 +36,7 @@ public class TrialScreen extends BaseActivity {
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
-        uiPager.setAdapter(new TrialPager());
+        uiPager.setAdapter(new TrialPager(context()));
         uiPagerIndicator.setViewPager(uiPager);
     }
 
@@ -43,21 +46,27 @@ public class TrialScreen extends BaseActivity {
 
     public static class TrialPager extends PagerAdapter {
 
-        String[] titles = new String[]{
-            "Welcome to Pearup!", "Title 2", "Title 3", "Title 4"
-        };
+        private final String[] titles;
+        private final String[] descriptions;
 
-        String[] descriptions = new String[]{
-            "Some text about the App... Messenger bag pop-up bicycle rights, brunch cliche freegan vice mixtape wayfarers gentrify kickstarter.",
-            "Description 2", "Description 3", "Description 4"
+        TrialPager(@NonNull Context context) {
+            titles = context.getResources().getStringArray(R.array.trial_titles);
+            descriptions = context.getResources().getStringArray(R.array.trial_descriptions);
+        }
+
+        @DrawableRes int[] images = {
+            R.drawable.trial_1, R.drawable.trial_2,
+            R.drawable.trial_3, R.drawable.trial_4,
         };
 
         @Override public Object instantiateItem(ViewGroup container, int position) {
             View view = LayoutInflater.from(container.getContext()).inflate(R.layout.item_trial, container, false);
             TextView titleView = (TextView) view.findViewById(R.id.title);
             TextView description = (TextView) view.findViewById(R.id.description);
+            ImageView uiImage = (ImageView) view.findViewById(R.id.image);
             titleView.setText(titles[position]);
             description.setText(descriptions[position]);
+            uiImage.setImageResource(images[position]);
             container.addView(view, 0);
             return view;
         }
@@ -67,7 +76,7 @@ public class TrialScreen extends BaseActivity {
         }
 
         @Override public int getCount() {
-            return 4;
+            return titles.length;
         }
 
         @Override public boolean isViewFromObject(View view, Object object) {
