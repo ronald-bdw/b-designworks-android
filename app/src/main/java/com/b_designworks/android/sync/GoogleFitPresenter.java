@@ -11,9 +11,6 @@ import android.util.Log;
 
 import com.b_designworks.android.UserInteractor;
 import com.b_designworks.android.login.models.Integration;
-import com.b_designworks.android.login.models.User;
-import com.b_designworks.android.utils.Bus;
-import com.b_designworks.android.utils.Logger;
 import com.b_designworks.android.utils.Rxs;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;

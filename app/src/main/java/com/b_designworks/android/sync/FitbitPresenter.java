@@ -5,9 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.b_designworks.android.UserInteractor;
 import com.b_designworks.android.login.models.Integration;
-import com.b_designworks.android.utils.Logger;
 import com.b_designworks.android.utils.Rxs;
-import com.google.android.gms.auth.api.Auth;
 
 /**
  * Created by Ilya Eremin on 9/26/16.
