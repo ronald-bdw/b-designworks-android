@@ -1,13 +1,15 @@
 package com.b_designworks.android;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.b_designworks.android.login.models.AuthResponse;
+import com.b_designworks.android.login.models.FitToken;
 import com.b_designworks.android.login.models.Integration;
 import com.b_designworks.android.login.models.User;
 import com.b_designworks.android.login.models.UserResponse;
-import com.b_designworks.android.sync.FitBitAuthorizationEnabled;
-import com.b_designworks.android.sync.GoogleFitAuthorizationEnabledEvent;
+import com.b_designworks.android.sync.FitBitAuthorizationStateChangedEvent;
+import com.b_designworks.android.sync.GoogleFitAuthorizationStateChangedEvent;
 import com.b_designworks.android.sync.Provider;
 import com.b_designworks.android.utils.Bus;
 import com.b_designworks.android.utils.Rxs;
@@ -15,13 +17,13 @@ import com.b_designworks.android.utils.storage.IStorage;
 import com.b_designworks.android.utils.storage.UserSettings;
 
 import java.io.File;
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import rx.Observable;
 import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 
 /**
@@ -121,20 +123,12 @@ public class UserInteractor {
         });
     }
 
-    public void integrateGoogleFit(@NonNull String serverAuthCode) {
-        api.integrateFitnessApp(serverAuthCode, Provider.GOOGLE_FIT)
-            .compose(Rxs.doInBackgroundDeliverToUI())
-            .subscribe(fitToken -> {
-                saveGoogleFitTokenLocally(fitToken.getId());
-            }, e -> {});
+    public Observable<FitToken> integrateGoogleFit(@NonNull String serverAuthCode) {
+        return api.integrateFitnessApp(serverAuthCode, Provider.GOOGLE_FIT);
     }
 
-    public void integrateFitbit(@NonNull String serverAuthCode) {
-        api.integrateFitnessApp(serverAuthCode, Provider.FITBIT)
-            .compose(Rxs.doInBackgroundDeliverToUI())
-            .subscribe(fitToken -> {
-                saveFitBitTokenLocally(fitToken.getId());
-            }, e -> {});
+    public Observable<FitToken> integrateFitbit(@NonNull String serverAuthCode) {
+        return api.integrateFitnessApp(serverAuthCode, Provider.FITBIT);
     }
 
     public Observable<User> updateUserProfile() {
@@ -161,59 +155,58 @@ public class UserInteractor {
         api.deleteFitnessToken(id)
             .compose(Rxs.doInBackgroundDeliverToUI())
             .subscribe(result ->
-            {
-                removeFitnessTokenLocally(result.getId());
-            }
-            , error -> {});
+                {
+                    removeFitnessTokenLocally(result.getId());
+                }
+                , error -> {});
     }
 
     private void removeFitnessTokenLocally(String tokenId) {
         User user = getUser();
-        Integration[] integrations = user.getIntegrations();
-        for (int i = 0; i < integrations.length; i++) {
-            if (integrations[i].getFitnessTokenId().equals(tokenId)) {
-                integrations[i].setStatus("false");
-                integrations[i].setFitnessTokenId(null);
+        for (Integration integration : user.getIntegrations()) {
+            if (integration.getFitnessTokenId() != null) {
+                if (integration.getFitnessTokenId().equals(tokenId)) {
+                    integration.setFitnessTokenId(null);
+                    integration.setStatus(false);
+                    saveUser(user);
+                    if (integration.getName().equals("Googlefit")) {
+                        Bus.event(GoogleFitAuthorizationStateChangedEvent.EVENT);
+                    } else if (integration.getName().equals("Fitbit")) {
+                        Bus.event(FitBitAuthorizationStateChangedEvent.EVENT);
+                    }
+                }
             }
         }
-        user.setIntegrations(integrations);
-        saveUser(user);
-        //TODO
-        Bus.event(GoogleFitAuthorizationEnabledEvent.EVENT);
-        Bus.event(FitBitAuthorizationEnabled.EVENT);
     }
 
-    private void saveGoogleFitTokenLocally(@NonNull String tokenId) {
+    public void saveGoogleFitTokenLocally(@NonNull String tokenId) {
         User user = getUser();
-        Integration[] integrations = user.getIntegrations();
-        for (int i = 0; i < integrations.length; i++) {
-            if (integrations[i].getName().equals("Googlefit")) {
-                integrations[i].setStatus("true");
-                integrations[i].setFitnessTokenId(tokenId);
+        for (Integration integration : user.getIntegrations()) {
+            if (integration.getName().equals("Googlefit")) {
+                integration.setStatus(true);
+                integration.setFitnessTokenId(tokenId);
             }
         }
-        user.setIntegrations(integrations);
         saveUser(user);
-        Bus.event(GoogleFitAuthorizationEnabledEvent.EVENT);
+        Bus.event(GoogleFitAuthorizationStateChangedEvent.EVENT);
     }
 
-    private void saveFitBitTokenLocally(@NonNull String tokenId) {
+    public void saveFitBitTokenLocally(@NonNull String tokenId) {
         User user = getUser();
-        Integration[] integrations = user.getIntegrations();
-        for (int i = 0; i < integrations.length; i++) {
-            if (integrations[i].getName().equals("Fitbit")) {
-                integrations[i].setStatus("true");
-                integrations[i].setFitnessTokenId(tokenId);
+        for (Integration integration : user.getIntegrations()) {
+            if (integration.getName().equals("Fitbit")) {
+                integration.setStatus(true);
+                integration.setFitnessTokenId(tokenId);
             }
         }
-        user.setIntegrations(integrations);
         saveUser(user);
-        Bus.event(FitBitAuthorizationEnabled.EVENT);
+        Bus.event(FitBitAuthorizationStateChangedEvent.EVENT);
     }
 
     public boolean isGoogleFitAuthEnabled() {
         for (Integration integration : getUser().getIntegrations()) {
-            if (integration.getName().equals("Googlefit") && integration.getStatus().equals("true")) {
+            if (integration.getName().equals("Googlefit") && integration.getStatus()) {
+                Log.d("isGoogleFitEnabled", integration.getFitnessTokenId() + " " + integration.getName() + " " + integration.getStatus());
                 return true;
             }
         }
@@ -222,7 +215,7 @@ public class UserInteractor {
 
     public boolean isFitBitAuthEnabled() {
         for (Integration integration : getUser().getIntegrations()) {
-            if (integration.getName().equals("Fitbit") && integration.getStatus().equals("true")) {
+            if (integration.getName().equals("Fitbit") && integration.getStatus()) {
                 return true;
             }
         }

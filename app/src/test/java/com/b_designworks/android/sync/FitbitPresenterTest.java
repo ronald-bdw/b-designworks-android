@@ -2,6 +2,7 @@ package com.b_designworks.android.sync;
 
 import com.b_designworks.android.RxSchedulersOverrideRule;
 import com.b_designworks.android.UserInteractor;
+import com.b_designworks.android.login.models.FitToken;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -35,7 +36,7 @@ public class FitbitPresenterTest {
 
     @Before
     public void setUp() throws Exception {
-        when(userInteractor.integrateFitbit(FITBIT_CORRECT_AUTH_CODE)).thenReturn(Observable.just(new Object()));
+        when(userInteractor.integrateFitbit(FITBIT_CORRECT_AUTH_CODE)).thenReturn(Observable.just(new FitToken()));
         when(userInteractor.integrateFitbit(FITBIT_INCORRECT_AUTH_CODE)).thenReturn(Observable.error(new Throwable()));
         fitbitPresenter = new FitbitPresenter(fitbitView, userInteractor);
     }

@@ -105,7 +105,11 @@ public class GoogleFitPresenter {
             if (result.isSuccess()) {
                 GoogleSignInAccount acct = result.getSignInAccount();
                 if (acct != null) {
-                    userInteractor.integrateGoogleFit(acct.getServerAuthCode());
+                    userInteractor.integrateGoogleFit(acct.getServerAuthCode())
+                        .compose(Rxs.doInBackgroundDeliverToUI())
+                        .subscribe(
+                            fitToken -> userInteractor.saveGoogleFitTokenLocally(fitToken.getId()),
+                            view::onError);
                     if (view != null) {
                         view.codeRetrievedSuccessfull();
                     }

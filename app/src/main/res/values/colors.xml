@@ -4,6 +4,7 @@
     <color name="my_message_bg">#c9deb1</color>
     <color name="default_background">#e7e7e7</color>
     <color name="app_accent">#29537c</color>
+    <color name="shadow">#eceff1</color>
 
     <color name="Smooch_accent">#75a125</color>
     <color name="Smooch_remoteMessageBackground">#f3f3f3</color>

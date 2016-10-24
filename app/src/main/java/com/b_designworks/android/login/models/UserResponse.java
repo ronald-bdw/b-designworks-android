@@ -2,6 +2,8 @@ package com.b_designworks.android.login.models;
 
 import android.support.annotation.Nullable;
 
+import java.util.List;
+
 /**
  * Created by Ilya Eremin on 15.08.2016.
  */
@@ -51,7 +53,7 @@ public class UserResponse {
         return user.getAvatar() == null ? null : user.getAvatar().getThumb();
     }
 
-    public Integration[] getIntegrations(){
+    public List<Integration> getIntegrations(){
         return user.getIntegrations();
     }
 

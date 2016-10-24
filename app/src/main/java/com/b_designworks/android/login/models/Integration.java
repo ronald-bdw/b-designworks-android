@@ -7,7 +7,7 @@ package com.b_designworks.android.login.models;
 public class Integration {
     private String fitnessTokenId;
     private String name;
-    private String status;
+    private boolean status;
 
     public String getFitnessTokenId() {
         return fitnessTokenId;
@@ -21,11 +21,11 @@ public class Integration {
         return name;
     }
 
-    public String getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 }
