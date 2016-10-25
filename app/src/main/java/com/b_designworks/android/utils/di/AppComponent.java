@@ -10,8 +10,7 @@ import com.b_designworks.android.login.VerifyScreen;
 import com.b_designworks.android.profile.EditProfileScreen;
 import com.b_designworks.android.profile.ProfileScreen;
 import com.b_designworks.android.settings.SettingsScreen;
-import com.b_designworks.android.sync.FitbitScreen;
-import com.b_designworks.android.sync.GoogleFitScreen;
+import com.b_designworks.android.sync.SyncScreen;
 import com.b_designworks.android.tour_app.TourScreenProfile;
 import com.b_designworks.android.tour_app.TourScreenUploadAvatar;
 
@@ -26,7 +25,6 @@ import dagger.Component;
 @Singleton
 @Component(modules = {AppModule.class})
 public interface AppComponent {
-    void inject(GoogleFitScreen activity);
     void inject(InitialScreen activity);
     void inject(RegistrationScreen registrationScreen);
     void inject(VerifyScreen verifyScreen);
@@ -35,9 +33,9 @@ public interface AppComponent {
     void inject(EditProfileScreen editProfileScreen);
     void inject(ProfileScreen profileScreen);
     void inject(SettingsScreen settingsScreen);
-    void inject(FitbitScreen fitbitScreen);
     void inject(TourScreenProfile tourScreenProfile);
     void inject(TourScreenUploadAvatar tourScreenUploadAvatar);
     void inject(PushNotificationsHandlerService pushNotificationsHandlerService);
     void inject(EnterPhoneScreen enterPhoneScreen);
+    void inject(SyncScreen syncScreen);
 }

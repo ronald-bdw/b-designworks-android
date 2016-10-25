@@ -1,13 +1,19 @@
 package com.b_designworks.android;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.b_designworks.android.chat.UserProfileUpdatedEvent;
 import com.b_designworks.android.login.models.AuthResponse;
+import com.b_designworks.android.login.models.FitToken;
+import com.b_designworks.android.login.models.Integration;
 import com.b_designworks.android.login.models.User;
 import com.b_designworks.android.login.models.UserResponse;
+import com.b_designworks.android.sync.FitBitAuthorizationStateChangedEvent;
+import com.b_designworks.android.sync.GoogleFitAuthorizationStateChangedEvent;
 import com.b_designworks.android.sync.Provider;
 import com.b_designworks.android.utils.Bus;
+import com.b_designworks.android.utils.Logger;
 import com.b_designworks.android.utils.storage.IStorage;
 import com.b_designworks.android.utils.storage.UserSettings;
 
@@ -119,10 +125,12 @@ public class UserInteractor {
         });
     }
 
+    public Observable<FitToken> integrateGoogleFit(@NonNull String serverAuthCode) {
+        return api.integrateFitnessApp(serverAuthCode, Provider.GOOGLE_FIT);
+    }
 
-    public Observable<Object> integrateFitbit(@NonNull String code) {
-        return api.integrateFitnessApp(code, Provider.FITBIT)
-            .map(result -> null);
+    public Observable<FitToken> integrateFitbit(@NonNull String serverAuthCode) {
+        return api.integrateFitnessApp(serverAuthCode, Provider.FITBIT);
     }
 
     public Observable<User> updateUserProfile() {
@@ -151,5 +159,67 @@ public class UserInteractor {
             api.userDisabledPushNotificatinos().subscribeOn(Schedulers.io())
                 .subscribe(result -> {}, ignoreError -> {});
         }
+    }
+
+    public void removeFitnessToken(@NonNull Provider provider) {
+        String tokenId = getFitnessToken(provider);
+        if (tokenId != null) {
+            api.deleteFitnessToken(tokenId)
+                .subscribeOn(Schedulers.io())
+                .subscribe(result -> removeFitnessTokenLocally(result.getId()), Logger::e);
+        }
+    }
+
+    private void removeFitnessTokenLocally(@NonNull String tokenId) {
+        User user = getUser();
+        for (Integration integration : user.getIntegrations()) {
+            if (integration.getFitnessTokenId() != null) {
+                if (tokenId.equals(integration.getFitnessTokenId())) {
+                    integration.setFitnessTokenId(null);
+                    integration.setStatus(false);
+                    saveUser(user);
+                    if (Provider.GOOGLE_FIT == integration.getProvider()) {
+                        Bus.event(GoogleFitAuthorizationStateChangedEvent.EVENT);
+                    } else if (Provider.FITBIT == integration.getProvider()) {
+                        Bus.event(FitBitAuthorizationStateChangedEvent.EVENT);
+                    }
+                }
+            }
+        }
+    }
+
+    public void saveFitnessTokenLocally(@NonNull String tokenId, @NonNull Provider provider) {
+        User user = getUser();
+        for (Integration integration : user.getIntegrations()) {
+            if (provider == integration.getProvider()) {
+                integration.setStatus(true);
+                integration.setFitnessTokenId(tokenId);
+                saveUser(user);
+                if (provider == Provider.GOOGLE_FIT) {
+                    Bus.event(GoogleFitAuthorizationStateChangedEvent.EVENT);
+                } else if (provider == Provider.FITBIT) {
+                    Bus.event(FitBitAuthorizationStateChangedEvent.EVENT);
+                }
+            }
+        }
+    }
+
+    public boolean isFitnessAuthEnabled(@NonNull Provider provider) {
+        for (Integration integration : getUser().getIntegrations()) {
+            if (provider == integration.getProvider() && integration.getStatus()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public @Nullable String getFitnessToken(@NonNull Provider provider) {
+        String id = null;
+        for (Integration integration : getUser().getIntegrations()) {
+            if (provider == integration.getProvider()) {
+                id = integration.getFitnessTokenId();
+            }
+        }
+        return id;
     }
 }

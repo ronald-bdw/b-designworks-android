@@ -11,7 +11,8 @@ import com.b_designworks.android.BuildConfig;
 import com.b_designworks.android.UserInteractor;
 import com.b_designworks.android.login.VerifyPresenter;
 import com.b_designworks.android.profile.EditProfilePresenter;
-import com.b_designworks.android.sync.GoogleFitInteractor;
+import com.b_designworks.android.sync.FitbitPresenter;
+import com.b_designworks.android.sync.GoogleFitPresenter;
 import com.b_designworks.android.utils.network.RxErrorHandlingCallAdapterFactory;
 import com.b_designworks.android.utils.network.StringConverterFactory;
 import com.b_designworks.android.utils.storage.IStorage;
@@ -51,13 +52,6 @@ public class AppModule {
     @Singleton
     Context providesApplication() {
         return mApplication;
-    }
-
-    @Provides
-    @Singleton
-    GoogleFitInteractor provideGoogleFitInteractor(
-        @NonNull Api api) {
-        return new GoogleFitInteractor(api);
     }
 
     @Provides
@@ -141,4 +135,11 @@ public class AppModule {
         return new VerifyPresenter(userInteractor);
     }
 
+    @Provides @Singleton public FitbitPresenter provideFitbitPresenter(UserInteractor userInteractor) {
+        return new FitbitPresenter(userInteractor);
+    }
+
+    @Provides @Singleton public GoogleFitPresenter provideGoogleFitPresenter(UserInteractor userInteractor){
+        return new GoogleFitPresenter(userInteractor, mApplication);
+    }
 }

@@ -33,15 +33,8 @@
         <activity android:name=".profile.ProfileScreen"/>
         <activity android:name=".settings.SettingsScreen"/>
         <activity android:name=".settings.PushNotificationsSettingsScreen"/>
-        <activity android:name=".sync.SyncScreen"/>
-        <activity android:name=".login.RegistrationScreen"/>
-        <activity android:name=".profile.EditProfileScreen"/>
-        <activity android:name=".AboutUsScreen"/>
-        <activity android:name=".sync.GoogleFitScreen"/>
-        <activity android:name=".login.functional_area.FunctionalToAreaCodeScreen"/>
-
         <activity
-            android:name=".sync.FitbitScreen"
+            android:name=".sync.SyncScreen"
             android:launchMode="singleTop"
             >
             <intent-filter>
@@ -55,7 +48,10 @@
                     android:scheme="pearup"/>
             </intent-filter>
         </activity>
-
+        <activity android:name=".login.RegistrationScreen"/>
+        <activity android:name=".profile.EditProfileScreen"/>
+        <activity android:name=".AboutUsScreen"/>
+        <activity android:name=".login.functional_area.FunctionalToAreaCodeScreen"/>
         <activity android:name=".tour_app.TourScreenProfile"/>
         <activity android:name=".tour_app.TourScreenUploadAvatar"/>
 

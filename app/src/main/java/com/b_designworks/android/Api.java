@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.b_designworks.android.login.models.AuthResponse;
+import com.b_designworks.android.login.models.FitToken;
 import com.b_designworks.android.login.models.UserResponse;
 import com.b_designworks.android.sync.Provider;
 
@@ -66,9 +67,13 @@ public interface Api {
                                           @NonNull @Part MultipartBody.Part data);
 
     @FormUrlEncoded
-    @POST(V1 + "/fitness_tokens") Observable<UserResponse> integrateFitnessApp(
+    @POST(V1 + "/fitness_tokens") Observable<FitToken> integrateFitnessApp(
         @NonNull @Field("authorization_code") String code,
         @NonNull @Field("source") Provider provider
+    );
+
+    @DELETE(V1 + "fitness_tokens/{id}") Observable<FitToken> deleteFitnessToken(
+        @NonNull @Path("id") String id
     );
 
     @FormUrlEncoded

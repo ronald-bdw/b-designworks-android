@@ -1,16 +1,19 @@
 package com.b_designworks.android.login.models;
 
+import java.util.List;
+
 /**
  * Created by Ilya Eremin on 9/12/16.
  */
 public class User {
-    private String id;
-    private String authenticationToken;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String phoneNumber;
-    private Avatar avatar;
+    private String            id;
+    private String            authenticationToken;
+    private String            firstName;
+    private String            lastName;
+    private String            email;
+    private String            phoneNumber;
+    private Avatar            avatar;
+    private List<Integration> integrations;
 
     public Avatar getAvatar() {
         return avatar;
@@ -38,5 +41,13 @@ public class User {
 
     public String getPhoneNumber() {
         return phoneNumber;
+    }
+
+    public List<Integration> getIntegrations() {
+        return integrations;
+    }
+
+    public void setIntegrations(List<Integration> integrations) {
+        this.integrations = integrations;
     }
 }

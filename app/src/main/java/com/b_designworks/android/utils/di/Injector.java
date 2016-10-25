@@ -14,8 +14,7 @@ import com.b_designworks.android.login.VerifyScreen;
 import com.b_designworks.android.profile.EditProfileScreen;
 import com.b_designworks.android.profile.ProfileScreen;
 import com.b_designworks.android.settings.SettingsScreen;
-import com.b_designworks.android.sync.FitbitScreen;
-import com.b_designworks.android.sync.GoogleFitScreen;
+import com.b_designworks.android.sync.SyncScreen;
 import com.b_designworks.android.tour_app.TourScreenProfile;
 import com.b_designworks.android.tour_app.TourScreenUploadAvatar;
 
@@ -23,10 +22,6 @@ import com.b_designworks.android.tour_app.TourScreenUploadAvatar;
  * Created by Ilya Eremin on 9/19/16.
  */
 public class Injector {
-
-    public static void inject(@NonNull GoogleFitScreen googleFitScreen) {
-        getAppComponent(googleFitScreen).inject(googleFitScreen);
-    }
 
     public static void inject(@NonNull InitialScreen initialScreen) {
         getAppComponent(initialScreen).inject(initialScreen);
@@ -64,16 +59,16 @@ public class Injector {
         getAppComponent(settingsScreen).inject(settingsScreen);
     }
 
-    public static void inject(FitbitScreen fitbitScreen) {
-        getAppComponent(fitbitScreen).inject(fitbitScreen);
-    }
-
     public static void inject(TourScreenProfile tourScreenProfile) {
         getAppComponent(tourScreenProfile).inject(tourScreenProfile);
     }
 
     public static void inject(TourScreenUploadAvatar tourScreenUploadAvatar) {
         getAppComponent(tourScreenUploadAvatar).inject(tourScreenUploadAvatar);
+    }
+
+    public static void inject(SyncScreen syncScreen) {
+        getAppComponent(syncScreen).inject(syncScreen);
     }
 
     public static void inject(PushNotificationsHandlerService pushNotificationsHandlerService) {

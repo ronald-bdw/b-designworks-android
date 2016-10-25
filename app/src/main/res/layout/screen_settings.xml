@@ -48,7 +48,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="#C7C7CD"
+                android:background="@color/separator"
                 />
 
             <LinearLayout
@@ -78,7 +78,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="#C7C7CD"
+                android:background="@color/separator"
                 />
 
             <LinearLayout
@@ -107,7 +107,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="#C7C7CD"
+                android:background="@color/separator"
                 />
 
         </LinearLayout>

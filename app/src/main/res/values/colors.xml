@@ -6,6 +6,7 @@
     <color name="app_accent">#29537c</color>
     <color name="settings_font">#243664</color>
     <color name="separator">#c7c7cd</color>
+    <color name="shadow">#eceff1</color>
 
     <color name="Smooch_accent">#75a125</color>
     <color name="Smooch_remoteMessageBackground">#f3f3f3</color>

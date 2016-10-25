@@ -57,7 +57,7 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView {
         uiFirstName.setText(user.getFirstName());
         uiLastName.setText(user.getLastName());
         uiEmail.setText(user.getEmail());
-        googleFitPresenter.attachView(this);
+        googleFitPresenter.attachView(this, this);
     }
 
     @Nullable private Subscription   updateProfileSubs;

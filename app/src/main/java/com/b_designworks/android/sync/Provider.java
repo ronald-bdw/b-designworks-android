@@ -1,11 +1,17 @@
 package com.b_designworks.android.sync;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.Locale;
+
 /**
  * Created by Ilya Eremin on 9/26/16.
  */
 
 public enum Provider {
-    FITBIT("fitbit"), GOOGLE_FIT("googlefit"),;
+    @SerializedName("Fitbit")FITBIT("Fitbit"),
+    @SerializedName("Googlefit")GOOGLE_FIT("Googlefit"),
+    @SerializedName("Healthkit")HEALTH_KIT("Healthkit");
 
     String name;
 
@@ -14,6 +20,6 @@ public enum Provider {
     }
 
     @Override public String toString() {
-        return name;
+        return name.toLowerCase(Locale.ENGLISH);
     }
 }

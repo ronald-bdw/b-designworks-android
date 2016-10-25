@@ -1,5 +1,9 @@
 package com.b_designworks.android.login.models;
 
+import android.support.annotation.Nullable;
+
+import java.util.List;
+
 /**
  * Created by Ilya Eremin on 15.08.2016.
  */
@@ -39,6 +43,10 @@ public class UserResponse {
 
     public String getId() {
         return user.getId();
+    }
+
+    public List<Integration> getIntegrations(){
+        return user.getIntegrations();
     }
 
 }

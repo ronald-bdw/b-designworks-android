@@ -15,8 +15,6 @@ import com.b_designworks.android.login.functional_area.FunctionalToAreaCodeScree
 import com.b_designworks.android.profile.EditProfileScreen;
 import com.b_designworks.android.profile.ProfileScreen;
 import com.b_designworks.android.settings.SettingsScreen;
-import com.b_designworks.android.sync.FitbitScreen;
-import com.b_designworks.android.sync.GoogleFitScreen;
 import com.b_designworks.android.sync.SyncScreen;
 import com.b_designworks.android.tour_app.TourScreenProfile;
 import com.b_designworks.android.tour_app.TourScreenUploadAvatar;
@@ -92,14 +90,6 @@ public class Navigator {
             VerifyScreen.createIntent(activity, phone, phoneCodeId, phoneRegistered),
             RegistrationScreen.RESULT_KEY_FOR_VERIFYING
         );
-    }
-
-    public static void googleFit(@NonNull Context context) {
-        context.startActivity(new Intent(context, GoogleFitScreen.class));
-    }
-
-    public static void fitbit(@NonNull Context context) {
-        context.startActivity(new Intent(context, FitbitScreen.class));
     }
 
     public static void openUrl(@NonNull Context context, @NonNull String url) {
