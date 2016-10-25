@@ -143,4 +143,8 @@ public class UserInteractor {
     public void setNotificationsEnabled(boolean enabled) {
         storage.putBoolean(KEY_NOTIFICATIONS_ENABLED, enabled);
     }
+
+    public boolean userHasValidSubscription() {
+        return false;
+    }
 }
