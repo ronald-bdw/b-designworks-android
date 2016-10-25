@@ -73,6 +73,13 @@
 -keepattributes Exceptions
 -keepclasseswithmembers class * { @retrofit2.http.* <methods>; }
 
+#retrolambda
+-dontwarn java.lang.invoke**
+
+
+-keepattributes InnerClasses
+-keepattributes EnclosingMethod
+
 #debug
 -renamesourcefileattribute SourceFile
 -keepattributes SourceFile,LineNumberTable
