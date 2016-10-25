@@ -2,7 +2,6 @@ package com.b_designworks.android;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.b_designworks.android.chat.UserProfileUpdatedEvent;
 import com.b_designworks.android.login.models.AuthResponse;
@@ -15,7 +14,6 @@ import com.b_designworks.android.sync.GoogleFitAuthorizationStateChangedEvent;
 import com.b_designworks.android.sync.Provider;
 import com.b_designworks.android.utils.Bus;
 import com.b_designworks.android.utils.Logger;
-import com.b_designworks.android.utils.Rxs;
 import com.b_designworks.android.utils.storage.IStorage;
 import com.b_designworks.android.utils.storage.UserSettings;
 
@@ -180,9 +178,9 @@ public class UserInteractor {
                     integration.setFitnessTokenId(null);
                     integration.setStatus(false);
                     saveUser(user);
-                    if (Provider.GOOGLE_FIT == integration.getName()) {
+                    if (Provider.GOOGLE_FIT == integration.getProvider()) {
                         Bus.event(GoogleFitAuthorizationStateChangedEvent.EVENT);
-                    } else if (Provider.FITBIT == integration.getName()) {
+                    } else if (Provider.FITBIT == integration.getProvider()) {
                         Bus.event(FitBitAuthorizationStateChangedEvent.EVENT);
                     }
                 }
@@ -193,7 +191,7 @@ public class UserInteractor {
     public void saveFitnessTokenLocally(@NonNull String tokenId, @NonNull Provider provider) {
         User user = getUser();
         for (Integration integration : user.getIntegrations()) {
-            if (provider == integration.getName()) {
+            if (provider == integration.getProvider()) {
                 integration.setStatus(true);
                 integration.setFitnessTokenId(tokenId);
                 saveUser(user);
@@ -208,7 +206,7 @@ public class UserInteractor {
 
     public boolean isFitnessAuthEnabled(@NonNull Provider provider) {
         for (Integration integration : getUser().getIntegrations()) {
-            if (provider == integration.getName() && integration.getStatus()) {
+            if (provider == integration.getProvider() && integration.getStatus()) {
                 return true;
             }
         }
@@ -218,7 +216,7 @@ public class UserInteractor {
     public @Nullable String getFitnessToken(@NonNull Provider provider) {
         String id = null;
         for (Integration integration : getUser().getIntegrations()) {
-            if (provider == integration.getName()) {
+            if (provider == integration.getProvider()) {
                 id = integration.getFitnessTokenId();
             }
         }

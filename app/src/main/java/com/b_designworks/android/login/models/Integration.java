@@ -19,7 +19,7 @@ public class Integration {
         this.fitnessTokenId = fitnessTokenId;
     }
 
-    public Provider getName() {
+    public Provider getProvider() {
         return name;
     }
 
