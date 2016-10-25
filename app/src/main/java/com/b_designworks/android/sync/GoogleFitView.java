@@ -9,7 +9,6 @@ public interface GoogleFitView {
     void codeRetrievedSuccessfull();
     void errorWhileRetrievingCode();
     void onGoogleServicesError(ConnectionResult result);
-    void enableIntegrationContainer(boolean enabled);
     void showInternetConnectionError();
     void showGoogleServiceDisconected();
     void onError(Throwable error);

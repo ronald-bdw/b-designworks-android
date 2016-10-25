@@ -63,8 +63,8 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
         Bus.subscribe(this);
         googleFitPresenter.attachView(this, this);
         fitbitPresenter.attach(this);
-        uiGoogleFit.setChecked(userInteractor.isGoogleFitAuthEnabled());
-        uiFitBit.setChecked(userInteractor.isFitBitAuthEnabled());
+        uiGoogleFit.setChecked(userInteractor.isFitnessAuthEnabled(Provider.GOOGLE_FIT));
+        uiFitBit.setChecked(userInteractor.isFitnessAuthEnabled(Provider.FITBIT));
         Intent intent = getIntent();
         handleIntent(intent);
     }
@@ -74,7 +74,8 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
     }
 
     @OnClick(R.id.google_fit) void onGoogleFitClick() {
-        if (userInteractor.isGoogleFitAuthEnabled()) {
+        if (userInteractor.isFitnessAuthEnabled(Provider.GOOGLE_FIT)) {
+            userInteractor.removeFitnessToken(Provider.GOOGLE_FIT);
             googleFitPresenter.logout();
         } else {
             googleFitPresenter.startIntegrate(this);
@@ -83,8 +84,8 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
 
     @OnClick(R.id.fitbit) void onFitbitClick() {
 
-        if (userInteractor.isFitBitAuthEnabled()) {
-            fitbitPresenter.logout();
+        if (userInteractor.isFitnessAuthEnabled(Provider.FITBIT)) {
+            userInteractor.removeFitnessToken(Provider.FITBIT);
         } else {
             Navigator.openUrl(context(), GETTING_CODE_URL);
         }
@@ -102,10 +103,6 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
     @Override public void onGoogleServicesError(ConnectionResult result) {
         Toast.makeText(SyncScreen.this, "Exception while connecting to Google Play services: " +
             result.getErrorMessage(), Toast.LENGTH_LONG).show();
-    }
-
-    @Override public void enableIntegrationContainer(boolean enabled) {
-        uiSyncContainer.setEnabled(enabled);
     }
 
     @Override public void showInternetConnectionError() {
@@ -195,12 +192,12 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(GoogleFitAuthorizationStateChangedEvent event) {
-        uiGoogleFit.setChecked(userInteractor.isGoogleFitAuthEnabled());
+        uiGoogleFit.setChecked(userInteractor.isFitnessAuthEnabled(Provider.GOOGLE_FIT));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(FitBitAuthorizationStateChangedEvent event) {
-        uiFitBit.setChecked(userInteractor.isFitBitAuthEnabled());
+        uiFitBit.setChecked(userInteractor.isFitnessAuthEnabled(Provider.FITBIT));
     }
 
 }

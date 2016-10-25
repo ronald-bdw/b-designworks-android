@@ -1,13 +1,15 @@
 package com.b_designworks.android.login.models;
 
+import com.b_designworks.android.sync.Provider;
+
 /**
  * Created by almaziskhakov on 20/10/2016.
  */
 
 public class Integration {
-    private String fitnessTokenId;
-    private String name;
-    private boolean status;
+    private String   fitnessTokenId;
+    private Provider name;
+    private boolean  status;
 
     public String getFitnessTokenId() {
         return fitnessTokenId;
@@ -17,7 +19,7 @@ public class Integration {
         this.fitnessTokenId = fitnessTokenId;
     }
 
-    public String getName() {
+    public Provider getName() {
         return name;
     }
 

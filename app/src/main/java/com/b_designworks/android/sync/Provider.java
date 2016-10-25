@@ -7,8 +7,9 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public enum Provider {
-    @SerializedName("Fitbit")FITBIT("fitbit"),
-    @SerializedName("Googlefit")GOOGLE_FIT("googlefit");
+    @SerializedName("Fitbit")FITBIT("Fitbit"),
+    @SerializedName("Googlefit")GOOGLE_FIT("Googlefit"),
+    @SerializedName("Healthkit")HEALTH_KIT("Healthkit");
 
     String name;
 
@@ -17,6 +18,6 @@ public enum Provider {
     }
 
     @Override public String toString() {
-        return name;
+        return name.toLowerCase();
     }
 }

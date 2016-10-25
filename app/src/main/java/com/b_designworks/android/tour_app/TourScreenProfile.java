@@ -134,10 +134,6 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView {
        Logger.dToast(this, "onGoogleServicesError: " + result.getErrorMessage());
     }
 
-    @Override public void enableIntegrationContainer(boolean enabled) {
-        //TODO block/unblock container
-    }
-
     @Override public void showInternetConnectionError() {
        Logger.dToast(this, "showInternetConnectionError: ");
     }

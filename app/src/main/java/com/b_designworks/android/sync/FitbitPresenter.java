@@ -28,30 +28,17 @@ public class FitbitPresenter {
         view.showSendingFitbitCodeProgress();
         userInteractor.integrateFitbit(code)
             .compose(Rxs.doInBackgroundDeliverToUI())
-            .doOnTerminate(view::dismissSendingFitbitCodeProgress)
-            .subscribe(fitToken -> userInteractor.saveFitBitTokenLocally(fitToken.getId()),
-                (error) -> {
+            .doOnTerminate(() -> {
+                if (view != null) {
+                    view.dismissSendingFitbitCodeProgress();
+                }
+            })
+            .subscribe(fitToken -> userInteractor.saveFitnessTokenLocally(fitToken.getId(), Provider.FITBIT),
+                error -> {
                     if (view != null) {
                         view.onError(error);
                     }
                 });
-    }
-
-    private @Nullable String getFitBitTokenId() {
-        String id = null;
-        for (Integration integration : userInteractor.getUser().getIntegrations()) {
-            if (integration.getName().equals("Fitbit")) {
-                id = integration.getFitnessTokenId();
-            }
-        }
-        return id;
-    }
-
-    public void logout() {
-        String tokenId = getFitBitTokenId();
-        if (tokenId != null) {
-            userInteractor.removeFitnessToken(tokenId);
-        }
     }
 
     public void detach() {

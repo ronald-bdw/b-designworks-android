@@ -62,7 +62,6 @@ public class GoogleFitPresenter {
                 new GoogleApiClient.ConnectionCallbacks() {
                     @Override
                     public void onConnected(Bundle bundle) {
-                        view.enableIntegrationContainer(true);
                     }
 
                     @Override
@@ -103,7 +102,7 @@ public class GoogleFitPresenter {
                         userInteractor.integrateGoogleFit(acct.getServerAuthCode())
                             .compose(Rxs.doInBackgroundDeliverToUI())
                             .subscribe(
-                                fitToken -> userInteractor.saveGoogleFitTokenLocally(fitToken.getId()),
+                                fitToken -> userInteractor.saveFitnessTokenLocally(fitToken.getId(), Provider.GOOGLE_FIT),
                                 (error) -> {
                                     if (view != null) {
                                         view.onError(error);
@@ -138,20 +137,8 @@ public class GoogleFitPresenter {
     }
 
     public void logout() {
-        String tokenId = getGoogleFitTokenId();
-        if (mClient != null && tokenId != null) {
-            userInteractor.removeFitnessToken(tokenId);
+        if (mClient != null) {
             Auth.GoogleSignInApi.signOut(mClient);
         }
-    }
-
-    private @Nullable String getGoogleFitTokenId() {
-        String id = null;
-        for (Integration integration : userInteractor.getUser().getIntegrations()) {
-            if (integration.getName().equals("Googlefit")) {
-                id = integration.getFitnessTokenId();
-            }
-        }
-        return id;
     }
 }
