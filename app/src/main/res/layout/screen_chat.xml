@@ -14,6 +14,33 @@
 
         <include layout="@layout/layout_chat_action_bar"/>
 
+        <FrameLayout
+            android:id="@+id/buy_subscription_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?actionBarSize"
+            android:visibility="gone"
+            android:background="@android:color/white"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="You have to pay money to continue use our app"
+                />
+
+            <Button
+                android:id="@+id/subscribe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="48dp"
+                android:text="Subscribe"
+                />
+
+        </FrameLayout>
+
     </FrameLayout>
 
     <FrameLayout

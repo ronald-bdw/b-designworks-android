@@ -38,8 +38,9 @@ public class ChatScreen extends ConversationActivity {
 
     @Inject UserInteractor userInteractor;
 
-    @Bind(R.id.drawer)        DrawerLayout uiDrawer;
-    @Bind(R.id.provider_logo) ImageView    uiProviderLogo;
+    @Bind(R.id.drawer)                     DrawerLayout uiDrawer;
+    @Bind(R.id.provider_logo)              ImageView    uiProviderLogo;
+    @Bind(R.id.buy_subscription_container) View         uiBuySubscription;
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
@@ -74,6 +75,18 @@ public class ChatScreen extends ConversationActivity {
 
             @Override public void onDrawerStateChanged(int newState) {}
         });
+        checkSubscription();
+    }
+
+    private void checkSubscription() {
+        if (!userInteractor.userHasValidSubscription()) {
+            blockChat();
+        }
+
+    }
+
+    private void blockChat() {
+        uiBuySubscription.setVisibility(View.VISIBLE);
     }
 
     private void customizeSmoochInterface() {
@@ -82,7 +95,7 @@ public class ChatScreen extends ConversationActivity {
         rootView.removeView(oldChatLayout);
 
         View newChatLayout = LayoutInflater.from(this).inflate(R.layout.screen_chat, rootView);
-        ((ViewGroup) newChatLayout.findViewById(R.id.chat_container)).addView(oldChatLayout);
+        ((ViewGroup) newChatLayout.findViewById(R.id.chat_container)).addView(oldChatLayout, 1);
 
         ButterKnife.bind(this);
     }
