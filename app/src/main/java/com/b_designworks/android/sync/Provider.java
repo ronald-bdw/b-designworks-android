@@ -2,6 +2,8 @@ package com.b_designworks.android.sync;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Locale;
+
 /**
  * Created by Ilya Eremin on 9/26/16.
  */
@@ -18,6 +20,6 @@ public enum Provider {
     }
 
     @Override public String toString() {
-        return name.toLowerCase();
+        return name.toLowerCase(Locale.ENGLISH);
     }
 }
