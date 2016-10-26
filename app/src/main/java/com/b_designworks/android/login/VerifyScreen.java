@@ -83,6 +83,37 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
             verifyPresenter.setPhoneRegistered(argPhoneRegistered);
             showWaitingForSmsProgress();
         }
+        if (getIntent() != null) {
+            handleCodeFromSms(getIntent());
+        }
+    }
+
+    private void handleCodeFromSms(@NonNull Intent intent) {
+        Uri data = intent.getData();
+        if (data != null) {
+            if (loginFlowInteractor.userEnteredPhone()) {
+                String url = data.toString();
+                String code = url.substring(url.length() - 4);
+                uiVerificationCode.setText(code);
+                verifyPresenter.handleSmsCode(code);
+            } else {
+                if (userInteractor.userLoggedIn()) {
+                    Toast.makeText(this, R.string.warning_you_already_logged_in, Toast.LENGTH_SHORT).show();
+                    Navigator.chat(context());
+                    finish();
+                } else {
+                    SimpleDialog.withOkBtn(context(), R.string.error, R.string.error_no_accosiated_number, () -> {
+                        Navigator.enterPhoneAndClearStack(context());
+                        finish();
+                    });
+                }
+            }
+        }
+    }
+
+    @Override protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handleCodeFromSms(intent);
     }
 
     @OnClick(R.id.submit) void onSubmitClick() {
