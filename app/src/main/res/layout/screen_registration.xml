@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fbfbfb"
@@ -30,7 +31,7 @@
                 android:layout_marginTop="16dp"
                 android:paddingLeft="24dp"
                 android:text="@string/profile_phone"
-                android:textColor="@color/app_accent"
+                android:textColor="#5e7489"
                 android:textStyle="bold"
                 />
 
@@ -42,8 +43,11 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/bg_edit_profile"
-                android:inputType="phone"
+                android:inputType="none"
                 android:maxLines="1"
+                tools:ignore="TextFields"
+                android:enabled="false"
+                android:imeOptions="actionNone"
                 />
 
         </LinearLayout>

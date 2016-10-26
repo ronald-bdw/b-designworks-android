@@ -94,6 +94,8 @@ public class RegistrationScreen extends BaseActivity {
                 fillFakeData();
             }
         }
+        uiPhone.setInputType(InputType.TYPE_NULL);
+        uiPhone.setKeyListener(null);
     }
 
     @SuppressLint("SetTextI18n")
