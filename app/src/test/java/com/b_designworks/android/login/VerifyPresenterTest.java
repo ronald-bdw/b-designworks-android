@@ -57,7 +57,7 @@ public class VerifyPresenterTest {
 
     @Test
     public void testRegisteredUserFlow() throws Exception {
-        presenter.requestCode(REGISTERED_PHONE_NUMBER);
+        presenter.resendCode(REGISTERED_PHONE_NUMBER);
         verify(view).showRequestVerificationCodeProgressDialog();
         verify(userInteractor).requestCode(any());
         verify(view).hideRequestVerificationProgressDialog();
@@ -71,7 +71,7 @@ public class VerifyPresenterTest {
 
     @Test
     public void testUnregisteredUserFlow() throws Exception {
-        presenter.requestCode(NEW_PHONE_NUMBER);
+        presenter.resendCode(NEW_PHONE_NUMBER);
         verify(view).showRequestVerificationCodeProgressDialog();
         verify(userInteractor).requestCode(any());
         verify(view).hideRequestVerificationProgressDialog();
@@ -88,7 +88,7 @@ public class VerifyPresenterTest {
 
     @Test
     public void testOnShownOnHidden() throws Exception {
-        presenter.requestCode(LONG_REQUEST_FLAG);
+        presenter.resendCode(LONG_REQUEST_FLAG);
         presenter.onHidden();
         Mockito.reset(view);
         presenter.onShown();

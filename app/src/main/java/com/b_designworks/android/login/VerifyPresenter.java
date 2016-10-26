@@ -14,17 +14,15 @@ import rx.Subscription;
  */
 public class VerifyPresenter {
 
-    private final UserInteractor userInteractor;
+    private final UserInteractor      userInteractor;
+    private final LoginFlowInteractor loginFlowInteractor;
 
     @Nullable private VerifyView view;
 
-    private boolean userRegistered;
-
-    @Nullable private String phoneCodeId;
-    @Nullable private String phoneNumber;
-
-    public VerifyPresenter(UserInteractor userInteractor) {
+    public VerifyPresenter(@NonNull UserInteractor userInteractor,
+                           @NonNull LoginFlowInteractor loginFlowInteractor) {
         this.userInteractor = userInteractor;
+        this.loginFlowInteractor = loginFlowInteractor;
     }
 
     @Nullable private Subscription requestingSmsCodeSubs;
@@ -33,8 +31,8 @@ public class VerifyPresenter {
         this.view = view;
     }
 
-    public void requestCode(@NonNull String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void resendCode() {
+        String phoneNumber = loginFlowInteractor.getPhoneNumber();
         if (view != null) {
             view.showRequestVerificationCodeProgressDialog();
         }
@@ -51,29 +49,18 @@ public class VerifyPresenter {
                 if (view != null) {
                     view.showWaitingForSmsProgress();
                 }
-                userRegistered = result.isPhoneRegistered();
-                phoneCodeId = result.getPhoneCodeId();
+                loginFlowInteractor.setPhoneCodeId(result.getPhoneCodeId());
+                loginFlowInteractor.setPhoneRegistered(result.isPhoneRegistered());
             }, view::showError);
-    }
-
-    public void setPhoneCodeId(@NonNull String phoneCodeId) {
-        this.phoneCodeId = phoneCodeId;
-    }
-
-    public void setPhoneRegistered(boolean userRegistered) {
-        this.userRegistered = userRegistered;
-    }
-
-    public void setPhone(String phone) {
-        this.phoneNumber = phone;
     }
 
     public void handleSmsCode(String verificadtionCode) {
         if (!Strings.isEmpty(verificadtionCode)) {
-            if (userRegistered) {
+            if (loginFlowInteractor.isUserRegistered()) {
                 login(verificadtionCode);
             } else {
-                view.openRegistrationScreen(verificadtionCode, phoneNumber, phoneCodeId);
+                view.openRegistrationScreen(loginFlowInteractor.getPhoneNumber(), verificadtionCode,
+                    loginFlowInteractor.getPhoneCodeId());
             }
         } else {
             if (view != null) {
@@ -85,13 +72,14 @@ public class VerifyPresenter {
     @Nullable private Subscription verifyingCodeSubs;
 
     private void login(@NonNull String verifyCode) {
-        if (verifyingCodeSubs != null && !verifyingCodeSubs.isUnsubscribed() || verifyingCodeSubs != null
-            || phoneNumber == null || phoneCodeId == null)
+        if (verifyingCodeSubs != null && !verifyingCodeSubs.isUnsubscribed())
             return;
         if (view != null) {
             view.showAuthorizationProgressDialog();
         }
-        verifyingCodeSubs = userInteractor.verifyCode(verifyCode, phoneNumber, phoneCodeId)
+        String phoneNumber = loginFlowInteractor.getPhoneNumber();
+        String phoneCodeId = loginFlowInteractor.getPhoneCodeId();
+        verifyingCodeSubs = userInteractor.login(verifyCode, phoneNumber, phoneCodeId)
             .doOnTerminate(() -> {
                 verifyingCodeSubs = null;
                 if (view != null) {
@@ -100,6 +88,7 @@ public class VerifyPresenter {
             })
             .compose(Rxs.doInBackgroundDeliverToUI())
             .subscribe(result -> {
+                loginFlowInteractor.reset();
                 if (view != null) {
                     view.openChatScreen();
                 }
@@ -121,9 +110,6 @@ public class VerifyPresenter {
             }
             if (verifyingCodeSubs != null) {
                 view.showAuthorizationProgressDialog();
-            }
-            if (phoneCodeId != null) {
-                view.showWaitingForSmsProgress();
             }
         }
     }

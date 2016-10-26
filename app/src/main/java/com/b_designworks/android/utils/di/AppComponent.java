@@ -6,6 +6,7 @@ import com.b_designworks.android.chat.ChatSidePanelFragment;
 import com.b_designworks.android.chat.pushes.PushNotificationsHandlerService;
 import com.b_designworks.android.login.EnterPhoneScreen;
 import com.b_designworks.android.login.RegistrationScreen;
+import com.b_designworks.android.login.SmsListener;
 import com.b_designworks.android.login.VerifyScreen;
 import com.b_designworks.android.profile.EditProfileScreen;
 import com.b_designworks.android.profile.ProfileScreen;
@@ -38,4 +39,5 @@ public interface AppComponent {
     void inject(PushNotificationsHandlerService pushNotificationsHandlerService);
     void inject(EnterPhoneScreen enterPhoneScreen);
     void inject(SyncScreen syncScreen);
+    void inject(SmsListener smsListener);
 }

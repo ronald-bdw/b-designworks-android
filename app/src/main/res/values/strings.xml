@@ -123,6 +123,9 @@
     <string name="title_area_code">Area code</string>
     <string name="error_incorrect_verification_code">Incorrect verification code</string>
     <string name="try_again">Try again</string>
+    <string name="loading_creating_account">Creating account</string>
+    <string name="error_no_accosiated_number">No accosiated number with this code. Please retry login.</string>
+    <string name="warning_you_already_logged_in">You are already logged in</string>
 
     <string-array name="select_provider_options">
         <item>HBF</item>

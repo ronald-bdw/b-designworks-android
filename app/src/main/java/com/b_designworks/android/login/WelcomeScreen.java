@@ -38,7 +38,7 @@ public class WelcomeScreen extends BaseActivity {
         }
 
         @OnClick(R.id.start_trial_now) void onStartTrialClick() {
-            Navigator.registration(context());
+            Navigator.enterPhone(context());
         }
 
         @OnClick(R.id.learn_more) void onLearnMoreClick() {

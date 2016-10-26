@@ -1,8 +1,8 @@
 package com.b_designworks.android.login;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,17 +10,19 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.b_designworks.android.BaseActivity;
 import com.b_designworks.android.Navigator;
 import com.b_designworks.android.R;
+import com.b_designworks.android.UserInteractor;
 import com.b_designworks.android.utils.Bus;
 import com.b_designworks.android.utils.Keyboard;
 import com.b_designworks.android.utils.di.Injector;
 import com.b_designworks.android.utils.network.ErrorUtils;
+import com.b_designworks.android.utils.ui.SimpleDialog;
 import com.b_designworks.android.utils.ui.TextViews;
 import com.b_designworks.android.utils.ui.UiInfo;
-import com.f2prateek.dart.InjectExtra;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -35,34 +37,19 @@ import butterknife.OnEditorAction;
  */
 public class VerifyScreen extends BaseActivity implements VerifyView {
 
-    private static final String ARG_KEY_PHONE            = "phone";
-    private static final String ARG_KEY_PHONE_CODE_ID    = "phoneCodeId";
-    private static final String ARG_KEY_PHONE_REGISTERED = "userRegistered";
-
     private static final String KEY_PROGRESS_VISIBILITY = "progressVisibility";
 
     private static final String RESULT_KEY_VERIFICATION_CODE = "verificationCode";
     private static final String RESULT_KEY_PHONE_CODE_ID     = "phoneCodeId";
     private static final String RESULT_KEY_PHONE_NUMBER      = "phoneNumber";
 
-    public static Intent createIntent(@NonNull Context context, @NonNull String phone,
-                                      @NonNull String phoneCodeId, boolean phoneRegistered) {
-        Intent intent = new Intent(context, VerifyScreen.class);
-        intent.putExtra(ARG_KEY_PHONE, phone);
-        intent.putExtra(ARG_KEY_PHONE_CODE_ID, phoneCodeId);
-        intent.putExtra(ARG_KEY_PHONE_REGISTERED, phoneRegistered);
-        return intent;
-    }
-
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_verify);
     }
 
-    @Inject VerifyPresenter verifyPresenter;
-
-    @InjectExtra(ARG_KEY_PHONE)            String  argPhone;
-    @InjectExtra(ARG_KEY_PHONE_CODE_ID)    String  argPhoneCodeId;
-    @InjectExtra(ARG_KEY_PHONE_REGISTERED) boolean argPhoneRegistered;
+    @Inject VerifyPresenter     verifyPresenter;
+    @Inject LoginFlowInteractor loginFlowInteractor;
+    @Inject UserInteractor      userInteractor;
 
     @Bind(R.id.verification_code) EditText uiVerificationCode;
     @Bind(R.id.progress)          View     uiWaitingForSms;
@@ -78,9 +65,6 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
         Injector.inject(this);
         verifyPresenter.attachView(this);
         if (savedState == null) {
-            verifyPresenter.setPhone(argPhone);
-            verifyPresenter.setPhoneCodeId(argPhoneCodeId);
-            verifyPresenter.setPhoneRegistered(argPhoneRegistered);
             showWaitingForSmsProgress();
         }
         if (getIntent() != null) {
@@ -122,7 +106,7 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
     }
 
     @OnClick(R.id.resend) void onResendClick() {
-        verifyPresenter.requestCode(argPhone);
+        verifyPresenter.resendCode();
     }
 
     @Override protected void onResume() {
@@ -131,6 +115,7 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
     }
 
     @Subscribe public void onEvent(SmsCodeEvent event) {
+        uiVerificationCode.setText(event.getCode());
         verifyPresenter.handleSmsCode(event.getCode());
     }
 
@@ -157,7 +142,7 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
 
     @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
-            Bus.event(new SmsCodeEvent("Event triggers success sms verification"));
+            Bus.event(new SmsCodeEvent("1234"));
             return false;
         }
         return super.onKeyDown(keyCode, event);
@@ -209,41 +194,13 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
         Navigator.chat(context());
     }
 
-    @Override public void openRegistrationScreen(@NonNull String code,
-                                                 @NonNull String phoneNumber,
-                                                 @NonNull String phoneCodeId) {
-        if (getCallingActivity() != null) {
-            returnCodeToRegistrationScreen(code, phoneNumber, phoneCodeId);
-        } else {
-            Navigator.registration(context(), code, phoneNumber, phoneCodeId);
-        }
-    }
-
-    private void returnCodeToRegistrationScreen(@NonNull String code,
-                                                @NonNull String phoneNumber,
-                                                @NonNull String phoneCodeId) {
-        Intent intent = new Intent();
-        intent.putExtra(RESULT_KEY_VERIFICATION_CODE, code);
-        intent.putExtra(RESULT_KEY_PHONE_CODE_ID, phoneCodeId);
-        intent.putExtra(RESULT_KEY_PHONE_NUMBER, phoneNumber);
-        setResult(RESULT_OK, intent);
-        finish();
+    @Override public void openRegistrationScreen(
+        @NonNull String phone, @NonNull String code, @NonNull String phoneCodeId) {
+        Navigator.registration(context(), phone, code, phoneCodeId);
     }
 
     @Override protected void onDestroy() {
         verifyPresenter.detachView();
         super.onDestroy();
-    }
-
-    public static String extractCodeFromResult(@NonNull Intent data) {
-        return data.getExtras().getString(RESULT_KEY_VERIFICATION_CODE);
-    }
-
-    public static String extractPhoneCodeIdFromResult(@NonNull Intent data) {
-        return data.getExtras().getString(RESULT_KEY_PHONE_CODE_ID);
-    }
-
-    public static String extractPhone(Intent data) {
-        return data.getExtras().getString(RESULT_KEY_PHONE_NUMBER);
     }
 }

@@ -14,5 +14,5 @@ public interface VerifyView {
     void showAuthorizationProgressDialog();
     void hideAuthProgressDialog();
     void openChatScreen();
-    void openRegistrationScreen(@NonNull String code, @NonNull String phoneNumber, @NonNull String phoneCodeId);
+    void openRegistrationScreen(@NonNull String phone, @NonNull String code, @NonNull String phoneCodeId);
 }

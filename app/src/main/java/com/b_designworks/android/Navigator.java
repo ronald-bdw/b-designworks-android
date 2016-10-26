@@ -33,12 +33,16 @@ public class Navigator {
         context.startActivity(new Intent(context, EnterPhoneScreen.class));
     }
 
+    public static void enterPhoneAndClearStack(@NonNull Context context) {
+        context.startActivity(clearStack(new Intent(context, EnterPhoneScreen.class)));
+    }
+
     public static void trialPage(@NonNull Context context) {
         context.startActivity(new Intent(context, TrialScreen.class));
     }
 
-    public static void verification(@NonNull Context context, String phone, String phoneCodeId) {
-        context.startActivity(VerifyScreen.createIntent(context, phone, phoneCodeId, true));
+    public static void verification(@NonNull Context context) {
+        context.startActivity(new Intent(context, VerifyScreen.class));
     }
 
     public static void chat(@NonNull Context context) {
@@ -73,23 +77,9 @@ public class Navigator {
         context.startActivity(new Intent(context, SelectProviderScreen.class));
     }
 
-    public static void registration(@NonNull Context context, @NonNull String code,
-                                    @NonNull String phoneNumber, @NonNull String phoneCodeId) {
-        context.startActivity(RegistrationScreen.createIntent(context, code, phoneNumber, phoneCodeId));
-    }
-
-    public static void registration(@NonNull Context context) {
-        context.startActivity(new Intent(context, RegistrationScreen.class));
-    }
-
-    public static void verifyAndReturnCode(@NonNull BaseActivity activity,
-                                           @NonNull String phone,
-                                           @NonNull String phoneCodeId,
-                                           boolean phoneRegistered) {
-        activity.startActivityForResult(
-            VerifyScreen.createIntent(activity, phone, phoneCodeId, phoneRegistered),
-            RegistrationScreen.RESULT_KEY_FOR_VERIFYING
-        );
+    public static void registration(@NonNull Context context, @NonNull String phone,
+                                    @NonNull String code, @NonNull String phoneCodeId) {
+        context.startActivity(RegistrationScreen.createIntent(context, phone, code, phoneCodeId));
     }
 
     public static void openUrl(@NonNull Context context, @NonNull String url) {
