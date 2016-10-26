@@ -48,9 +48,9 @@ public class VerifyPresenterTest {
         when(userInteractor.requestCode(NEW_PHONE_NUMBER)).thenReturn(Observable.just(new AuthResponse(false, PHONE_CODE_ID)));
         when(userInteractor.requestCode(LONG_REQUEST_FLAG)).thenReturn(Observable.just(new AuthResponse(true, PHONE_CODE_ID)).delay(100, TimeUnit.MILLISECONDS).subscribeOn(Schedulers.computation()));
 
-        when(userInteractor.verifyCode(eq(CORRECT_SMS_CODE), any(), any())).thenReturn(Observable.just(null));
-        when(userInteractor.verifyCode(eq(WRONG_SMS_CODE), any(), any())).thenReturn(Observable.error(new Exception()));
-        when(userInteractor.verifyCode(eq(LONG_REQUEST_FLAG), any(), any())).thenReturn(Observable.just(null).delay(100, TimeUnit.MILLISECONDS).subscribeOn(Schedulers.computation()));
+        when(userInteractor.login(eq(CORRECT_SMS_CODE), any(), any())).thenReturn(Observable.just(null));
+        when(userInteractor.login(eq(WRONG_SMS_CODE), any(), any())).thenReturn(Observable.error(new Exception()));
+        when(userInteractor.login(eq(LONG_REQUEST_FLAG), any(), any())).thenReturn(Observable.just(null).delay(100, TimeUnit.MILLISECONDS).subscribeOn(Schedulers.computation()));
         presenter = new VerifyPresenter(userInteractor);
         presenter.attachView(view);
     }
