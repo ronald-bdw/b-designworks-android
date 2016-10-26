@@ -59,7 +59,7 @@ public class UserInteractor {
             .map(saveUser());
     }
 
-    public Observable<Object> verifyCode(
+    public Observable<Object> login(
         @NonNull String verificationCode, @NonNull String phone, @NonNull String phoneCodeId) {
         return api.signIn(verificationCode, phone, phoneCodeId)
             .map(saveUser());
@@ -221,5 +221,9 @@ public class UserInteractor {
             }
         }
         return id;
+    }
+
+    public boolean userLoggedIn() {
+        return storage.contains(KEY_USER);
     }
 }

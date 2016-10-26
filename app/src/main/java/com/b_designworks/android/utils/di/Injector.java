@@ -1,5 +1,6 @@
 package com.b_designworks.android.utils.di;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 
@@ -10,6 +11,7 @@ import com.b_designworks.android.chat.ChatSidePanelFragment;
 import com.b_designworks.android.chat.pushes.PushNotificationsHandlerService;
 import com.b_designworks.android.login.EnterPhoneScreen;
 import com.b_designworks.android.login.RegistrationScreen;
+import com.b_designworks.android.login.SmsListener;
 import com.b_designworks.android.login.VerifyScreen;
 import com.b_designworks.android.profile.EditProfileScreen;
 import com.b_designworks.android.profile.ProfileScreen;
@@ -77,5 +79,9 @@ public class Injector {
 
     public static void inject(@NonNull EnterPhoneScreen enterPhoneScreen) {
         ((App) enterPhoneScreen.getApplicationContext()).getAppComponent().inject(enterPhoneScreen);
+    }
+
+    public static void inject(SmsListener smsListener, Context context) {
+        ((App) context.getApplicationContext()).getAppComponent().inject(smsListener);
     }
 }

@@ -23,6 +23,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/bg_edit_profile"
         android:inputType="textCapWords"
+        android:imeOptions="actionNext"
         />
 
     <TextView
@@ -44,6 +45,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/bg_edit_profile"
         android:inputType="textCapWords"
+        android:imeOptions="actionNext"
         />
 
     <TextView
@@ -65,5 +67,6 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/bg_edit_profile"
         android:inputType="textEmailAddress"
+        android:imeOptions="actionDone"
         />
 </merge>

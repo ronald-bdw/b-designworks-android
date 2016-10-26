@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v7.app.AlertDialog;
 
 import com.b_designworks.android.R;
@@ -32,6 +33,12 @@ public class SimpleDialog {
         @Nullable String title, String message,
         @NonNull String buttonLabel, @Nullable Action0 action) {
         show(context, title, message, buttonLabel, action, null, null);
+    }
+
+    public static void withOkBtn(@NonNull Context context, @StringRes int labelRes,
+                                 @StringRes int descriptionRes, @NonNull Action0 onOkClick) {
+        show(context, context.getString(labelRes), context.getString(descriptionRes), context.getString(R.string.ok),
+            onOkClick);
     }
 
     public static void show(
@@ -78,4 +85,5 @@ public class SimpleDialog {
     public static void networkProblem(Context context) {
         withOkBtn(context, context.getString(R.string.error_network));
     }
+
 }

@@ -44,7 +44,8 @@ public class EnterPhoneScreen extends BaseActivity {
     @Bind(R.id.submit)    Button   uiSubmit;
     @Bind(R.id.area_code) EditText uiAreaCode;
 
-    @Inject UserInteractor userInteractor;
+    @Inject UserInteractor      userInteractor;
+    @Inject LoginFlowInteractor loginFlowInteractor;
 
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_enter_phone)
@@ -85,7 +86,7 @@ public class EnterPhoneScreen extends BaseActivity {
         if (!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(areaCode)) {
             Keyboard.hide(this);
             showProgerss();
-            if(verifyNumberSubs != null) return;
+            if (verifyNumberSubs != null) return;
             verifyNumberSubs = userInteractor.requestCode(areaCode + phone)
                 .doOnTerminate(() -> {
                     hideProgress();
@@ -93,11 +94,10 @@ public class EnterPhoneScreen extends BaseActivity {
                 })
                 .compose(Rxs.doInBackgroundDeliverToUI())
                 .subscribe(result -> {
-                    if (!result.isPhoneRegistered()) {
-                        uiPhone.setError(getString(R.string.error_phone_not_registered));
-                    } else {
-                        Navigator.verification(context(), areaCode + phone, result.getPhoneCodeId());
-                    }
+                    loginFlowInteractor.setPhoneCodeId(result.getPhoneCodeId());
+                    loginFlowInteractor.setPhoneRegistered(result.isPhoneRegistered());
+                    loginFlowInteractor.setPhoneNumber(areaCode + phone);
+                    Navigator.verification(context());
                 }, error -> {
                     if (error instanceof RetrofitException) {
                         RetrofitException retrofitError = (RetrofitException) error;

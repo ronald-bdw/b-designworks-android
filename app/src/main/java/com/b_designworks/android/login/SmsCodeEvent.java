@@ -5,17 +5,13 @@ package com.b_designworks.android.login;
  */
 public class SmsCodeEvent {
 
-    private final String codeSmsText;
+    private final String verificationCode;
 
-    public SmsCodeEvent(String codeSmsText) {
-        this.codeSmsText = codeSmsText;
-    }
-
-    public String getCodeSmsText() {
-        return codeSmsText;
+    public SmsCodeEvent(String verificationCode) {
+        this.verificationCode = verificationCode;
     }
 
     public String getCode() {
-        return "1234";
+        return verificationCode;
     }
 }
