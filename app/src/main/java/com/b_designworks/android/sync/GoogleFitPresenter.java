@@ -54,7 +54,7 @@ public class GoogleFitPresenter {
         GoogleSignInOptions signInRequest = new GoogleSignInOptions
             .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestScopes(new Scope(Scopes.FITNESS_ACTIVITY_READ))
-            .requestServerAuthCode(SERVER_KEY, false)
+            .requestServerAuthCode(SERVER_KEY, true)
             .build();
         mClient = new GoogleApiClient.Builder(context)
             .addApi(Auth.GOOGLE_SIGN_IN_API, signInRequest)
