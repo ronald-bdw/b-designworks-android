@@ -1,5 +1,7 @@
 package com.b_designworks.android.login.models;
 
+import com.b_designworks.android.sync.*;
+
 import java.util.List;
 
 /**
@@ -14,6 +16,7 @@ public class User {
     private String            phoneNumber;
     private Avatar            avatar;
     private List<Integration> integrations;
+    private Provider          provider;
 
     public Avatar getAvatar() {
         return avatar;
@@ -41,6 +44,10 @@ public class User {
 
     public String getPhoneNumber() {
         return phoneNumber;
+    }
+
+    public Provider getProvider() {
+        return provider;
     }
 
     public List<Integration> getIntegrations() {
