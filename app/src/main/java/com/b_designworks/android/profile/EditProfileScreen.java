@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -39,9 +40,9 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
 
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_edit_profile)
-                .enableBackButton()
-                .setTitleRes(R.string.title_edit_profile)
-                .setMenuRes(R.menu.edit_profile);
+            .enableBackButton()
+            .setTitleRes(R.string.title_edit_profile)
+            .setMenuRes(R.menu.edit_profile);
     }
 
     @Bind(R.id.avatar)                    ImageView uiAvatar;
@@ -59,6 +60,7 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
         Injector.inject(this);
         editProfilePresenter.attachView(this);
         editProfilePresenter.showUserInfo();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     @Override public void showUserInfo(@NonNull User user) {
@@ -153,8 +155,8 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
     @Override public void showUploadAvatarError(@Nullable String avatarUrl) {
         uiAvatarUploadingProgress.setVisibility(View.GONE);
         SimpleDialog.show(context(), getString(R.string.error), getString(R.string.error_uploading_photo),
-                getString(R.string.retry), () -> editProfilePresenter.updateAvatar(avatarUrl),
-                getString(R.string.cancel), () -> editProfilePresenter.userCancelAvatarUploading());
+            getString(R.string.retry), () -> editProfilePresenter.updateAvatar(avatarUrl),
+            getString(R.string.cancel), () -> editProfilePresenter.userCancelAvatarUploading());
     }
 
     @Override public void avatarSuccessfullyUploaded() {
