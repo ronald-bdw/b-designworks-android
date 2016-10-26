@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import com.b_designworks.android.Api;
 import com.b_designworks.android.BuildConfig;
 import com.b_designworks.android.UserInteractor;
+import com.b_designworks.android.login.LoginFlowInteractor;
 import com.b_designworks.android.login.VerifyPresenter;
 import com.b_designworks.android.profile.EditProfilePresenter;
 import com.b_designworks.android.sync.FitbitPresenter;
@@ -131,15 +132,22 @@ public class AppModule {
     }
 
     @Provides @Singleton
-    public VerifyPresenter provideVerifyPresenter(UserInteractor userInteractor) {
-        return new VerifyPresenter(userInteractor);
+    public VerifyPresenter provideVerifyPresenter(UserInteractor userInteractor,
+                                                  LoginFlowInteractor loginFlowInteractor) {
+        return new VerifyPresenter(userInteractor, loginFlowInteractor);
     }
 
-    @Provides @Singleton public FitbitPresenter provideFitbitPresenter(UserInteractor userInteractor) {
+    @Provides @Singleton
+    public FitbitPresenter provideFitbitPresenter(UserInteractor userInteractor) {
         return new FitbitPresenter(userInteractor);
     }
 
-    @Provides @Singleton public GoogleFitPresenter provideGoogleFitPresenter(UserInteractor userInteractor){
+    @Provides @Singleton
+    public GoogleFitPresenter provideGoogleFitPresenter(UserInteractor userInteractor) {
         return new GoogleFitPresenter(userInteractor, mApplication);
+    }
+
+    @Provides @Singleton public LoginFlowInteractor provideLoginFlowInteractor(IStorage storage) {
+        return new LoginFlowInteractor(storage);
     }
 }
