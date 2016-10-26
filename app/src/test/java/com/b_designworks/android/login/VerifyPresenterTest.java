@@ -3,6 +3,7 @@ package com.b_designworks.android.login;
 import com.b_designworks.android.RxSchedulersOverrideRule;
 import com.b_designworks.android.UserInteractor;
 import com.b_designworks.android.login.models.AuthResponse;
+import com.b_designworks.android.utils.storage.RuntimeStorage;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -39,25 +40,31 @@ public class VerifyPresenterTest {
 
     private static final String LONG_REQUEST_FLAG = "veryLongRequestToVerifyShownHidden";
 
-    private VerifyPresenter presenter;
     @Mock   UserInteractor  userInteractor;
     @Mock   VerifyView      view;
+
+    private VerifyPresenter presenter;
+    private LoginFlowInteractor loginFlowInteractor;
 
     @Before public void setUp() throws Exception {
         when(userInteractor.requestCode(REGISTERED_PHONE_NUMBER)).thenReturn(Observable.just(new AuthResponse(true, PHONE_CODE_ID)));
         when(userInteractor.requestCode(NEW_PHONE_NUMBER)).thenReturn(Observable.just(new AuthResponse(false, PHONE_CODE_ID)));
-        when(userInteractor.requestCode(LONG_REQUEST_FLAG)).thenReturn(Observable.just(new AuthResponse(true, PHONE_CODE_ID)).delay(100, TimeUnit.MILLISECONDS).subscribeOn(Schedulers.computation()));
+        when(userInteractor.requestCode(LONG_REQUEST_FLAG))
+            .thenReturn(Observable.just(new AuthResponse(true, PHONE_CODE_ID)).delay(100, TimeUnit.MILLISECONDS).subscribeOn(Schedulers.computation()));
 
         when(userInteractor.login(eq(CORRECT_SMS_CODE), any(), any())).thenReturn(Observable.just(null));
         when(userInteractor.login(eq(WRONG_SMS_CODE), any(), any())).thenReturn(Observable.error(new Exception()));
         when(userInteractor.login(eq(LONG_REQUEST_FLAG), any(), any())).thenReturn(Observable.just(null).delay(100, TimeUnit.MILLISECONDS).subscribeOn(Schedulers.computation()));
-        presenter = new VerifyPresenter(userInteractor);
+        loginFlowInteractor = new LoginFlowInteractor(new RuntimeStorage());
+
+        presenter = new VerifyPresenter(userInteractor, loginFlowInteractor);
         presenter.attachView(view);
     }
 
     @Test
     public void testRegisteredUserFlow() throws Exception {
-        presenter.resendCode(REGISTERED_PHONE_NUMBER);
+        loginFlowInteractor.setPhoneNumber(REGISTERED_PHONE_NUMBER);
+        presenter.sendCode();
         verify(view).showRequestVerificationCodeProgressDialog();
         verify(userInteractor).requestCode(any());
         verify(view).hideRequestVerificationProgressDialog();
@@ -71,13 +78,14 @@ public class VerifyPresenterTest {
 
     @Test
     public void testUnregisteredUserFlow() throws Exception {
-        presenter.resendCode(NEW_PHONE_NUMBER);
+        loginFlowInteractor.setPhoneNumber(NEW_PHONE_NUMBER);
+        presenter.sendCode();
         verify(view).showRequestVerificationCodeProgressDialog();
         verify(userInteractor).requestCode(any());
         verify(view).hideRequestVerificationProgressDialog();
         verify(view).showWaitingForSmsProgress();
         presenter.handleSmsCode(CORRECT_SMS_CODE);
-        verify(view).openRegistrationScreen(CORRECT_SMS_CODE, NEW_PHONE_NUMBER, PHONE_CODE_ID);
+        verify(view).openRegistrationScreen(NEW_PHONE_NUMBER, CORRECT_SMS_CODE, PHONE_CODE_ID);
     }
 
     @Test
@@ -88,7 +96,8 @@ public class VerifyPresenterTest {
 
     @Test
     public void testOnShownOnHidden() throws Exception {
-        presenter.resendCode(LONG_REQUEST_FLAG);
+        loginFlowInteractor.setPhoneNumber(LONG_REQUEST_FLAG);
+        presenter.sendCode();
         presenter.onHidden();
         Mockito.reset(view);
         presenter.onShown();

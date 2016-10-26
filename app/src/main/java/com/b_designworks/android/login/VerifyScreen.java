@@ -106,7 +106,7 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
     }
 
     @OnClick(R.id.resend) void onResendClick() {
-        verifyPresenter.resendCode();
+        verifyPresenter.sendCode();
     }
 
     @Override protected void onResume() {

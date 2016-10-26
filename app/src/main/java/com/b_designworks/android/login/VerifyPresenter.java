@@ -31,7 +31,7 @@ public class VerifyPresenter {
         this.view = view;
     }
 
-    public void resendCode() {
+    public void sendCode() {
         String phoneNumber = loginFlowInteractor.getPhoneNumber();
         if (view != null) {
             view.showRequestVerificationCodeProgressDialog();
