@@ -133,7 +133,14 @@ public class ChatScreen extends ConversationActivity {
     }
 
     private void setUpProviderLogo() {
-        // TODO show provider logo in uiProviderLogo view or hide it if there is no provider
+        com.b_designworks.android.login.models.User user = userInteractor.getUser();
+        if (user.getProvider() != null) {
+            if (user.getProvider().getName() != null) {
+                if ("HBF".equals(userInteractor.getUser().getProvider().getName())) {
+                    uiProviderLogo.setVisibility(View.VISIBLE);
+                }
+            }
+        }
     }
 
     @Subscribe public void onEvent(CloseDrawerEvent event) {
