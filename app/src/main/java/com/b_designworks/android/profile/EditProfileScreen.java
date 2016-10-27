@@ -54,6 +54,7 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
     @Bind(R.id.email)                     EditText  uiEmail;
 
     @Inject EditProfilePresenter editProfilePresenter;
+    @Inject ImageLoader          imageLoader;
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
@@ -99,6 +100,10 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
         Keyboard.hide(this);
     }
 
+    @Override public void incorrectImage() {
+        SimpleDialog.withOkBtn(context(), getString(R.string.error_image_unacceptable));
+    }
+
     @Override public void hideProgress() {
         if (progressDialog != null) {
             progressDialog.dismiss();
@@ -135,7 +140,14 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
             .subscribe(granted -> {
                 if (granted) {
                     TedBottomPicker tedBottomPicker = new TedBottomPicker.Builder(this)
-                        .setOnImageSelectedListener(uri -> editProfilePresenter.updateAvatar(uri.getPath()))
+                        .setOnImageSelectedListener(uri -> {
+                            String imagelink = imageLoader.getCorrectLink(uri);
+                            if (imagelink == null) {
+                                incorrectImage();
+                            } else {
+                                editProfilePresenter.updateAvatar(imagelink);
+                            }
+                        })
                         .create();
                     tedBottomPicker.show(getSupportFragmentManager());
                 } else {

@@ -25,4 +25,5 @@ public interface EditProfileView {
     @NonNull String getLastName();
     @NonNull String getFirstName();
     void hideKeyboard();
+    void incorrectImage();
 }
