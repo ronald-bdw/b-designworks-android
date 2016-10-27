@@ -41,6 +41,7 @@ public class TourScreenUploadAvatar extends BaseActivity {
     }
 
     @Inject UserInteractor userInteractor;
+    @Inject ImageLoader    imageLoader;
 
     @Bind(R.id.avatar)   ImageView uiAvatar;
     @Bind(R.id.progress) View      uiProgress;
@@ -69,7 +70,14 @@ public class TourScreenUploadAvatar extends BaseActivity {
             .subscribe(granted -> {
                 if (granted) {
                     TedBottomPicker tedBottomPicker = new TedBottomPicker.Builder(this)
-                        .setOnImageSelectedListener(uri -> updateAvatar(uri.getPath()))
+                        .setOnImageSelectedListener(uri -> {
+                            String imagelink = imageLoader.getCorrectLink(uri);
+                            if (imagelink == null) {
+                                SimpleDialog.withOkBtn(context(), getString(R.string.error_image_unacceptable));
+                            } else {
+                                updateAvatar(imagelink);
+                            }
+                        })
                         .create();
                     tedBottomPicker.show(getSupportFragmentManager());
                 } else {
@@ -81,7 +89,7 @@ public class TourScreenUploadAvatar extends BaseActivity {
     @Nullable private Subscription uploadAvatarSubs;
 
     private void updateAvatar(String url) {
-        if(uploadAvatarSubs != null) return;
+        if (uploadAvatarSubs != null) return;
         showAvatar(url);
         showAvatarUploadingProgress();
 
@@ -110,6 +118,7 @@ public class TourScreenUploadAvatar extends BaseActivity {
 
     private void avatarSuccessfullyUploaded() {
         uiProgress.setVisibility(View.GONE);
+        ImageLoader.load(context(), uiAvatar, userInteractor.getUser().getAvatar().getThumb());
     }
 
     private void showUploadAvatarError(String url) {

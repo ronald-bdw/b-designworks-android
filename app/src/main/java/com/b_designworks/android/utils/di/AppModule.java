@@ -14,6 +14,7 @@ import com.b_designworks.android.login.VerifyPresenter;
 import com.b_designworks.android.profile.EditProfilePresenter;
 import com.b_designworks.android.sync.FitbitPresenter;
 import com.b_designworks.android.sync.GoogleFitPresenter;
+import com.b_designworks.android.utils.ImageLoader;
 import com.b_designworks.android.utils.network.RxErrorHandlingCallAdapterFactory;
 import com.b_designworks.android.utils.network.StringConverterFactory;
 import com.b_designworks.android.utils.storage.IStorage;
@@ -50,8 +51,7 @@ public class AppModule {
     }
 
     @Provides
-    @Singleton
-    Context providesApplication() {
+    @Singleton Context providesApplication() {
         return mApplication;
     }
 
@@ -150,5 +150,9 @@ public class AppModule {
 
     @Provides @Singleton public LoginFlowInteractor provideLoginFlowInteractor(IStorage storage) {
         return new LoginFlowInteractor(storage);
+    }
+
+    @Provides @Singleton public ImageLoader provideImageLoader(Context context) {
+        return new ImageLoader(context);
     }
 }

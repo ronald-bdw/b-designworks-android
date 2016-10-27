@@ -68,7 +68,9 @@ public class EditProfilePresenter {
 
     public void onScreenShown() {
         if (updateProfileSubscribtion != null) {
-            view.showProgressDialog();
+            if (view != null) {
+                view.showProgressDialog();
+            }
         }
     }
 
@@ -98,12 +100,13 @@ public class EditProfilePresenter {
             uploadingSubscription.unsubscribe();
         }
         uploadingSubscription = userInteractor.uploadAvatar(imageUrl)
-                .compose(Rxs.doInBackgroundDeliverToUI())
-                .subscribe(result -> {
-                    view.avatarSuccessfullyUploaded();
-                }, error -> {
-                    view.showUploadAvatarError(imageUrl);
-                });
+            .compose(Rxs.doInBackgroundDeliverToUI())
+            .subscribe(result -> {
+                view.avatarSuccessfullyUploaded();
+                view.showAvatar(result.getUser().getAvatar().getThumb());
+            }, error -> {
+                view.showUploadAvatarError(imageUrl);
+            });
     }
 
     public void userCancelAvatarUploading() {
