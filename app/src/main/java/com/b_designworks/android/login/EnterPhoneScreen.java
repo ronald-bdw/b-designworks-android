@@ -1,5 +1,6 @@
 package com.b_designworks.android.login;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -25,6 +26,7 @@ import com.b_designworks.android.utils.network.RetrofitException;
 import com.b_designworks.android.utils.ui.SimpleDialog;
 import com.b_designworks.android.utils.ui.TextViews;
 import com.b_designworks.android.utils.ui.UiInfo;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import javax.inject.Inject;
 
@@ -84,33 +86,45 @@ public class EnterPhoneScreen extends BaseActivity {
         String phone = TextViews.textOf(uiPhone);
         String areaCode = TextViews.textOf(uiAreaCode);
         if (!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(areaCode)) {
-            Keyboard.hide(this);
-            showProgerss();
-            if (verifyNumberSubs != null) return;
-            verifyNumberSubs = userInteractor.requestCode(areaCode + phone)
-                .doOnTerminate(() -> {
-                    hideProgress();
-                    verifyNumberSubs = null;
-                })
-                .compose(Rxs.doInBackgroundDeliverToUI())
-                .subscribe(result -> {
-                    loginFlowInteractor.setPhoneCodeId(result.getPhoneCodeId());
-                    loginFlowInteractor.setPhoneRegistered(result.isPhoneRegistered());
-                    loginFlowInteractor.setPhoneNumber(areaCode + phone);
-                    Navigator.verification(context());
-                }, error -> {
-                    if (error instanceof RetrofitException) {
-                        RetrofitException retrofitError = (RetrofitException) error;
-                        if (retrofitError.getKind() == RetrofitException.Kind.NETWORK) {
-                            SimpleDialog.networkProblem(context());
-                        } else {
-                            uiPhone.setError(getString(R.string.error_incorrect_phone));
-                        }
-                    }
-                });
+            if (RxPermissions.getInstance(context()).isGranted(Manifest.permission.RECEIVE_SMS)) {
+                requestAuthorizationCode(areaCode, phone);
+            } else {
+                SimpleDialog.show(context(), getString(R.string.warning_permission_needed),
+                    getString(R.string.sms_permission_description), getString(R.string.ok), () ->
+                        RxPermissions.getInstance(context()).request(Manifest.permission.RECEIVE_SMS)
+                            .subscribe(isGranted -> requestAuthorizationCode(areaCode, phone)),
+                    getString(R.string.no_thanks), () -> requestAuthorizationCode(areaCode, phone));
+            }
         } else {
             uiPhone.setError(getString(R.string.registration_error_fill_phone));
         }
+    }
+
+    private void requestAuthorizationCode(String areaCode, String phone) {
+        Keyboard.hide(this);
+        showProgerss();
+        if (verifyNumberSubs != null) return;
+        verifyNumberSubs = userInteractor.requestCode(areaCode + phone)
+            .doOnTerminate(() -> {
+                hideProgress();
+                verifyNumberSubs = null;
+            })
+            .compose(Rxs.doInBackgroundDeliverToUI())
+            .subscribe(result -> {
+                loginFlowInteractor.setPhoneCodeId(result.getPhoneCodeId());
+                loginFlowInteractor.setPhoneRegistered(result.isPhoneRegistered());
+                loginFlowInteractor.setPhoneNumber(areaCode + phone);
+                Navigator.verification(context());
+            }, error -> {
+                if (error instanceof RetrofitException) {
+                    RetrofitException retrofitError = (RetrofitException) error;
+                    if (retrofitError.getKind() == RetrofitException.Kind.NETWORK) {
+                        SimpleDialog.networkProblem(context());
+                    } else {
+                        uiPhone.setError(getString(R.string.error_incorrect_phone));
+                    }
+                }
+            });
     }
 
     @Override protected void onStop() {
