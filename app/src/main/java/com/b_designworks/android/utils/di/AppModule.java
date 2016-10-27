@@ -60,8 +60,9 @@ public class AppModule {
     public OkHttpClient provideHttpClient(@NonNull UserSettings userSettings,
                                           @NonNull File cachedDir) {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
-        httpClientBuilder.cache(new Cache(cachedDir, 20 * 1024 * 1024))
-            .writeTimeout(60, TimeUnit.SECONDS);
+        httpClientBuilder.cache(new Cache(cachedDir, 20 * 1024 * 1024));
+        httpClientBuilder.readTimeout(30, TimeUnit.SECONDS);
+
         if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
