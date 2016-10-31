@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-    package="com.b_designworks.android"
+    package="com.pairup.android"
     xmlns:android="http://schemas.android.com/apk/res/android"
     >
 
@@ -71,7 +71,7 @@
         </activity>
         <activity android:name=".login.RegistrationScreen"/>
         <activity android:name=".profile.EditProfileScreen"/>
-        <activity android:name=".AboutUsScreen"/>
+        <activity android:name="com.pairup.android.AboutUsScreen"/>
         <activity android:name=".login.functional_area.FunctionalToAreaCodeScreen"/>
         <activity android:name=".tour_app.TourScreenProfile"/>
         <activity android:name=".tour_app.TourScreenUploadAvatar"/>
