@@ -19,5 +19,5 @@ deployment:
   production:
     branch: master
     commands:
-      - ./gradlew assembleProductionDebug crashlyticsUploadDistributionProductionDebug
+      - ./gradlew assembleProductionRelease crashlyticsUploadDistributionProductionRelease
 
