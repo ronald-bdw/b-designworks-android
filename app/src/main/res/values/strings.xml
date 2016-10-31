@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Pear Up</string>
+    <string name="app_name">PairUp</string>
     <string name="menu_right">Right menu</string>
     <string name="title_settings">Settings</string>
     <string name="title_push_notifications">Push notifications</string>
@@ -31,9 +31,9 @@
     <string name="verify_enter_code">If you did not automatically redirect after receiving sms please enter verification code below</string>
     <string name="sync_google_fit">Google Fit</string>
     <string name="sync_fitbit">Fitbit</string>
-    <string name="settings_logout">Logout</string>
+    <string name="settings_logout">Log Out</string>
     <string name="settings_sync">Sync</string>
-    <string name="profile_phone">Phone</string>
+    <string name="profile_phone">Phone number</string>
     <string name="profile_email">Email</string>
     <string name="edit_profile_change_photo">Change photo</string>
     <string name="about_us_text">Some text about the App… Messenger bag pop-up bicycle rights, brunch cliche freegan vice mixtape wayfares gentrify kickstarger.\n\nCountact us and Social Media</string>
@@ -92,12 +92,10 @@
     <string name="fitbit_integration_successful">Fitbit has been integrated</string>
     <string name="skip">Skip</string>
 
-    <string name="title_tour_1_page">Step 1 of 4</string>
-    <string name="title_tour_2_page">Step 2 of 4</string>
-    <string name="title_tour_3_page">Step 3 of 4</string>
-    <string name="title_tour_4_page">Step 4 of 4</string>
+    <string name="title_tour_1_page">Step 1 of 2</string>
+    <string name="title_tour_2_page">Step 2 of 2</string>
     <string name="finish">Finish</string>
-    <string name="tour_profile_title">Hello!\nWelcome to Pearup!</string>
+    <string name="tour_profile_title">Let get started!</string>
     <string name="tour_profile_description">Few things to get started and we will\nguide you through it</string>
     <string name="tour_profile_description_2">Let start by confirming/setting your\nprofile information. Click Next when\nyou have completed it</string>
     <string name="tour_upload_avatar_title">Upload your\nprofile photo</string>
@@ -112,16 +110,44 @@
     <string name="verify_code_format_hint">0000</string>
     <string name="share">Share</string>
     <string name="share_using">Share with…</string>
-    <string name="error_incorrect_phone">Please check your number and try again</string>
+    <string name="error_incorrect_phone">Invalid phone format</string>
     <string name="progress_verifying_phone_number">Verifying phone number</string>
 
     <string name="Smooch_startOfConversation"/>
     <string name="Smooch_welcome"/>
     <string name="Smooch_messageHint">Input chat message</string>
     <string name="show_notifications">Show Notifications</string>
+    <string name="settings_show_notifications">Show notifications</string>
+    <string name="error_phone_taken">Phone number already taken</string>
+    <string name="error_phone_not_registered">Phone number is not registered yet</string>
+    <string name="title_area_code">Area code</string>
+    <string name="error_incorrect_verification_code">Incorrect verification code</string>
+    <string name="try_again">Try again</string>
+    <string name="loading_creating_account">Creating account</string>
+    <string name="error_no_accosiated_number">No accosiated number with this code. Please retry login.</string>
+    <string name="warning_you_already_logged_in">You are already logged in</string>
+    <string name="ok">OK</string>
+    <string name="warning_permission_needed">Permission required</string>
+    <string name="sms_permission_description">After you enter the phone number you will receive sms. If you grant to the app permission to read incoming sms then it could be automaticaly handled. If not you have to open sms and click on link or type code manually.</string>
+    <string name="no_thanks">No, thanks</string>
+    <string name="error_image_unacceptable">Unacceptable image</string>
 
     <string-array name="select_provider_options">
         <item>HBF</item>
         <item>I do not have a provider</item>
     </string-array>
+
+    <string-array name="trial_titles">
+        <item>Welcome to Pearup!</item>
+        <item>Personalized Coach</item>
+        <item>Getting active tips</item>
+        <item>Free 14 day trial</item>
+    </string-array>
+    <string-array name="trial_descriptions">
+        <item>Some text about the App… Messenger bag pop-up bicycle rights, brunch cliche freegan vice mixtape wayfarers gentrify kickstarter.</item>
+        <item>Description 2</item>
+        <item>Description 3</item>
+        <item>Description 4</item>
+    </string-array>
+
 </resources>

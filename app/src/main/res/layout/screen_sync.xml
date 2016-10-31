@@ -1,34 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/sync_container"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:orientation="vertical"
     >
 
     <include layout="@layout/layout_toolbar"/>
 
-    <TextView
+    <LinearLayout
         android:id="@+id/google_fit"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:text="@string/sync_google_fit"
-        android:gravity="center_vertical"
-        android:paddingLeft="16dp"
-        android:textSize="16sp"
-        android:background="@android:color/white"
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        >
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="24dp"
+            android:background="@drawable/ic_google_fit"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:text="@string/sync_google_fit"
+            android:textSize="16sp"
+            />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/google_fit_switch_compat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="24dp"
+            android:clickable="false"
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/separator"
         />
 
-    <TextView
+    <LinearLayout
         android:id="@+id/fitbit"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:text="@string/sync_fitbit"
-        android:gravity="center_vertical"
-        android:paddingLeft="16dp"
-        android:textSize="16sp"
-        android:background="@android:color/white"
+        android:layout_height="80dp"
         android:layout_marginTop="1dp"
+        android:orientation="horizontal"
+        >
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="24dp"
+            android:background="@drawable/ic_fitbit"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:text="@string/sync_fitbit"
+            android:textSize="16sp"
+            />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/fitbit_switch_compat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="24dp"
+            android:clickable="false"
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/separator"
         />
 
 </LinearLayout>

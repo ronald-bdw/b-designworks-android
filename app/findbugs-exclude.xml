@@ -12,4 +12,7 @@
     <Match>
         <Bug code="SBSC"/>
     </Match>
+    <Match>
+        <Bug code="MS"/>
+    </Match>
 </FindBugsFilter>
