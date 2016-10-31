@@ -60,8 +60,9 @@ public class SettingsScreen extends BaseActivity {
         });
     }
 
-    @OnClick(R.id.notifications_toggle) void onNotificationClick(SwitchCompat view) {
-        userInteractor.setNotificationsEnabled(view.isChecked());
+    @OnClick(R.id.notifications) void onNotificationClick() {
+        uiNotificationsToggle.setChecked(!uiNotificationsToggle.isChecked());
+        userInteractor.setNotificationsEnabled(uiNotificationsToggle.isChecked());
     }
 
 }
