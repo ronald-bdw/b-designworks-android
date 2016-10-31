@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Pear Up</string>
+    <string name="app_name">PairUp</string>
     <string name="menu_right">Right menu</string>
     <string name="title_settings">Settings</string>
     <string name="title_push_notifications">Push notifications</string>
