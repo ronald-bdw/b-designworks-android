@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1031731430214:android:7a1ad4b70437130f",
         "android_client_info": {
-          "package_name": "com.b_designworks.android"
+          "package_name": "com.pairup.android"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "1031731430214-va94917dad0d7ii8cvtturq8gfbp00uh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.b_designworks.android",
+            "package_name": "com.pairup.android",
             "certificate_hash": "4446FA45553C8C02ED234ED2AA0249B27ED913DB"
           }
         },
@@ -54,7 +54,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1031731430214:android:7a1ad4b70437130f",
         "android_client_info": {
-          "package_name": "com.b_designworks.android.staging"
+          "package_name": "com.pairup.android.staging"
         }
       },
       "oauth_client": [
@@ -62,7 +62,7 @@
           "client_id": "1031731430214-va94917dad0d7ii8cvtturq8gfbp00uh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.b_designworks.android.staging",
+            "package_name": "com.pairup.android.staging",
             "certificate_hash": "4446FA45553C8C02ED234ED2AA0249B27ED913DB"
           }
         },
