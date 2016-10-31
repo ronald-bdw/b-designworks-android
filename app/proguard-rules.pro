@@ -56,12 +56,8 @@
 -keep class sun.misc.Unsafe { *; }
 #end of gson
 
-#glide
--keep public class * implements com.bumptech.glide.module.GlideModule
--keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
-  **[] $VALUES;
-  public *;
-}
+#picasso
+-dontwarn com.squareup.okhttp.**
 
 #okio
 -dontwarn okio.**
@@ -72,6 +68,18 @@
 -keepattributes Signature
 -keepattributes Exceptions
 -keepclasseswithmembers class * { @retrofit2.http.* <methods>; }
+
+#retrolambda
+-dontwarn java.lang.invoke.*
+
+#greenrobot event bus
+-keepattributes *Annotation*
+-keepclassmembers class ** {
+    @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
+
+-keepattributes EnclosingMethod
 
 #debug
 -renamesourcefileattribute SourceFile
