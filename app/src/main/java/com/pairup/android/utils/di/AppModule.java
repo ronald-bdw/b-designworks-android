@@ -155,4 +155,11 @@ public class AppModule {
     @Provides @Singleton public ImageLoader provideImageLoader(Context context) {
         return new ImageLoader(context);
     }
+
+    @Provides @Singleton
+    public RxErrorHandlingCallAdapterFactory
+    provideRxErrorHandlingCallAdapterFactory(@NonNull UserInteractor userInteractor,
+                                             @NonNull Context context) {
+        return new RxErrorHandlingCallAdapterFactory(userInteractor, context);
+    }
 }

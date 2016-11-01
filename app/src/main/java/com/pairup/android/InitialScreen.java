@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.pairup.android.utils.di.Injector;
+import com.pairup.android.utils.network.RxErrorHandlingCallAdapterFactory;
 import com.pairup.android.utils.storage.UserSettings;
 
 import javax.inject.Inject;
@@ -14,7 +15,8 @@ import javax.inject.Inject;
  */
 public class InitialScreen extends AppCompatActivity {
 
-    @Inject UserSettings userSettings;
+    @Inject UserSettings                      userSettings;
+    @Inject RxErrorHandlingCallAdapterFactory rxErrorHandlingCallAdapterFactory;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
