@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:textColor="@color/app_accent"
-            android:textSize="20sp"
+            android:textSize="@dimen/font_size_big"
             android:textStyle="bold"
             tools:text="some text"
             android:textAllCaps="true"
