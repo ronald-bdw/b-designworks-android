@@ -12,9 +12,8 @@ PairUp [![Circle CI](https://circleci.com/gh/fs/b-designworks-android.png?style=
 Run `./gradlew check`
 
 ###Build process
-1. Open terminal in project root folder
-2. Run `./gradlew assembleProductionRelease`
-3. Apk will be at `$projectRoot/app/build/outputs/apk/app-production-release.apk` signed with production keystore.
+1. Run `./gradlew assembleProductionRelease`
+2. You can find apk in `$projectRoot/app/build/outputs/apk/app-production-release.apk` signed with production keystore.
 
 ###Distributation
 run `./gradlew assembleProductionRelease crashlyticsUploadDistributionProductionRelease`
