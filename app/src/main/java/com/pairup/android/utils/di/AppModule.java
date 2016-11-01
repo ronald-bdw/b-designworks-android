@@ -116,11 +116,14 @@ public class AppModule {
     }
 
     @Provides @Singleton
-    public Api providesApi(@NonNull OkHttpClient httpClient, @NonNull Gson mapper) {
+    public Api providesApi(@NonNull OkHttpClient httpClient,
+                           @NonNull Gson mapper,
+                           @NonNull UserSettings userSettings,
+                           @NonNull Context context) {
         return new Retrofit.Builder()
             .client(httpClient)
             .baseUrl(Api.BASE_URL)
-            .addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create())
+            .addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create(userSettings, context))
             .addConverterFactory(StringConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(mapper))
             .build()
@@ -158,8 +161,8 @@ public class AppModule {
 
     @Provides @Singleton
     public RxErrorHandlingCallAdapterFactory
-    provideRxErrorHandlingCallAdapterFactory(@NonNull UserInteractor userInteractor,
-                                             @NonNull Context context) {
-        return new RxErrorHandlingCallAdapterFactory(userInteractor, context);
+    provideRxErrorHandlingCallAdapterFactory(
+        @NonNull UserSettings userSettings, @NonNull Context context) {
+        return new RxErrorHandlingCallAdapterFactory(userSettings, context);
     }
 }
