@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     >
 
     <include layout="@layout/layout_toolbar"/>
@@ -63,14 +63,23 @@
                     android:src="@drawable/ic_notifications"
                     />
 
-                <android.support.v7.widget.SwitchCompat
-                    android:id="@+id/notifications_toggle"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
                     android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
                     android:text="@string/settings_show_notifications"
                     android:textColor="@color/settings_font"
+                    />
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/notifications_toggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
                     />
 
             </LinearLayout>
