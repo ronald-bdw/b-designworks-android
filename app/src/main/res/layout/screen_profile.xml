@@ -36,7 +36,7 @@
                     android:gravity="center"
                     android:text="@string/profile_email"
                     android:textColor="@color/app_accent"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/font_size_medium"
                     android:textStyle="bold"
                     />
 
@@ -60,7 +60,7 @@
                     tools:ignore="HardcodedText"
                     tools:text="example@email.com"
                     android:layout_marginTop="12dp"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/font_size_medium"
                     />
 
 
@@ -72,7 +72,7 @@
                     android:gravity="center"
                     android:text="@string/profile_phone"
                     android:textColor="@color/app_accent"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/font_size_medium"
                     android:textStyle="bold"
                     />
 
@@ -95,7 +95,7 @@
                     tools:ignore="HardcodedText"
                     tools:text="8912345678"
                     android:layout_marginTop="12dp"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/font_size_medium"
 
                     />
 

@@ -23,7 +23,7 @@
             android:text="Pear up app"
             android:textAllCaps="true"
             android:textColor="@color/app_accent"
-            android:textSize="22sp"
+            android:textSize="@dimen/font_size_big"
             android:textStyle="bold"
             tools:ignore="HardcodedText"
             />
