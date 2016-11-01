@@ -1,5 +1,6 @@
 package com.pairup.android.utils.di;
 
+import com.pairup.android.App;
 import com.pairup.android.InitialScreen;
 import com.pairup.android.chat.ChatScreen;
 import com.pairup.android.chat.ChatSidePanelFragment;
@@ -26,6 +27,7 @@ import dagger.Component;
 @Singleton
 @Component(modules = {AppModule.class})
 public interface AppComponent {
+    void inject(App app);
     void inject(InitialScreen activity);
     void inject(RegistrationScreen registrationScreen);
     void inject(VerifyScreen verifyScreen);

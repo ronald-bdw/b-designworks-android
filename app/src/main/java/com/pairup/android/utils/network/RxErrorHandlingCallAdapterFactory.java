@@ -1,5 +1,8 @@
 package com.pairup.android.utils.network;
 
+import com.pairup.android.UserUnauthorizedEvent;
+import com.pairup.android.utils.Bus;
+
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
@@ -63,7 +66,7 @@ public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory  {
                 HttpException httpException = (HttpException) throwable;
                 Response response = httpException.response();
                 if (response.code() == 401) {
-                    // TODO make something with that shit
+                    Bus.event(UserUnauthorizedEvent.EVENT);
                 }
                 return RetrofitException.httpError(response.raw().request().url().toString(), response, retrofit);
             }
