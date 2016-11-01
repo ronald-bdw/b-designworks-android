@@ -20,6 +20,8 @@ import butterknife.OnClick;
 
 public class SubscriptionScreen extends BaseActivity implements BillingProcessor.IBillingHandler {
 
+    public static final String ONE_MONTH_SUBSRIPTION_ID = "one_month_subsription";
+
     private BillingProcessor bp;
 
     @NonNull @Override public UiInfo getUiInfo() {
@@ -53,11 +55,11 @@ public class SubscriptionScreen extends BaseActivity implements BillingProcessor
     }
 
     @OnClick(R.id.one_month_subscribe) void onOneMonthClick() {
-        bp.subscribe(this, "super_pear_up_subsription_1_month");
+        bp.subscribe(this, ONE_MONTH_SUBSRIPTION_ID);
     }
 
     @OnClick(R.id.unsubscribe) void onUnsubscribeClick() {
-        bp.consumePurchase("super_pear_up_subsription_1_month");
+        bp.consumePurchase(ONE_MONTH_SUBSRIPTION_ID);
     }
 
     @Override
