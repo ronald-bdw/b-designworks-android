@@ -1,8 +1,18 @@
 package com.pairup.android.utils.network;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+
+import com.pairup.android.Navigator;
+import com.pairup.android.UserInteractor;
+import com.pairup.android.login.models.User;
+import com.pairup.android.utils.storage.UserSettings;
+
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
+
+import javax.inject.Inject;
 
 import retrofit2.Call;
 import retrofit2.CallAdapter;
@@ -16,29 +26,44 @@ import rx.functions.Func1;
 /**
  * Created by Ilya Eremin on 12.08.2016.
  */
-public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory  {
+public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory {
     private final RxJavaCallAdapterFactory original;
 
-    private RxErrorHandlingCallAdapterFactory() {
+    private UserSettings userSettings;
+    private Context      context;
+
+    @Inject
+    public RxErrorHandlingCallAdapterFactory(
+        @NonNull UserSettings userSettings, @NonNull Context context) {
         original = RxJavaCallAdapterFactory.create();
+        this.userSettings = userSettings;
+        this.context = context;
     }
 
-    public static CallAdapter.Factory create() {
-        return new RxErrorHandlingCallAdapterFactory();
+    public static CallAdapter.Factory create(UserSettings userSettings, Context context) {
+        return new RxErrorHandlingCallAdapterFactory(userSettings, context);
     }
 
     @Override
     public CallAdapter<?> get(Type returnType, Annotation[] annotations, Retrofit retrofit) {
-        return new RxCallAdapterWrapper(retrofit, original.get(returnType, annotations, retrofit));
+        return new RxCallAdapterWrapper(retrofit, original.get(returnType, annotations, retrofit), userSettings, context);
     }
 
     private static class RxCallAdapterWrapper implements CallAdapter<Observable<?>> {
         private final Retrofit       retrofit;
         private final CallAdapter<?> wrapped;
 
-        public RxCallAdapterWrapper(Retrofit retrofit, CallAdapter<?> wrapped) {
+        private UserSettings userSettings;
+        private Context      context;
+
+        public RxCallAdapterWrapper(Retrofit retrofit,
+                                    CallAdapter<?> wrapped,
+                                    UserSettings userSettings,
+                                    Context context) {
             this.retrofit = retrofit;
             this.wrapped = wrapped;
+            this.userSettings = userSettings;
+            this.context = context;
         }
 
         @Override
@@ -63,7 +88,8 @@ public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory  {
                 HttpException httpException = (HttpException) throwable;
                 Response response = httpException.response();
                 if (response.code() == 401) {
-                    // TODO make something with that shit
+                    userSettings.clear();
+                    Navigator.welcome(context);
                 }
                 return RetrofitException.httpError(response.raw().request().url().toString(), response, retrofit);
             }
