@@ -49,7 +49,7 @@ public class WelcomeScreen extends BaseActivity {
 
     @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
-            Navigator.subsription(context());
+            Navigator.subscription(context());
             return true;
         }
         return super.onKeyDown(keyCode, event);

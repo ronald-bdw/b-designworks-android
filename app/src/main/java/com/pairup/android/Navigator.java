@@ -106,7 +106,7 @@ public class Navigator {
         context.startActivity(Intent.createChooser(sharingIntent, context.getString(R.string.share_using)));
     }
 
-    public static void subsription(@NonNull Context context) {
+    public static void subscription(@NonNull Context context) {
         context.startActivity(new Intent(context, SubscriptionScreen.class));
     }
 }
