@@ -3,6 +3,7 @@ package com.pairup.android;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.google.android.gms.common.server.converter.StringToIntConverter;
 import com.pairup.android.chat.UserProfileUpdatedEvent;
 import com.pairup.android.login.models.AuthResponse;
 import com.pairup.android.login.models.FitToken;
@@ -35,6 +36,7 @@ public class UserInteractor {
     private static final String KEY_USER                    = "user";
     private static final String KEY_FIRST_VISIT_AFTER_LOGIN = "firstVisitAfterLogin";
     private static final String KEY_NOTIFICATIONS_ENABLED   = "notificationsEnabled";
+    private static final String KEY_SUBSCRIPTION_ENABLED    = "subscriptionEnabled";
 
     @NonNull private final IStorage     storage;
     @NonNull private final UserSettings userSettings;
@@ -154,10 +156,14 @@ public class UserInteractor {
         if (enabled) {
             api.userEnabledPushNotifications("message_push")
                 .subscribeOn(Schedulers.io())
-                .subscribe(result -> {}, ignoreError -> {});
+                .subscribe(result -> {
+                }, ignoreError -> {
+                });
         } else {
             api.userDisabledPushNotificatinos().subscribeOn(Schedulers.io())
-                .subscribe(result -> {}, ignoreError -> {});
+                .subscribe(result -> {
+                }, ignoreError -> {
+                });
         }
     }
 
@@ -227,8 +233,12 @@ public class UserInteractor {
         return storage.contains(KEY_USER);
     }
 
+    public void setSubscriptionEnabled(boolean enabled) {
+        storage.putBoolean(KEY_SUBSCRIPTION_ENABLED, enabled);
+    }
+
     public boolean userHasValidSubscription() {
-        return false;
+        return storage.getBoolean(KEY_SUBSCRIPTION_ENABLED, false);
     }
 
 }

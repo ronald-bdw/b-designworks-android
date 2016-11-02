@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.utils.AndroidUtils;
@@ -82,7 +83,6 @@ public class ChatScreen extends ConversationActivity {
         if (!userInteractor.userHasValidSubscription()) {
             blockChat();
         }
-
     }
 
     private void blockChat() {
@@ -106,6 +106,10 @@ public class ChatScreen extends ConversationActivity {
         } else {
             uiDrawer.openDrawer(GravityCompat.END);
         }
+    }
+
+    @OnClick(R.id.subscribe) void onSubscribeClick() {
+        Navigator.subscription(this);
     }
 
     @Override public void onBackPressed() {
