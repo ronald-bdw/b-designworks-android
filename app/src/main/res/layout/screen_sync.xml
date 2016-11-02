@@ -13,7 +13,7 @@
     <LinearLayout
         android:id="@+id/google_fit"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="@dimen/settings_item_height"
         android:orientation="horizontal"
         >
 
@@ -54,7 +54,7 @@
     <LinearLayout
         android:id="@+id/fitbit"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="@dimen/settings_item_height"
         android:layout_marginTop="1dp"
         android:orientation="horizontal"
         >
