@@ -25,6 +25,10 @@ import com.pairup.android.tour_app.TourScreenUploadAvatar;
  */
 public class Injector {
 
+    public static void inject(@NonNull App app){
+        app.getAppComponent().inject(app);
+    }
+
     public static void inject(@NonNull InitialScreen initialScreen) {
         getAppComponent(initialScreen).inject(initialScreen);
     }
