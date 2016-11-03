@@ -20,7 +20,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/welcome_question"
+            android:text="@string/screen_splash_main_txt"
             android:gravity="center"
             android:layout_marginTop="16dp"
             android:textColor="#61615f"
