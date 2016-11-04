@@ -1,7 +1,6 @@
 package com.pairup.android;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
@@ -17,43 +16,40 @@ public class InitialScreen extends AppCompatActivity {
 
     @Inject UserSettings userSettings;
 
-    private static InitialScreen sActivity;
-
-    private static int SPLASH_DURATION;
+    private boolean canStart;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.screen_splash);
 
-        sActivity = this;
+        Injector.inject(this);
 
-        Injector.inject(sActivity);
+        canStart = true;
 
-        SPLASH_DURATION = 500;
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (sActivity!=null) {
-                    if (userSettings.userHasToken()) {
-                        Navigator.chat(sActivity);
-                    } else {
-                        Navigator.welcome(sActivity);
+        Thread timerThread = new Thread(){
+            public void run(){
+                try{
+                    sleep(500);
+                    if (canStart) {
+                        if (userSettings.userHasToken()) {
+                            Navigator.chat(InitialScreen.this);
+                        } else {
+                            Navigator.welcome(InitialScreen.this);
+                        }
                     }
-                    sActivity.finish();
+                }catch(InterruptedException e){
+                    e.printStackTrace();
+                }finally{
+                    finish();
                 }
             }
-        }, SPLASH_DURATION);
+        };
+        timerThread.start();
     }
 
     @Override protected void onPause() {
         super.onPause();
-        sActivity = null;
+        canStart = false;
         finish();
-    }
-
-    @Override protected void onDestroy() {
-        super.onDestroy();
-        sActivity = null;
     }
 }
