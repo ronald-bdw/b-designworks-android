@@ -1,6 +1,7 @@
 package com.pairup.android;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
@@ -16,40 +17,24 @@ public class InitialScreen extends AppCompatActivity {
 
     @Inject UserSettings userSettings;
 
-    private boolean canStart;
-
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.screen_splash);
 
-        Injector.inject(this);
+        InitialScreen activity = this;
 
-        canStart = true;
+        Injector.inject(activity);
 
-        Thread timerThread = new Thread(){
-            public void run(){
-                try{
-                    sleep(500);
-                    if (canStart) {
-                        if (userSettings.userHasToken()) {
-                            Navigator.chat(InitialScreen.this);
-                        } else {
-                            Navigator.welcome(InitialScreen.this);
-                        }
-                    }
-                }catch(InterruptedException e){
-                    e.printStackTrace();
-                }finally{
-                    finish();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (userSettings.userHasToken()) {
+                    Navigator.chat(activity);
+                } else {
+                    Navigator.welcome(activity);
                 }
+                finish();
             }
-        };
-        timerThread.start();
-    }
-
-    @Override protected void onPause() {
-        super.onPause();
-        canStart = false;
-        finish();
+        }, 500);
     }
 }
