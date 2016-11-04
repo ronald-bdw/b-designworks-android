@@ -17,28 +17,43 @@ public class InitialScreen extends AppCompatActivity {
 
     @Inject UserSettings userSettings;
 
+    private static InitialScreen sActivity;
+
     private static int SPLASH_DURATION;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.screen_splash);
 
-        InitialScreen activity = this;
+        sActivity = this;
 
-        Injector.inject(activity);
+        Injector.inject(sActivity);
 
         SPLASH_DURATION = 500;
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (userSettings.userHasToken()) {
-                    Navigator.chat(activity);
-                } else {
-                    Navigator.welcome(activity);
+                if (sActivity!=null) {
+                    if (userSettings.userHasToken()) {
+                        Navigator.chat(sActivity);
+                    } else {
+                        Navigator.welcome(sActivity);
+                    }
+                    sActivity.finish();
                 }
-                finish();
             }
         }, SPLASH_DURATION);
+    }
+
+    @Override protected void onPause() {
+        super.onPause();
+        sActivity = null;
+        finish();
+    }
+
+    @Override protected void onDestroy() {
+        super.onDestroy();
+        sActivity = null;
     }
 }
