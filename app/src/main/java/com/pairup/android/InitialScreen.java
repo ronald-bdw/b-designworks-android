@@ -17,6 +17,8 @@ public class InitialScreen extends AppCompatActivity {
 
     @Inject UserSettings userSettings;
 
+    private Handler mHandler;
+
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.screen_splash);
@@ -25,7 +27,8 @@ public class InitialScreen extends AppCompatActivity {
 
         Injector.inject(activity);
 
-        new Handler().postDelayed(new Runnable() {
+        mHandler = new Handler();
+        mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (userSettings.userHasToken()) {
@@ -36,5 +39,11 @@ public class InitialScreen extends AppCompatActivity {
                 finish();
             }
         }, 500);
+    }
+
+    @Override protected void onStop() {
+        super.onStart();
+        mHandler.removeCallbacksAndMessages(null);
+        finish();
     }
 }
