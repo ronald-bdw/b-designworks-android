@@ -42,7 +42,7 @@ public class InitialScreen extends AppCompatActivity {
     }
 
     @Override protected void onStop() {
-        super.onStart();
+        super.onStop();
         mHandler.removeCallbacksAndMessages(null);
         finish();
     }
