@@ -38,7 +38,7 @@ import static com.pairup.android.utils.ui.TextViews.textOf;
  * Created by Ilya Eremin on 9/28/16.
  */
 
-public class TourScreenProfile extends BaseActivity implements GoogleFitView, SubscriptionView {
+public class TourScreenProfile extends BaseActivity implements GoogleFitView {
 
     @Bind(R.id.first_name) TextView uiFirstName;
     @Bind(R.id.last_name)  TextView uiLastName;
@@ -46,7 +46,6 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView, Su
 
     @Inject UserInteractor        userInteractor;
     @Inject GoogleFitPresenter    googleFitPresenter;
-    @Inject SubscriptionPresenter subscriptionPresenter;
 
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_tour_profile)
@@ -62,7 +61,6 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView, Su
         uiLastName.setText(user.getLastName());
         uiEmail.setText(user.getEmail());
         googleFitPresenter.attachView(this, this);
-        subscriptionPresenter.attachView(this, this);
     }
 
     @Nullable private Subscription   updateProfileSubs;
@@ -122,13 +120,6 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView, Su
             !textOf(uiEmail).equals(user.getEmail());
     }
 
-    private void subscribePurchase() {
-        if(subscriptionPresenter.isSubscribed()) {
-            Navigator.tourUploadAvatar(this);
-        } else {
-            subscriptionPresenter.showSubscriptionDialog();
-        }
-    }
 
     @OnClick(R.id.next) void onSubmitClick() {
         sendInfoAndMoveToNextScreen();
@@ -136,7 +127,7 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView, Su
 
     @Override public void codeRetrievedSuccessfull() {
         Toast.makeText(this, R.string.google_fit_token_retrieved, Toast.LENGTH_SHORT).show();
-        subscribePurchase();
+        Navigator.tourUploadAvatar(this);
     }
 
     @Override public void errorWhileRetrievingCode() {
@@ -161,22 +152,16 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView, Su
 
     @Override public void userCancelIntegration() {
         Logger.dToast(context(), "User canceled google git integration");
-        subscribePurchase();
+        Navigator.tourUploadAvatar(this);
     }
 
     @Override protected void onDestroy() {
         googleFitPresenter.detachView(this);
-        subscriptionPresenter.detachView();
         super.onDestroy();
     }
 
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         googleFitPresenter.handleResponse(requestCode, resultCode, data);
-    }
-
-    @Override public void onProductPurchased(String productId, TransactionDetails details) {
-        Toast.makeText(this, "purchased: " + productId, Toast.LENGTH_SHORT).show();
-        Navigator.tourUploadAvatar(this);
     }
 }

@@ -55,7 +55,6 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         super.onCreate(savedState);
         Injector.inject(this);
 
-        subscriptionPresenter.attachView(this, this);
         customizeSmoochInterface();
 
         if (savedState == null) {
@@ -137,6 +136,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     @Override public void onResume() {
         super.onResume();
         Bus.subscribe(this);
+        subscriptionPresenter.attachView(this, this);
         checkSubscription();
 
         // we could not customize part of the UI in on create because not all necessary views present in the hierarcy
@@ -184,14 +184,10 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         showUserName(userInteractor.getFullName());
     }
 
-    @Override public void onPause() {
+    @Override public void onStop() {
         Bus.unsubscribe(this);
-        super.onPause();
-    }
-
-    @Override protected void onDestroy() {
         subscriptionPresenter.detachView();
-        super.onDestroy();
+        super.onStop();
     }
 
     private void closeDrawer() {

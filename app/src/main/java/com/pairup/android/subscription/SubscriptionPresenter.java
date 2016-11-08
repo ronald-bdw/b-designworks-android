@@ -1,19 +1,16 @@
 package com.pairup.android.subscription;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.anjlab.android.iab.v3.BillingProcessor;
 import com.anjlab.android.iab.v3.TransactionDetails;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
-import com.pairup.android.utils.Logger;
 
 import javax.inject.Inject;
 
@@ -23,10 +20,11 @@ import javax.inject.Inject;
 
 public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
 
-    public static final  String ONE_MONTH_SUBSCRIPTION_ID = "one_month_subsription";
-    public static final  String ONE_YEAR_SUBSCRIPTION_ID  = "one_year_subscription";
-    private static final String UNSUBSCRIBE_LINK          = "https://play.google.com/store/account/subscriptions";
-    private static final String PURCHASE_KEY              = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAorESPZk0zw3hhu3kFGoGm1wsJJX/TJWOB/+q9LQ+VpN2TVuyzouVaYSxOSaHXg3/s1t4tUni7Ih3EVwR4//dbTH7ob3JdDoRzlWsgJaHeytH8qW6hPCdRX/cHLT0PbldwryUh92/yjBeel4Lo7McirS97MYElfsSQ52bEo8GOhG8SPYTHruh4WNp/LD/NO042AZUfi6+9fITzgNe2PeUKvGaFB9CrPpdbylExGhXhjjUhodZEjoUUtvCFG82lkvQHjnrUOs1PdHIhOk2IVVjpLHkX++9188ASEOflNNfnQIbRprjTuKFZG9NX/DTunzJNnH183fvyVQCX/r+ciFkAQIDAQAB";
+    public static final  String ONE_MONTH_TEST_SUBSCRIPTION_ID = "one_month_test_subscription";
+    public static final  String ONE_MONTH_SUBSCRIPTION_ID      = "one_month_subsription";
+    public static final  String ONE_YEAR_SUBSCRIPTION_ID       = "one_year_subscription";
+    private static final String UNSUBSCRIBE_LINK               = "https://play.google.com/store/account/subscriptions";
+    private static final String PURCHASE_KEY                   = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAorESPZk0zw3hhu3kFGoGm1wsJJX/TJWOB/+q9LQ+VpN2TVuyzouVaYSxOSaHXg3/s1t4tUni7Ih3EVwR4//dbTH7ob3JdDoRzlWsgJaHeytH8qW6hPCdRX/cHLT0PbldwryUh92/yjBeel4Lo7McirS97MYElfsSQ52bEo8GOhG8SPYTHruh4WNp/LD/NO042AZUfi6+9fITzgNe2PeUKvGaFB9CrPpdbylExGhXhjjUhodZEjoUUtvCFG82lkvQHjnrUOs1PdHIhOk2IVVjpLHkX++9188ASEOflNNfnQIbRprjTuKFZG9NX/DTunzJNnH183fvyVQCX/r+ciFkAQIDAQAB";
 
     private SubscriptionView view;
     private FragmentActivity activity;
@@ -59,9 +57,7 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
     }
 
     public boolean isSubscribed() {
-        Log.d("isSubscribed", bp.isSubscribed(ONE_MONTH_SUBSCRIPTION_ID) + "");
-//        return bp.isSubscriptionUpdateSupported();
-        return bp.isSubscribed(ONE_MONTH_SUBSCRIPTION_ID);
+        return bp.isSubscribed(ONE_MONTH_TEST_SUBSCRIPTION_ID);
     }
 
     public String getSubsciptionStatus() {
@@ -75,7 +71,7 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
     }
 
     public void subscribe() {
-        bp.subscribe(activity, ONE_MONTH_SUBSCRIPTION_ID);
+        bp.subscribe(activity, ONE_MONTH_TEST_SUBSCRIPTION_ID);
     }
 
     public void unsubscribe(@NonNull FragmentActivity activity) {
