@@ -228,7 +228,7 @@ public class UserInteractor {
         return storage.contains(KEY_USER);
     }
 
-    public boolean hasHbfProvider(){
-        return "HBF".equals(getUser().getProvider());
+    public boolean hasHbfProvider() {
+        return "HBF".equals(getUser().getProvider().getName());
     }
 }
