@@ -1,6 +1,7 @@
 package com.pairup.android;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
@@ -16,14 +17,28 @@ public class InitialScreen extends AppCompatActivity {
 
     @Inject UserSettings userSettings;
 
+    private Handler mHandler;
+
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.screen_splash);
+
         Injector.inject(this);
-        if (userSettings.userHasToken()) {
-            Navigator.chat(this);
-        } else {
-            Navigator.welcome(this);
-        }
+
+        mHandler = new Handler();
+        mHandler.postDelayed(() -> {
+            if (userSettings.userHasToken()) {
+                Navigator.chat(this);
+            } else {
+                Navigator.welcome(this);
+            }
+            finish();}
+        , 500);
+    }
+
+    @Override protected void onStop() {
+        super.onStop();
+        mHandler.removeCallbacksAndMessages(null);
         finish();
     }
 }
