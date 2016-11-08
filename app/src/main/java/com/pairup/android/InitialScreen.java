@@ -23,16 +23,14 @@ public class InitialScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.screen_splash);
 
-        InitialScreen activity = this;
-
-        Injector.inject(activity);
+        Injector.inject(this);
 
         mHandler = new Handler();
         mHandler.postDelayed(()-> {
             if (userSettings.userHasToken()) {
-                Navigator.chat(activity);
+                Navigator.chat(this);
             } else {
-                Navigator.welcome(activity);
+                Navigator.welcome(this);
             }
             finish();}
         , 500);

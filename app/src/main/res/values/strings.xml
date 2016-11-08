@@ -132,7 +132,7 @@
     <string name="no_thanks">No, thanks</string>
     <string name="error_image_unacceptable">Unacceptable image</string>
 
-    <string name="screen_splash_main_txt">your ger active coach\n with you every step of the way</string>
+    <string name="screen_splash_main_txt">you get active coach\n with your every step of the way</string>
 
     <string-array name="select_provider_options">
         <item>HBF</item>
