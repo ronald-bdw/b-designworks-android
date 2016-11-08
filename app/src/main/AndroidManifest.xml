@@ -18,11 +18,9 @@
         android:theme="@style/PairUpTheme"
         >
 
-        <activity android:name=".subscription.SubscriptionScreen">
-
-        </activity>
-
-        <activity android:name=".InitialScreen">
+        <activity android:name=".subscription.SubscriptionScreen"/>
+        <activity android:name=".InitialScreen"
+            android:theme="@style/Invisible">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

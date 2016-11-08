@@ -137,6 +137,8 @@
     <string name="subscription">Subscription</string>
     <string name="subscription_dialog_message">Please, subscribe to continue using PairUp</string>
 
+    <string name="screen_splash_main_txt">you get active coach\n with your every step of the way</string>
+
     <string-array name="select_provider_options">
         <item>HBF</item>
         <item>I do not have a provider</item>
