@@ -119,7 +119,22 @@
                 android:background="@color/separator"
                 />
 
+            <TextView
+                android:id="@+id/unsubscribe"
+                style="@style/settings_item_container"
+                android:paddingLeft="16dp"
+                android:textColor="@color/settings_font"
+                android:text="Subscription"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/separator"
+                />
+
         </LinearLayout>
+
 
     </ScrollView>
 

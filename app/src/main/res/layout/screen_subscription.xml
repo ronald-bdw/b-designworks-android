@@ -6,23 +6,64 @@
     android:layout_height="match_parent"
     >
 
-    <Button
-        android:id="@+id/one_month_subscribe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="1 month subsribe"
-        tools:ignore="HardcodedText"
-        />
+    <include layout="@layout/layout_toolbar"/>
 
-    <Button
-        android:id="@+id/unsubscribe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="52dp"
-        android:text="Cancel subscription"
-        tools:ignore="HardcodedText"
-        />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?actionBarSize"
+        android:background="@android:color/white"
+        >
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <TextView
+                android:id="@+id/status"
+                style="@style/settings_item_container"
+                android:paddingLeft="16dp"
+                android:textColor="@color/settings_font"
+                android:text="@string/subscription_status"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/separator"
+                />
+
+            <TextView
+                android:id="@+id/subscribe"
+                style="@style/settings_item_container"
+                android:paddingLeft="16dp"
+                android:textColor="@color/settings_font"
+                android:text="@string/subscribe"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/separator"
+                />
+
+            <TextView
+                android:id="@+id/unsubscribe"
+                style="@style/settings_item_container"
+                android:paddingLeft="16dp"
+                android:textColor="@color/settings_font"
+                android:text="@string/unsubscribe"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/separator"
+                />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </FrameLayout>

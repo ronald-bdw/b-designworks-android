@@ -46,12 +46,4 @@ public class WelcomeScreen extends BaseActivity {
             Navigator.trialPage(context());
         }
     }
-
-    @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
-            Navigator.subscription(context());
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
 }

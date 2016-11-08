@@ -36,7 +36,6 @@ public class UserInteractor {
     private static final String KEY_USER                    = "user";
     private static final String KEY_FIRST_VISIT_AFTER_LOGIN = "firstVisitAfterLogin";
     private static final String KEY_NOTIFICATIONS_ENABLED   = "notificationsEnabled";
-    private static final String KEY_SUBSCRIPTION_ENABLED    = "subscriptionEnabled";
 
     @NonNull private final IStorage     storage;
     @NonNull private final UserSettings userSettings;
@@ -233,12 +232,7 @@ public class UserInteractor {
         return storage.contains(KEY_USER);
     }
 
-    public void setSubscriptionEnabled(boolean enabled) {
-        storage.putBoolean(KEY_SUBSCRIPTION_ENABLED, enabled);
+    public boolean hasHbfProvider(){
+        return "HBF".equals(getUser().getProvider());
     }
-
-    public boolean userHasValidSubscription() {
-        return storage.getBoolean(KEY_SUBSCRIPTION_ENABLED, false);
-    }
-
 }

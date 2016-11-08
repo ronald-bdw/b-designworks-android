@@ -9,11 +9,14 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.anjlab.android.iab.v3.TransactionDetails;
 import com.pairup.android.BaseActivity;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.login.models.User;
+import com.pairup.android.subscription.SubscriptionPresenter;
+import com.pairup.android.subscription.SubscriptionView;
 import com.pairup.android.sync.GoogleFitPresenter;
 import com.pairup.android.sync.GoogleFitView;
 import com.pairup.android.utils.Logger;
@@ -35,14 +38,15 @@ import static com.pairup.android.utils.ui.TextViews.textOf;
  * Created by Ilya Eremin on 9/28/16.
  */
 
-public class TourScreenProfile extends BaseActivity implements GoogleFitView {
+public class TourScreenProfile extends BaseActivity implements GoogleFitView, SubscriptionView {
 
     @Bind(R.id.first_name) TextView uiFirstName;
     @Bind(R.id.last_name)  TextView uiLastName;
     @Bind(R.id.email)      TextView uiEmail;
 
-    @Inject UserInteractor     userInteractor;
-    @Inject GoogleFitPresenter googleFitPresenter;
+    @Inject UserInteractor        userInteractor;
+    @Inject GoogleFitPresenter    googleFitPresenter;
+    @Inject SubscriptionPresenter subscriptionPresenter;
 
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_tour_profile)
@@ -58,6 +62,7 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView {
         uiLastName.setText(user.getLastName());
         uiEmail.setText(user.getEmail());
         googleFitPresenter.attachView(this, this);
+        subscriptionPresenter.attachView(this, this);
     }
 
     @Nullable private Subscription   updateProfileSubs;
@@ -117,42 +122,51 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView {
             !textOf(uiEmail).equals(user.getEmail());
     }
 
+    private void subscribePurchase() {
+        if(subscriptionPresenter.isSubscribed()) {
+            Navigator.tourUploadAvatar(this);
+        } else {
+            subscriptionPresenter.showSubscriptionDialog();
+        }
+    }
+
     @OnClick(R.id.next) void onSubmitClick() {
         sendInfoAndMoveToNextScreen();
     }
 
     @Override public void codeRetrievedSuccessfull() {
         Toast.makeText(this, R.string.google_fit_token_retrieved, Toast.LENGTH_SHORT).show();
-        Navigator.tourUploadAvatar(context());
+        subscribePurchase();
     }
 
     @Override public void errorWhileRetrievingCode() {
-       Logger.dToast(this, "error while retrieving code");
+        Logger.dToast(this, "error while retrieving code");
     }
 
     @Override public void onGoogleServicesError(ConnectionResult result) {
-       Logger.dToast(this, "onGoogleServicesError: " + result.getErrorMessage());
+        Logger.dToast(this, "onGoogleServicesError: " + result.getErrorMessage());
     }
 
     @Override public void showInternetConnectionError() {
-       Logger.dToast(this, "showInternetConnectionError: ");
+        Logger.dToast(this, "showInternetConnectionError: ");
     }
 
     @Override public void showGoogleServiceDisconected() {
-       Logger.dToast(this, "showGoogleServiceDisconected");
+        Logger.dToast(this, "showGoogleServiceDisconected");
     }
 
     @Override public void onError(Throwable error) {
-       Logger.dToast(this, "On error" + error.getMessage());
+        Logger.dToast(this, "On error" + error.getMessage());
     }
 
     @Override public void userCancelIntegration() {
         Logger.dToast(context(), "User canceled google git integration");
-        Navigator.tourUploadAvatar(context());
+        subscribePurchase();
     }
 
     @Override protected void onDestroy() {
         googleFitPresenter.detachView(this);
+        subscriptionPresenter.detachView();
         super.onDestroy();
     }
 
@@ -161,4 +175,8 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView {
         googleFitPresenter.handleResponse(requestCode, resultCode, data);
     }
 
+    @Override public void onProductPurchased(String productId, TransactionDetails details) {
+        Toast.makeText(this, "purchased: " + productId, Toast.LENGTH_SHORT).show();
+        Navigator.tourUploadAvatar(this);
+    }
 }

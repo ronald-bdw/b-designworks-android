@@ -10,6 +10,7 @@ import com.pairup.android.BaseActivity;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
+import com.pairup.android.subscription.SubscriptionPresenter;
 import com.pairup.android.utils.ImageLoader;
 import com.pairup.android.utils.di.Injector;
 import com.pairup.android.utils.ui.AreYouSureDialog;
@@ -65,4 +66,7 @@ public class SettingsScreen extends BaseActivity {
         userInteractor.setNotificationsEnabled(uiNotificationsToggle.isChecked());
     }
 
+    @OnClick(R.id.unsubscribe) void onUnsubscribeClick(){
+        Navigator.subscription(this);
+    }
 }

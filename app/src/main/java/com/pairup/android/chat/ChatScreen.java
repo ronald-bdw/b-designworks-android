@@ -1,20 +1,27 @@
 package com.pairup.android.chat;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.pairup.android.Navigator;
+import com.anjlab.android.iab.v3.TransactionDetails;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
+import com.pairup.android.subscription.SubscriptionPresenter;
+import com.pairup.android.subscription.SubscriptionView;
 import com.pairup.android.utils.AndroidUtils;
 import com.pairup.android.utils.Bus;
 import com.pairup.android.utils.Keyboard;
@@ -35,9 +42,10 @@ import io.smooch.ui.ConversationActivity;
 /**
  * Created by Ilya Eremin on 04.08.2016.
  */
-public class ChatScreen extends ConversationActivity {
+public class ChatScreen extends ConversationActivity implements SubscriptionView {
 
-    @Inject UserInteractor userInteractor;
+    @Inject UserInteractor        userInteractor;
+    @Inject SubscriptionPresenter subscriptionPresenter;
 
     @Bind(R.id.drawer)                     DrawerLayout uiDrawer;
     @Bind(R.id.provider_logo)              ImageView    uiProviderLogo;
@@ -47,6 +55,7 @@ public class ChatScreen extends ConversationActivity {
         super.onCreate(savedState);
         Injector.inject(this);
 
+        subscriptionPresenter.attachView(this, this);
         customizeSmoochInterface();
 
         if (savedState == null) {
@@ -76,17 +85,22 @@ public class ChatScreen extends ConversationActivity {
 
             @Override public void onDrawerStateChanged(int newState) {}
         });
-        checkSubscription();
     }
 
     private void checkSubscription() {
-        if (!userInteractor.userHasValidSubscription()) {
+        if (subscriptionPresenter.isSubscribed() || userInteractor.hasHbfProvider()) {
+            unblockChat();
+        } else {
             blockChat();
         }
     }
 
     private void blockChat() {
         uiBuySubscription.setVisibility(View.VISIBLE);
+    }
+
+    private void unblockChat() {
+        uiBuySubscription.setVisibility(View.INVISIBLE);
     }
 
     private void customizeSmoochInterface() {
@@ -109,7 +123,7 @@ public class ChatScreen extends ConversationActivity {
     }
 
     @OnClick(R.id.subscribe) void onSubscribeClick() {
-        Navigator.subscription(this);
+        subscriptionPresenter.showSubscriptionDialog();
     }
 
     @Override public void onBackPressed() {
@@ -123,6 +137,7 @@ public class ChatScreen extends ConversationActivity {
     @Override public void onResume() {
         super.onResume();
         Bus.subscribe(this);
+        checkSubscription();
 
         // we could not customize part of the UI in on create because not all necessary views present in the hierarcy
         // that's the reason why we split customize process between onCreate/onResume
@@ -153,7 +168,7 @@ public class ChatScreen extends ConversationActivity {
         com.pairup.android.login.models.User user = userInteractor.getUser();
         if (user.getProvider() != null) {
             if (user.getProvider().getName() != null) {
-                if ("HBF".equals(userInteractor.getUser().getProvider().getName())) {
+                if (userInteractor.hasHbfProvider()) {
                     uiProviderLogo.setVisibility(View.VISIBLE);
                 }
             }
@@ -174,7 +189,33 @@ public class ChatScreen extends ConversationActivity {
         super.onPause();
     }
 
+    @Override protected void onDestroy() {
+        subscriptionPresenter.detachView();
+        super.onDestroy();
+    }
+
     private void closeDrawer() {
         uiDrawer.closeDrawer(GravityCompat.END);
+    }
+
+    @Override public void onProductPurchased(String productId, TransactionDetails details) {
+        Toast.makeText(this, "purchased: " + productId, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (!subscriptionPresenter.getBillingProcessor().handleActivityResult(requestCode, resultCode, data))
+            super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+            subscriptionPresenter.showSubscriptionDialog();
+            return true;
+        } else if(keyCode == KeyEvent.KEYCODE_VOLUME_DOWN){
+            Intent i = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/account/subscriptions"));
+            startActivity(i);
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
