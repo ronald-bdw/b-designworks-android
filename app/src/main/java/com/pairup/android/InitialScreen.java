@@ -26,7 +26,7 @@ public class InitialScreen extends AppCompatActivity {
         Injector.inject(this);
 
         mHandler = new Handler();
-        mHandler.postDelayed(()-> {
+        mHandler.postDelayed(() -> {
             if (userSettings.userHasToken()) {
                 Navigator.chat(this);
             } else {
