@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
-import com.pairup.android.R;
 import com.pairup.android.chat.ChatScreen;
 import com.pairup.android.login.EnterPhoneScreen;
 import com.pairup.android.login.RegistrationScreen;
@@ -30,8 +29,10 @@ public class Navigator {
         context.startActivity(clearStack(new Intent(context, WelcomeScreen.class)));
     }
 
-    public static void enterPhone(@NonNull Context context) {
-        context.startActivity(new Intent(context, EnterPhoneScreen.class));
+    public static void enterPhone(@NonNull Context context, boolean checkExistUser) {
+        Intent intent = new Intent(context, EnterPhoneScreen.class);
+        intent.putExtra(EnterPhoneScreen.NEED_CHECK_USER_EXTRA, checkExistUser);
+        context.startActivity(intent);
     }
 
     public static void enterPhoneAndClearStack(@NonNull Context context) {

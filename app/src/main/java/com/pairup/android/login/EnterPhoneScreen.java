@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.pairup.android.BaseActivity;
 import com.pairup.android.BuildConfig;
@@ -41,7 +42,11 @@ import rx.Subscription;
  */
 public class EnterPhoneScreen extends BaseActivity {
 
+    public static final String NEED_CHECK_USER_EXTRA = "need_check_user_extra";
+
     private static final int CODE_REQUEST_AREA = 1121;
+
+    private boolean mCheckExistUser;
 
     @Bind(R.id.phone)     EditText uiPhone;
     @Bind(R.id.submit)    Button   uiSubmit;
@@ -58,6 +63,7 @@ public class EnterPhoneScreen extends BaseActivity {
 
     @SuppressLint("SetTextI18n") @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
+        mCheckExistUser = getIntent().getBooleanExtra(NEED_CHECK_USER_EXTRA, false);
         Injector.inject(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         if (BuildConfig.DEBUG && savedState == null) {
@@ -89,17 +95,54 @@ public class EnterPhoneScreen extends BaseActivity {
         String areaCode = TextViews.textOf(uiAreaCode);
         if (!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(areaCode)) {
             if (RxPermissions.getInstance(context()).isGranted(Manifest.permission.RECEIVE_SMS)) {
-                requestAuthorizationCode(areaCode, phone);
+                manageSubmit(areaCode, phone);
             } else {
                 SimpleDialog.show(context(), getString(R.string.warning_permission_needed),
                     getString(R.string.sms_permission_description), getString(R.string.ok), () ->
                         RxPermissions.getInstance(context()).request(Manifest.permission.RECEIVE_SMS)
-                            .subscribe(isGranted -> requestAuthorizationCode(areaCode, phone)),
-                    getString(R.string.no_thanks), () -> requestAuthorizationCode(areaCode, phone));
+                            .subscribe(isGranted -> manageSubmit(areaCode, phone)),
+                    getString(R.string.no_thanks), () -> manageSubmit(areaCode, phone));
             }
         } else {
             uiPhone.setError(getString(R.string.registration_error_fill_phone));
         }
+    }
+
+    private void manageSubmit(String areaCode, String phone) {
+        if (mCheckExistUser) {
+            checkUserExist(areaCode, phone);
+        }else requestAuthorizationCode(areaCode, phone);
+    }
+
+    private void checkUserExist(String areaCode, String phone) {
+        Keyboard.hide(this);
+        showProgerss();
+        userInteractor.requestUserExist(areaCode + phone)
+            .doOnTerminate(() -> {
+                hideProgress();
+            })
+            .compose(Rxs.doInBackgroundDeliverToUI())
+            .subscribe(result -> {
+                if (result.isPhoneRegistered()) {
+                    requestAuthorizationCode(areaCode, phone);
+                }else {
+                    showToastMessage();
+                    finish();
+                }
+            }, error -> {
+                if (error instanceof RetrofitException) {
+                    RetrofitException retrofitError = (RetrofitException) error;
+                    if (retrofitError.getKind() == RetrofitException.Kind.NETWORK) {
+                        SimpleDialog.networkProblem(context());
+                    } else {
+                        showToastMessage();
+                    }
+                }
+            });
+    }
+
+    private void showToastMessage() {
+        Toast.makeText(this, getString(R.string.screen_enter_phone), Toast.LENGTH_LONG).show();
     }
 
     private void requestAuthorizationCode(String areaCode, String phone) {

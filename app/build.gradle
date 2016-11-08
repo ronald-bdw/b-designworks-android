@@ -10,7 +10,7 @@ ext {
     APPLICATION_ID = "com.pairup.android"
     isCI = "true".equals(System.getenv("CI"))
     BUILD_NUMBER = System.getenv("CIRCLE_BUILD_NUM") ?: new Date().format('yyyy-MM-dd-HH:mm:ss')
-    LAST_COMMIT_MESSAGE = 'git log -1 --pretty=%B'.execute().text.trim()
+//    LAST_COMMIT_MESSAGE = 'git log -1 --pretty=%B'.execute().text.trim()
 }
 
 android {
@@ -21,7 +21,7 @@ android {
         minSdkVersion versions.MIN_SDK_VERSION
         targetSdkVersion versions.TARGET_SDK_VERSION
 
-        ext.betaDistributionReleaseNotes = LAST_COMMIT_MESSAGE
+//        ext.betaDistributionReleaseNotes = LAST_COMMIT_MESSAGE
         ext.betaDistributionNotifications = true
         ext.betaDistributionGroupAliases = "fitness-app"
 
@@ -29,7 +29,8 @@ android {
         versionCode 1
         versionName "1.0.0-$BUILD_NUMBER"
 
-        def gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
+//        def gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
+        def gitSha = ''
         buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
         buildConfigField "String", "FITBIT_APP_ID", "\"227ZMJ\""
 

@@ -136,6 +136,8 @@
 
     <string name="screen_welcome_user_have_account"><u>Click here if you have an account with PearUp</u></string>
 
+    <string name="screen_enter_phone">Unsuccessful!</string>
+
     <string-array name="select_provider_options">
         <item>HBF</item>
         <item>I do not have a provider</item>

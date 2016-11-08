@@ -28,7 +28,7 @@ public class WelcomeScreen extends BaseActivity {
     }
 
     @OnClick(R.id.have_account_link) void haveAccountClick() {
-        Navigator.enterPhone(context());
+        Navigator.enterPhone(context(), true);
     }
 
     public static class TrialDialog extends BaseDialogFragment {
@@ -42,7 +42,7 @@ public class WelcomeScreen extends BaseActivity {
         }
 
         @OnClick(R.id.start_trial_now) void onStartTrialClick() {
-            Navigator.enterPhone(context());
+            Navigator.enterPhone(context(), false);
         }
 
         @OnClick(R.id.learn_more) void onLearnMoreClick() {
