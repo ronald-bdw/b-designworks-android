@@ -28,17 +28,14 @@ public class InitialScreen extends AppCompatActivity {
         Injector.inject(activity);
 
         mHandler = new Handler();
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (userSettings.userHasToken()) {
-                    Navigator.chat(activity);
-                } else {
-                    Navigator.welcome(activity);
-                }
-                finish();
+        mHandler.postDelayed(()-> {
+            if (userSettings.userHasToken()) {
+                Navigator.chat(activity);
+            } else {
+                Navigator.welcome(activity);
             }
-        }, 500);
+            finish();}
+        , 500);
     }
 
     @Override protected void onStop() {
