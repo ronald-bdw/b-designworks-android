@@ -155,14 +155,10 @@ public class UserInteractor {
         if (enabled) {
             api.userEnabledPushNotifications("message_push")
                 .subscribeOn(Schedulers.io())
-                .subscribe(result -> {
-                }, ignoreError -> {
-                });
+                .subscribe(result -> {}, ignoreError -> {});
         } else {
             api.userDisabledPushNotificatinos().subscribeOn(Schedulers.io())
-                .subscribe(result -> {
-                }, ignoreError -> {
-                });
+                .subscribe(result -> {}, ignoreError -> {});
         }
     }
 

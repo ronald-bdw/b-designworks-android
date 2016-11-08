@@ -4,13 +4,13 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.anjlab.android.iab.v3.BillingProcessor;
 import com.anjlab.android.iab.v3.TransactionDetails;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
+import com.pairup.android.utils.Logger;
 
 import javax.inject.Inject;
 
@@ -96,7 +96,7 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
 
     @Override public void onPurchaseHistoryRestored() {}
 
-    @Override public void onBillingError(int errorCode, Throwable error) {}
+    @Override public void onBillingError(int errorCode, Throwable error) { Logger.e(error);}
 
     @Override public void onBillingInitialized() {}
 }

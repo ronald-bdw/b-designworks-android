@@ -2,13 +2,10 @@ package com.pairup.android.chat;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,20 +83,12 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         });
     }
 
-    private void checkSubscription() {
-        if (subscriptionPresenter.isSubscribed() || userInteractor.hasHbfProvider()) {
-            unblockChat();
+    private void setChatEnabled(boolean enabled) {
+        if (enabled) {
+            uiBuySubscription.setVisibility(View.INVISIBLE);
         } else {
-            blockChat();
+            uiBuySubscription.setVisibility(View.VISIBLE);
         }
-    }
-
-    private void blockChat() {
-        uiBuySubscription.setVisibility(View.VISIBLE);
-    }
-
-    private void unblockChat() {
-        uiBuySubscription.setVisibility(View.INVISIBLE);
     }
 
     private void customizeSmoochInterface() {
@@ -137,7 +126,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         super.onResume();
         Bus.subscribe(this);
         subscriptionPresenter.attachView(this, this);
-        checkSubscription();
+        setChatEnabled(subscriptionPresenter.isSubscribed() || userInteractor.hasHbfProvider());
 
         // we could not customize part of the UI in on create because not all necessary views present in the hierarcy
         // that's the reason why we split customize process between onCreate/onResume
@@ -202,16 +191,5 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (!subscriptionPresenter.getBillingProcessor().handleActivityResult(requestCode, resultCode, data))
             super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
-            subscriptionPresenter.showSubscriptionDialog();
-            return true;
-        } else if(keyCode == KeyEvent.KEYCODE_VOLUME_DOWN){
-            Intent i = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/account/subscriptions"));
-            startActivity(i);
-        }
-        return super.onKeyDown(keyCode, event);
     }
 }

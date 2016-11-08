@@ -9,14 +9,11 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.anjlab.android.iab.v3.TransactionDetails;
 import com.pairup.android.BaseActivity;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.login.models.User;
-import com.pairup.android.subscription.SubscriptionPresenter;
-import com.pairup.android.subscription.SubscriptionView;
 import com.pairup.android.sync.GoogleFitPresenter;
 import com.pairup.android.sync.GoogleFitView;
 import com.pairup.android.utils.Logger;
@@ -44,8 +41,8 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView {
     @Bind(R.id.last_name)  TextView uiLastName;
     @Bind(R.id.email)      TextView uiEmail;
 
-    @Inject UserInteractor        userInteractor;
-    @Inject GoogleFitPresenter    googleFitPresenter;
+    @Inject UserInteractor     userInteractor;
+    @Inject GoogleFitPresenter googleFitPresenter;
 
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_tour_profile)
@@ -120,14 +117,13 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView {
             !textOf(uiEmail).equals(user.getEmail());
     }
 
-
     @OnClick(R.id.next) void onSubmitClick() {
         sendInfoAndMoveToNextScreen();
     }
 
     @Override public void codeRetrievedSuccessfull() {
         Toast.makeText(this, R.string.google_fit_token_retrieved, Toast.LENGTH_SHORT).show();
-        Navigator.tourUploadAvatar(this);
+        Navigator.tourUploadAvatar(context());
     }
 
     @Override public void errorWhileRetrievingCode() {
@@ -152,7 +148,7 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView {
 
     @Override public void userCancelIntegration() {
         Logger.dToast(context(), "User canceled google git integration");
-        Navigator.tourUploadAvatar(this);
+        Navigator.tourUploadAvatar(context());
     }
 
     @Override protected void onDestroy() {
