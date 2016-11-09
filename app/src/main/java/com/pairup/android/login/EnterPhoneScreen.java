@@ -42,11 +42,13 @@ import rx.Subscription;
  */
 public class EnterPhoneScreen extends BaseActivity {
 
-    public static final String NEED_CHECK_USER_EXTRA = "need_check_user_extra";
+    public static final String NEED_CHECK_USER_EXTRA     = "need_check_user_extra";
+    public static final String NEED_CHECK_PROVIDER_EXTRA = "need_check_provider_extra";
 
     private static final int CODE_REQUEST_AREA = 1121;
 
     private boolean shouldUserBeRegistered;
+    private boolean shouldUserHasProvider;
 
     @Bind(R.id.phone)     EditText uiPhone;
     @Bind(R.id.submit)    Button   uiSubmit;
@@ -63,6 +65,7 @@ public class EnterPhoneScreen extends BaseActivity {
 
     @Override protected void parseArguments(@NonNull Bundle extras) {
         shouldUserBeRegistered = extras.getBoolean(NEED_CHECK_USER_EXTRA, false);
+        shouldUserHasProvider = extras.getBoolean(NEED_CHECK_PROVIDER_EXTRA, false);
     }
 
     @SuppressLint("SetTextI18n") @Override protected void onCreate(@Nullable Bundle savedState) {
@@ -111,15 +114,17 @@ public class EnterPhoneScreen extends BaseActivity {
         }
     }
 
-    private void manageSubmit(String areaCode, String phone) {
+    private void manageSubmit(@NonNull String areaCode, @NonNull String phone) {
         if (shouldUserBeRegistered) {
             checkUserExist(areaCode, phone);
+        } else if (shouldUserHasProvider) {
+            checkUserHasProvider(areaCode, phone);
         } else {
             requestAuthorizationCode(areaCode, phone);
         }
     }
 
-    private void checkUserExist(String areaCode, String phone) {
+    private void checkUserExist(@NonNull String areaCode, @NonNull String phone) {
         Keyboard.hide(this);
         showProgerss();
         userInteractor.requestUserStatus(areaCode + phone)
@@ -134,9 +139,24 @@ public class EnterPhoneScreen extends BaseActivity {
             }, ErrorUtils.handle(this));
     }
 
+    private void checkUserHasProvider(@NonNull String areaCode, @NonNull String phone) {
+        Keyboard.hide(this);
+        showProgerss();
+        userInteractor.requestUserStatus(areaCode + phone)
+            .doOnTerminate(() -> hideProgress())
+            .compose(Rxs.doInBackgroundDeliverToUI())
+            .subscribe(result -> {
+                if (result.isHbfProvider()) {
+                    requestAuthorizationCode(areaCode, phone);
+                } else {
+                    showErrorDialog();
+                }
+            }, ErrorUtils.handle(this));
+    }
+
     private void showErrorDialog() {
         SimpleDialog.show(context(), getString(R.string.error), getString(R.string.screen_enter_phone_error_no_account),
-            getString(R.string.ok), () -> finish());
+            getString(R.string.ok), () -> Navigator.welcome(this));
     }
 
     private void requestAuthorizationCode(String areaCode, String phone) {

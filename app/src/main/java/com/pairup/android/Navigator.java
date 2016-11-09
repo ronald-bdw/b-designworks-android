@@ -40,6 +40,12 @@ public class Navigator {
         context.startActivity(intent);
     }
 
+    public static void enterPhoneAndCheckProvider(@NonNull Context context){
+        Intent intent = new Intent(context, EnterPhoneScreen.class);
+        intent.putExtra(EnterPhoneScreen.NEED_CHECK_PROVIDER_EXTRA, true);
+        context.startActivity(intent);
+    }
+
     public static void enterPhoneAndClearStack(@NonNull Context context) {
         context.startActivity(clearStack(new Intent(context, EnterPhoneScreen.class)));
     }
