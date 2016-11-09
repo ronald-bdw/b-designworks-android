@@ -124,7 +124,7 @@
                 style="@style/settings_item_container"
                 android:paddingLeft="16dp"
                 android:textColor="@color/settings_font"
-                android:text="Subscription"
+                android:text="@string/subscribe"
                 />
 
             <View

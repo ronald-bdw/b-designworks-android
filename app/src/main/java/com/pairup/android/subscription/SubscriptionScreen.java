@@ -36,7 +36,6 @@ public class SubscriptionScreen extends BaseActivity implements SubscriptionView
         super.onCreate(savedState);
         Injector.inject(this);
         subscriptionPresenter.attachView(this, this);
-        uiStatus.setText(subscriptionPresenter.getSubsciptionStatus());
     }
 
     @OnClick(R.id.subscribe) void onSubscribeClick() {
@@ -49,6 +48,11 @@ public class SubscriptionScreen extends BaseActivity implements SubscriptionView
 
     @Override public void onProductPurchased(String productId, TransactionDetails details) {
         Toast.makeText(this, R.string.subscription_owned_text, Toast.LENGTH_LONG).show();
+    }
+
+    @Override protected void onResume() {
+        uiStatus.setText(subscriptionPresenter.getSubsciptionStatus());
+        super.onResume();
     }
 
     @Override protected void onDestroy() {

@@ -14,6 +14,7 @@ import com.pairup.android.R;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by almaziskhakov on 04/11/2016.
@@ -59,7 +60,8 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
     }
 
     public String getSubsciptionStatus() {
-        DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+        DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+        
         Date purchaseDate = bp.getSubscriptionTransactionDetails(ONE_MONTH_SUBSCRIPTION_ID).purchaseTime;
         return activity.getString(R.string.subscription_status_time) + formatter.format(purchaseDate);
     }
