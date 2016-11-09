@@ -62,7 +62,6 @@ public class EnterPhoneScreen extends BaseActivity {
     }
 
     @Override protected void parseArguments(@NonNull Bundle extras) {
-        super.parseArguments(extras);
         shouldUserBeRegistered = extras.getBoolean(NEED_CHECK_USER_EXTRA, false);
     }
 
@@ -131,26 +130,17 @@ public class EnterPhoneScreen extends BaseActivity {
             .subscribe(result -> {
                 if (result.isPhoneRegistered()) {
                     requestAuthorizationCode(areaCode, phone);
-                }else {
+                } else {
                     showErrorDialog();
                 }
             }, error -> {
-                if (error instanceof RetrofitException) {
-                    RetrofitException retrofitError = (RetrofitException) error;
-                    if (retrofitError.getKind() == RetrofitException.Kind.NETWORK) {
-                        SimpleDialog.networkProblem(context());
-                    } else {
-                        ErrorUtils.handle(this);
-                    }
-                }
+                ErrorUtils.handle(this);
             });
     }
 
     private void showErrorDialog() {
         SimpleDialog.show(context(), getString(R.string.error), getString(R.string.screen_enter_phone_error_no_account),
-            getString(R.string.ok), () -> finish(),
-            null, null);
-
+            getString(R.string.ok), () -> finish());
     }
 
     private void requestAuthorizationCode(String areaCode, String phone) {

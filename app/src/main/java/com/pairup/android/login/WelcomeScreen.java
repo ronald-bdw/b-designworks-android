@@ -22,7 +22,7 @@ import butterknife.OnClick;
  */
 public class WelcomeScreen extends BaseActivity {
 
-    @Bind(R.id.have_account_link) TextView mHaveAccountLink;
+    @Bind(R.id.have_account_link) TextView uiHaveAccountLink;
 
     @BindString(R.string.screen_welcome_user_have_account) String mHaveAccountLinkTxt;
 
@@ -39,15 +39,19 @@ public class WelcomeScreen extends BaseActivity {
     }
 
     @OnClick(R.id.have_account_link) void haveAccountClick() {
-        Navigator.enterPhoneAndVerify(context(), true);
+        Navigator.enterPhoneAndVerify(context());
     }
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
 
+        underlineHaveAccountLinkText();
+    }
+
+    private void underlineHaveAccountLinkText() {
         SpannableString content = new SpannableString(mHaveAccountLinkTxt);
         content.setSpan(new UnderlineSpan(), 0, mHaveAccountLinkTxt.length(), 0);
-        mHaveAccountLink.setText(content);
+        uiHaveAccountLink.setText(content);
     }
 
     public static class TrialDialog extends BaseDialogFragment {
@@ -61,7 +65,7 @@ public class WelcomeScreen extends BaseActivity {
         }
 
         @OnClick(R.id.start_trial_now) void onStartTrialClick() {
-            Navigator.enterPhoneAndVerify(context());
+            Navigator.enterPhone(context());
         }
 
         @OnClick(R.id.learn_more) void onLearnMoreClick() {

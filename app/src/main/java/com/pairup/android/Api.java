@@ -86,7 +86,6 @@ public interface Api {
 
     @FormUrlEncoded
     @POST(V1 + "registration_status")
-    Observable<UserStatus> getUserStatus(
-        @Field("phone_number") String phone);
+    Observable<UserStatus> getUserStatus(@Field("phone_number") String phone);
 
 }
