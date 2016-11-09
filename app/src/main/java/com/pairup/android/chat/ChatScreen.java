@@ -154,13 +154,8 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     }
 
     private void setUpProviderLogo() {
-        com.pairup.android.login.models.User user = userInteractor.getUser();
-        if (user.getProvider() != null) {
-            if (user.getProvider().getName() != null) {
-                if (user.hasHbfProvider()) {
-                    uiProviderLogo.setVisibility(View.VISIBLE);
-                }
-            }
+        if (userInteractor.getUser().hasHbfProvider()) {
+            uiProviderLogo.setVisibility(View.VISIBLE);
         }
     }
 

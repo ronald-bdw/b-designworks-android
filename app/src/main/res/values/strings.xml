@@ -143,7 +143,7 @@
     <string name="screen_welcome_user_have_account">Click here if you have an account with PearUp</string>
 
     <string name="screen_enter_phone_error_no_account">Number not registered. Try another number or register this.</string>
-    <string name="subscription_owned_text">Subscription is owned</string>
+    <string name="subscription_owned_text">Congratulations! You are now subscribed for Pair Up for 1 month.</string>
     <string name="subscription_status_time">"Subscription was paid in "</string>
     <string name="subscribed_status">You are already subscribed</string>
 

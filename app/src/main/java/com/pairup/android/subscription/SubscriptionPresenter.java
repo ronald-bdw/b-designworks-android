@@ -4,17 +4,21 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
 import com.anjlab.android.iab.v3.BillingProcessor;
 import com.anjlab.android.iab.v3.TransactionDetails;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
+import com.pairup.android.utils.ui.SimpleDialog;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import rx.functions.Action0;
 
 /**
  * Created by almaziskhakov on 04/11/2016.
@@ -60,7 +64,7 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
     }
 
     public int getSubsciptionStatus() {
-        return isSubscribed()? R.string.subscribed_status : R.string.subscription_request;
+        return isSubscribed() ? R.string.subscribed_status : R.string.subscription_request;
     }
 
     public void subscribe() {
@@ -72,15 +76,11 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
     }
 
     public void showSubscriptionDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setNeutralButton(R.string.subscribe, new DialogInterface.OnClickListener() {
-            @Override public void onClick(DialogInterface dialog, int which) {
-                subscribe();
-            }
-        });
-        builder.setTitle(R.string.subscription);
-        builder.setMessage(R.string.subscription_request);
-        builder.create().show();
+        SimpleDialog.show(activity,
+            activity.getString(R.string.subscription),
+            activity.getString(R.string.subscription_request),
+            activity.getString(R.string.subscribe),
+            () -> subscribe());
     }
 
     @Override public void onProductPurchased(String productId, TransactionDetails details) {
