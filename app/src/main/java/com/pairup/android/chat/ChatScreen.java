@@ -23,6 +23,7 @@ import com.pairup.android.utils.AndroidUtils;
 import com.pairup.android.utils.Bus;
 import com.pairup.android.utils.Keyboard;
 import com.pairup.android.utils.di.Injector;
+import com.pairup.android.utils.ui.SimpleDialog;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -184,6 +185,14 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
 
     @Override public void onProductPurchased(String productId, TransactionDetails details) {
         Toast.makeText(this, R.string.subscription_owned_text, Toast.LENGTH_LONG).show();
+    }
+
+    @Override public void showSubscriptionDialog() {
+        SimpleDialog.show(this,
+            getString(R.string.subscription),
+            getString(R.string.subscription_request),
+            getString(R.string.subscribe),
+            () -> subscriptionPresenter.subscribe());
     }
 
     @Override

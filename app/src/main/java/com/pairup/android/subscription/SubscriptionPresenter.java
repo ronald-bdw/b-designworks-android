@@ -3,6 +3,7 @@ package com.pairup.android.subscription;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
@@ -26,10 +27,7 @@ import rx.functions.Action0;
 
 public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
 
-    public static final  String ONE_MONTH_TEST_SUBSCRIPTION_ID = "one_month_test_subscription";
-    public static final  String ONE_MONTH_SUBSCRIPTION_ID      = "one_month_subsription";
-    public static final  String ONE_YEAR_SUBSCRIPTION_ID       = "one_year_subscription";
-    private static final String UNSUBSCRIBE_LINK               = "https://play.google.com/store/account/subscriptions";
+    private static final String ONE_MONTH_TEST_SUBSCRIPTION_ID = "one_month_test_subscription";
     private static final String PURCHASE_KEY                   = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAorESPZk0zw3hhu3kFGoGm1wsJJX/TJWOB/+q9LQ+VpN2TVuyzouVaYSxOSaHXg3/s1t4tUni7Ih3EVwR4//dbTH7ob3JdDoRzlWsgJaHeytH8qW6hPCdRX/cHLT0PbldwryUh92/yjBeel4Lo7McirS97MYElfsSQ52bEo8GOhG8SPYTHruh4WNp/LD/NO042AZUfi6+9fITzgNe2PeUKvGaFB9CrPpdbylExGhXhjjUhodZEjoUUtvCFG82lkvQHjnrUOs1PdHIhOk2IVVjpLHkX++9188ASEOflNNfnQIbRprjTuKFZG9NX/DTunzJNnH183fvyVQCX/r+ciFkAQIDAQAB";
 
     private SubscriptionView view;
@@ -43,7 +41,7 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
         if (isAvailable) {
             bp = new BillingProcessor(activity, PURCHASE_KEY, this);
         } else {
-            Toast.makeText(activity, "Google play services unavailable", Toast.LENGTH_SHORT).show();
+            // TODO device what to when user has no google play services
         }
     }
 
@@ -63,7 +61,7 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
         return bp.isSubscribed(ONE_MONTH_TEST_SUBSCRIPTION_ID);
     }
 
-    public int getSubsciptionStatus() {
+    public @StringRes int getSubsciptionStatusText() {
         return isSubscribed() ? R.string.subscribed_status : R.string.subscription_request;
     }
 
@@ -72,15 +70,10 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
     }
 
     public void unsubscribe(@NonNull FragmentActivity activity) {
-        Navigator.openUrl(activity, UNSUBSCRIBE_LINK);
     }
 
     public void showSubscriptionDialog() {
-        SimpleDialog.show(activity,
-            activity.getString(R.string.subscription),
-            activity.getString(R.string.subscription_request),
-            activity.getString(R.string.subscribe),
-            () -> subscribe());
+        view.showSubscriptionDialog();
     }
 
     @Override public void onProductPurchased(String productId, TransactionDetails details) {

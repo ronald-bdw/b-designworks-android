@@ -8,8 +8,10 @@ import android.widget.Toast;
 
 import com.anjlab.android.iab.v3.TransactionDetails;
 import com.pairup.android.BaseActivity;
+import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.utils.di.Injector;
+import com.pairup.android.utils.ui.SimpleDialog;
 import com.pairup.android.utils.ui.UiInfo;
 
 import javax.inject.Inject;
@@ -23,6 +25,8 @@ import butterknife.OnClick;
 
 public class SubscriptionScreen extends BaseActivity implements SubscriptionView {
 
+    public static final String UNSUBSCRIBE_LINK = "https://play.google.com/store/account/subscriptions";
+
     @Inject SubscriptionPresenter subscriptionPresenter;
 
     @NonNull @Override public UiInfo getUiInfo() {
@@ -30,6 +34,7 @@ public class SubscriptionScreen extends BaseActivity implements SubscriptionView
             .setTitleRes(R.string.subscription)
             .enableBackButton();
     }
+
     @Bind(R.id.status) TextView uiStatus;
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
@@ -43,15 +48,23 @@ public class SubscriptionScreen extends BaseActivity implements SubscriptionView
     }
 
     @OnClick(R.id.unsubscribe) void onUnsubscribeClick() {
-        subscriptionPresenter.unsubscribe(this);
+        Navigator.openUrl(this, UNSUBSCRIBE_LINK);
     }
 
     @Override public void onProductPurchased(String productId, TransactionDetails details) {
         Toast.makeText(this, R.string.subscription_owned_text, Toast.LENGTH_LONG).show();
     }
 
+    @Override public void showSubscriptionDialog() {
+        SimpleDialog.show(this,
+            getString(R.string.subscription),
+            getString(R.string.subscription_request),
+            getString(R.string.subscribe),
+            () -> subscriptionPresenter.subscribe());
+    }
+
     @Override protected void onResume() {
-        uiStatus.setText(subscriptionPresenter.getSubsciptionStatus());
+        uiStatus.setText(subscriptionPresenter.getSubsciptionStatusText());
         super.onResume();
     }
 
