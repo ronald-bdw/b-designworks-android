@@ -13,7 +13,6 @@
         android:id="@+id/have_account_link"
         android:autoLink="web"
         android:textColor="@color/app_accent"
-        android:layout_weight="1"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="24dp"/>
 
