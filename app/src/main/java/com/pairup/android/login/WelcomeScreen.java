@@ -1,7 +1,11 @@
 package com.pairup.android.login;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.view.KeyEvent;
+import android.support.annotation.Nullable;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
+import android.widget.TextView;
 
 import com.pairup.android.BaseActivity;
 import com.pairup.android.Navigator;
@@ -9,12 +13,18 @@ import com.pairup.android.R;
 import com.pairup.android.utils.ui.BaseDialogFragment;
 import com.pairup.android.utils.ui.UiInfo;
 
+import butterknife.Bind;
+import butterknife.BindString;
 import butterknife.OnClick;
 
 /**
  * Created by Ilya Eremin on 22.08.2016.
  */
 public class WelcomeScreen extends BaseActivity {
+
+    @Bind(R.id.have_account_link) TextView uiHaveAccountLink;
+
+    @BindString(R.string.screen_welcome_user_have_account) String mHaveAccountLinkTxt;
 
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_welcome);
@@ -26,6 +36,22 @@ public class WelcomeScreen extends BaseActivity {
 
     @OnClick(R.id.no) void onNoClick() {
         TrialDialog.show(this);
+    }
+
+    @OnClick(R.id.have_account_link) void haveAccountClick() {
+        Navigator.enterPhoneAndVerify(context());
+    }
+
+    @Override protected void onCreate(@Nullable Bundle savedState) {
+        super.onCreate(savedState);
+
+        underlineHaveAccountLinkText();
+    }
+
+    private void underlineHaveAccountLinkText() {
+        SpannableString content = new SpannableString(mHaveAccountLinkTxt);
+        content.setSpan(new UnderlineSpan(), 0, mHaveAccountLinkTxt.length(), 0);
+        uiHaveAccountLink.setText(content);
     }
 
     public static class TrialDialog extends BaseDialogFragment {
