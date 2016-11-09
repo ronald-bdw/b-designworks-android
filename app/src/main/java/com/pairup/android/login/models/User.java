@@ -50,6 +50,12 @@ public class User {
         return provider;
     }
 
+    public boolean hasHbfProvider() {
+        if (provider != null)
+            return "HBF".equals(provider.getName());
+        return false;
+    }
+
     public List<Integration> getIntegrations() {
         return integrations;
     }

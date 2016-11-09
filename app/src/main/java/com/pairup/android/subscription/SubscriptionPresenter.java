@@ -10,7 +10,6 @@ import com.anjlab.android.iab.v3.BillingProcessor;
 import com.anjlab.android.iab.v3.TransactionDetails;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
-import com.pairup.android.utils.Logger;
 
 import javax.inject.Inject;
 
@@ -63,10 +62,6 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
     public String getSubsciptionStatus() {
         //TODO make adecvat getting
         String status = "Your subscription expires in ";
-//        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-//        Date purchaseDate = bp.getSubscriptionTransactionDetails(ONE_MONTH_SUBSCRIPTION_ID).purchaseTime;
-//        purchaseDate.setMonth(purchaseDate.getMonth()+1);
-//        status+=df.format(purchaseDate);
         return status;
     }
 
@@ -86,7 +81,7 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
             }
         });
         builder.setTitle(R.string.subscription);
-        builder.setMessage(R.string.subscription_dialog_message);
+        builder.setMessage(R.string.subscription_request);
         builder.create().show();
     }
 
@@ -96,7 +91,7 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
 
     @Override public void onPurchaseHistoryRestored() {}
 
-    @Override public void onBillingError(int errorCode, Throwable error) { Logger.e(error);}
+    @Override public void onBillingError(int errorCode, Throwable error) {}
 
     @Override public void onBillingInitialized() {}
 }

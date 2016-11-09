@@ -48,7 +48,7 @@ public class SubscriptionScreen extends BaseActivity implements SubscriptionView
     }
 
     @Override public void onProductPurchased(String productId, TransactionDetails details) {
-        Toast.makeText(this, "purchased: " + productId, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Subscription is owned", Toast.LENGTH_SHORT).show();
     }
 
     @Override protected void onDestroy() {

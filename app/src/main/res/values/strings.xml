@@ -135,7 +135,8 @@
     <string name="subscribe">Subscribe</string>
     <string name="subscription_status">Subscription status</string>
     <string name="subscription">Subscription</string>
-    <string name="subscription_dialog_message">Please, subscribe to continue using PairUp</string>
+    <string name="subscription_request">Please, subscribe to continue using PairUp</string>
+    <string name="chat_screen_blocked">Chat is blocked!</string>
 
     <string name="screen_splash_main_txt">you get active coach\n with your every step of the way</string>
 

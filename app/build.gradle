@@ -39,7 +39,7 @@ android {
     productFlavors {
         staging {
             buildConfigField "String", "API_URL", "\"https://b-designworks.herokuapp.com/\""
-            applicationIdSuffix ".test_in_apps"
+            applicationIdSuffix ".staging"
         }
 
         production {

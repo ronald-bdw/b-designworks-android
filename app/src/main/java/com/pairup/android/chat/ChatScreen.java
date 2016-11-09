@@ -126,7 +126,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         super.onResume();
         Bus.subscribe(this);
         subscriptionPresenter.attachView(this, this);
-        setChatEnabled(subscriptionPresenter.isSubscribed() || userInteractor.hasHbfProvider());
+        setChatEnabled(subscriptionPresenter.isSubscribed() || userInteractor.getUser().hasHbfProvider());
 
         // we could not customize part of the UI in on create because not all necessary views present in the hierarcy
         // that's the reason why we split customize process between onCreate/onResume
@@ -157,7 +157,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         com.pairup.android.login.models.User user = userInteractor.getUser();
         if (user.getProvider() != null) {
             if (user.getProvider().getName() != null) {
-                if (userInteractor.hasHbfProvider()) {
+                if (user.hasHbfProvider()) {
                     uiProviderLogo.setVisibility(View.VISIBLE);
                 }
             }
@@ -184,7 +184,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     }
 
     @Override public void onProductPurchased(String productId, TransactionDetails details) {
-        Toast.makeText(this, "purchased: " + productId, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Subscription is owned", Toast.LENGTH_SHORT).show();
     }
 
     @Override

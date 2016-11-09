@@ -27,7 +27,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="You have to pay money to continue use our app"
+                android:text="@string/chat_screen_blocked"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/subscription_request"
                 />
 
             <Button
