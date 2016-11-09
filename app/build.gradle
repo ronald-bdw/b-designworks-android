@@ -89,6 +89,7 @@ android {
         textOutput "stdout"
         lintConfig file("$projectDir/lint.xml")
         warningsAsErrors true
+        abortOnError false
     }
 
     configurations.all {
