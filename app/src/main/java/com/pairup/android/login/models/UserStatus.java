@@ -7,6 +7,7 @@ package com.pairup.android.login.models;
 public class UserStatus {
 
     private boolean phoneRegistered;
+    private String provider;
 
     public boolean isPhoneRegistered() {
         return phoneRegistered;
@@ -14,5 +15,9 @@ public class UserStatus {
 
     public void setPhoneRegistered(boolean phoneRegistered) {
         this.phoneRegistered = phoneRegistered;
+    }
+
+    public boolean isHbfProvider(){
+        return "HBF".equals(provider);
     }
 }
