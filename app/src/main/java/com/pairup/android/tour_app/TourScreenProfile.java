@@ -127,23 +127,23 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView {
     }
 
     @Override public void errorWhileRetrievingCode() {
-       Logger.dToast(this, "error while retrieving code");
+        Logger.dToast(this, "error while retrieving code");
     }
 
     @Override public void onGoogleServicesError(ConnectionResult result) {
-       Logger.dToast(this, "onGoogleServicesError: " + result.getErrorMessage());
+        Logger.dToast(this, "onGoogleServicesError: " + result.getErrorMessage());
     }
 
     @Override public void showInternetConnectionError() {
-       Logger.dToast(this, "showInternetConnectionError: ");
+        Logger.dToast(this, "showInternetConnectionError: ");
     }
 
     @Override public void showGoogleServiceDisconected() {
-       Logger.dToast(this, "showGoogleServiceDisconected");
+        Logger.dToast(this, "showGoogleServiceDisconected");
     }
 
     @Override public void onError(Throwable error) {
-       Logger.dToast(this, "On error" + error.getMessage());
+        Logger.dToast(this, "On error" + error.getMessage());
     }
 
     @Override public void userCancelIntegration() {
@@ -160,5 +160,4 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView {
         super.onActivityResult(requestCode, resultCode, data);
         googleFitPresenter.handleResponse(requestCode, resultCode, data);
     }
-
 }

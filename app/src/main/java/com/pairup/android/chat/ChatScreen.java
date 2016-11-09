@@ -1,5 +1,6 @@
 package com.pairup.android.chat;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,13 +12,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.anjlab.android.iab.v3.TransactionDetails;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
+import com.pairup.android.subscription.SubscriptionPresenter;
+import com.pairup.android.subscription.SubscriptionView;
 import com.pairup.android.utils.AndroidUtils;
 import com.pairup.android.utils.Bus;
 import com.pairup.android.utils.Keyboard;
 import com.pairup.android.utils.di.Injector;
+import com.pairup.android.utils.ui.SimpleDialog;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -30,16 +36,19 @@ import butterknife.OnClick;
 import io.smooch.core.Smooch;
 import io.smooch.core.User;
 import io.smooch.ui.ConversationActivity;
+import rx.functions.Action0;
 
 /**
  * Created by Ilya Eremin on 04.08.2016.
  */
-public class ChatScreen extends ConversationActivity {
+public class ChatScreen extends ConversationActivity implements SubscriptionView {
 
-    @Inject UserInteractor userInteractor;
+    @Inject UserInteractor        userInteractor;
+    @Inject SubscriptionPresenter subscriptionPresenter;
 
-    @Bind(R.id.drawer)        DrawerLayout uiDrawer;
-    @Bind(R.id.provider_logo) ImageView    uiProviderLogo;
+    @Bind(R.id.drawer)                     DrawerLayout uiDrawer;
+    @Bind(R.id.provider_logo)              ImageView    uiProviderLogo;
+    @Bind(R.id.buy_subscription_container) View         uiBuySubscription;
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
@@ -76,13 +85,21 @@ public class ChatScreen extends ConversationActivity {
         });
     }
 
+    private void setChatGone(boolean gone) {
+        if (gone) {
+            uiBuySubscription.setVisibility(View.VISIBLE);
+        } else {
+            uiBuySubscription.setVisibility(View.INVISIBLE);
+        }
+    }
+
     private void customizeSmoochInterface() {
         ViewGroup rootView = ((ViewGroup) findViewById(android.R.id.content));
         View oldChatLayout = rootView.getChildAt(0);
         rootView.removeView(oldChatLayout);
 
         View newChatLayout = LayoutInflater.from(this).inflate(R.layout.screen_chat, rootView);
-        ((ViewGroup) newChatLayout.findViewById(R.id.chat_container)).addView(oldChatLayout);
+        ((ViewGroup) newChatLayout.findViewById(R.id.chat_container)).addView(oldChatLayout, 1);
 
         ButterKnife.bind(this);
     }
@@ -93,6 +110,10 @@ public class ChatScreen extends ConversationActivity {
         } else {
             uiDrawer.openDrawer(GravityCompat.END);
         }
+    }
+
+    @OnClick(R.id.subscribe) void onSubscribeClick() {
+        subscriptionPresenter.showSubscriptionDialog();
     }
 
     @Override public void onBackPressed() {
@@ -106,6 +127,8 @@ public class ChatScreen extends ConversationActivity {
     @Override public void onResume() {
         super.onResume();
         Bus.subscribe(this);
+        subscriptionPresenter.attachView(this, this);
+        setChatGone(!(subscriptionPresenter.isSubscribed() || userInteractor.getUser().hasHbfProvider()));
 
         // we could not customize part of the UI in on create because not all necessary views present in the hierarcy
         // that's the reason why we split customize process between onCreate/onResume
@@ -133,13 +156,8 @@ public class ChatScreen extends ConversationActivity {
     }
 
     private void setUpProviderLogo() {
-        com.pairup.android.login.models.User user = userInteractor.getUser();
-        if (user.getProvider() != null) {
-            if (user.getProvider().getName() != null) {
-                if ("HBF".equals(userInteractor.getUser().getProvider().getName())) {
-                    uiProviderLogo.setVisibility(View.VISIBLE);
-                }
-            }
+        if (userInteractor.getUser().hasHbfProvider()) {
+            uiProviderLogo.setVisibility(View.VISIBLE);
         }
     }
 
@@ -157,7 +175,34 @@ public class ChatScreen extends ConversationActivity {
         super.onPause();
     }
 
+    @Override public void onStop() {
+        subscriptionPresenter.detachView();
+        super.onStop();
+    }
+
     private void closeDrawer() {
         uiDrawer.closeDrawer(GravityCompat.END);
+    }
+
+    @Override public void onProductPurchased(String productId, TransactionDetails details) {
+        Toast.makeText(this, R.string.subscription_owned_text, Toast.LENGTH_LONG).show();
+    }
+
+    @Override public void showSubscriptionDialog() {
+        SimpleDialog.show(this,
+            getString(R.string.subscription),
+            getString(R.string.subscription_request),
+            getString(R.string.subscribe),
+            new Action0() {
+                @Override public void call() {
+                    subscriptionPresenter.subscribe();
+                }
+            });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (!subscriptionPresenter.getBillingProcessor().handleActivityResult(requestCode, resultCode, data))
+            super.onActivityResult(requestCode, resultCode, data);
     }
 }

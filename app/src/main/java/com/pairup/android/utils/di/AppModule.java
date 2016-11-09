@@ -12,6 +12,7 @@ import com.pairup.android.UserInteractor;
 import com.pairup.android.login.LoginFlowInteractor;
 import com.pairup.android.login.VerifyPresenter;
 import com.pairup.android.profile.EditProfilePresenter;
+import com.pairup.android.subscription.SubscriptionPresenter;
 import com.pairup.android.sync.FitbitPresenter;
 import com.pairup.android.sync.GoogleFitPresenter;
 import com.pairup.android.utils.ImageLoader;
@@ -146,6 +147,11 @@ public class AppModule {
     @Provides @Singleton
     public GoogleFitPresenter provideGoogleFitPresenter(UserInteractor userInteractor) {
         return new GoogleFitPresenter(userInteractor, mApplication);
+    }
+
+    @Provides @Singleton
+    public SubscriptionPresenter provideSubscriptionPresenter(){
+        return new SubscriptionPresenter();
     }
 
     @Provides @Singleton public LoginFlowInteractor provideLoginFlowInteractor(IStorage storage) {
