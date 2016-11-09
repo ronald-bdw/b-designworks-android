@@ -134,6 +134,10 @@
 
     <string name="screen_splash_main_txt">you get active coach\n with your every step of the way</string>
 
+    <string name="screen_welcome_user_have_account">Click here if you have an account with PearUp</string>
+
+    <string name="screen_enter_phone_error_no_account">Number not registered. Try another number or register this.</string>
+
     <string-array name="select_provider_options">
         <item>HBF</item>
         <item>I do not have a provider</item>

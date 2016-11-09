@@ -3,9 +3,9 @@ package com.pairup.android;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.pairup.android.BuildConfig;
 import com.pairup.android.login.models.AuthResponse;
 import com.pairup.android.login.models.FitToken;
+import com.pairup.android.login.models.UserStatus;
 import com.pairup.android.login.models.UserResponse;
 import com.pairup.android.sync.Provider;
 
@@ -83,4 +83,9 @@ public interface Api {
     );
 
     @DELETE("v1/notifications/message_push") Observable<ResponseBody> userDisabledPushNotificatinos();
+
+    @FormUrlEncoded
+    @POST(V1 + "registration_status")
+    Observable<UserStatus> getUserStatus(@Field("phone_number") String phone);
+
 }

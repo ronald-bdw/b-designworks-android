@@ -8,6 +8,7 @@ import com.pairup.android.login.models.AuthResponse;
 import com.pairup.android.login.models.FitToken;
 import com.pairup.android.login.models.Integration;
 import com.pairup.android.login.models.User;
+import com.pairup.android.login.models.UserStatus;
 import com.pairup.android.login.models.UserResponse;
 import com.pairup.android.sync.FitBitAuthorizationStateChangedEvent;
 import com.pairup.android.sync.GoogleFitAuthorizationStateChangedEvent;
@@ -50,6 +51,10 @@ public class UserInteractor {
 
     public Observable<AuthResponse> requestCode(@NonNull String phone) {
         return api.sendMeCode(phone);
+    }
+
+    public Observable<UserStatus> requestUserStatus(@NonNull String phone) {
+        return api.getUserStatus(phone);
     }
 
     public Observable<Void> register(@NonNull String firstName, @NonNull String lastName,
