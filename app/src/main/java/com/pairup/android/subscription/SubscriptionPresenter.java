@@ -61,15 +61,12 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
         return bp.isSubscribed(ONE_MONTH_TEST_SUBSCRIPTION_ID);
     }
 
-    public @StringRes int getSubsciptionStatusText() {
+    public @StringRes int getSubscriptionStatusText() {
         return isSubscribed() ? R.string.subscribed_status : R.string.subscription_request;
     }
 
     public void subscribe() {
         bp.subscribe(activity, ONE_MONTH_TEST_SUBSCRIPTION_ID);
-    }
-
-    public void unsubscribe(@NonNull FragmentActivity activity) {
     }
 
     public void showSubscriptionDialog() {

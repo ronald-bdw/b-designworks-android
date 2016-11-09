@@ -36,6 +36,7 @@ import butterknife.OnClick;
 import io.smooch.core.Smooch;
 import io.smooch.core.User;
 import io.smooch.ui.ConversationActivity;
+import rx.functions.Action0;
 
 /**
  * Created by Ilya Eremin on 04.08.2016.
@@ -192,7 +193,11 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
             getString(R.string.subscription),
             getString(R.string.subscription_request),
             getString(R.string.subscribe),
-            () -> subscriptionPresenter.subscribe());
+            new Action0() {
+                @Override public void call() {
+                    subscriptionPresenter.subscribe();
+                }
+            });
     }
 
     @Override

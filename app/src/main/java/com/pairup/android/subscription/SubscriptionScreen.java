@@ -64,7 +64,7 @@ public class SubscriptionScreen extends BaseActivity implements SubscriptionView
     }
 
     @Override protected void onResume() {
-        uiStatus.setText(subscriptionPresenter.getSubsciptionStatusText());
+        uiStatus.setText(subscriptionPresenter.getSubscriptionStatusText());
         super.onResume();
     }
 
