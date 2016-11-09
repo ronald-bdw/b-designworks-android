@@ -131,12 +131,21 @@
     <string name="sms_permission_description">After you enter the phone number you will receive sms. If you grant to the app permission to read incoming sms then it could be automaticaly handled. If not you have to open sms and click on link or type code manually.</string>
     <string name="no_thanks">No, thanks</string>
     <string name="error_image_unacceptable">Unacceptable image</string>
+    <string name="unsubscribe">Unsubscribe</string>
+    <string name="subscribe">Subscribe</string>
+    <string name="subscription_status">Subscription status</string>
+    <string name="subscription">Subscription</string>
+    <string name="subscription_request">Please, subscribe to continue using PairUp</string>
+    <string name="chat_screen_blocked">Chat is blocked!</string>
 
     <string name="screen_splash_main_txt">you get active coach\n with your every step of the way</string>
 
     <string name="screen_welcome_user_have_account">Click here if you have an account with PearUp</string>
 
     <string name="screen_enter_phone_error_no_account">Number not registered. Try another number or register this.</string>
+    <string name="subscription_owned_text">Congratulations! You are now subscribed for Pair Up for 1 month.</string>
+    <string name="subscription_status_time">"Subscription was paid in "</string>
+    <string name="subscribed_status">You are already subscribed</string>
 
     <string-array name="select_provider_options">
         <item>HBF</item>

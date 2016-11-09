@@ -79,6 +79,11 @@
 }
 -keep enum org.greenrobot.eventbus.ThreadMode { *; }
 
+#retrolambda
+-dontwarn java.lang.invoke**
+
+
+-keepattributes InnerClasses
 -keepattributes EnclosingMethod
 
 #debug

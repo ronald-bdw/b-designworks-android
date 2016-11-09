@@ -26,8 +26,8 @@ android {
         ext.betaDistributionGroupAliases = "fitness-app"
 
         applicationId APPLICATION_ID
-        versionCode 1
-        versionName "1.0.0-$BUILD_NUMBER"
+        versionCode 2
+        versionName "1.0.0"
 
         def gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
         buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
@@ -131,6 +131,8 @@ dependencies {
 
     compile 'com.timehop.stickyheadersrecyclerview:library:0.4.3@aar'
     compile 'com.simplecityapps:recyclerview-fastscroll:1.0.11'
+
+    compile 'com.anjlab.android.iab.v3:library:1.0.+'
 
     testCompile androidTestsLibs
     compile('com.crashlytics.sdk.android:crashlytics:2.6.1@aar') {
