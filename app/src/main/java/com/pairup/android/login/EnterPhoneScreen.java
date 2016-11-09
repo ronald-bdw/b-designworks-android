@@ -123,9 +123,7 @@ public class EnterPhoneScreen extends BaseActivity {
         Keyboard.hide(this);
         showProgerss();
         userInteractor.requestUserStatus(areaCode + phone)
-            .doOnTerminate(() -> {
-                hideProgress();
-            })
+            .doOnTerminate(() -> hideProgress())
             .compose(Rxs.doInBackgroundDeliverToUI())
             .subscribe(result -> {
                 if (result.isPhoneRegistered()) {
@@ -133,9 +131,7 @@ public class EnterPhoneScreen extends BaseActivity {
                 } else {
                     showErrorDialog();
                 }
-            }, error -> {
-                ErrorUtils.handle(this);
-            });
+            }, ErrorUtils.handle(this));
     }
 
     private void showErrorDialog() {
