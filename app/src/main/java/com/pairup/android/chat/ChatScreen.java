@@ -83,11 +83,11 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         });
     }
 
-    private void setChatEnabled(boolean enabled) {
-        if (enabled) {
-            uiBuySubscription.setVisibility(View.INVISIBLE);
-        } else {
+    private void setChatGone(boolean gone) {
+        if (gone) {
             uiBuySubscription.setVisibility(View.VISIBLE);
+        } else {
+            uiBuySubscription.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -126,7 +126,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         super.onResume();
         Bus.subscribe(this);
         subscriptionPresenter.attachView(this, this);
-        setChatEnabled(subscriptionPresenter.isSubscribed() || userInteractor.getUser().hasHbfProvider());
+        setChatGone(!(subscriptionPresenter.isSubscribed() || userInteractor.getUser().hasHbfProvider()));
 
         // we could not customize part of the UI in on create because not all necessary views present in the hierarcy
         // that's the reason why we split customize process between onCreate/onResume
@@ -188,7 +188,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     }
 
     @Override public void onProductPurchased(String productId, TransactionDetails details) {
-        Toast.makeText(this, "Subscription is owned", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.subscription_owned_text, Toast.LENGTH_LONG).show();
     }
 
     @Override

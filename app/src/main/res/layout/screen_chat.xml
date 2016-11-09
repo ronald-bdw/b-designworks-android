@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="96dp"
-                android:text="Subscribe"
+                android:text="@string/subscribe"
                 />
 
         </FrameLayout>

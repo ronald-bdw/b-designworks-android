@@ -51,9 +51,7 @@ public class User {
     }
 
     public boolean hasHbfProvider() {
-        if (provider != null)
-            return "HBF".equals(provider.getName());
-        return false;
+        return provider != null && "HBF".equals(provider.getName());
     }
 
     public List<Integration> getIntegrations() {
