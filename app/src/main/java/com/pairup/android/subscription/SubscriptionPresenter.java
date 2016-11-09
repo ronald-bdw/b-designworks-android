@@ -11,7 +11,9 @@ import com.anjlab.android.iab.v3.TransactionDetails;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
 
-import javax.inject.Inject;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by almaziskhakov on 04/11/2016.
@@ -28,9 +30,6 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
     private SubscriptionView view;
     private FragmentActivity activity;
     private BillingProcessor bp;
-
-    @Inject
-    public SubscriptionPresenter() {}
 
     public void attachView(@NonNull SubscriptionView view, @NonNull FragmentActivity activity) {
         this.view = view;
@@ -60,9 +59,9 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
     }
 
     public String getSubsciptionStatus() {
-        //TODO make adecvat getting
-        String status = "Your subscription expires in ";
-        return status;
+        DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+        Date purchaseDate = bp.getSubscriptionTransactionDetails(ONE_MONTH_SUBSCRIPTION_ID).purchaseTime;
+        return activity.getString(R.string.subscription_status_time) + formatter.format(purchaseDate);
     }
 
     public void subscribe() {

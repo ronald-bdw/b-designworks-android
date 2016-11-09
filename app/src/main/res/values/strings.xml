@@ -144,6 +144,7 @@
 
     <string name="screen_enter_phone_error_no_account">Number not registered. Try another number or register this.</string>
     <string name="subscription_owned_text">Subscription is owned</string>
+    <string name="subscription_status_time">"Subscription was paid in "</string>
 
     <string-array name="select_provider_options">
         <item>HBF</item>
