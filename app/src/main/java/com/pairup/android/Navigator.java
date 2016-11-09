@@ -29,7 +29,11 @@ public class Navigator {
         context.startActivity(clearStack(new Intent(context, WelcomeScreen.class)));
     }
 
-    public static void enterPhone(@NonNull Context context, boolean checkExistUser) {
+    public static void enterPhoneAndVerify(@NonNull Context context) {
+        context.startActivity(new Intent(context, EnterPhoneScreen.class));
+    }
+
+    public static void enterPhoneAndVerify(@NonNull Context context, boolean checkExistUser) {
         Intent intent = new Intent(context, EnterPhoneScreen.class);
         intent.putExtra(EnterPhoneScreen.NEED_CHECK_USER_EXTRA, checkExistUser);
         context.startActivity(intent);

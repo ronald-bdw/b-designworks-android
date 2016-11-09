@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.pairup.android.login.models.AuthResponse;
 import com.pairup.android.login.models.FitToken;
-import com.pairup.android.login.models.UserExistResponse;
+import com.pairup.android.login.models.UserStatus;
 import com.pairup.android.login.models.UserResponse;
 import com.pairup.android.sync.Provider;
 
@@ -86,7 +86,7 @@ public interface Api {
 
     @FormUrlEncoded
     @POST(V1 + "registration_status")
-    Observable<UserExistResponse> userExist(
+    Observable<UserStatus> getUserStatus(
         @Field("phone_number") String phone);
 
 }

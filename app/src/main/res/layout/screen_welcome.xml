@@ -7,6 +7,16 @@
     android:background="@drawable/initial_screen_gradient"
     >
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/have_account_link"
+        android:autoLink="web"
+        android:textColor="@color/app_accent"
+        android:layout_weight="1"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="24dp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -70,25 +80,6 @@
             android:layout_marginLeft="16dp"
             />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="24dp"
-        android:gravity="center"
-        >
-
-        <TextView
-            android:text="@string/screen_welcome_user_have_account"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/have_account_link"
-            android:autoLink="web"
-            android:textColor="@color/app_accent"
-            />
     </LinearLayout>
 
 </FrameLayout>

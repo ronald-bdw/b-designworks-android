@@ -41,7 +41,7 @@ public class TrialScreen extends BaseActivity {
     }
 
     @OnClick(R.id.start_trial_now) void onSignUpClick() {
-        Navigator.enterPhone(context(), false);
+        Navigator.enterPhoneAndVerify(context());
     }
 
     public static class TrialPager extends PagerAdapter {

@@ -4,7 +4,7 @@ package com.pairup.android.login.models;
  * Created by Klymenko on 08.11.2016.
  */
 
-public class UserExistResponse {
+public class UserStatus {
 
     private boolean phoneRegistered;
 

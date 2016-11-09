@@ -48,7 +48,7 @@ public class SelectProviderScreen extends BaseActivity{
 
     @OnClick(R.id.next) void onNextClick() {
         if (uiSelectProviderSpinner.getSelectedItemPosition() == 0) {
-            Navigator.enterPhone(context(), false);
+            Navigator.enterPhoneAndVerify(context());
         } else if (uiSelectProviderSpinner.getSelectedItemPosition() == 1) {
             Navigator.trialPage(context());
         } else {

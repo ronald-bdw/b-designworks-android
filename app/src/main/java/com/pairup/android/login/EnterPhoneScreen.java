@@ -12,7 +12,6 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.pairup.android.BaseActivity;
 import com.pairup.android.BuildConfig;
@@ -24,6 +23,7 @@ import com.pairup.android.login.functional_area.FunctionalToAreaCodeScreen;
 import com.pairup.android.utils.Keyboard;
 import com.pairup.android.utils.Rxs;
 import com.pairup.android.utils.di.Injector;
+import com.pairup.android.utils.network.ErrorUtils;
 import com.pairup.android.utils.network.RetrofitException;
 import com.pairup.android.utils.ui.SimpleDialog;
 import com.pairup.android.utils.ui.TextViews;
@@ -46,7 +46,7 @@ public class EnterPhoneScreen extends BaseActivity {
 
     private static final int CODE_REQUEST_AREA = 1121;
 
-    private boolean mCheckExistUser;
+    private boolean shouldUserBeRegistered;
 
     @Bind(R.id.phone)     EditText uiPhone;
     @Bind(R.id.submit)    Button   uiSubmit;
@@ -61,9 +61,13 @@ public class EnterPhoneScreen extends BaseActivity {
             .enableBackButton();
     }
 
+    @Override protected void parseArguments(@NonNull Bundle extras) {
+        super.parseArguments(extras);
+        shouldUserBeRegistered = extras.getBoolean(NEED_CHECK_USER_EXTRA, false);
+    }
+
     @SuppressLint("SetTextI18n") @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
-        mCheckExistUser = getIntent().getBooleanExtra(NEED_CHECK_USER_EXTRA, false);
         Injector.inject(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         if (BuildConfig.DEBUG && savedState == null) {
@@ -109,15 +113,17 @@ public class EnterPhoneScreen extends BaseActivity {
     }
 
     private void manageSubmit(String areaCode, String phone) {
-        if (mCheckExistUser) {
+        if (shouldUserBeRegistered) {
             checkUserExist(areaCode, phone);
-        }else requestAuthorizationCode(areaCode, phone);
+        } else {
+            requestAuthorizationCode(areaCode, phone);
+        }
     }
 
     private void checkUserExist(String areaCode, String phone) {
         Keyboard.hide(this);
         showProgerss();
-        userInteractor.requestUserExist(areaCode + phone)
+        userInteractor.requestUserStatus(areaCode + phone)
             .doOnTerminate(() -> {
                 hideProgress();
             })
@@ -126,8 +132,7 @@ public class EnterPhoneScreen extends BaseActivity {
                 if (result.isPhoneRegistered()) {
                     requestAuthorizationCode(areaCode, phone);
                 }else {
-                    showToastMessage();
-                    finish();
+                    showErrorDialog();
                 }
             }, error -> {
                 if (error instanceof RetrofitException) {
@@ -135,14 +140,17 @@ public class EnterPhoneScreen extends BaseActivity {
                     if (retrofitError.getKind() == RetrofitException.Kind.NETWORK) {
                         SimpleDialog.networkProblem(context());
                     } else {
-                        showToastMessage();
+                        ErrorUtils.handle(this);
                     }
                 }
             });
     }
 
-    private void showToastMessage() {
-        Toast.makeText(this, getString(R.string.screen_enter_phone), Toast.LENGTH_LONG).show();
+    private void showErrorDialog() {
+        SimpleDialog.show(context(), getString(R.string.error), getString(R.string.screen_enter_phone_error_no_account),
+            getString(R.string.ok), () -> finish(),
+            null, null);
+
     }
 
     private void requestAuthorizationCode(String areaCode, String phone) {
