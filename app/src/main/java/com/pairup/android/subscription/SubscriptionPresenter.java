@@ -59,11 +59,8 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
         return bp.isSubscribed(ONE_MONTH_TEST_SUBSCRIPTION_ID);
     }
 
-    public String getSubsciptionStatus() {
-        DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
-        
-        Date purchaseDate = bp.getSubscriptionTransactionDetails(ONE_MONTH_SUBSCRIPTION_ID).purchaseTime;
-        return activity.getString(R.string.subscription_status_time) + formatter.format(purchaseDate);
+    public int getSubsciptionStatus() {
+        return isSubscribed()? R.string.subscribed_status : R.string.subscription_request;
     }
 
     public void subscribe() {
