@@ -173,8 +173,12 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         showUserName(userInteractor.getFullName());
     }
 
-    @Override public void onStop() {
+    @Override public void onPause() {
         Bus.unsubscribe(this);
+        super.onPause();
+    }
+
+    @Override public void onStop() {
         subscriptionPresenter.detachView();
         super.onStop();
     }
