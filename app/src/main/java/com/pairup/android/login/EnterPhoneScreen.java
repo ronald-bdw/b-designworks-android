@@ -46,7 +46,7 @@ public class EnterPhoneScreen extends BaseActivity {
 
     private static final int CODE_REQUEST_AREA = 1121;
 
-    private AccountChecking accountChecking;
+    private AccountVerificationType accountVerificationType;
 
     @Bind(R.id.phone)     EditText uiPhone;
     @Bind(R.id.submit)    Button   uiSubmit;
@@ -62,7 +62,7 @@ public class EnterPhoneScreen extends BaseActivity {
     }
 
     @Override protected void parseArguments(@NonNull Bundle extras) {
-        accountChecking = (AccountChecking) extras.getSerializable(ARG_ACCOUNT_CHECKING);
+        accountVerificationType = (AccountVerificationType) extras.getSerializable(ARG_ACCOUNT_CHECKING);
     }
 
     @SuppressLint("SetTextI18n") @Override protected void onCreate(@Nullable Bundle savedState) {
@@ -119,12 +119,16 @@ public class EnterPhoneScreen extends BaseActivity {
             .compose(Rxs.doInBackgroundDeliverToUI())
             .subscribe(result -> {
                 boolean passed = false;
-                if (accountChecking == AccountChecking.IS_REGISTERED) {
-                    passed = result.isPhoneRegistered();
-                } else if (accountChecking == AccountChecking.IS_NOT_REGISTERED) {
-                    passed = !result.isPhoneRegistered();
-                } else if (accountChecking == AccountChecking.HAS_PROVIDER) {
-                    passed = result.hasHbfProvider();
+                switch (accountVerificationType) {
+                    case IS_REGISTERED:
+                        passed = result.isPhoneRegistered();
+                        break;
+                    case IS_NOT_REGISTERED:
+                        passed = !result.isPhoneRegistered();
+                        break;
+                    case HAS_PROVIDER:
+                        passed = result.userHasHbfProvider();
+                        break;
                 }
                 if (passed) {
                     requestAuthorizationCode(areaCode, phone);
@@ -136,12 +140,16 @@ public class EnterPhoneScreen extends BaseActivity {
 
     private void showErrorDialog() {
         String errorMessage = getString(R.string.screen_enter_phone_error);
-        if (accountChecking == AccountChecking.IS_REGISTERED) {
-            errorMessage = getString(R.string.screen_enter_phone_error_not_registered);
-        } else if (accountChecking == AccountChecking.IS_NOT_REGISTERED) {
-            errorMessage = getString(R.string.screen_enter_phone_error_registered);
-        } else if (accountChecking == AccountChecking.HAS_PROVIDER) {
-            errorMessage = getString(R.string.screen_enter_phone_error_has_not_provider);
+        switch (accountVerificationType) {
+            case IS_REGISTERED:
+                errorMessage = getString(R.string.screen_enter_phone_error_not_registered);
+                break;
+            case IS_NOT_REGISTERED:
+                errorMessage = getString(R.string.screen_enter_phone_error_registered);
+                break;
+            case HAS_PROVIDER:
+                errorMessage = getString(R.string.screen_enter_phone_error_has_no_provider);
+                break;
         }
         SimpleDialog.show(context(), getString(R.string.error), errorMessage,
             getString(R.string.ok), () -> Navigator.welcome(this));

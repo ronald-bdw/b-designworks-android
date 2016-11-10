@@ -13,11 +13,7 @@ public class UserStatus {
         return phoneRegistered;
     }
 
-    public void setPhoneRegistered(boolean phoneRegistered) {
-        this.phoneRegistered = phoneRegistered;
-    }
-
-    public boolean hasHbfProvider(){
+    public boolean userHasHbfProvider(){
         return "HBF".equals(provider);
     }
 }
