@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 
 import com.pairup.android.chat.ChatScreen;
+import com.pairup.android.login.AccountChecking;
 import com.pairup.android.login.EnterPhoneScreen;
 import com.pairup.android.login.RegistrationScreen;
 import com.pairup.android.login.SelectProviderScreen;
@@ -30,24 +31,11 @@ public class Navigator {
         context.startActivity(clearStack(new Intent(context, WelcomeScreen.class)));
     }
 
-    public static void enterPhone(@NonNull Context context) {
-        context.startActivity(new Intent(context, EnterPhoneScreen.class));
-    }
-
-    public static void enterPhoneAndVerify(@NonNull Context context) {
+    public static void enterPhone(
+        @NonNull Context context, @NonNull AccountChecking accountChecking) {
         Intent intent = new Intent(context, EnterPhoneScreen.class);
-        intent.putExtra(EnterPhoneScreen.NEED_CHECK_USER_EXTRA, true);
+        intent.putExtra(EnterPhoneScreen.ARG_ACCOUNT_CHECKING, accountChecking);
         context.startActivity(intent);
-    }
-
-    public static void enterPhoneAndCheckProvider(@NonNull Context context){
-        Intent intent = new Intent(context, EnterPhoneScreen.class);
-        intent.putExtra(EnterPhoneScreen.NEED_CHECK_PROVIDER_EXTRA, true);
-        context.startActivity(intent);
-    }
-
-    public static void enterPhoneAndClearStack(@NonNull Context context) {
-        context.startActivity(clearStack(new Intent(context, EnterPhoneScreen.class)));
     }
 
     public static void trialPage(@NonNull Context context) {

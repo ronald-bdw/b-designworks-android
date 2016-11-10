@@ -42,13 +42,11 @@ import rx.Subscription;
  */
 public class EnterPhoneScreen extends BaseActivity {
 
-    public static final String NEED_CHECK_USER_EXTRA     = "need_check_user_extra";
-    public static final String NEED_CHECK_PROVIDER_EXTRA = "need_check_provider_extra";
+    public static final String ARG_ACCOUNT_CHECKING = "account_checking";
 
     private static final int CODE_REQUEST_AREA = 1121;
 
-    private boolean shouldUserBeRegistered;
-    private boolean shouldUserHasProvider;
+    private AccountChecking accountChecking;
 
     @Bind(R.id.phone)     EditText uiPhone;
     @Bind(R.id.submit)    Button   uiSubmit;
@@ -64,8 +62,7 @@ public class EnterPhoneScreen extends BaseActivity {
     }
 
     @Override protected void parseArguments(@NonNull Bundle extras) {
-        shouldUserBeRegistered = extras.getBoolean(NEED_CHECK_USER_EXTRA, false);
-        shouldUserHasProvider = extras.getBoolean(NEED_CHECK_PROVIDER_EXTRA, false);
+        accountChecking = (AccountChecking) extras.getSerializable(ARG_ACCOUNT_CHECKING);
     }
 
     @SuppressLint("SetTextI18n") @Override protected void onCreate(@Nullable Bundle savedState) {
@@ -115,38 +112,21 @@ public class EnterPhoneScreen extends BaseActivity {
     }
 
     private void manageSubmit(@NonNull String areaCode, @NonNull String phone) {
-        if (shouldUserBeRegistered) {
-            checkUserExist(areaCode, phone);
-        } else if (shouldUserHasProvider) {
-            checkUserHasProvider(areaCode, phone);
-        } else {
-            requestAuthorizationCode(areaCode, phone);
-        }
-    }
-
-    private void checkUserExist(@NonNull String areaCode, @NonNull String phone) {
         Keyboard.hide(this);
         showProgerss();
         userInteractor.requestUserStatus(areaCode + phone)
             .doOnTerminate(() -> hideProgress())
             .compose(Rxs.doInBackgroundDeliverToUI())
             .subscribe(result -> {
-                if (result.isPhoneRegistered()) {
-                    requestAuthorizationCode(areaCode, phone);
-                } else {
-                    showErrorDialog();
+                boolean passed = false;
+                if (accountChecking == AccountChecking.IS_REGISTERED) {
+                    passed = result.isPhoneRegistered();
+                } else if (accountChecking == AccountChecking.IS_NOT_REGISTERED) {
+                    passed = !result.isPhoneRegistered();
+                } else if (accountChecking == AccountChecking.HAS_PROVIDER) {
+                    passed = result.hasHbfProvider();
                 }
-            }, ErrorUtils.handle(this));
-    }
-
-    private void checkUserHasProvider(@NonNull String areaCode, @NonNull String phone) {
-        Keyboard.hide(this);
-        showProgerss();
-        userInteractor.requestUserStatus(areaCode + phone)
-            .doOnTerminate(() -> hideProgress())
-            .compose(Rxs.doInBackgroundDeliverToUI())
-            .subscribe(result -> {
-                if (result.isHbfProvider()) {
+                if (passed) {
                     requestAuthorizationCode(areaCode, phone);
                 } else {
                     showErrorDialog();
@@ -155,17 +135,22 @@ public class EnterPhoneScreen extends BaseActivity {
     }
 
     private void showErrorDialog() {
-        SimpleDialog.show(context(), getString(R.string.error), getString(R.string.screen_enter_phone_error_no_account),
+        String errorMessage = getString(R.string.screen_enter_phone_error);
+        if (accountChecking == AccountChecking.IS_REGISTERED) {
+            errorMessage = getString(R.string.screen_enter_phone_error_not_registered);
+        } else if (accountChecking == AccountChecking.IS_NOT_REGISTERED) {
+            errorMessage = getString(R.string.screen_enter_phone_error_registered);
+        } else if (accountChecking == AccountChecking.HAS_PROVIDER) {
+            errorMessage = getString(R.string.screen_enter_phone_error_has_not_provider);
+        }
+        SimpleDialog.show(context(), getString(R.string.error), errorMessage,
             getString(R.string.ok), () -> Navigator.welcome(this));
     }
 
-    private void requestAuthorizationCode(String areaCode, String phone) {
-        Keyboard.hide(this);
-        showProgerss();
+    private void requestAuthorizationCode(@NonNull String areaCode, @NonNull String phone) {
         if (verifyNumberSubs != null) return;
         verifyNumberSubs = userInteractor.requestCode(areaCode + phone)
             .doOnTerminate(() -> {
-                hideProgress();
                 verifyNumberSubs = null;
             })
             .compose(Rxs.doInBackgroundDeliverToUI())

@@ -17,7 +17,7 @@ public class UserStatus {
         this.phoneRegistered = phoneRegistered;
     }
 
-    public boolean isHbfProvider(){
+    public boolean hasHbfProvider(){
         return "HBF".equals(provider);
     }
 }

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.pairup.android.BaseActivity;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
+import com.pairup.android.login.AccountChecking;
 import com.pairup.android.utils.ui.UiInfo;
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -41,7 +42,7 @@ public class TrialScreen extends BaseActivity {
     }
 
     @OnClick(R.id.start_trial_now) void onSignUpClick() {
-        Navigator.enterPhone(context());
+        Navigator.enterPhone(context(), AccountChecking.IS_NOT_REGISTERED);
     }
 
     public static class TrialPager extends PagerAdapter {

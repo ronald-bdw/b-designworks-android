@@ -39,7 +39,7 @@ public class WelcomeScreen extends BaseActivity {
     }
 
     @OnClick(R.id.have_account_link) void haveAccountClick() {
-        Navigator.enterPhoneAndVerify(context());
+        Navigator.enterPhone(context(), AccountChecking.IS_REGISTERED);
     }
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
@@ -65,7 +65,7 @@ public class WelcomeScreen extends BaseActivity {
         }
 
         @OnClick(R.id.start_trial_now) void onStartTrialClick() {
-            Navigator.enterPhone(context());
+            Navigator.enterPhone(context(), AccountChecking.IS_NOT_REGISTERED);
         }
 
         @OnClick(R.id.learn_more) void onLearnMoreClick() {

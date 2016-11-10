@@ -89,7 +89,7 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
                     finish();
                 } else {
                     SimpleDialog.withOkBtn(context(), R.string.error, R.string.error_no_accosiated_number, () -> {
-                        Navigator.enterPhoneAndClearStack(context());
+                        Navigator.welcome(context());
                         finish();
                     });
                 }

@@ -142,10 +142,14 @@
 
     <string name="screen_welcome_user_have_account">Click here if you have an account with PearUp</string>
 
-    <string name="screen_enter_phone_error_no_account">Number not registered. Try another number or register this.</string>
+    <string name="screen_enter_phone_error_registered">Number already registered. Try another number.</string>
+    <string name="screen_enter_phone_error_not_registered">Number not registered. Try another number or register this.</string>
+    <string name="screen_enter_phone_error_has_not_provider">This Number has not provider. Try another number or register this.</string>
+    <string name="screen_enter_phone_error">Something went wrong. Please, try again.</string>
     <string name="subscription_owned_text">Congratulations! You are now subscribed for Pair Up for 1 month.</string>
     <string name="subscription_status_time">"Subscription was paid in "</string>
     <string name="subscribed_status">You are already subscribed</string>
+    <string name="provider_not_chosen">Please select provider</string>
 
     <string-array name="select_provider_options">
         <item>HBF</item>
