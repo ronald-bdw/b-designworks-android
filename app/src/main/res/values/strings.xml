@@ -28,7 +28,6 @@
     <string name="chat_drawer_about_us">About us</string>
     <string name="title_about_us">About us</string>
     <string name="verify_you_will_get_code">You will get code provided by your provider</string>
-    <string name="verify_enter_code">If you did not automatically redirect after receiving sms please enter verification code below</string>
     <string name="sync_google_fit">Google Fit</string>
     <string name="sync_fitbit">Fitbit</string>
     <string name="settings_logout">Log Out</string>
@@ -74,7 +73,7 @@
     <string name="trial_start_trial">Start free 14-day trial now</string>
     <string name="verify_resend">Re-send</string>
     <string name="loading_sending_request_for_code">Requesting verification code</string>
-    <string name="verify_waiting_for_sms">Waiting for SMS</string>
+    <string name="verify_waiting_for_sms">Please, wait for sms with link to app</string>
     <string name="edit_profile_profile_updated">Profile has been updated</string>
     <string name="cancel">Cancel</string>
     <string name="edit_profile_name_surname_pattern">%1$s %2$s</string>

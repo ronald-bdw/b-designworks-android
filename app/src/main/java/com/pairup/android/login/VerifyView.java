@@ -7,10 +7,8 @@ import android.support.annotation.NonNull;
  */
 public interface VerifyView {
     void showRequestVerificationCodeProgressDialog();
-    void showWaitingForSmsProgress();
     void showError(Throwable error);
     void hideRequestVerificationProgressDialog();
-    void showVerificationCodeError();
     void showAuthorizationProgressDialog();
     void hideAuthProgressDialog();
     void openChatScreen();

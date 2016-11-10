@@ -1,6 +1,5 @@
 package com.pairup.android.utils.di;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 
@@ -11,12 +10,10 @@ import com.pairup.android.chat.ChatSidePanelFragment;
 import com.pairup.android.chat.pushes.PushNotificationsHandlerService;
 import com.pairup.android.login.EnterPhoneScreen;
 import com.pairup.android.login.RegistrationScreen;
-import com.pairup.android.login.SmsListener;
 import com.pairup.android.login.VerifyScreen;
 import com.pairup.android.profile.EditProfileScreen;
 import com.pairup.android.profile.ProfileScreen;
 import com.pairup.android.settings.SettingsScreen;
-import com.pairup.android.subscription.SubscriptionPresenter;
 import com.pairup.android.subscription.SubscriptionScreen;
 import com.pairup.android.sync.SyncScreen;
 import com.pairup.android.tour_app.TourScreenProfile;
@@ -89,9 +86,5 @@ public class Injector {
 
     public static void inject(@NonNull EnterPhoneScreen enterPhoneScreen) {
         ((App) enterPhoneScreen.getApplicationContext()).getAppComponent().inject(enterPhoneScreen);
-    }
-
-    public static void inject(SmsListener smsListener, Context context) {
-        ((App) context.getApplicationContext()).getAppComponent().inject(smsListener);
     }
 }
