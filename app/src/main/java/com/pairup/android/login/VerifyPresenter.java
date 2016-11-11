@@ -46,9 +46,6 @@ public class VerifyPresenter {
             })
             .compose(Rxs.doInBackgroundDeliverToUI())
             .subscribe(result -> {
-                if (view != null) {
-                    view.showWaitingForSmsProgress();
-                }
                 loginFlowInteractor.setPhoneCodeId(result.getPhoneCodeId());
                 loginFlowInteractor.setPhoneRegistered(result.isPhoneRegistered());
             }, view::showError);
@@ -61,10 +58,6 @@ public class VerifyPresenter {
             } else {
                 view.openRegistrationScreen(loginFlowInteractor.getPhoneNumber(), verificadtionCode,
                     loginFlowInteractor.getPhoneCodeId());
-            }
-        } else {
-            if (view != null) {
-                view.showVerificationCodeError();
             }
         }
     }
