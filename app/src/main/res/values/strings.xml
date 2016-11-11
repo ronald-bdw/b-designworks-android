@@ -60,17 +60,17 @@
     <string name="waiting_code_description">For sms code verification</string>
     <string name="title_payment">Payment</string>
     <string name="warning_you_will_lose_all_data">All user related data will be removed from this phone.</string>
-    <string name="welcome_to_pearup">Welcome to Pearup!</string>
+    <string name="welcome_to_pairup">Welcome to Pair Up!</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="trial_dialog_no_worries">No worries. Pear Up is open to everyone!</string>
+    <string name="trial_dialog_no_worries">No worries. Pair Up is open to everyone.</string>
     <string name="start_free_14_day_trial_now">Start free 14-day trial now</string>
     <string name="trial_dialog_learn_more">Learn more</string>
     <string name="select_provider_label">Select your provider:</string>
     <string name="welcome_question">Did you receive a personal\nsign-up invitation?</string>
     <string name="confirm">Confirm</string>
     <string name="title_start_trial">Start your free trial</string>
-    <string name="trial_start_trial">Start free 14-day trial now</string>
+    <string name="trial_start_trial">Start a free 14-day trial now</string>
     <string name="verify_resend">Re-send</string>
     <string name="loading_sending_request_for_code">Requesting verification code</string>
     <string name="verify_waiting_for_sms">Please, wait for sms with link to app</string>
@@ -137,9 +137,9 @@
     <string name="subscription_request">Please, subscribe to continue using PairUp</string>
     <string name="chat_screen_blocked">Chat is blocked!</string>
 
-    <string name="screen_splash_main_txt">you get active coach\n with your every step of the way</string>
+    <string name="screen_splash_main_txt">your healthy habit coach\n with your every step of the way</string>
 
-    <string name="screen_welcome_user_have_account">Click here if you have an account with PearUp</string>
+    <string name="screen_welcome_user_have_account">Click here if you have an account with Pair Up</string>
 
     <string name="screen_enter_phone_error_registered">Number is already registered. Try another number.</string>
     <string name="screen_enter_phone_error_not_registered">Number is not registered. Try another number or register this.</string>
@@ -152,11 +152,11 @@
 
     <string-array name="select_provider_options">
         <item>HBF</item>
-        <item>I do not have a provider</item>
+        <item>I don\'t have a provider</item>
     </string-array>
 
     <string-array name="trial_titles">
-        <item>Welcome to Pearup!</item>
+        <item>Welcome to Pair Up!</item>
         <item>Personalized Coach</item>
         <item>Getting active tips</item>
         <item>Free 14 day trial</item>
