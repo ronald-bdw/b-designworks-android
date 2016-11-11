@@ -58,7 +58,7 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
         Injector.inject(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         if (!isHbfProvider) {
-            uiHbfLogo.setVisibility(View.INVISIBLE);
+            uiHbfLogo.setVisibility(View.GONE);
         }
         verifyPresenter.attachView(this);
         if (getIntent() != null) {
