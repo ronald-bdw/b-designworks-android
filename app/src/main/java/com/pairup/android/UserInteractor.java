@@ -37,6 +37,7 @@ public class UserInteractor {
     private static final String KEY_USER                    = "user";
     private static final String KEY_FIRST_VISIT_AFTER_LOGIN = "firstVisitAfterLogin";
     private static final String KEY_NOTIFICATIONS_ENABLED   = "notificationsEnabled";
+    private static final String DEVICE_TYPE_ANDROID         = "android";
 
     @NonNull private final IStorage     storage;
     @NonNull private final UserSettings userSettings;
@@ -51,7 +52,7 @@ public class UserInteractor {
     }
 
     public Observable<AuthResponse> requestCode(@NonNull String phone) {
-        return api.sendMeCode(phone);
+        return api.sendMeCode(phone, DEVICE_TYPE_ANDROID);
     }
 
     public Observable<UserStatus> requestUserStatus(@NonNull String phone) {

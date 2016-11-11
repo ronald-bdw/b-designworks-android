@@ -33,7 +33,8 @@ public interface Api {
     @FormUrlEncoded
     @POST(V1 + "auth_phone_codes")
     Observable<AuthResponse> sendMeCode(
-        @Field("phone_number") String phone);
+        @NonNull @Field("phone_number") String phone,
+        @NonNull @Field("device_type") String deviceType);
 
     @GET(V1 + "users/account") Observable<UserResponse> currentUser();
 
