@@ -68,7 +68,6 @@ public class VerifyPresenterTest {
         verify(view).showRequestVerificationCodeProgressDialog();
         verify(userInteractor).requestCode(any());
         verify(view).hideRequestVerificationProgressDialog();
-        verify(view).showWaitingForSmsProgress();
         presenter.handleSmsCode(CORRECT_SMS_CODE);
         verify(view).showAuthorizationProgressDialog();
         verify(view).hideAuthProgressDialog();
@@ -83,15 +82,8 @@ public class VerifyPresenterTest {
         verify(view).showRequestVerificationCodeProgressDialog();
         verify(userInteractor).requestCode(any());
         verify(view).hideRequestVerificationProgressDialog();
-        verify(view).showWaitingForSmsProgress();
         presenter.handleSmsCode(CORRECT_SMS_CODE);
         verify(view).openRegistrationScreen(NEW_PHONE_NUMBER, CORRECT_SMS_CODE, PHONE_CODE_ID);
-    }
-
-    @Test
-    public void testIncorrectSmsCode() throws Exception {
-        presenter.handleSmsCode(null);
-        verify(view).showVerificationCodeError();
     }
 
     @Test
