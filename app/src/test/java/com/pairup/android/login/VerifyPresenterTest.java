@@ -87,11 +87,6 @@ public class VerifyPresenterTest {
     }
 
     @Test
-    public void testIncorrectSmsCode() throws Exception {
-        presenter.handleSmsCode(null);
-    }
-
-    @Test
     public void testOnShownOnHidden() throws Exception {
         loginFlowInteractor.setPhoneNumber(LONG_REQUEST_FLAG);
         presenter.sendCode();
