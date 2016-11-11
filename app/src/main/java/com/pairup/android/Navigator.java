@@ -34,7 +34,7 @@ public class Navigator {
     public static void enterPhone(
         @NonNull Context context, @NonNull AccountVerificationType accountVerificationType) {
         Intent intent = new Intent(context, EnterPhoneScreen.class);
-        intent.putExtra(EnterPhoneScreen.ARG_ACCOUNT_CHECKING, accountVerificationType);
+        intent.putExtra(EnterPhoneScreen.ARG_ACCOUNT_VERIFICATION_TYPE, accountVerificationType);
         context.startActivity(intent);
     }
 

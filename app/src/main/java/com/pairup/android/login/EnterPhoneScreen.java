@@ -42,7 +42,7 @@ import rx.Subscription;
  */
 public class EnterPhoneScreen extends BaseActivity {
 
-    public static final String ARG_ACCOUNT_CHECKING = "account_checking";
+    public static final String ARG_ACCOUNT_VERIFICATION_TYPE = "account_verification_type";
 
     private static final int CODE_REQUEST_AREA = 1121;
 
@@ -62,7 +62,7 @@ public class EnterPhoneScreen extends BaseActivity {
     }
 
     @Override protected void parseArguments(@NonNull Bundle extras) {
-        accountVerificationType = (AccountVerificationType) extras.getSerializable(ARG_ACCOUNT_CHECKING);
+        accountVerificationType = (AccountVerificationType) extras.getSerializable(ARG_ACCOUNT_VERIFICATION_TYPE);
     }
 
     @SuppressLint("SetTextI18n") @Override protected void onCreate(@Nullable Bundle savedState) {

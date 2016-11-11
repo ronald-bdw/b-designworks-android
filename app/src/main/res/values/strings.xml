@@ -142,7 +142,7 @@
 
     <string name="screen_welcome_user_have_account">Click here if you have an account with PearUp</string>
 
-    <string name="screen_enter_phone_error_registered">Number already registered. Try another number.</string>
+    <string name="screen_enter_phone_error_registered">Number is already registered. Try another number.</string>
     <string name="screen_enter_phone_error_not_registered">Number not registered. Try another number or register this.</string>
     <string name="screen_enter_phone_error_has_no_provider">This Number has not provider. Try another number or register this.</string>
     <string name="screen_enter_phone_error">Something went wrong. Please, try again.</string>
