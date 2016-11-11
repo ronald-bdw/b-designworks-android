@@ -79,17 +79,6 @@
         <activity android:name=".tour_app.TourScreenProfile"/>
         <activity android:name=".tour_app.TourScreenUploadAvatar"/>
 
-        <receiver
-            android:name=".login.SmsListener"
-            android:permission="android.permission.BROADCAST_SMS"
-            >
-            <intent-filter
-                android:priority="1000"
-                >
-                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
-            </intent-filter>
-        </receiver>
-
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="a58319df29eb3929f0ed864166f3c42deb476e66"
