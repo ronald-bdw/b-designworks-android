@@ -114,7 +114,11 @@ public class EnterPhoneScreen extends BaseActivity {
     private void manageSubmit(@NonNull String areaCode, @NonNull String phone) {
         Keyboard.hide(this);
         showProgerss();
-        userInteractor.requestUserStatus(areaCode + phone)
+        if ("+61".equals(areaCode) && '0' == phone.charAt(0)) {
+            phone = phone.substring(1, phone.length());
+        }
+        final String formattedPhone = phone;
+        userInteractor.requestUserStatus(areaCode + formattedPhone)
             .doOnTerminate(() -> hideProgress())
             .compose(Rxs.doInBackgroundDeliverToUI())
             .subscribe(result -> {
@@ -131,7 +135,7 @@ public class EnterPhoneScreen extends BaseActivity {
                         break;
                 }
                 if (passed) {
-                    requestAuthorizationCode(areaCode, phone);
+                    requestAuthorizationCode(areaCode, formattedPhone);
                 } else {
                     showErrorDialog();
                 }
@@ -157,9 +161,6 @@ public class EnterPhoneScreen extends BaseActivity {
 
     private void requestAuthorizationCode(@NonNull String areaCode, @NonNull String phone) {
         if (verifyNumberSubs != null) return;
-        if ("+61".equals(areaCode) && '0' == phone.charAt(0)) {
-            phone.substring(1, phone.length());
-        }
         verifyNumberSubs = userInteractor.requestCode(areaCode + phone)
             .doOnTerminate(() -> verifyNumberSubs = null)
             .compose(Rxs.doInBackgroundDeliverToUI())
