@@ -10,8 +10,8 @@ import android.widget.TextView;
 import com.pairup.android.BaseActivity;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
-import com.pairup.android.utils.ui.BaseDialogFragment;
 import com.pairup.android.utils.ui.UiInfo;
+import com.pairup.android.login.TrialDialog;
 
 import butterknife.Bind;
 import butterknife.BindString;
@@ -52,24 +52,5 @@ public class WelcomeScreen extends BaseActivity {
         SpannableString content = new SpannableString(mHaveAccountLinkTxt);
         content.setSpan(new UnderlineSpan(), 0, mHaveAccountLinkTxt.length(), 0);
         uiHaveAccountLink.setText(content);
-    }
-
-    public static class TrialDialog extends BaseDialogFragment {
-
-        public static void show(BaseActivity activity) {
-            show(new TrialDialog(), activity);
-        }
-
-        @Override protected UiInfo getUiInfo() {
-            return new UiInfo(R.layout.dialog_trial);
-        }
-
-        @OnClick(R.id.start_trial_now) void onStartTrialClick() {
-            Navigator.enterPhone(context());
-        }
-
-        @OnClick(R.id.learn_more) void onLearnMoreClick() {
-            Navigator.trialPage(context());
-        }
     }
 }
