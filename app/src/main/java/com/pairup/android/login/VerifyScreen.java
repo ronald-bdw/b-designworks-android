@@ -116,14 +116,6 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
         super.onPause();
     }
 
-    @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
-            Bus.event(new SmsCodeEvent("1234"));
-            return false;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
     @Override public void showRequestVerificationCodeProgressDialog() {
         requestVerificationCodeProgressDialog = ProgressDialog.show(context(), getString(R.string.loading), getString(R.string.loading_sending_request_for_code));
     }
