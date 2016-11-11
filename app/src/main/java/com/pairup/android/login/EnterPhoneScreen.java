@@ -157,10 +157,11 @@ public class EnterPhoneScreen extends BaseActivity {
 
     private void requestAuthorizationCode(@NonNull String areaCode, @NonNull String phone) {
         if (verifyNumberSubs != null) return;
+        if ("+61".equals(areaCode) && '0' == phone.charAt(0)) {
+            phone.substring(1, phone.length());
+        }
         verifyNumberSubs = userInteractor.requestCode(areaCode + phone)
-            .doOnTerminate(() -> {
-                verifyNumberSubs = null;
-            })
+            .doOnTerminate(() -> verifyNumberSubs = null)
             .compose(Rxs.doInBackgroundDeliverToUI())
             .subscribe(result -> {
                 loginFlowInteractor.setPhoneCodeId(result.getPhoneCodeId());
