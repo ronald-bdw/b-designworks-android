@@ -1,13 +1,12 @@
 package com.pairup.android.login;
 
-import com.pairup.android.utils.ui.BaseDialogFragment;
-import com.pairup.android.utils.ui.UiInfo;
 import com.pairup.android.BaseActivity;
 import com.pairup.android.Navigator;
+import com.pairup.android.R;
+import com.pairup.android.utils.ui.BaseDialogFragment;
+import com.pairup.android.utils.ui.UiInfo;
 
 import butterknife.OnClick;
-
-import com.pairup.android.R;
 
 /**
  * Created by Klymenko on 11.11.2016.
@@ -24,7 +23,7 @@ public class TrialDialog extends BaseDialogFragment {
     }
 
     @OnClick(R.id.start_trial_now) void onStartTrialClick() {
-        Navigator.enterPhone(context());
+        Navigator.enterPhone(context(), AccountVerificationType.IS_NOT_REGISTERED);
     }
 
     @OnClick(R.id.learn_more) void onLearnMoreClick() {
