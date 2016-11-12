@@ -47,7 +47,7 @@ public class UserManagerTest {
         Api mockedApi = mock(Api.class);
         RuntimeStorage storage = new RuntimeStorage();
         userSettings = new UserSettings(storage);
-        when(mockedApi.sendMeCode(any())).thenReturn(Observable.just(getFakeAuthResponse()));
+        when(mockedApi.sendMeCode(any(), any())).thenReturn(Observable.just(getFakeAuthResponse()));
         when(mockedApi.register(anyString(), anyString(), anyString(), anyString(), eq(MY_FAKE_NUMBER), eq(MY_FAKE_NUMBER_CODE_ID)))
             .thenReturn(Observable.just(getFakeRegisterResponse()));
         userManager = new UserInteractor(storage, userSettings, mockedApi);

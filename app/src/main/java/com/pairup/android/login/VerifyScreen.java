@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.pairup.android.BaseActivity;
@@ -24,6 +26,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
 import butterknife.OnClick;
 
 /**
@@ -31,11 +34,7 @@ import butterknife.OnClick;
  */
 public class VerifyScreen extends BaseActivity implements VerifyView {
 
-    private static final String KEY_PROGRESS_VISIBILITY = "progressVisibility";
-
-    private static final String RESULT_KEY_VERIFICATION_CODE = "verificationCode";
-    private static final String RESULT_KEY_PHONE_CODE_ID     = "phoneCodeId";
-    private static final String RESULT_KEY_PHONE_NUMBER      = "phoneNumber";
+    public static final String ARG_IS_HBF_PROVIDER = "isHbfProvider";
 
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_verify);
@@ -44,6 +43,10 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
     @Inject VerifyPresenter     verifyPresenter;
     @Inject LoginFlowInteractor loginFlowInteractor;
     @Inject UserInteractor      userInteractor;
+
+    @Bind(R.id.hbf_logo) ImageView uiHbfLogo;
+
+    private boolean isHbfProvider;
 
     @SuppressWarnings("WrongConstant")
     @Override protected void restoreState(@NonNull Bundle savedState) {
@@ -54,6 +57,9 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
         super.onCreate(savedState);
         Injector.inject(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        if (!isHbfProvider) {
+            uiHbfLogo.setVisibility(View.GONE);
+        }
         verifyPresenter.attachView(this);
         if (getIntent() != null) {
             handleCodeFromSms(getIntent());
@@ -74,12 +80,16 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
                     finish();
                 } else {
                     SimpleDialog.withOkBtn(context(), R.string.error, R.string.error_no_accosiated_number, () -> {
-                        Navigator.enterPhoneAndClearStack(context());
+                        Navigator.welcome(context());
                         finish();
                     });
                 }
             }
         }
+    }
+
+    @Override protected void parseArguments(@NonNull Bundle extras) {
+        isHbfProvider = extras.getBoolean(ARG_IS_HBF_PROVIDER, false);
     }
 
     @Override protected void onNewIntent(Intent intent) {

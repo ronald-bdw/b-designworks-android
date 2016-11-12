@@ -46,15 +46,13 @@ public class SelectProviderScreen extends BaseActivity{
         });
     }
 
-
     @OnClick(R.id.next) void onNextClick() {
         if (uiSelectProviderSpinner.getSelectedItemPosition() == 0) {
-            Navigator.enterPhone(context());
+            Navigator.enterPhone(context(), AccountVerificationType.HAS_PROVIDER);
         } else if (uiSelectProviderSpinner.getSelectedItemPosition() == 1) {
             TrialDialog.show(this);
         } else {
-            Toast.makeText(context(), "Please select provider", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context(), R.string.provider_not_chosen, Toast.LENGTH_SHORT).show();
         }
     }
-
 }

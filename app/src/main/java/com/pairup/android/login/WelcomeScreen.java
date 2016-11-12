@@ -39,7 +39,7 @@ public class WelcomeScreen extends BaseActivity {
     }
 
     @OnClick(R.id.have_account_link) void haveAccountClick() {
-        Navigator.enterPhoneAndVerify(context());
+        Navigator.enterPhone(context(), AccountVerificationType.IS_REGISTERED);
     }
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
