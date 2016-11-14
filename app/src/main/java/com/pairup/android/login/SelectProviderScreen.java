@@ -13,6 +13,7 @@ import com.pairup.android.BaseActivity;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.utils.ui.UiInfo;
+import com.pairup.android.login.TrialDialog;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -49,7 +50,7 @@ public class SelectProviderScreen extends BaseActivity{
         if (uiSelectProviderSpinner.getSelectedItemPosition() == 0) {
             Navigator.enterPhone(context(), AccountVerificationType.HAS_PROVIDER);
         } else if (uiSelectProviderSpinner.getSelectedItemPosition() == 1) {
-            Navigator.trialPage(context());
+            TrialDialog.show(this);
         } else {
             Toast.makeText(context(), R.string.provider_not_chosen, Toast.LENGTH_SHORT).show();
         }
