@@ -2,7 +2,10 @@ package com.pairup.android.profile;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -26,10 +29,14 @@ import com.pairup.android.utils.ui.SimpleLoadingDialog;
 import com.pairup.android.utils.ui.TextViews;
 import com.pairup.android.utils.ui.UiInfo;
 import com.tbruyelle.rxpermissions.RxPermissions;
+import com.yalantis.ucrop.UCrop;
+
+import java.io.File;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import butterknife.BindColor;
 import butterknife.OnClick;
 import gun0912.tedbottompicker.TedBottomPicker;
 
@@ -37,6 +44,8 @@ import gun0912.tedbottompicker.TedBottomPicker;
  * Created by Ilya Eremin on 04.08.2016.
  */
 public class EditProfileScreen extends BaseActivity implements EditProfileView {
+
+    private static final String CROP_PROFILE_IMG_NAME = "profile_img.jpg";
 
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_edit_profile)
@@ -52,6 +61,9 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
     @Bind(R.id.first_name)                EditText  uiFirstName;
     @Bind(R.id.last_name)                 EditText  uiLastName;
     @Bind(R.id.email)                     EditText  uiEmail;
+
+    @BindColor(R.color.app_accent) int cropMainColor;
+    @BindColor(R.color.settings_font) int cropDarkColor;
 
     @Inject EditProfilePresenter editProfilePresenter;
     @Inject ImageLoader          imageLoader;
@@ -140,14 +152,7 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
             .subscribe(granted -> {
                 if (granted) {
                     TedBottomPicker tedBottomPicker = new TedBottomPicker.Builder(this)
-                        .setOnImageSelectedListener(uri -> {
-                            String imagelink = imageLoader.getCorrectLink(uri);
-                            if (imagelink == null) {
-                                incorrectImage();
-                            } else {
-                                editProfilePresenter.updateAvatar(imagelink);
-                            }
-                        })
+                        .setOnImageSelectedListener(uri -> startCropImageActivity(uri))
                         .create();
                     tedBottomPicker.show(getSupportFragmentManager());
                 } else {
@@ -158,6 +163,18 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
 
     public void showAvatar(@Nullable String imageUrl) {
         ImageLoader.load(context(), uiAvatar, imageUrl);
+    }
+
+    private void startCropImageActivity(@NonNull Uri imageLink) {
+        UCrop.Options cropOptions = new UCrop.Options();
+        cropOptions.setStatusBarColor(cropDarkColor);
+        cropOptions.setToolbarColor(cropMainColor);
+        cropOptions.setActiveWidgetColor(cropMainColor);
+        cropOptions.setHideBottomControls(true);
+        UCrop.of(imageLink, Uri.fromFile(new File(Environment.getExternalStorageDirectory(), CROP_PROFILE_IMG_NAME)))
+            .withOptions(cropOptions)
+            .withAspectRatio(1,1)
+            .start(this);
     }
 
     @Override public void showAvatarUploadingProgress() {
@@ -183,5 +200,17 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
     @Override protected void onDestroy() {
         editProfilePresenter.detachView();
         super.onDestroy();
+    }
+
+    @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
+            String imagelink = imageLoader.getCorrectLink(UCrop.getOutput(data));
+            if (imagelink == null) {
+                incorrectImage();
+            } else {
+                editProfilePresenter.updateAvatar(imagelink);
+            }
+        }
     }
 }
