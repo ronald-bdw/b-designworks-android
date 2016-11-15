@@ -2,6 +2,7 @@ package com.pairup.android.profile;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import com.pairup.android.BaseActivity;
 import com.pairup.android.R;
 import com.pairup.android.login.models.User;
+import com.pairup.android.utils.CropUtil;
 import com.pairup.android.utils.ImageLoader;
 import com.pairup.android.utils.Keyboard;
 import com.pairup.android.utils.di.Injector;
@@ -26,6 +28,9 @@ import com.pairup.android.utils.ui.SimpleLoadingDialog;
 import com.pairup.android.utils.ui.TextViews;
 import com.pairup.android.utils.ui.UiInfo;
 import com.tbruyelle.rxpermissions.RxPermissions;
+import com.yalantis.ucrop.UCrop;
+
+import java.io.File;
 
 import javax.inject.Inject;
 
@@ -55,6 +60,7 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
 
     @Inject EditProfilePresenter editProfilePresenter;
     @Inject ImageLoader          imageLoader;
+    @Inject File                 filePath;
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
@@ -140,14 +146,7 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
             .subscribe(granted -> {
                 if (granted) {
                     TedBottomPicker tedBottomPicker = new TedBottomPicker.Builder(this)
-                        .setOnImageSelectedListener(uri -> {
-                            String imagelink = imageLoader.getCorrectLink(uri);
-                            if (imagelink == null) {
-                                incorrectImage();
-                            } else {
-                                editProfilePresenter.updateAvatar(imagelink);
-                            }
-                        })
+                        .setOnImageSelectedListener(uri -> CropUtil.startCropImageActivity(this, uri, filePath.getAbsolutePath()))
                         .create();
                     tedBottomPicker.show(getSupportFragmentManager());
                 } else {
@@ -183,5 +182,18 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
     @Override protected void onDestroy() {
         editProfilePresenter.detachView();
         super.onDestroy();
+    }
+
+    @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
+            String imagelink = imageLoader.getCorrectLink(UCrop.getOutput(data));
+            if (imagelink == null) {
+                incorrectImage();
+            } else {
+                editProfilePresenter.updateAvatar(imagelink);
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }
