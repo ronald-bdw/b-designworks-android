@@ -12,7 +12,7 @@ import java.io.File;
 
 public class CropUtil {
 
-    private static final String CROP_PROFILE_IMG_NAME       = "profile_img.jpg";
+    private static final String CROP_PROFILE_IMG_NAME = "profile_img.jpg";
 
     public static void startCropImageActivity(@NonNull Activity activity,
                                        @NonNull Uri imageLink,
