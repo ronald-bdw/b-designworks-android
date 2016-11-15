@@ -22,7 +22,7 @@ public class CropUtil {
             cropOptions.setStatusBarColor(activity.getColor(R.color.settings_font));
             cropOptions.setToolbarColor(activity.getColor(R.color.app_accent));
             cropOptions.setActiveWidgetColor(activity.getColor(R.color.app_accent));
-        }else {
+        } else {
             cropOptions.setStatusBarColor(activity.getResources().getColor(R.color.settings_font));
             cropOptions.setToolbarColor(activity.getResources().getColor(R.color.app_accent));
             cropOptions.setActiveWidgetColor(activity.getResources().getColor(R.color.app_accent));
@@ -30,7 +30,7 @@ public class CropUtil {
         cropOptions.setHideBottomControls(true);
         UCrop.of(imageLink, Uri.fromFile(new File(filePath, CROP_PROFILE_IMG_NAME)))
             .withOptions(cropOptions)
-            .withAspectRatio(1,1)
+            .withAspectRatio(1, 1)
             .start(activity);
     }
 
