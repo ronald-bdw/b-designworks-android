@@ -1,6 +1,7 @@
 package com.pairup.android.tour_app;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,10 +20,14 @@ import com.pairup.android.utils.di.Injector;
 import com.pairup.android.utils.ui.SimpleDialog;
 import com.pairup.android.utils.ui.UiInfo;
 import com.tbruyelle.rxpermissions.RxPermissions;
+import com.yalantis.ucrop.UCrop;
+
+import java.io.File;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import butterknife.BindColor;
 import butterknife.OnClick;
 import gun0912.tedbottompicker.TedBottomPicker;
 import rx.Subscription;
@@ -42,10 +47,13 @@ public class TourScreenUploadAvatar extends BaseActivity {
 
     @Inject UserInteractor userInteractor;
     @Inject ImageLoader    imageLoader;
+    @Inject File           filePath;
 
     @Bind(R.id.avatar)   ImageView uiAvatar;
     @Bind(R.id.progress) View      uiProgress;
 
+    @BindColor(R.color.app_accent)    int cropMainColor;
+    @BindColor(R.color.settings_font) int cropDarkColor;
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
@@ -70,14 +78,8 @@ public class TourScreenUploadAvatar extends BaseActivity {
             .subscribe(granted -> {
                 if (granted) {
                     TedBottomPicker tedBottomPicker = new TedBottomPicker.Builder(this)
-                        .setOnImageSelectedListener(uri -> {
-                            String imagelink = imageLoader.getCorrectLink(uri);
-                            if (imagelink == null) {
-                                SimpleDialog.withOkBtn(context(), getString(R.string.error_image_unacceptable));
-                            } else {
-                                updateAvatar(imagelink);
-                            }
-                        })
+                        .setOnImageSelectedListener(uri -> userInteractor.startCropImageActivity(this, uri, cropMainColor,
+                            cropDarkColor, filePath.getAbsolutePath()))
                         .create();
                     tedBottomPicker.show(getSupportFragmentManager());
                 } else {
@@ -141,4 +143,17 @@ public class TourScreenUploadAvatar extends BaseActivity {
         }
     }
 
+    @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
+            String imagelink = imageLoader.getCorrectLink(UCrop.getOutput(data));
+            if (imagelink == null) {
+                SimpleDialog.withOkBtn(context(), getString(R.string.error_image_unacceptable));
+            } else {
+                updateAvatar(imagelink);
+            }
+        }else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+
+    }
 }

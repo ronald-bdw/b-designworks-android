@@ -3,9 +3,7 @@ package com.pairup.android.profile;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -19,6 +17,7 @@ import android.widget.Toast;
 
 import com.pairup.android.BaseActivity;
 import com.pairup.android.R;
+import com.pairup.android.UserInteractor;
 import com.pairup.android.login.models.User;
 import com.pairup.android.utils.ImageLoader;
 import com.pairup.android.utils.Keyboard;
@@ -45,8 +44,6 @@ import gun0912.tedbottompicker.TedBottomPicker;
  */
 public class EditProfileScreen extends BaseActivity implements EditProfileView {
 
-    private static final String CROP_PROFILE_IMG_NAME = "profile_img.jpg";
-
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_edit_profile)
             .enableBackButton()
@@ -67,6 +64,8 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
 
     @Inject EditProfilePresenter editProfilePresenter;
     @Inject ImageLoader          imageLoader;
+    @Inject UserInteractor       userInteractor;
+    @Inject File                 filePath;
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
@@ -152,7 +151,8 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
             .subscribe(granted -> {
                 if (granted) {
                     TedBottomPicker tedBottomPicker = new TedBottomPicker.Builder(this)
-                        .setOnImageSelectedListener(uri -> startCropImageActivity(uri))
+                        .setOnImageSelectedListener(uri -> userInteractor.startCropImageActivity(this, uri, cropMainColor,
+                            cropDarkColor, filePath.getAbsolutePath()))
                         .create();
                     tedBottomPicker.show(getSupportFragmentManager());
                 } else {
@@ -163,18 +163,6 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
 
     public void showAvatar(@Nullable String imageUrl) {
         ImageLoader.load(context(), uiAvatar, imageUrl);
-    }
-
-    private void startCropImageActivity(@NonNull Uri imageLink) {
-        UCrop.Options cropOptions = new UCrop.Options();
-        cropOptions.setStatusBarColor(cropDarkColor);
-        cropOptions.setToolbarColor(cropMainColor);
-        cropOptions.setActiveWidgetColor(cropMainColor);
-        cropOptions.setHideBottomControls(true);
-        UCrop.of(imageLink, Uri.fromFile(new File(Environment.getExternalStorageDirectory(), CROP_PROFILE_IMG_NAME)))
-            .withOptions(cropOptions)
-            .withAspectRatio(1,1)
-            .start(this);
     }
 
     @Override public void showAvatarUploadingProgress() {
@@ -203,7 +191,6 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
     }
 
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
             String imagelink = imageLoader.getCorrectLink(UCrop.getOutput(data));
             if (imagelink == null) {
@@ -211,6 +198,8 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
             } else {
                 editProfilePresenter.updateAvatar(imagelink);
             }
+        }else {
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 }
