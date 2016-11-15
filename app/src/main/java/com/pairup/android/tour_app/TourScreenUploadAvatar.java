@@ -151,7 +151,7 @@ public class TourScreenUploadAvatar extends BaseActivity {
             } else {
                 updateAvatar(imagelink);
             }
-        }else {
+        } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
 

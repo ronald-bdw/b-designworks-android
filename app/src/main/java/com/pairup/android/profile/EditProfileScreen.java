@@ -198,7 +198,7 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
             } else {
                 editProfilePresenter.updateAvatar(imagelink);
             }
-        }else {
+        } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
