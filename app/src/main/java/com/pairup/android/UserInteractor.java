@@ -1,7 +1,5 @@
 package com.pairup.android;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -19,7 +17,6 @@ import com.pairup.android.utils.Bus;
 import com.pairup.android.utils.Logger;
 import com.pairup.android.utils.storage.IStorage;
 import com.pairup.android.utils.storage.UserSettings;
-import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 
@@ -40,7 +37,6 @@ public class UserInteractor {
     private static final String KEY_FIRST_VISIT_AFTER_LOGIN = "firstVisitAfterLogin";
     private static final String KEY_NOTIFICATIONS_ENABLED   = "notificationsEnabled";
     private static final String DEVICE_TYPE_ANDROID         = "android";
-    private static final String CROP_PROFILE_IMG_NAME       = "profile_img.jpg";
 
     @NonNull private final IStorage     storage;
     @NonNull private final UserSettings userSettings;
@@ -235,21 +231,5 @@ public class UserInteractor {
 
     public boolean userLoggedIn() {
         return storage.contains(KEY_USER);
-    }
-
-    public void startCropImageActivity(@NonNull Activity activity,
-                                        @NonNull Uri imageLink,
-                                        @NonNull int cropMainColor,
-                                        @NonNull int cropDarkColor,
-                                        @NonNull String filePath) {
-        UCrop.Options cropOptions = new UCrop.Options();
-        cropOptions.setStatusBarColor(cropDarkColor);
-        cropOptions.setToolbarColor(cropMainColor);
-        cropOptions.setActiveWidgetColor(cropMainColor);
-        cropOptions.setHideBottomControls(true);
-        UCrop.of(imageLink, Uri.fromFile(new File(filePath, CROP_PROFILE_IMG_NAME)))
-            .withOptions(cropOptions)
-            .withAspectRatio(1,1)
-            .start(activity);
     }
 }

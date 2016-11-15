@@ -17,8 +17,8 @@ import android.widget.Toast;
 
 import com.pairup.android.BaseActivity;
 import com.pairup.android.R;
-import com.pairup.android.UserInteractor;
 import com.pairup.android.login.models.User;
+import com.pairup.android.utils.CropUtil;
 import com.pairup.android.utils.ImageLoader;
 import com.pairup.android.utils.Keyboard;
 import com.pairup.android.utils.di.Injector;
@@ -35,7 +35,6 @@ import java.io.File;
 import javax.inject.Inject;
 
 import butterknife.Bind;
-import butterknife.BindColor;
 import butterknife.OnClick;
 import gun0912.tedbottompicker.TedBottomPicker;
 
@@ -59,12 +58,8 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
     @Bind(R.id.last_name)                 EditText  uiLastName;
     @Bind(R.id.email)                     EditText  uiEmail;
 
-    @BindColor(R.color.app_accent) int cropMainColor;
-    @BindColor(R.color.settings_font) int cropDarkColor;
-
     @Inject EditProfilePresenter editProfilePresenter;
     @Inject ImageLoader          imageLoader;
-    @Inject UserInteractor       userInteractor;
     @Inject File                 filePath;
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
@@ -151,8 +146,7 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
             .subscribe(granted -> {
                 if (granted) {
                     TedBottomPicker tedBottomPicker = new TedBottomPicker.Builder(this)
-                        .setOnImageSelectedListener(uri -> userInteractor.startCropImageActivity(this, uri, cropMainColor,
-                            cropDarkColor, filePath.getAbsolutePath()))
+                        .setOnImageSelectedListener(uri -> CropUtil.startCropImageActivity(this, uri, filePath.getAbsolutePath()))
                         .create();
                     tedBottomPicker.show(getSupportFragmentManager());
                 } else {

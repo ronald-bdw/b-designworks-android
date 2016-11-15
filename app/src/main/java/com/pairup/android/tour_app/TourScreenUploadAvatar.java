@@ -14,6 +14,7 @@ import com.pairup.android.BaseActivity;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
+import com.pairup.android.utils.CropUtil;
 import com.pairup.android.utils.ImageLoader;
 import com.pairup.android.utils.Rxs;
 import com.pairup.android.utils.di.Injector;
@@ -27,7 +28,6 @@ import java.io.File;
 import javax.inject.Inject;
 
 import butterknife.Bind;
-import butterknife.BindColor;
 import butterknife.OnClick;
 import gun0912.tedbottompicker.TedBottomPicker;
 import rx.Subscription;
@@ -52,9 +52,6 @@ public class TourScreenUploadAvatar extends BaseActivity {
     @Bind(R.id.avatar)   ImageView uiAvatar;
     @Bind(R.id.progress) View      uiProgress;
 
-    @BindColor(R.color.app_accent)    int cropMainColor;
-    @BindColor(R.color.settings_font) int cropDarkColor;
-
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
         Injector.inject(this);
@@ -78,8 +75,7 @@ public class TourScreenUploadAvatar extends BaseActivity {
             .subscribe(granted -> {
                 if (granted) {
                     TedBottomPicker tedBottomPicker = new TedBottomPicker.Builder(this)
-                        .setOnImageSelectedListener(uri -> userInteractor.startCropImageActivity(this, uri, cropMainColor,
-                            cropDarkColor, filePath.getAbsolutePath()))
+                        .setOnImageSelectedListener(uri -> CropUtil.startCropImageActivity(this, uri, filePath.getAbsolutePath()))
                         .create();
                     tedBottomPicker.show(getSupportFragmentManager());
                 } else {
@@ -154,6 +150,5 @@ public class TourScreenUploadAvatar extends BaseActivity {
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
-
     }
 }
