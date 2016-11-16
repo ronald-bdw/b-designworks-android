@@ -17,6 +17,7 @@ public class InitialScreen extends AppCompatActivity {
 
     @Inject UserSettings userSettings;
 
+    private static final int DELAY_TIME = 1000;
     private Handler mHandler;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class InitialScreen extends AppCompatActivity {
                 Navigator.welcome(this);
             }
             finish();}
-        , 500);
+        , DELAY_TIME);
     }
 
     @Override protected void onStop() {
