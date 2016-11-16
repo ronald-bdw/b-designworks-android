@@ -23,7 +23,7 @@ android {
 
         ext.betaDistributionReleaseNotes = LAST_COMMIT_MESSAGE
         ext.betaDistributionNotifications = true
-        ext.betaDistributionGroupAliases = "fitness-app"
+        ext.betaDistributionGroupAliases = "qa"
 
         applicationId APPLICATION_ID
         versionCode 2
