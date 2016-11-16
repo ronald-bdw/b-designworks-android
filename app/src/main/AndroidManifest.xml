@@ -86,7 +86,8 @@
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="26e8ad9c560c2cc08a320c0e96eed4f489ae1901" />
+            android:value="26e8ad9c560c2cc08a320c0e96eed4f489ae1901"
+            />
 
         <service
             android:name=".chat.pushes.PushNotificationsHandlerService"
