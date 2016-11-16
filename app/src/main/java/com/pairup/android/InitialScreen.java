@@ -33,7 +33,7 @@ public class InitialScreen extends AppCompatActivity {
                 Navigator.welcome(this);
             }
             finish();}
-        , 500);
+        , 1000);
     }
 
     @Override protected void onStop() {
