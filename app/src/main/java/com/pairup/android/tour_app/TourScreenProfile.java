@@ -73,7 +73,7 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView {
     }
 
     private void sendInfoAndMoveToNextScreen() {
-        userInteractor.setNotShowTourForUser();
+        userInteractor.setShowTourForUser();
         if (fieldsChanged()) {
             showUpdateProfileProgress();
             updateProfileSubs = userInteractor.updateUser(textOf(uiFirstName), textOf(uiLastName), textOf(uiEmail))
