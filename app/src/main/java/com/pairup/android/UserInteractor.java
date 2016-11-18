@@ -34,6 +34,7 @@ import rx.schedulers.Schedulers;
 public class UserInteractor {
 
     private static final String KEY_USER                    = "user";
+    private static final String KEY_SHOW_TOUR_TO_USER = "showTourForUser";
     private static final String KEY_FIRST_VISIT_AFTER_LOGIN = "firstVisitAfterLogin";
     private static final String KEY_NOTIFICATIONS_ENABLED   = "notificationsEnabled";
     private static final String DEVICE_TYPE_ANDROID         = "android";
@@ -231,5 +232,13 @@ public class UserInteractor {
 
     public boolean userLoggedIn() {
         return storage.contains(KEY_USER);
+    }
+
+    public void setShowTourForUser() {
+        storage.putBoolean(KEY_SHOW_TOUR_TO_USER, false);
+    }
+
+    public boolean showTourForUser() {
+        return storage.getBoolean(KEY_SHOW_TOUR_TO_USER, true);
     }
 }
