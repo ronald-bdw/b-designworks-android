@@ -95,7 +95,7 @@ public class EnterPhoneScreen extends BaseActivity {
 
     @OnClick(R.id.submit) void onSubmitClick() {
         String phone = TextViews.textOf(uiPhone);
-        String areaCode = TextViews.textOf(uiAreaCode);
+        String areaCode = getAreaCode();
         if (!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(areaCode)) {
             if (RxPermissions.getInstance(context()).isGranted(Manifest.permission.RECEIVE_SMS)) {
                 manageSubmit(areaCode, phone);
@@ -140,6 +140,11 @@ public class EnterPhoneScreen extends BaseActivity {
                     showErrorDialog();
                 }
             }, ErrorUtils.handle(this));
+    }
+
+    private String getAreaCode() {
+        String areaCode = TextViews.textOf(uiAreaCode);
+        return areaCode.contains("+")?areaCode:"+"+areaCode;
     }
 
     private void showErrorDialog() {
