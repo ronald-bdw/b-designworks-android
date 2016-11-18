@@ -144,7 +144,7 @@ public class EnterPhoneScreen extends BaseActivity {
 
     private String getAreaCode() {
         String areaCode = TextViews.textOf(uiAreaCode);
-        return areaCode.contains("+")?areaCode:"+"+areaCode;
+        return areaCode.startsWith("+") ? areaCode : ("+" + areaCode);
     }
 
     private void showErrorDialog() {
