@@ -71,7 +71,7 @@ public class VerifyPresenterTest {
         presenter.handleSmsCode(CORRECT_SMS_CODE);
         verify(view).showAuthorizationProgressDialog();
         verify(view).hideAuthProgressDialog();
-        verify(view).openTourScreen();
+        verify(view).openChatScreen();
         verify(view, never()).openRegistrationScreen(any(), any(), any());
     }
 
