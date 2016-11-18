@@ -20,6 +20,7 @@ import com.pairup.android.utils.storage.UserSettings;
 
 import java.io.File;
 
+import io.smooch.core.Smooch;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -86,6 +87,7 @@ public class UserInteractor {
     public void logout() {
         storage.remove(KEY_USER);
         userSettings.clear();
+        Smooch.logout();
     }
 
     public boolean firstVisitAfterLogin() {
