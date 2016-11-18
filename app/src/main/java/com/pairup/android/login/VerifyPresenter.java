@@ -83,7 +83,11 @@ public class VerifyPresenter {
             .subscribe(result -> {
                 loginFlowInteractor.reset();
                 if (view != null) {
-                    view.openChatScreen();
+                    if (userInteractor.notShowTourForUser()) {
+                        view.openChatScreen();
+                    } else {
+                        view.openTourScreen();
+                    }
                 }
             }, error -> {
                 if (view != null) {
