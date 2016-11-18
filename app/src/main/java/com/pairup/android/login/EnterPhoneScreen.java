@@ -1,6 +1,5 @@
 package com.pairup.android.login;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -28,7 +27,6 @@ import com.pairup.android.utils.network.RetrofitException;
 import com.pairup.android.utils.ui.SimpleDialog;
 import com.pairup.android.utils.ui.TextViews;
 import com.pairup.android.utils.ui.UiInfo;
-import com.tbruyelle.rxpermissions.RxPermissions;
 
 import javax.inject.Inject;
 
@@ -97,15 +95,7 @@ public class EnterPhoneScreen extends BaseActivity {
         String phone = TextViews.textOf(uiPhone);
         String areaCode = getAreaCode();
         if (!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(areaCode)) {
-            if (RxPermissions.getInstance(context()).isGranted(Manifest.permission.RECEIVE_SMS)) {
-                manageSubmit(areaCode, phone);
-            } else {
-                SimpleDialog.show(context(), getString(R.string.warning_permission_needed),
-                    getString(R.string.sms_permission_description), getString(R.string.ok), () ->
-                        RxPermissions.getInstance(context()).request(Manifest.permission.RECEIVE_SMS)
-                            .subscribe(isGranted -> manageSubmit(areaCode, phone)),
-                    getString(R.string.no_thanks), () -> manageSubmit(areaCode, phone));
-            }
+            manageSubmit(areaCode, phone);
         } else {
             uiPhone.setError(getString(R.string.registration_error_fill_phone));
         }
