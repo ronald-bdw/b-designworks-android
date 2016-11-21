@@ -7,7 +7,6 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
     <uses-permission android:name="com.android.vending.BILLING"/>
 
     <application
@@ -48,6 +47,11 @@
 
                 <data
                     android:host="pearup.com"
+                    android:scheme="pairup"
+                    />
+
+                <data
+                    android:host="b-designworks.herokuapp.com"
                     android:scheme="http"
                     />
             </intent-filter>
@@ -70,6 +74,7 @@
                 <data
                     android:host="pearup.com"
                     android:scheme="pearup"/>
+
             </intent-filter>
         </activity>
         <activity android:name=".login.RegistrationScreen"/>
