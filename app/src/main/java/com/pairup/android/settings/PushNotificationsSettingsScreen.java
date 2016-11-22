@@ -66,7 +66,7 @@ public class PushNotificationsSettingsScreen extends BaseActivity {
                 uiChangeNotifications.setText(R.string.notifications_change_on);
                 uiNotificationsToggle.setChecked(true);
             }
-            userInteractor.sendNotificationsStatus(userInteractor.areNotificationsEnabled());
+            userInteractor.sendNotificationsStatus();
         } else {
             uiStatus.setVisibility(View.GONE);
             uiChangeNotifications.setText(R.string.notifications_change);
