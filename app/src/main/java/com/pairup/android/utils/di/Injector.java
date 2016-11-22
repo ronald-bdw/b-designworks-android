@@ -24,7 +24,7 @@ import com.pairup.android.tour_app.TourScreenUploadAvatar;
  */
 public class Injector {
 
-    public static void inject(@NonNull App app){
+    public static void inject(@NonNull App app) {
         app.getAppComponent().inject(app);
     }
 
@@ -76,11 +76,11 @@ public class Injector {
         getAppComponent(syncScreen).inject(syncScreen);
     }
 
-    public static void inject(SubscriptionScreen subscriptionScreen){
+    public static void inject(SubscriptionScreen subscriptionScreen) {
         getAppComponent(subscriptionScreen).inject(subscriptionScreen);
     }
 
-    public static void inject(PushNotificationsSettingsScreen pushNotificationsSettingsScreen){
+    public static void inject(PushNotificationsSettingsScreen pushNotificationsSettingsScreen) {
         getAppComponent(pushNotificationsSettingsScreen).inject(pushNotificationsSettingsScreen);
     }
 
