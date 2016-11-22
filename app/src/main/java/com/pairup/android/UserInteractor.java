@@ -168,8 +168,8 @@ public class UserInteractor {
         }
     }
 
-    public void sendNotificationsStatus(boolean enabled) {
-        if (enabled) {
+    public void sendNotificationsStatus() {
+        if (areNotificationsEnabled()) {
             api.userEnabledPushNotifications("message_push")
                 .subscribeOn(Schedulers.io())
                 .subscribe(result -> {}, ignoreError -> {});
