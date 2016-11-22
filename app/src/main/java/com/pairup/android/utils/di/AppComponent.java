@@ -4,7 +4,6 @@ import com.pairup.android.App;
 import com.pairup.android.InitialScreen;
 import com.pairup.android.chat.ChatScreen;
 import com.pairup.android.chat.ChatSidePanelFragment;
-import com.pairup.android.chat.pushes.PushNotificationsHandlerService;
 import com.pairup.android.login.EnterPhoneScreen;
 import com.pairup.android.login.RegistrationScreen;
 import com.pairup.android.login.VerifyScreen;
@@ -39,7 +38,6 @@ public interface AppComponent {
     void inject(SettingsScreen settingsScreen);
     void inject(TourScreenProfile tourScreenProfile);
     void inject(TourScreenUploadAvatar tourScreenUploadAvatar);
-    void inject(PushNotificationsHandlerService pushNotificationsHandlerService);
     void inject(EnterPhoneScreen enterPhoneScreen);
     void inject(SyncScreen syncScreen);
     void inject(SubscriptionScreen subscriptionScreen);

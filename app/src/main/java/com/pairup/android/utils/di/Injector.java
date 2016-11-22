@@ -7,7 +7,6 @@ import com.pairup.android.App;
 import com.pairup.android.InitialScreen;
 import com.pairup.android.chat.ChatScreen;
 import com.pairup.android.chat.ChatSidePanelFragment;
-import com.pairup.android.chat.pushes.PushNotificationsHandlerService;
 import com.pairup.android.login.EnterPhoneScreen;
 import com.pairup.android.login.RegistrationScreen;
 import com.pairup.android.login.VerifyScreen;
@@ -83,10 +82,6 @@ public class Injector {
 
     public static void inject(PushNotificationsSettingsScreen pushNotificationsSettingsScreen){
         getAppComponent(pushNotificationsSettingsScreen).inject(pushNotificationsSettingsScreen);
-    }
-
-    public static void inject(PushNotificationsHandlerService pushNotificationsHandlerService) {
-        ((App) pushNotificationsHandlerService.getApplicationContext()).getAppComponent().inject(pushNotificationsHandlerService);
     }
 
     public static void inject(@NonNull EnterPhoneScreen enterPhoneScreen) {
