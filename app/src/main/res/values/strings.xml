@@ -116,7 +116,7 @@
     <string name="Smooch_welcome"/>
     <string name="Smooch_messageHint">Input chat message</string>
     <string name="show_notifications">Show Notifications</string>
-    <string name="settings_show_notifications">Show notifications</string>
+    <string name="settings_notifications">Push Notifications</string>
     <string name="error_phone_taken">Phone number already taken</string>
     <string name="error_phone_not_registered">Phone number is not registered yet</string>
     <string name="title_area_code">Area code</string>
@@ -149,6 +149,17 @@
     <string name="subscription_status_time">"Subscription was paid in "</string>
     <string name="subscribed_status">You are already subscribed</string>
     <string name="provider_not_chosen">Please select your provider from the list:</string>
+    <string name="notification_status_enabled">Notifications are enabled!</string>
+    <string name="notification_status_disabled">Notifications are disabled!</string>
+    <string name="notification_hint">Change your settings to get or don\'t get notified when your coach sends you message</string>
+    <string name="notification_hint_off">Change your settings to don\'t get notified when your coach sends you message</string>
+    <string name="notification_hint_on">Change your settings to get notified when your coach sends you message</string>
+    <string name="notifications_open_app_settings">1) Tap to Open Application Settings</string>
+    <string name="notifications_tap_to_notifications">2) Tap to Notifications </string>
+    <string name="notifications_change">3) Change Show notifications</string>
+    <string name="notifications_change_off">3) Set Show notifications to Off</string>
+    <string name="notifications_change_on">3) Set Show notifications to On</string>
+    <string name="open_application_settings">Open Application Settings</string>
     <string name="about_us_title">The Pair Up Team</string>
     <string name="about_us_information">Our professional of healthy habit coaches are based in Perth, Western Australia. We have hhelped over 23,000 Australians get more active over the past few years.</string>
     <string name="about_us_website_info">Pair Up cares about your privacy. To learn more, please visit our website to review our Privacy Policy and our End-User Licensing Agreement</string>
