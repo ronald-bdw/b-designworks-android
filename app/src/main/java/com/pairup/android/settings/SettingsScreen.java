@@ -3,11 +3,13 @@ package com.pairup.android.settings;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.pairup.android.BaseActivity;
+import com.pairup.android.DeviceInteractor;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
@@ -39,13 +41,13 @@ public class SettingsScreen extends BaseActivity {
         super.onCreate(savedState);
         Injector.inject(this);
 
-        if (!userInteractor.isSdkSupportsNotifications())
+        if (!DeviceInteractor.isSdkSupportsNotifications())
             uiNotificationsToggle.setVisibility(View.GONE);
     }
 
     @Override protected void onResume() {
         super.onResume();
-        uiNotificationsToggle.setChecked(userInteractor.areNotificationsEnabled(this));
+        uiNotificationsToggle.setChecked(userInteractor.areNotificationsEnabled(NotificationManagerCompat.from(this)));
         ImageLoader.load(context(), uiAvatar, userInteractor.getUser().getAvatar().getThumb());
     }
 

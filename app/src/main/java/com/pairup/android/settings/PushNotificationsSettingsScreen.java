@@ -3,11 +3,13 @@ package com.pairup.android.settings;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.widget.TextView;
 
 import com.pairup.android.BaseActivity;
+import com.pairup.android.DeviceInteractor;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
@@ -26,7 +28,7 @@ public class PushNotificationsSettingsScreen extends BaseActivity {
 
     @Bind(R.id.status)               TextView     uiStatus;
     @Bind(R.id.hint)                 TextView     uiHint;
-    @Bind(R.id.fourth_line_tv)       TextView     uiFourthLineText;
+    @Bind(R.id.change_notifications) TextView     uiChangeNotifications;
     @Bind(R.id.notifications_toggle) SwitchCompat uiNotificationsToggle;
 
     @Inject UserInteractor userInteractor;
@@ -45,7 +47,6 @@ public class PushNotificationsSettingsScreen extends BaseActivity {
     @Override protected void onResume() {
         super.onResume();
         customizeUi();
-
     }
 
     @OnClick(R.id.application_settings) void onClickApplicationSettings() {
@@ -53,20 +54,20 @@ public class PushNotificationsSettingsScreen extends BaseActivity {
     }
 
     private void customizeUi() {
-        if(userInteractor.isSdkSupportsNotifications()) {
-            if (userInteractor.areNotificationsEnabled(this)) {
+        if (DeviceInteractor.isSdkSupportsNotifications()) {
+            if (userInteractor.areNotificationsEnabled(NotificationManagerCompat.from(this))) {
                 uiStatus.setText(R.string.notification_status_enabled);
                 uiHint.setText(R.string.notification_hint_off);
-                uiFourthLineText.setText(R.string.notifications_change_off);
+                uiChangeNotifications.setText(R.string.notifications_change_off);
             } else {
                 uiStatus.setText(R.string.notification_status_disabled);
                 uiHint.setText(R.string.notification_hint_on);
-                uiFourthLineText.setText(R.string.notifications_change_on);
+                uiChangeNotifications.setText(R.string.notifications_change_on);
             }
-            uiNotificationsToggle.setChecked(!userInteractor.areNotificationsEnabled(this));
+            uiNotificationsToggle.setChecked(!userInteractor.areNotificationsEnabled(NotificationManagerCompat.from(this)));
         } else {
             uiStatus.setVisibility(View.GONE);
-            uiFourthLineText.setText(R.string.notifications_change);
+            uiChangeNotifications.setText(R.string.notifications_change);
             uiHint.setText(R.string.notification_hint);
         }
     }

@@ -1,10 +1,7 @@
 package com.pairup.android;
 
 import android.annotation.TargetApi;
-import android.app.AppOpsManager;
-import android.app.NotificationManager;
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,9 +23,6 @@ import com.pairup.android.utils.storage.IStorage;
 import com.pairup.android.utils.storage.UserSettings;
 
 import java.io.File;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import io.smooch.core.Smooch;
 import okhttp3.MediaType;
@@ -164,14 +158,9 @@ public class UserInteractor {
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    public boolean areNotificationsEnabled(@NonNull Context context) {
-        if (isSdkSupportsNotifications()) {
-            boolean areNotificationsEnabled = NotificationManagerCompat.from(context).areNotificationsEnabled();
-            sendNotificationsStatus(areNotificationsEnabled);
-            return areNotificationsEnabled;
-        } else {
-            return true;
-        }
+    public boolean areNotificationsEnabled(@NonNull NotificationManagerCompat notificationManagerCompat) {
+        sendNotificationsStatus(notificationManagerCompat.areNotificationsEnabled());
+        return notificationManagerCompat.areNotificationsEnabled();
     }
 
     public void sendNotificationsStatus(boolean enabled) {
@@ -257,10 +246,6 @@ public class UserInteractor {
 
     public boolean showTourForUser() {
         return storage.getBoolean(KEY_SHOW_TOUR_TO_USER, true);
-    }
-
-    public boolean isSdkSupportsNotifications() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
     }
 
 }
