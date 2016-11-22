@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.SwitchCompat;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.pairup.android.BaseActivity;
@@ -38,11 +39,14 @@ public class SettingsScreen extends BaseActivity {
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
         Injector.inject(this);
-        uiNotificationsToggle.setChecked(userInteractor.isNotificationsEnabled());
+
+        if(!userInteractor.isSdkSupportsNotifications())
+            uiNotificationsToggle.setVisibility(View.GONE);
     }
 
     @Override protected void onResume() {
         super.onResume();
+        uiNotificationsToggle.setChecked(userInteractor.isNotificationsEnabled(this));
         ImageLoader.load(context(), uiAvatar, userInteractor.getUser().getAvatar().getThumb());
     }
 
@@ -62,8 +66,9 @@ public class SettingsScreen extends BaseActivity {
     }
 
     @OnClick(R.id.notifications) void onNotificationClick() {
-        uiNotificationsToggle.setChecked(!uiNotificationsToggle.isChecked());
-        userInteractor.setNotificationsEnabled(uiNotificationsToggle.isChecked());
+        Navigator.notifications(this);
+//        uiNotificationsToggle.setChecked(!uiNotificationsToggle.isChecked());
+//        userInteractor.setNotificationsEnabled(uiNotificationsToggle.isChecked());
     }
 
     @OnClick(R.id.unsubscribe) void onUnsubscribeClick(){

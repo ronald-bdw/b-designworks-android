@@ -10,6 +10,7 @@ import com.pairup.android.login.RegistrationScreen;
 import com.pairup.android.login.VerifyScreen;
 import com.pairup.android.profile.EditProfileScreen;
 import com.pairup.android.profile.ProfileScreen;
+import com.pairup.android.settings.PushNotificationsSettingsScreen;
 import com.pairup.android.settings.SettingsScreen;
 import com.pairup.android.subscription.SubscriptionScreen;
 import com.pairup.android.sync.SyncScreen;
@@ -42,4 +43,5 @@ public interface AppComponent {
     void inject(EnterPhoneScreen enterPhoneScreen);
     void inject(SyncScreen syncScreen);
     void inject(SubscriptionScreen subscriptionScreen);
+    void inject(PushNotificationsSettingsScreen pushNotificationsSettingsScreen);
 }

@@ -3,81 +3,124 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/default_background"
+    android:orientation="vertical"
     >
 
     <include layout="@layout/layout_toolbar"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@android:color/white"
-        android:text="@string/pushes_send_me_push_notifications_for"
-        android:gravity="center_vertical"
-        android:paddingLeft="16dp"
-        android:textSize="@dimen/font_size_medium"
-        android:textStyle="bold"
-        android:layout_marginTop="1dp"
-        />
-
-    <RadioGroup
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@android:color/white"
         >
 
-        <RadioButton
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:text="@string/pushes_activity_on_any_kind"
-            />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
 
-        <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:text="@string/pushes_only_key_words"
-            />
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:gravity="center"
+                android:textSize="@dimen/font_size_medium"
+                />
 
-        <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:text="@string/pushes_nothing_push_notifications_off"
-            />
+            <TextView
+                android:id="@+id/hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginTop="52dp"
+                android:gravity="center"
+                />
 
-    </RadioGroup>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:orientation="horizontal"
+                >
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="48dp"
-        android:background="@android:color/white"
-        android:text="@string/pushes_key_words"
-        android:gravity="center_vertical"
-        android:paddingLeft="16dp"
-        android:textStyle="bold"
-        android:textSize="@dimen/font_size_medium"
-        />
+                <ImageView
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:layout_marginLeft="16dp"
+                    />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@android:color/white"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
-        android:hint="@string/pushes_keywords_hint"
-        android:padding="16dp"
-        />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="4dp"
+                    android:text="@string/notifications_2nd_line"
+                    />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/pushes_case_warning"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
-        android:layout_marginTop="8dp"
-        />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                >
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:layout_marginLeft="16dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="4dp"
+                    android:text="@string/notifications_3rd_line"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/notifications_toggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    />
+
+                <TextView
+                    android:id="@+id/fourth_line_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="4dp"
+                    />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/application_settings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/app_btn_filled"
+                android:text="@string/open_application_settings"
+                android:textColor="@android:color/white"
+                />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

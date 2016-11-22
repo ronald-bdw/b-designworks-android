@@ -1,5 +1,9 @@
 package com.pairup.android;
 
+import android.app.AppOpsManager;
+import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -19,6 +23,9 @@ import com.pairup.android.utils.storage.IStorage;
 import com.pairup.android.utils.storage.UserSettings;
 
 import java.io.File;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import io.smooch.core.Smooch;
 import okhttp3.MediaType;
@@ -35,9 +42,8 @@ import rx.schedulers.Schedulers;
 public class UserInteractor {
 
     private static final String KEY_USER                    = "user";
-    private static final String KEY_SHOW_TOUR_TO_USER = "showTourForUser";
+    private static final String KEY_SHOW_TOUR_TO_USER       = "showTourForUser";
     private static final String KEY_FIRST_VISIT_AFTER_LOGIN = "firstVisitAfterLogin";
-    private static final String KEY_NOTIFICATIONS_ENABLED   = "notificationsEnabled";
     private static final String DEVICE_TYPE_ANDROID         = "android";
 
     @NonNull private final IStorage     storage;
@@ -154,12 +160,39 @@ public class UserInteractor {
         return user.getFirstName() + " " + user.getLastName();
     }
 
-    public boolean isNotificationsEnabled() {
-        return storage.getBoolean(KEY_NOTIFICATIONS_ENABLED, true);
+    public boolean isNotificationsEnabled(@NonNull Context context) {
+        if (isSdkSupportsNotifications()) {
+            AppOpsManager mAppOps = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
+            ApplicationInfo appInfo = context.getApplicationInfo();
+            String pkg = context.getApplicationContext().getPackageName();
+            int uid = appInfo.uid;
+            Class appOpsClass;
+            try {
+                appOpsClass = Class.forName(AppOpsManager.class.getName());
+                Method checkOpNoThrowMethod = appOpsClass.getMethod("checkOpNoThrow", Integer.TYPE, Integer.TYPE, String.class);
+                Field opPostNotificationValue = appOpsClass.getDeclaredField("OP_POST_NOTIFICATION");
+                int value = (int) opPostNotificationValue.get(Integer.class);
+                boolean isNotificationsEnabled = ((int) checkOpNoThrowMethod.invoke(mAppOps, value, uid, pkg) == AppOpsManager.MODE_ALLOWED);
+                sendNotificationsStatus(isNotificationsEnabled);
+                return isNotificationsEnabled;
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            return false;
+        } else {
+            return true;
+        }
     }
 
-    public void setNotificationsEnabled(boolean enabled) {
-        storage.putBoolean(KEY_NOTIFICATIONS_ENABLED, enabled);
+    public void sendNotificationsStatus(boolean enabled) {
         if (enabled) {
             api.userEnabledPushNotifications("message_push")
                 .subscribeOn(Schedulers.io())
@@ -243,4 +276,9 @@ public class UserInteractor {
     public boolean showTourForUser() {
         return storage.getBoolean(KEY_SHOW_TOUR_TO_USER, true);
     }
+
+    public boolean isSdkSupportsNotifications() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+    }
+
 }
