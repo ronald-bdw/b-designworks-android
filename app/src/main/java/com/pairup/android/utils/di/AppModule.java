@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationManagerCompat;
 
 import com.pairup.android.Api;
 import com.pairup.android.BuildConfig;
@@ -51,8 +52,7 @@ public class AppModule {
         mApplication = application;
     }
 
-    @Provides
-    @Singleton Context providesApplication() {
+    @Provides @Singleton Context provideContext() {
         return mApplication;
     }
 
@@ -92,8 +92,9 @@ public class AppModule {
     @Singleton
     public UserInteractor providesUserInteractor(@NonNull IStorage storage,
                                                  @NonNull UserSettings userSettings,
-                                                 @NonNull Api api) {
-        return new UserInteractor(storage, userSettings, api);
+                                                 @NonNull Api api,
+                                                 @NonNull NotificationManagerCompat notificationManager) {
+        return new UserInteractor(storage, userSettings, api, notificationManager);
     }
 
     @Provides @Singleton
@@ -160,5 +161,9 @@ public class AppModule {
 
     @Provides @Singleton public ImageLoader provideImageLoader(Context context) {
         return new ImageLoader(context);
+    }
+
+    @Provides @Singleton NotificationManagerCompat provideNotificationManager(Context context) {
+        return NotificationManagerCompat.from(context);
     }
 }

@@ -1,8 +1,10 @@
 package com.pairup.android;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 
 import com.pairup.android.chat.ChatScreen;
@@ -15,6 +17,7 @@ import com.pairup.android.login.WelcomeScreen;
 import com.pairup.android.login.functional_area.FunctionalToAreaCodeScreen;
 import com.pairup.android.profile.EditProfileScreen;
 import com.pairup.android.profile.ProfileScreen;
+import com.pairup.android.settings.PushNotificationsSettingsScreen;
 import com.pairup.android.settings.SettingsScreen;
 import com.pairup.android.subscription.SubscriptionScreen;
 import com.pairup.android.sync.SyncScreen;
@@ -114,5 +117,20 @@ public class Navigator {
 
     public static void subscription(@NonNull Context context) {
         context.startActivity(new Intent(context, SubscriptionScreen.class));
+    }
+
+    public static void notifications(@NonNull Context context){
+        context.startActivity(new Intent(context, PushNotificationsSettingsScreen.class));
+    }
+
+    public static void applicationSettings(@NonNull Context context){
+        try {
+            Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            intent.setData(Uri.parse("package:com.pairup.android"));
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS);
+            context.startActivity(intent);
+        }
     }
 }
