@@ -26,8 +26,8 @@ android {
         ext.betaDistributionGroupAliases = "qa"
 
         applicationId APPLICATION_ID
-        versionCode 2
-        versionName "1.0.0"
+        versionCode 4
+        versionName "0.0.rc1"
 
         def gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
         buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
@@ -131,7 +131,7 @@ dependencies {
 
     compile 'com.timehop.stickyheadersrecyclerview:library:0.4.3@aar'
     compile 'com.simplecityapps:recyclerview-fastscroll:1.0.11'
-
+    
     compile 'com.anjlab.android.iab.v3:library:1.0.+'
 
     compile 'com.yalantis:ucrop:2.2.0'
