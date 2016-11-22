@@ -55,16 +55,18 @@ public class PushNotificationsSettingsScreen extends BaseActivity {
 
     private void customizeUi() {
         if (DeviceInteractor.isSdkSupportsNotifications()) {
-            if (userInteractor.areNotificationsEnabled(NotificationManagerCompat.from(this))) {
+            if (userInteractor.areNotificationsEnabled()) {
                 uiStatus.setText(R.string.notification_status_enabled);
                 uiHint.setText(R.string.notification_hint_off);
                 uiChangeNotifications.setText(R.string.notifications_change_off);
+                uiNotificationsToggle.setChecked(false);
             } else {
                 uiStatus.setText(R.string.notification_status_disabled);
                 uiHint.setText(R.string.notification_hint_on);
                 uiChangeNotifications.setText(R.string.notifications_change_on);
+                uiNotificationsToggle.setChecked(true);
             }
-            uiNotificationsToggle.setChecked(!userInteractor.areNotificationsEnabled(NotificationManagerCompat.from(this)));
+            userInteractor.sendNotificationsStatus(userInteractor.areNotificationsEnabled());
         } else {
             uiStatus.setVisibility(View.GONE);
             uiChangeNotifications.setText(R.string.notifications_change);

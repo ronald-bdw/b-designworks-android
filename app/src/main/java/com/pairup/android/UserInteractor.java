@@ -46,13 +46,16 @@ public class UserInteractor {
     @NonNull private final IStorage     storage;
     @NonNull private final UserSettings userSettings;
     @NonNull private final Api          api;
+    @NonNull private final NotificationManagerCompat notificationManager;
 
     public UserInteractor(@NonNull IStorage storage,
                           @NonNull UserSettings userSettings,
-                          @NonNull Api api) {
+                          @NonNull Api api,
+                          @NonNull NotificationManagerCompat notificationManager) {
         this.storage = storage;
         this.userSettings = userSettings;
         this.api = api;
+        this.notificationManager = notificationManager;
     }
 
     public Observable<AuthResponse> requestCode(@NonNull String phone) {
@@ -157,10 +160,12 @@ public class UserInteractor {
         return user.getFirstName() + " " + user.getLastName();
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    public boolean areNotificationsEnabled(@NonNull NotificationManagerCompat notificationManagerCompat) {
-        sendNotificationsStatus(notificationManagerCompat.areNotificationsEnabled());
-        return notificationManagerCompat.areNotificationsEnabled();
+    public boolean areNotificationsEnabled() {
+        if(DeviceInteractor.isSdkSupportsNotifications()) {
+            return notificationManager.areNotificationsEnabled();
+        } else {
+            return true;
+        }
     }
 
     public void sendNotificationsStatus(boolean enabled) {

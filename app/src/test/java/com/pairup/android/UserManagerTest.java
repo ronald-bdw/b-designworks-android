@@ -1,5 +1,8 @@
 package com.pairup.android;
 
+import android.content.Context;
+import android.support.v4.app.NotificationManagerCompat;
+
 import com.pairup.android.login.models.AuthResponse;
 import com.pairup.android.login.models.UserResponse;
 import com.pairup.android.utils.Bus;
@@ -40,17 +43,21 @@ public class UserManagerTest {
         return MapperUtils.getInstance().fromJson(FAKE_REGISTER_RESPONSE, UserResponse.class);
     }
 
-    private UserInteractor userManager;
-    private UserSettings   userSettings;
+    private UserInteractor            userManager;
+    private UserSettings              userSettings;
+    private NotificationManagerCompat notificationManager;
+    private Context                   context;
 
     @Before public void setUp() throws Exception {
+        context = mock(Context.class);
         Api mockedApi = mock(Api.class);
         RuntimeStorage storage = new RuntimeStorage();
         userSettings = new UserSettings(storage);
+        notificationManager = NotificationManagerCompat.from(context);
         when(mockedApi.sendMeCode(any(), any())).thenReturn(Observable.just(getFakeAuthResponse()));
         when(mockedApi.register(anyString(), anyString(), anyString(), anyString(), eq(MY_FAKE_NUMBER), eq(MY_FAKE_NUMBER_CODE_ID)))
             .thenReturn(Observable.just(getFakeRegisterResponse()));
-        userManager = new UserInteractor(storage, userSettings, mockedApi);
+        userManager = new UserInteractor(storage, userSettings, mockedApi, notificationManager);
     }
 
     @Test

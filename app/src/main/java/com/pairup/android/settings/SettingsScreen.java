@@ -47,7 +47,7 @@ public class SettingsScreen extends BaseActivity {
 
     @Override protected void onResume() {
         super.onResume();
-        uiNotificationsToggle.setChecked(userInteractor.areNotificationsEnabled(NotificationManagerCompat.from(this)));
+        uiNotificationsToggle.setChecked(userInteractor.areNotificationsEnabled());
         ImageLoader.load(context(), uiAvatar, userInteractor.getUser().getAvatar().getThumb());
     }
 
