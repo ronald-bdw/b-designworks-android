@@ -149,16 +149,16 @@
     <string name="subscription_status_time">"Subscription was paid in "</string>
     <string name="subscribed_status">You are already subscribed</string>
     <string name="provider_not_chosen">Please select provider</string>
-    <string name="notification_status_on">Notifications are enabled!</string>
-    <string name="notification_status_off">Notifications are disabled!</string>
-    <string name="notification_1st_line">Change your settings to get or don\'t get notified when your coach sends you message</string>
-    <string name="notification_1st_line_on">Change your settings to don\'t get notified when your coach sends you message</string>
-    <string name="notification_1st_line_off">Change your settings to get notified when your coach sends you message</string>
-    <string name="notifications_2nd_line">1) Tap to Open Application Settings</string>
-    <string name="notifications_3rd_line">2) Tap to Notifications </string>
-    <string name="notifications_4th_line">3) Change Show notifications</string>
-    <string name="notifications_4th_line_on">3) Set Show notifications to Off</string>
-    <string name="notifications_4th_line_off">3) Set Show notifications to On</string>
+    <string name="notification_status_enabled">Notifications are enabled!</string>
+    <string name="notification_status_disabled">Notifications are disabled!</string>
+    <string name="notification_hint">Change your settings to get or don\'t get notified when your coach sends you message</string>
+    <string name="notification_hint_off">Change your settings to don\'t get notified when your coach sends you message</string>
+    <string name="notification_hint_on">Change your settings to get notified when your coach sends you message</string>
+    <string name="notifications_open_app_settings">1) Tap to Open Application Settings</string>
+    <string name="notifications_tap_to_notifications">2) Tap to Notifications </string>
+    <string name="notifications_change">3) Change Show notifications</string>
+    <string name="notifications_change_off">3) Set Show notifications to Off</string>
+    <string name="notifications_change_on">3) Set Show notifications to On</string>
     <string name="open_application_settings">Open Application Settings</string>
 
     <string-array name="select_provider_options">

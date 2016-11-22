@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="4dp"
-                    android:text="@string/notifications_2nd_line"
+                    android:text="@string/notifications_open_app_settings"
                     />
 
             </LinearLayout>
@@ -80,7 +80,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="4dp"
-                    android:text="@string/notifications_3rd_line"
+                    android:text="@string/notifications_tap_to_notifications"
                     />
 
             </LinearLayout>
