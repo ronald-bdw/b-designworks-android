@@ -1,5 +1,7 @@
 package com.pairup.android;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.AppOpsManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -160,6 +162,7 @@ public class UserInteractor {
         return user.getFirstName() + " " + user.getLastName();
     }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     public boolean isNotificationsEnabled(@NonNull Context context) {
         if (isSdkSupportsNotifications()) {
             AppOpsManager mAppOps = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
@@ -175,15 +178,7 @@ public class UserInteractor {
                 boolean isNotificationsEnabled = ((int) checkOpNoThrowMethod.invoke(mAppOps, value, uid, pkg) == AppOpsManager.MODE_ALLOWED);
                 sendNotificationsStatus(isNotificationsEnabled);
                 return isNotificationsEnabled;
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
+            } catch (ClassNotFoundException | NoSuchMethodException | NoSuchFieldException | InvocationTargetException | IllegalAccessException e) {
                 e.printStackTrace();
             }
             return false;
