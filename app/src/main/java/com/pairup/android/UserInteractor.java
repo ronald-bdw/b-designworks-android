@@ -1,13 +1,14 @@
 package com.pairup.android;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AppOpsManager;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationManagerCompat;
 
 import com.pairup.android.chat.UserProfileUpdatedEvent;
 import com.pairup.android.login.models.AuthResponse;
@@ -163,25 +164,11 @@ public class UserInteractor {
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    public boolean isNotificationsEnabled(@NonNull Context context) {
+    public boolean areNotificationsEnabled(@NonNull Context context) {
         if (isSdkSupportsNotifications()) {
-            AppOpsManager mAppOps = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
-            ApplicationInfo appInfo = context.getApplicationInfo();
-            String pkg = context.getApplicationContext().getPackageName();
-            int uid = appInfo.uid;
-            Class appOpsClass;
-            try {
-                appOpsClass = Class.forName(AppOpsManager.class.getName());
-                Method checkOpNoThrowMethod = appOpsClass.getMethod("checkOpNoThrow", Integer.TYPE, Integer.TYPE, String.class);
-                Field opPostNotificationValue = appOpsClass.getDeclaredField("OP_POST_NOTIFICATION");
-                int value = (int) opPostNotificationValue.get(Integer.class);
-                boolean isNotificationsEnabled = ((int) checkOpNoThrowMethod.invoke(mAppOps, value, uid, pkg) == AppOpsManager.MODE_ALLOWED);
-                sendNotificationsStatus(isNotificationsEnabled);
-                return isNotificationsEnabled;
-            } catch (ClassNotFoundException | NoSuchMethodException | NoSuchFieldException | InvocationTargetException | IllegalAccessException e) {
-                e.printStackTrace();
-            }
-            return false;
+            boolean areNotificationsEnabled = NotificationManagerCompat.from(context).areNotificationsEnabled();
+            sendNotificationsStatus(areNotificationsEnabled);
+            return areNotificationsEnabled;
         } else {
             return true;
         }

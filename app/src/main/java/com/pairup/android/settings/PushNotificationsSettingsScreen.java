@@ -54,20 +54,20 @@ public class PushNotificationsSettingsScreen extends BaseActivity {
 
     private void customizeUi() {
         if(userInteractor.isSdkSupportsNotifications()) {
-            if (userInteractor.isNotificationsEnabled(this)) {
-                uiStatus.setText(R.string.notification_status_on);
-                uiHint.setText(R.string.notification_1st_line_on);
-                uiFourthLineText.setText(R.string.notifications_4th_line_on);
+            if (userInteractor.areNotificationsEnabled(this)) {
+                uiStatus.setText(R.string.notification_status_enabled);
+                uiHint.setText(R.string.notification_hint_off);
+                uiFourthLineText.setText(R.string.notifications_change_off);
             } else {
-                uiStatus.setText(R.string.notification_status_off);
-                uiHint.setText(R.string.notification_1st_line_off);
-                uiFourthLineText.setText(R.string.notifications_4th_line_off);
+                uiStatus.setText(R.string.notification_status_disabled);
+                uiHint.setText(R.string.notification_hint_on);
+                uiFourthLineText.setText(R.string.notifications_change_on);
             }
-            uiNotificationsToggle.setChecked(!userInteractor.isNotificationsEnabled(this));
+            uiNotificationsToggle.setChecked(!userInteractor.areNotificationsEnabled(this));
         } else {
             uiStatus.setVisibility(View.GONE);
-            uiFourthLineText.setText(R.string.notifications_4th_line);
-            uiHint.setText(R.string.notification_1st_line);
+            uiFourthLineText.setText(R.string.notifications_change);
+            uiHint.setText(R.string.notification_hint);
         }
     }
 }

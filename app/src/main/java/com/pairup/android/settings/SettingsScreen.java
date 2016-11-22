@@ -11,7 +11,6 @@ import com.pairup.android.BaseActivity;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
-import com.pairup.android.subscription.SubscriptionPresenter;
 import com.pairup.android.utils.ImageLoader;
 import com.pairup.android.utils.di.Injector;
 import com.pairup.android.utils.ui.AreYouSureDialog;
@@ -40,13 +39,13 @@ public class SettingsScreen extends BaseActivity {
         super.onCreate(savedState);
         Injector.inject(this);
 
-        if(!userInteractor.isSdkSupportsNotifications())
+        if (!userInteractor.isSdkSupportsNotifications())
             uiNotificationsToggle.setVisibility(View.GONE);
     }
 
     @Override protected void onResume() {
         super.onResume();
-        uiNotificationsToggle.setChecked(userInteractor.isNotificationsEnabled(this));
+        uiNotificationsToggle.setChecked(userInteractor.areNotificationsEnabled(this));
         ImageLoader.load(context(), uiAvatar, userInteractor.getUser().getAvatar().getThumb());
     }
 
@@ -67,11 +66,9 @@ public class SettingsScreen extends BaseActivity {
 
     @OnClick(R.id.notifications) void onNotificationClick() {
         Navigator.notifications(this);
-//        uiNotificationsToggle.setChecked(!uiNotificationsToggle.isChecked());
-//        userInteractor.setNotificationsEnabled(uiNotificationsToggle.isChecked());
     }
 
-    @OnClick(R.id.unsubscribe) void onUnsubscribeClick(){
+    @OnClick(R.id.unsubscribe) void onUnsubscribeClick() {
         Navigator.subscription(this);
     }
 }
