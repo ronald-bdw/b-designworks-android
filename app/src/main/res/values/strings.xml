@@ -64,7 +64,7 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="trial_dialog_no_worries">No worries. Pair Up is open to everyone.</string>
-    <string name="start_free_14_day_trial_now">Start free 14-day trial now</string>
+    <string name="start_free_14_day_trial_now">Start free 30 day trial now</string>
     <string name="trial_dialog_learn_more">Learn more</string>
     <string name="select_provider_label">Select your provider:</string>
     <string name="welcome_question">Did you receive a personal\nsign-up invitation?</string>
@@ -73,7 +73,7 @@
     <string name="trial_start_trial">Start a free 14-day trial now</string>
     <string name="verify_resend">Re-send</string>
     <string name="loading_sending_request_for_code">Requesting verification code</string>
-    <string name="verify_waiting_for_sms">Please, wait for sms with link to app</string>
+    <string name="verify_waiting_for_sms">Success! Please wait for your SMS confirmation to complete the verification process.</string>
     <string name="edit_profile_profile_updated">Profile has been updated</string>
     <string name="cancel">Cancel</string>
     <string name="edit_profile_name_surname_pattern">%1$s %2$s</string>
@@ -139,16 +139,16 @@
 
     <string name="screen_splash_main_txt">your healthy habit coach\n with your every step of the way</string>
 
-    <string name="screen_welcome_user_have_account">Click here if you have an account with Pair Up</string>
+    <string name="screen_welcome_user_have_account">Login if you already have a Pair Up account</string>
 
-    <string name="screen_enter_phone_error_registered">Number is already registered. Try another number.</string>
-    <string name="screen_enter_phone_error_not_registered">Number is not registered. Try another number or register this.</string>
-    <string name="screen_enter_phone_error_has_no_provider">This Number has no provider. Try another number or register this.</string>
+    <string name="screen_enter_phone_error_registered">Unsuccessful!</string>
+    <string name="screen_enter_phone_error_not_registered">Verification is unsuccessful. You are not registerd with Pair Up. Please sign up first.</string>
+    <string name="screen_enter_phone_error_has_no_provider">Verification is unsuccessful. You don't have a provider.</string>
     <string name="screen_enter_phone_error">Something went wrong. Please, try again.</string>
     <string name="subscription_owned_text">Congratulations! You are now subscribed for Pair Up for 1 month.</string>
     <string name="subscription_status_time">"Subscription was paid in "</string>
     <string name="subscribed_status">You are already subscribed</string>
-    <string name="provider_not_chosen">Please select provider</string>
+    <string name="provider_not_chosen">Please select your provider from the list:</string>
 
     <string-array name="select_provider_options">
         <item>HBF</item>
