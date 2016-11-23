@@ -10,6 +10,7 @@ import com.anjlab.android.iab.v3.TransactionDetails;
 import com.pairup.android.BaseActivity;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
+import com.pairup.android.chat.models.SubscriptionsDetails;
 import com.pairup.android.utils.di.Injector;
 import com.pairup.android.utils.ui.SimpleDialog;
 import com.pairup.android.utils.ui.UiInfo;
@@ -61,6 +62,10 @@ public class SubscriptionScreen extends BaseActivity implements SubscriptionView
             getString(R.string.subscription_request),
             getString(R.string.subscribe),
             () -> subscriptionPresenter.subscribe());
+    }
+
+    @Override public void sendSubscribeStatus(SubscriptionsDetails subscriptionsDetails) {
+
     }
 
     @Override protected void onResume() {

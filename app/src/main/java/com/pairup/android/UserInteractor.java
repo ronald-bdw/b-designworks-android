@@ -23,6 +23,7 @@ import java.io.File;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import rx.Observable;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
@@ -231,5 +232,9 @@ public class UserInteractor {
 
     public boolean userLoggedIn() {
         return storage.contains(KEY_USER);
+    }
+
+    public Observable<ResponseBody> sendInAppStatus(@NonNull String planName, @NonNull String date, @NonNull boolean isActive) {
+        return api.sendSubscriptionStatus(planName, date, isActive);
     }
 }
