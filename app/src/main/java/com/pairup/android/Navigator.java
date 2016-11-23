@@ -4,7 +4,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 
 import com.pairup.android.chat.ChatScreen;
@@ -45,13 +44,9 @@ public class Navigator {
         context.startActivity(new Intent(context, TrialScreen.class));
     }
 
-    public static void verification(@NonNull Context context) {
-        context.startActivity(new Intent(context, VerifyScreen.class));
-    }
-
-    public static void verificationWithHbfProvider(@NonNull Context context) {
+    public static void verification(@NonNull Context context, boolean hasHbfProvider) {
         Intent intent = new Intent(context, VerifyScreen.class);
-        intent.putExtra(VerifyScreen.ARG_IS_HBF_PROVIDER, true);
+        intent.putExtra(VerifyScreen.ARG_HAS_HBF_PROVIDER, true);
         context.startActivity(intent);
     }
 

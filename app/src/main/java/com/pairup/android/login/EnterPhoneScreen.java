@@ -53,6 +53,8 @@ public class EnterPhoneScreen extends BaseActivity {
     @Inject UserInteractor      userInteractor;
     @Inject LoginFlowInteractor loginFlowInteractor;
 
+    private boolean hasHbfProvider;
+
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_enter_phone)
             .setTitleRes(R.string.title_verification)
@@ -69,7 +71,7 @@ public class EnterPhoneScreen extends BaseActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         if (BuildConfig.DEBUG && savedState == null) {
             uiAreaCode.setText("+7");
-            uiPhone.setText("9625535458");
+            uiPhone.setText("9872947933");
         }
     }
 
@@ -163,11 +165,7 @@ public class EnterPhoneScreen extends BaseActivity {
                 loginFlowInteractor.setPhoneCodeId(result.getPhoneCodeId());
                 loginFlowInteractor.setPhoneRegistered(result.isPhoneRegistered());
                 loginFlowInteractor.setPhoneNumber(areaCode + phone);
-                if (accountVerificationType == AccountVerificationType.HAS_PROVIDER) {
-                    Navigator.verificationWithHbfProvider(context());
-                } else {
-                    Navigator.verification(context());
-                }
+                Navigator.verification(context(), hasHbfProvider);
             }, error -> {
                 if (error instanceof RetrofitException) {
                     RetrofitException retrofitError = (RetrofitException) error;
