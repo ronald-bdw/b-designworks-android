@@ -1,7 +1,11 @@
 package com.pairup.android;
 
+import android.annotation.TargetApi;
+import android.content.Context;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationManagerCompat;
 
 import com.pairup.android.chat.UserProfileUpdatedEvent;
 import com.pairup.android.login.models.AuthResponse;
@@ -20,6 +24,7 @@ import com.pairup.android.utils.storage.UserSettings;
 
 import java.io.File;
 
+import io.smooch.core.Smooch;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -35,20 +40,23 @@ import rx.schedulers.Schedulers;
 public class UserInteractor {
 
     private static final String KEY_USER                    = "user";
+    private static final String KEY_SHOW_TOUR_TO_USER       = "showTourForUser";
     private static final String KEY_FIRST_VISIT_AFTER_LOGIN = "firstVisitAfterLogin";
-    private static final String KEY_NOTIFICATIONS_ENABLED   = "notificationsEnabled";
     private static final String DEVICE_TYPE_ANDROID         = "android";
 
     @NonNull private final IStorage     storage;
     @NonNull private final UserSettings userSettings;
     @NonNull private final Api          api;
+    @NonNull private final NotificationManagerCompat notificationManager;
 
     public UserInteractor(@NonNull IStorage storage,
                           @NonNull UserSettings userSettings,
-                          @NonNull Api api) {
+                          @NonNull Api api,
+                          @NonNull NotificationManagerCompat notificationManager) {
         this.storage = storage;
         this.userSettings = userSettings;
         this.api = api;
+        this.notificationManager = notificationManager;
     }
 
     public Observable<AuthResponse> requestCode(@NonNull String phone) {
@@ -86,6 +94,7 @@ public class UserInteractor {
     public void logout() {
         storage.remove(KEY_USER);
         userSettings.clear();
+        Smooch.logout();
     }
 
     public boolean firstVisitAfterLogin() {
@@ -152,13 +161,16 @@ public class UserInteractor {
         return user.getFirstName() + " " + user.getLastName();
     }
 
-    public boolean isNotificationsEnabled() {
-        return storage.getBoolean(KEY_NOTIFICATIONS_ENABLED, true);
+    public boolean areNotificationsEnabled() {
+        if(DeviceInteractor.isSdkSupportsNotifications()) {
+            return notificationManager.areNotificationsEnabled();
+        } else {
+            return true;
+        }
     }
 
-    public void setNotificationsEnabled(boolean enabled) {
-        storage.putBoolean(KEY_NOTIFICATIONS_ENABLED, enabled);
-        if (enabled) {
+    public void sendNotificationsStatus() {
+        if (areNotificationsEnabled()) {
             api.userEnabledPushNotifications("message_push")
                 .subscribeOn(Schedulers.io())
                 .subscribe(result -> {}, ignoreError -> {});
@@ -233,6 +245,15 @@ public class UserInteractor {
     public boolean userLoggedIn() {
         return storage.contains(KEY_USER);
     }
+
+    public void setShowTourForUser() {
+        storage.putBoolean(KEY_SHOW_TOUR_TO_USER, false);
+    }
+
+    public boolean showTourForUser() {
+        return storage.getBoolean(KEY_SHOW_TOUR_TO_USER, true);
+    }
+
 
     public Observable<ResponseBody> sendInAppStatus(@NonNull String planName, @NonNull String date, @NonNull boolean isActive) {
         return api.sendSubscriptionStatus(planName, date, isActive);

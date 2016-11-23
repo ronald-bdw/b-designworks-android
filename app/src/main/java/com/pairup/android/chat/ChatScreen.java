@@ -72,6 +72,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
             User.getCurrentUser().setEmail(user.getEmail());
             User.getCurrentUser().setFirstName(user.getFirstName());
             User.getCurrentUser().setLastName(user.getId());
+            userInteractor.sendNotificationsStatus();
 
             getSupportFragmentManager().beginTransaction()
                 .replace(R.id.side_panel_container, new ChatSidePanelFragment())

@@ -1,7 +1,7 @@
 ext {
     versions = [
             okHttp               : '3.4.1',
-            support              : '23.3.0',
+            support              : '25.0.1',
             googleServicesVersion: '9.6.1',
             retrofit             : '2.0.2',
             espressoVersion      : '2.2.2',
