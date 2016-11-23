@@ -20,9 +20,10 @@ public class SubscriptionsDetails {
     @SerializedName("purchaseTime")
     private long   purchaseDate;
     @SerializedName("autoRenewing")
-    boolean isActive;
+    boolean isRenewing;
 
     public String getPlanName() {
+        //TODO change it when all subscriptions will be added
         return TYPE_TRIAL;
     }
 
@@ -30,13 +31,9 @@ public class SubscriptionsDetails {
         this.planName = planName;
     }
 
-    public String getPurchaseDate() {
-        Date date = new Date(purchaseDate);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.MONTH, 1);
+    public String getExpiredDateString() {
         SimpleDateFormat sdf = new SimpleDateFormat(EXPIRED_DATE_FORMAT);
-        return sdf.format(calendar.getTime());
+        return sdf.format(getExpiredDate());
     }
 
     public void setPurchaseDate(long purchaseDate) {
@@ -44,10 +41,19 @@ public class SubscriptionsDetails {
     }
 
     public boolean isActive() {
-        return isActive;
+        Date now = new Date();
+        return isRenewing || (now.getTime() < getExpiredDate().getTime());
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setRenewing(boolean renewing) {
+        isRenewing = renewing;
+    }
+
+    private Date getExpiredDate() {
+        Date date = new Date(purchaseDate);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.MONTH, 1);
+        return calendar.getTime();
     }
 }

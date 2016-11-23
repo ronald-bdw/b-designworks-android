@@ -1,8 +1,5 @@
 package com.pairup.android;
 
-import android.annotation.TargetApi;
-import android.content.Context;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationManagerCompat;
@@ -253,7 +250,6 @@ public class UserInteractor {
     public boolean showTourForUser() {
         return storage.getBoolean(KEY_SHOW_TOUR_TO_USER, true);
     }
-
 
     public Observable<ResponseBody> sendInAppStatus(@NonNull String planName, @NonNull String date, @NonNull boolean isActive) {
         return api.sendSubscriptionStatus(planName, date, isActive);

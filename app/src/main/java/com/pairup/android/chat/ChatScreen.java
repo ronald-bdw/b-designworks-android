@@ -93,7 +93,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
 
     @Override
     public void sendSubscribeStatus(@NonNull SubscriptionsDetails subscriptionsDetails) {
-        userInteractor.sendInAppStatus(subscriptionsDetails.getPlanName(), subscriptionsDetails.getPurchaseDate(), subscriptionsDetails.isActive())
+        userInteractor.sendInAppStatus(subscriptionsDetails.getPlanName(), subscriptionsDetails.getExpiredDateString(), subscriptionsDetails.isActive())
             .subscribeOn(Schedulers.io())
             .subscribe(new Observer<ResponseBody>() {
                 @Override public void onCompleted() {

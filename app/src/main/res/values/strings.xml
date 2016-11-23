@@ -100,9 +100,9 @@
     <string name="tour_upload_avatar_title">Upload your\nprofile photo</string>
     <string name="tour_upload_avatar_description">Choose a photo for profile photo.</string>
     <string name="tour_fitness_app_title">Track your steps with\nfitbit/google fit</string>
-    <string name="tour_fitness_app_description">We are nearly there… to understand\nyour active level better, please\nensure to sync your device with\nour app</string>
+    <string name="tour_fitness_app_description">We are nearly there… to understand\nyour renewing level better, please\nensure to sync your device with\nour app</string>
     <string name="tour_socials_title">Looks like you are\nall set!</string>
-    <string name="tour_socials_description">One of our coach will contact you\nshortly. Meanwhile, you can follow us\non Facebook for more tips to\nget active</string>
+    <string name="tour_socials_description">One of our coach will contact you\nshortly. Meanwhile, you can follow us\non Facebook for more tips to\nget renewing</string>
     <string name="tour_socials_fb_link">facebook.com/pearupapp</string>
     <string name="tour_socials_description_2">Or you can share this app with your\nfamily and friends to enjoy the FREE 14-day trial.</string>
     <string name="welcome_hint_area_code">Area code</string>
@@ -169,7 +169,7 @@
     <string-array name="trial_titles">
         <item>Welcome to Pair Up!</item>
         <item>Personalized Coach</item>
-        <item>Getting active tips</item>
+        <item>Getting renewing tips</item>
         <item>Free 14 day trial</item>
     </string-array>
     <string-array name="trial_descriptions">
