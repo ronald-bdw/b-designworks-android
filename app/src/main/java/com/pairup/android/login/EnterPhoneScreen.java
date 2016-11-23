@@ -167,9 +167,9 @@ public class EnterPhoneScreen extends BaseActivity {
                 loginFlowInteractor.setPhoneRegistered(result.isPhoneRegistered());
                 loginFlowInteractor.setPhoneNumber(areaCode + phone);
                 if (hasHbfProvider) {
-                    Navigator.verificationWithHbfProvider(this);
+                    Navigator.verificationWithHbfProvider(context());
                 } else {
-                    Navigator.verification(this);
+                    Navigator.verification(context());
                 }
             }, error -> {
                 if (error instanceof RetrofitException) {
