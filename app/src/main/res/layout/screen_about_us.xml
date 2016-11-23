@@ -20,12 +20,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="12dp"
-            android:text="Pear up app"
+            android:text="@string/about_us_title"
             android:textAllCaps="true"
             android:textColor="@color/app_accent"
             android:textSize="@dimen/font_size_big"
             android:textStyle="bold"
-            tools:ignore="HardcodedText"
             />
 
         <TextView
@@ -35,8 +34,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="12dp"
-            android:text="Some text stub. Some text stub. Some text stub. Some text stub. Honda Civic Hatchback is rock."
-            tools:ignore="HardcodedText"
+            android:text="@string/about_us_information"
             />
 
         <ImageView
@@ -47,7 +45,7 @@
             android:layout_marginTop="16dp"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            android:src="@drawable/about_us_1"
+            android:src="@drawable/about_us_coaches"
             />
 
         <TextView
@@ -57,39 +55,19 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="16dp"
-            android:text="Another text stub. Another text stub. Another text stub. Another text stub. I'm serious"
-            tools:ignore="HardcodedText"
+            android:text="@string/about_us_website_info"
             />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/website_link"
+            android:text="@string/website_link"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="24dp"
-            android:orientation="horizontal"
-            android:paddingBottom="24dp"
-            >
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="4dp"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:src="@drawable/about_us_2"
-                />
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:src="@drawable/about_us_3"
-                />
-
-        </LinearLayout>
+            android:background="@drawable/app_btn_filled"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="center"
+            />
 
     </LinearLayout>
 
