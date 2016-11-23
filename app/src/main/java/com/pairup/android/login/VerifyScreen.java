@@ -36,7 +36,8 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
     public static final String ARG_HAS_HBF_PROVIDER = "hasHbfProvider";
 
     @NonNull @Override public UiInfo getUiInfo() {
-        return new UiInfo(R.layout.screen_verify);
+        return new UiInfo(R.layout.screen_verify)
+            .enableBackButton();
     }
 
     @Inject VerifyPresenter     verifyPresenter;
