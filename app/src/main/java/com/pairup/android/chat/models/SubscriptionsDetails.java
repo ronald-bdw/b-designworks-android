@@ -1,13 +1,13 @@
 package com.pairup.android.chat.models;
 
 import com.google.gson.annotations.SerializedName;
+import com.pairup.android.utils.Times;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Created by klim-mobile on 22.11.2016.
+ * Created by Klymenko on 22.11.2016.
  */
 
 public class SubscriptionsDetails {
@@ -31,9 +31,8 @@ public class SubscriptionsDetails {
         this.planName = planName;
     }
 
-    public String getExpiredDateString() {
-        SimpleDateFormat sdf = new SimpleDateFormat(EXPIRED_DATE_FORMAT);
-        return sdf.format(getExpiredDate());
+    public String getExpiredDate() {
+        return Times.parseDateToString(Times.addToDateTime(purchaseDate, Calendar.MONTH, 1), EXPIRED_DATE_FORMAT);
     }
 
     public void setPurchaseDate(long purchaseDate) {
@@ -42,18 +41,10 @@ public class SubscriptionsDetails {
 
     public boolean isActive() {
         Date now = new Date();
-        return isRenewing || (now.getTime() < getExpiredDate().getTime());
+        return isRenewing || (now.getTime() < Times.addToDateTime(purchaseDate, Calendar.MONTH, 1).getTime());
     }
 
     public void setRenewing(boolean renewing) {
         isRenewing = renewing;
-    }
-
-    private Date getExpiredDate() {
-        Date date = new Date(purchaseDate);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.MONTH, 1);
-        return calendar.getTime();
     }
 }

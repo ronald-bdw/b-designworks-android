@@ -33,6 +33,7 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
     private                    FragmentActivity activity;
     private                    BillingProcessor bp;
     private                    SubscriptionsDetails subscriptionsDetails;
+    private                    Gson gson;
 
     IInAppBillingService mBillingService;
     ServiceConnection mServiceConnection = new ServiceConnection() {
@@ -48,6 +49,12 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
         }
     };
 
+    public void attachView(@NonNull SubscriptionView view, @NonNull FragmentActivity activity, Gson gson) {
+        attachView(view, activity);
+        this.gson = gson;
+        initPayments();
+    }
+
     public void attachView(@NonNull SubscriptionView view, @NonNull FragmentActivity activity) {
         this.view = view;
         this.activity = activity;
@@ -57,7 +64,6 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
         } else {
             // TODO device what to when user has no google play services
         }
-        initPayments();
     }
 
     public void detachView() {
@@ -124,7 +130,6 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
     }
 
     private SubscriptionsDetails getSubscribeDataFromString(@NonNull String purchaseData) {
-        Gson gson = new Gson();
         return gson.fromJson(purchaseData, SubscriptionsDetails.class);
     }
 

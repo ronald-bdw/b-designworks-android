@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anjlab.android.iab.v3.TransactionDetails;
+import com.google.gson.Gson;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.chat.models.SubscriptionsDetails;
@@ -93,7 +94,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
 
     @Override
     public void sendSubscribeStatus(@NonNull SubscriptionsDetails subscriptionsDetails) {
-        userInteractor.sendInAppStatus(subscriptionsDetails.getPlanName(), subscriptionsDetails.getExpiredDateString(), subscriptionsDetails.isActive())
+        userInteractor.sendInAppStatus(subscriptionsDetails.getPlanName(), subscriptionsDetails.getExpiredDate(), subscriptionsDetails.isActive())
             .subscribeOn(Schedulers.io())
             .subscribe(new Observer<ResponseBody>() {
                 @Override public void onCompleted() {
@@ -152,7 +153,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     @Override public void onResume() {
         super.onResume();
         Bus.subscribe(this);
-        subscriptionPresenter.attachView(this, this);
+        subscriptionPresenter.attachView(this, this, new Gson());
         setChatGone(!(subscriptionPresenter.isSubscribed() || userInteractor.getUser().hasHbfProvider()));
 
         // we could not customize part of the UI in on create because not all necessary views present in the hierarcy
