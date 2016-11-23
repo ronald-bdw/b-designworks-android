@@ -89,7 +89,7 @@ public class EnterPhoneScreen extends BaseActivity {
     @Override protected void onResume() {
         super.onResume();
         if (verifyNumberSubs != null && progressDialog == null) {
-            showProgerss();
+            showProgress();
         }
     }
 
@@ -105,7 +105,7 @@ public class EnterPhoneScreen extends BaseActivity {
 
     private void manageSubmit(@NonNull String areaCode, @NonNull String phone) {
         Keyboard.hide(this);
-        showProgerss();
+        showProgress();
         if ("+61".equals(areaCode) && '0' == phone.charAt(0)) {
             phone = phone.substring(1, phone.length());
         }
@@ -115,6 +115,7 @@ public class EnterPhoneScreen extends BaseActivity {
             .compose(Rxs.doInBackgroundDeliverToUI())
             .subscribe(result -> {
                 boolean passed = false;
+                hasHbfProvider = result.userHasHbfProvider();
                 switch (accountVerificationType) {
                     case IS_REGISTERED:
                         passed = result.isPhoneRegistered();
@@ -123,7 +124,7 @@ public class EnterPhoneScreen extends BaseActivity {
                         passed = !result.isPhoneRegistered();
                         break;
                     case HAS_PROVIDER:
-                        passed = result.userHasHbfProvider();
+                        passed = hasHbfProvider;
                         break;
                 }
                 if (passed) {
@@ -165,7 +166,11 @@ public class EnterPhoneScreen extends BaseActivity {
                 loginFlowInteractor.setPhoneCodeId(result.getPhoneCodeId());
                 loginFlowInteractor.setPhoneRegistered(result.isPhoneRegistered());
                 loginFlowInteractor.setPhoneNumber(areaCode + phone);
-                Navigator.verification(context(), hasHbfProvider);
+                if (hasHbfProvider) {
+                    Navigator.verificationWithHbfProvider(this);
+                } else {
+                    Navigator.verification(this);
+                }
             }, error -> {
                 if (error instanceof RetrofitException) {
                     RetrofitException retrofitError = (RetrofitException) error;
@@ -190,7 +195,7 @@ public class EnterPhoneScreen extends BaseActivity {
         }
     }
 
-    private void showProgerss() {
+    private void showProgress() {
         progressDialog = ProgressDialog.show(context(), getString(R.string.loading), getString(R.string.progress_verifying_phone_number), true, true, dialog -> {
             if (verifyNumberSubs != null && !verifyNumberSubs.isUnsubscribed()) {
                 verifyNumberSubs.unsubscribe();

@@ -44,7 +44,11 @@ public class Navigator {
         context.startActivity(new Intent(context, TrialScreen.class));
     }
 
-    public static void verification(@NonNull Context context, boolean hasHbfProvider) {
+    public static void verification(@NonNull Context context) {
+        context.startActivity(new Intent(context, VerifyScreen.class));
+    }
+
+    public static void verificationWithHbfProvider(@NonNull Context context) {
         Intent intent = new Intent(context, VerifyScreen.class);
         intent.putExtra(VerifyScreen.ARG_HAS_HBF_PROVIDER, true);
         context.startActivity(intent);
@@ -114,11 +118,11 @@ public class Navigator {
         context.startActivity(new Intent(context, SubscriptionScreen.class));
     }
 
-    public static void notifications(@NonNull Context context){
+    public static void notifications(@NonNull Context context) {
         context.startActivity(new Intent(context, PushNotificationsSettingsScreen.class));
     }
 
-    public static void applicationSettings(@NonNull Context context){
+    public static void applicationSettings(@NonNull Context context) {
         try {
             Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
             intent.setData(Uri.parse("package:com.pairup.android"));
