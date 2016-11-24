@@ -16,9 +16,12 @@ import com.anjlab.android.iab.v3.BillingProcessor;
 import com.anjlab.android.iab.v3.TransactionDetails;
 import com.google.gson.Gson;
 import com.pairup.android.R;
+import com.pairup.android.UserInteractor;
 import com.pairup.android.chat.models.SubscriptionsDetails;
 
 import java.util.ArrayList;
+
+import rx.schedulers.Schedulers;
 
 /**
  * Created by almaziskhakov on 04/11/2016.
@@ -29,11 +32,12 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
     private static final String ONE_MONTH_TEST_SUBSCRIPTION_ID = "one_month_test_subscription";
     private static final String PURCHASE_KEY                   = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAorESPZk0zw3hhu3kFGoGm1wsJJX/TJWOB/+q9LQ+VpN2TVuyzouVaYSxOSaHXg3/s1t4tUni7Ih3EVwR4//dbTH7ob3JdDoRzlWsgJaHeytH8qW6hPCdRX/cHLT0PbldwryUh92/yjBeel4Lo7McirS97MYElfsSQ52bEo8GOhG8SPYTHruh4WNp/LD/NO042AZUfi6+9fITzgNe2PeUKvGaFB9CrPpdbylExGhXhjjUhodZEjoUUtvCFG82lkvQHjnrUOs1PdHIhOk2IVVjpLHkX++9188ASEOflNNfnQIbRprjTuKFZG9NX/DTunzJNnH183fvyVQCX/r+ciFkAQIDAQAB";
 
-    private                    SubscriptionView view;
-    private                    FragmentActivity activity;
-    private                    BillingProcessor bp;
-    private                    SubscriptionsDetails subscriptionsDetails;
-    private                    Gson gson;
+    private SubscriptionView     view;
+    private FragmentActivity     activity;
+    private BillingProcessor     bp;
+    private SubscriptionsDetails subscriptionsDetails;
+    private Gson                 gson;
+    private UserInteractor       userInteractor;
 
     IInAppBillingService mBillingService;
     ServiceConnection mServiceConnection = new ServiceConnection() {
@@ -49,9 +53,13 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
         }
     };
 
-    public void attachView(@NonNull SubscriptionView view, @NonNull FragmentActivity activity, Gson gson) {
-        attachView(view, activity);
+    public SubscriptionPresenter(Gson gson) {
         this.gson = gson;
+    }
+
+    public void attachView(@NonNull SubscriptionView view, @NonNull FragmentActivity activity, UserInteractor userInteractor) {
+        attachView(view, activity);
+        this.userInteractor = userInteractor;
         initPayments();
     }
 
@@ -121,7 +129,12 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
                     skuDetails.getStringArrayList("INAPP_PURCHASE_DATA_LIST");
                 if (purchaseDataList != null && purchaseDataList.size() > 0) {
                     subscriptionsDetails = getSubscribeDataFromString(purchaseDataList.get(0));
-                    view.sendSubscribeStatus(subscriptionsDetails);
+                    userInteractor.sendInAppStatus(subscriptionsDetails.getPlanName(),
+                        subscriptionsDetails.getExpiredDate(),
+                        subscriptionsDetails.isActive())
+                        .map(result -> null)
+                        .subscribeOn(Schedulers.io())
+                        .subscribe(result -> {}, ignoreError -> {});
                 }
             }
         } catch (RemoteException e) {

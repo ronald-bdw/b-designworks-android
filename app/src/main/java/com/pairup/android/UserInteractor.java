@@ -25,7 +25,6 @@ import io.smooch.core.Smooch;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import rx.Observable;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
@@ -251,7 +250,7 @@ public class UserInteractor {
         return storage.getBoolean(KEY_SHOW_TOUR_TO_USER, true);
     }
 
-    public Observable<ResponseBody> sendInAppStatus(@NonNull String planName, @NonNull String date, @NonNull boolean isActive) {
+    public Observable<Void> sendInAppStatus(@NonNull String planName, @NonNull String date, @NonNull boolean isActive) {
         return api.sendSubscriptionStatus(planName, date, isActive);
     }
 }

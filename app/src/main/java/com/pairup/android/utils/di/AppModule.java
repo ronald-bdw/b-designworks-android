@@ -152,7 +152,7 @@ public class AppModule {
 
     @Provides @Singleton
     public SubscriptionPresenter provideSubscriptionPresenter(){
-        return new SubscriptionPresenter();
+        return new SubscriptionPresenter(new Gson());
     }
 
     @Provides @Singleton public LoginFlowInteractor provideLoginFlowInteractor(IStorage storage) {

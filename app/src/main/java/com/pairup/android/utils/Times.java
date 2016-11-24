@@ -1,5 +1,6 @@
 package com.pairup.android.utils;
 
+import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 
 import java.text.SimpleDateFormat;
@@ -12,7 +13,7 @@ import java.util.Date;
 
 public class Times {
 
-    public static Date addToDateTime(@NonNull long startDate,
+    public static Date addToDateTime(long startDate,
                                      @NonNull int addToDate,
                                      @NonNull int increaseAmount) {
         Date date = new Date(startDate);
@@ -22,6 +23,7 @@ public class Times {
         return calendar.getTime();
     }
 
+    @SuppressLint("SimpleDateFormat")
     public static String parseDateToString(@NonNull Date date, @NonNull String format) {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         return sdf.format(date);

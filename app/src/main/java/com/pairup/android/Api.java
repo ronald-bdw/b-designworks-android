@@ -91,7 +91,7 @@ public interface Api {
 
     @FormUrlEncoded
     @POST(V1 + "subscriptions")
-    Observable<ResponseBody> sendSubscriptionStatus(@Field("plan_name") String plan,
+    Observable<Void> sendSubscriptionStatus(@Field("plan_name") String plan,
                                                     @Field("expires_at") String date,
                                                     @Field("active") boolean isActive);
 }

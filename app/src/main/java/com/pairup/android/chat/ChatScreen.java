@@ -3,7 +3,6 @@ package com.pairup.android.chat;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,10 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anjlab.android.iab.v3.TransactionDetails;
-import com.google.gson.Gson;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
-import com.pairup.android.chat.models.SubscriptionsDetails;
 import com.pairup.android.subscription.SubscriptionPresenter;
 import com.pairup.android.subscription.SubscriptionView;
 import com.pairup.android.utils.AndroidUtils;
@@ -39,10 +36,7 @@ import butterknife.OnClick;
 import io.smooch.core.Smooch;
 import io.smooch.core.User;
 import io.smooch.ui.ConversationActivity;
-import okhttp3.ResponseBody;
-import rx.Observer;
 import rx.functions.Action0;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Ilya Eremin on 04.08.2016.
@@ -92,25 +86,6 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         });
     }
 
-    @Override
-    public void sendSubscribeStatus(@NonNull SubscriptionsDetails subscriptionsDetails) {
-        userInteractor.sendInAppStatus(subscriptionsDetails.getPlanName(), subscriptionsDetails.getExpiredDate(), subscriptionsDetails.isActive())
-            .subscribeOn(Schedulers.io())
-            .subscribe(new Observer<ResponseBody>() {
-                @Override public void onCompleted() {
-
-                }
-
-                @Override public void onError(Throwable e) {
-                    e.printStackTrace();
-                }
-
-                @Override public void onNext(ResponseBody responseBody) {
-
-                }
-            });
-    }
-
      private void setChatGone(boolean gone) {
         if (gone) {
             uiBuySubscription.setVisibility(View.VISIBLE);
@@ -153,7 +128,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     @Override public void onResume() {
         super.onResume();
         Bus.subscribe(this);
-        subscriptionPresenter.attachView(this, this, new Gson());
+        subscriptionPresenter.attachView(this, this, userInteractor);
         setChatGone(!(subscriptionPresenter.isSubscribed() || userInteractor.getUser().hasHbfProvider()));
 
         // we could not customize part of the UI in on create because not all necessary views present in the hierarcy
