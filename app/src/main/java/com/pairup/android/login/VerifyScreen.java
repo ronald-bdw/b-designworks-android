@@ -33,10 +33,11 @@ import butterknife.OnClick;
  */
 public class VerifyScreen extends BaseActivity implements VerifyView {
 
-    public static final String ARG_IS_HBF_PROVIDER = "isHbfProvider";
+    public static final String ARG_HAS_HBF_PROVIDER = "hasHbfProvider";
 
     @NonNull @Override public UiInfo getUiInfo() {
-        return new UiInfo(R.layout.screen_verify);
+        return new UiInfo(R.layout.screen_verify)
+            .enableBackButton();
     }
 
     @Inject VerifyPresenter     verifyPresenter;
@@ -45,7 +46,7 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
 
     @Bind(R.id.hbf_logo) ImageView uiHbfLogo;
 
-    private boolean isHbfProvider;
+    private boolean hasHbfProvider;
 
     @SuppressWarnings("WrongConstant")
     @Override protected void restoreState(@NonNull Bundle savedState) {
@@ -56,7 +57,7 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
         super.onCreate(savedState);
         Injector.inject(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        if (!isHbfProvider) {
+        if (!hasHbfProvider) {
             uiHbfLogo.setVisibility(View.GONE);
         }
         verifyPresenter.attachView(this);
@@ -88,7 +89,7 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
     }
 
     @Override protected void parseArguments(@NonNull Bundle extras) {
-        isHbfProvider = extras.getBoolean(ARG_IS_HBF_PROVIDER, false);
+        hasHbfProvider = extras.getBoolean(ARG_HAS_HBF_PROVIDER, false);
     }
 
     @Override protected void onNewIntent(Intent intent) {
