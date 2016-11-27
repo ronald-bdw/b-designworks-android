@@ -128,7 +128,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     @Override public void onResume() {
         super.onResume();
         Bus.subscribe(this);
-        subscriptionPresenter.attachView(this, this, userInteractor);
+        subscriptionPresenter.attachView(this, this);
         setChatGone(!(subscriptionPresenter.isSubscribed() || userInteractor.getUser().hasHbfProvider()));
 
         // we could not customize part of the UI in on create because not all necessary views present in the hierarcy

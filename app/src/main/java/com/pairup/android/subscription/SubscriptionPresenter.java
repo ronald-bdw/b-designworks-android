@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.chat.models.SubscriptionsDetails;
+import com.pairup.android.utils.SubscriptionDetailsUtils;
 
 import java.util.ArrayList;
 
@@ -53,14 +54,9 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
         }
     };
 
-    public SubscriptionPresenter(Gson gson) {
+    public SubscriptionPresenter(Gson gson,UserInteractor userInteractor) {
         this.gson = gson;
-    }
-
-    public void attachView(@NonNull SubscriptionView view, @NonNull FragmentActivity activity, UserInteractor userInteractor) {
-        attachView(view, activity);
         this.userInteractor = userInteractor;
-        initPayments();
     }
 
     public void attachView(@NonNull SubscriptionView view, @NonNull FragmentActivity activity) {
@@ -72,6 +68,7 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
         } else {
             // TODO device what to when user has no google play services
         }
+        initPayments();
     }
 
     public void detachView() {
@@ -130,9 +127,8 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
                 if (purchaseDataList != null && purchaseDataList.size() > 0) {
                     subscriptionsDetails = getSubscribeDataFromString(purchaseDataList.get(0));
                     userInteractor.sendInAppStatus(subscriptionsDetails.getPlanName(),
-                        subscriptionsDetails.getExpiredDate(),
-                        subscriptionsDetails.isActive())
-                        .map(result -> null)
+                        SubscriptionDetailsUtils.getExpiredDate(subscriptionsDetails.getPurchaseDate()),
+                        SubscriptionDetailsUtils.isActive(subscriptionsDetails.isRenewing(), subscriptionsDetails.getPurchaseDate()))
                         .subscribeOn(Schedulers.io())
                         .subscribe(result -> {}, ignoreError -> {});
                 }

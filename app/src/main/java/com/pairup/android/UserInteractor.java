@@ -251,6 +251,6 @@ public class UserInteractor {
     }
 
     public Observable<Void> sendInAppStatus(@NonNull String planName, @NonNull String date, @NonNull boolean isActive) {
-        return api.sendSubscriptionStatus(planName, date, isActive);
+        return api.sendSubscriptionStatus(planName, date, isActive).map(result -> null);
     }
 }

@@ -151,8 +151,8 @@ public class AppModule {
     }
 
     @Provides @Singleton
-    public SubscriptionPresenter provideSubscriptionPresenter(){
-        return new SubscriptionPresenter(new Gson());
+    public SubscriptionPresenter provideSubscriptionPresenter(Gson gson, UserInteractor userInteractor){
+        return new SubscriptionPresenter(gson, userInteractor);
     }
 
     @Provides @Singleton public LoginFlowInteractor provideLoginFlowInteractor(IStorage storage) {

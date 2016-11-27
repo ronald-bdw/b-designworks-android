@@ -1,10 +1,6 @@
 package com.pairup.android.chat.models;
 
 import com.google.gson.annotations.SerializedName;
-import com.pairup.android.utils.Times;
-
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by Klymenko on 22.11.2016.
@@ -12,7 +8,6 @@ import java.util.Date;
 
 public class SubscriptionsDetails {
 
-    private static final String EXPIRED_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
     private static final String TYPE_TRIAL = "trial";
 
     @SerializedName("productId")
@@ -31,17 +26,16 @@ public class SubscriptionsDetails {
         this.planName = planName;
     }
 
-    public String getExpiredDate() {
-        return Times.parseDateToString(Times.addToDateTime(purchaseDate, Calendar.MONTH, 1), EXPIRED_DATE_FORMAT);
+    public boolean isRenewing() {
+        return isRenewing;
+    }
+
+    public long getPurchaseDate() {
+        return purchaseDate;
     }
 
     public void setPurchaseDate(long purchaseDate) {
         this.purchaseDate = purchaseDate;
-    }
-
-    public boolean isActive() {
-        Date now = new Date();
-        return isRenewing || (now.getTime() < Times.addToDateTime(purchaseDate, Calendar.MONTH, 1).getTime());
     }
 
     public void setRenewing(boolean renewing) {
