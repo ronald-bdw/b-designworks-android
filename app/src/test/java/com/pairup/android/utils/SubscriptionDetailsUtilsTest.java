@@ -2,8 +2,7 @@ package com.pairup.android.utils;
 
 import com.pairup.android.chat.models.SubscriptionsDetails;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
