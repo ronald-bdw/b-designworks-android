@@ -2,26 +2,23 @@ package com.pairup.android.login;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.pairup.android.BaseActivity;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
-import com.pairup.android.utils.Bus;
+import com.pairup.android.utils.Keyboard;
 import com.pairup.android.utils.di.Injector;
 import com.pairup.android.utils.network.ErrorUtils;
-import com.pairup.android.utils.ui.SimpleDialog;
+import com.pairup.android.utils.ui.TextViews;
 import com.pairup.android.utils.ui.UiInfo;
-
-import org.greenrobot.eventbus.Subscribe;
 
 import javax.inject.Inject;
 
@@ -42,7 +39,8 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
     @Inject LoginFlowInteractor loginFlowInteractor;
     @Inject UserInteractor      userInteractor;
 
-    @Bind(R.id.hbf_logo) ImageView uiHbfLogo;
+    @Bind(R.id.hbf_logo)          ImageView uiHbfLogo;
+    @Bind(R.id.verification_code) EditText  uiVerificationCode;
 
     @SuppressWarnings("WrongConstant")
     @Override protected void restoreState(@NonNull Bundle savedState) {
@@ -57,49 +55,19 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
             uiHbfLogo.setVisibility(View.GONE);
         }
         verifyPresenter.attachView(this);
-        if (getIntent() != null) {
-            handleCodeFromSms(getIntent());
-        }
     }
 
-    private void handleCodeFromSms(@NonNull Intent intent) {
-        Uri data = intent.getData();
-        if (data != null) {
-            if (loginFlowInteractor.userEnteredPhone()) {
-                String url = data.toString();
-                String code = url.substring(url.length() - 4);
-                verifyPresenter.handleSmsCode(code);
-            } else {
-                if (userInteractor.userLoggedIn()) {
-                    Toast.makeText(this, R.string.warning_you_already_logged_in, Toast.LENGTH_SHORT).show();
-                    Navigator.chat(context());
-                    finish();
-                } else {
-                    SimpleDialog.withOkBtn(context(), R.string.error, R.string.error_no_accosiated_number, () -> {
-                        Navigator.welcome(context());
-                        finish();
-                    });
-                }
-            }
-        }
+    @OnClick(R.id.submit) void onSubmitClick() {
+        Keyboard.hide(this);
+        verifyPresenter.handleSmsCode(TextViews.textOf(uiVerificationCode));
     }
 
     @Override protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        handleCodeFromSms(intent);
     }
 
     @OnClick(R.id.resend) void onResendClick() {
         verifyPresenter.sendCode();
-    }
-
-    @Override protected void onResume() {
-        super.onResume();
-        Bus.subscribe(this);
-    }
-
-    @Subscribe public void onEvent(SmsCodeEvent event) {
-        verifyPresenter.handleSmsCode(event.getCode());
     }
 
     @Nullable private ProgressDialog authorizeProgressDialog;
@@ -114,7 +82,6 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
 
     @Override protected void onPause() {
         verifyPresenter.onHidden();
-        Bus.unsubscribe(this);
         super.onPause();
     }
 
@@ -124,6 +91,10 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
 
     @Override public void showError(Throwable error) {
         ErrorUtils.handle(context(), error);
+    }
+
+    @Override public void showVerificationCodeError() {
+        uiVerificationCode.setError(getString(R.string.registration_error_fill_code));
     }
 
     @Override public void hideRequestVerificationProgressDialog() {
