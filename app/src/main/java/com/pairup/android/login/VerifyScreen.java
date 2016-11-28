@@ -1,7 +1,6 @@
 package com.pairup.android.login;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -60,10 +59,6 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
     @OnClick(R.id.submit) void onSubmitClick() {
         Keyboard.hide(this);
         verifyPresenter.handleSmsCode(TextViews.textOf(uiVerificationCode));
-    }
-
-    @Override protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
     }
 
     @OnClick(R.id.resend) void onResendClick() {
