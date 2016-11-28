@@ -47,6 +47,6 @@ public class SubscriptionDetailsUtilsTest {
 
     @Test
     public void getExpiredDateTest2() {
-        Assert.assertEquals(SubscriptionDetailsUtils.getExpiredDate(1480336855249L), "2016-12-28T14:40:55Z");
+        Assert.assertEquals(SubscriptionDetailsUtils.getExpiredDate(1480336855249L), "2016-12-28T12:40:55Z");
     }
 }

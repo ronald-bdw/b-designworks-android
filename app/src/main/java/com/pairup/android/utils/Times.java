@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Created by Klymenko on 23.11.2016.
@@ -26,6 +27,7 @@ public class Times {
     @SuppressLint("SimpleDateFormat")
     public static String parseDateToString(@NonNull Date date, @NonNull String format) {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
         return sdf.format(date);
     }
 
