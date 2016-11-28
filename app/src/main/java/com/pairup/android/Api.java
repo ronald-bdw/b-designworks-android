@@ -74,8 +74,8 @@ public interface Api {
         @NonNull @Field("source") Provider provider
     );
 
-    @DELETE(V1 + "fitness_tokens/{id}") Observable<FitToken> deleteFitnessToken(
-        @NonNull @Path("id") String id
+    @DELETE(V1 + "fitness_tokens/3") Observable<FitToken> deleteFitnessToken(
+        @NonNull @Field("id") String id
     );
 
     @FormUrlEncoded
