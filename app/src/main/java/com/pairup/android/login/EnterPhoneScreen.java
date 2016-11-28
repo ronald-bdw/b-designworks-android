@@ -53,6 +53,8 @@ public class EnterPhoneScreen extends BaseActivity {
     @Inject UserInteractor      userInteractor;
     @Inject LoginFlowInteractor loginFlowInteractor;
 
+    private boolean hasHbfProvider;
+
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_enter_phone)
             .setTitleRes(R.string.title_verification)
@@ -69,7 +71,7 @@ public class EnterPhoneScreen extends BaseActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         if (BuildConfig.DEBUG && savedState == null) {
             uiAreaCode.setText("+7");
-            uiPhone.setText("9625535458");
+            uiPhone.setText("9872947933");
         }
     }
 
@@ -87,7 +89,7 @@ public class EnterPhoneScreen extends BaseActivity {
     @Override protected void onResume() {
         super.onResume();
         if (verifyNumberSubs != null && progressDialog == null) {
-            showProgerss();
+            showProgress();
         }
     }
 
@@ -103,7 +105,7 @@ public class EnterPhoneScreen extends BaseActivity {
 
     private void manageSubmit(@NonNull String areaCode, @NonNull String phone) {
         Keyboard.hide(this);
-        showProgerss();
+        showProgress();
         if ("+61".equals(areaCode) && '0' == phone.charAt(0)) {
             phone = phone.substring(1, phone.length());
         }
@@ -113,6 +115,7 @@ public class EnterPhoneScreen extends BaseActivity {
             .compose(Rxs.doInBackgroundDeliverToUI())
             .subscribe(result -> {
                 boolean passed = false;
+                hasHbfProvider = result.userHasHbfProvider();
                 switch (accountVerificationType) {
                     case IS_REGISTERED:
                         passed = result.isPhoneRegistered();
@@ -121,7 +124,7 @@ public class EnterPhoneScreen extends BaseActivity {
                         passed = !result.isPhoneRegistered();
                         break;
                     case HAS_PROVIDER:
-                        passed = result.userHasHbfProvider();
+                        passed = hasHbfProvider;
                         break;
                 }
                 if (passed) {
@@ -163,7 +166,7 @@ public class EnterPhoneScreen extends BaseActivity {
                 loginFlowInteractor.setPhoneCodeId(result.getPhoneCodeId());
                 loginFlowInteractor.setPhoneRegistered(result.isPhoneRegistered());
                 loginFlowInteractor.setPhoneNumber(areaCode + phone);
-                if (accountVerificationType == AccountVerificationType.HAS_PROVIDER) {
+                if (hasHbfProvider) {
                     Navigator.verificationWithHbfProvider(context());
                 } else {
                     Navigator.verification(context());
@@ -192,7 +195,7 @@ public class EnterPhoneScreen extends BaseActivity {
         }
     }
 
-    private void showProgerss() {
+    private void showProgress() {
         progressDialog = ProgressDialog.show(context(), getString(R.string.loading), getString(R.string.progress_verifying_phone_number), true, true, dialog -> {
             if (verifyNumberSubs != null && !verifyNumberSubs.isUnsubscribed()) {
                 verifyNumberSubs.unsubscribe();
