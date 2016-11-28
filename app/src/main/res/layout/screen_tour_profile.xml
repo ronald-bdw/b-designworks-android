@@ -13,39 +13,6 @@
         android:layout_height="match_parent"
         >
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="72dp"
-            >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                >
-
-                <TextView
-                    style="@style/tour_caption_style"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/tour_profile_title"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:gravity="center_horizontal"
-                    android:text="@string/tour_profile_description_2"
-                    />
-
-                <include layout="@layout/layout_profile_fields"/>
-
-            </LinearLayout>
-
-        </ScrollView>
-
         <Button
             android:id="@+id/next"
             android:layout_width="wrap_content"
@@ -57,6 +24,31 @@
             android:textColor="@android:color/white"
             android:layout_marginBottom="24dp"
             />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                style="@style/tour_caption_style"
+                android:layout_marginTop="16dp"
+                android:text="@string/tour_profile_title"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center_horizontal"
+                android:text="@string/tour_profile_description_2"
+                />
+
+            <include layout="@layout/layout_profile_fields"/>
+
+        </LinearLayout>
 
     </FrameLayout>
 
