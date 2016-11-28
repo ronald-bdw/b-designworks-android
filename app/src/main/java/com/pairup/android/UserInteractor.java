@@ -1,8 +1,5 @@
 package com.pairup.android;
 
-import android.annotation.TargetApi;
-import android.content.Context;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationManagerCompat;
@@ -184,15 +181,15 @@ public class UserInteractor {
         if (tokenId != null) {
             api.deleteFitnessToken(tokenId)
                 .subscribeOn(Schedulers.io())
-                .subscribe(result -> removeFitnessTokenLocally(result.getId()), Logger::e);
+                .subscribe(result -> removeFitnessTokenLocally(), Logger::e);
         }
     }
 
-    private void removeFitnessTokenLocally(@NonNull String tokenId) {
+    private void removeFitnessTokenLocally() {
         User user = getUser();
         for (Integration integration : user.getIntegrations()) {
             if (integration.getFitnessTokenId() != null) {
-                if (tokenId.equals(integration.getFitnessTokenId())) {
+                if (Provider.GOOGLE_FIT.equals(integration.getProvider())) {
                     integration.setFitnessTokenId(null);
                     integration.setStatus(false);
                     saveUser(user);
