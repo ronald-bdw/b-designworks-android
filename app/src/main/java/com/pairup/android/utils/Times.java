@@ -28,4 +28,8 @@ public class Times {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         return sdf.format(date);
     }
+
+    public static long now() {
+        return System.currentTimeMillis();
+    }
 }

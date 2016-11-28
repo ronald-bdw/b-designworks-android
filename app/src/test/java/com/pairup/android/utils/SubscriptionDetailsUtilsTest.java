@@ -1,5 +1,6 @@
 package com.pairup.android.utils;
 
+import com.pairup.android.TestApp;
 import com.pairup.android.chat.models.SubscriptionsDetails;
 
 import junit.framework.Assert;
@@ -25,7 +26,7 @@ public class SubscriptionDetailsUtilsTest {
         subscriptionsDetails = new SubscriptionsDetails();
         subscriptionsDetails.setPlanName(SUBSCRIPTION_NAME);
         subscriptionsDetails.setRenewing(true);
-        subscriptionsDetails.setPurchaseDate(new Date().getTime());
+        subscriptionsDetails.setPurchaseDate(Times.now());
     }
 
     @Test
@@ -44,5 +45,10 @@ public class SubscriptionDetailsUtilsTest {
     @Test
     public void getExpiredDateTest() {
         Assert.assertNotNull(SubscriptionDetailsUtils.getExpiredDate(subscriptionsDetails.getPurchaseDate()));
+    }
+
+    @Test
+    public void getExpiredDateTest2() {
+        Assert.assertTrue(TestApp.isValidDate(SubscriptionDetailsUtils.getExpiredDate(subscriptionsDetails.getPurchaseDate()), SubscriptionDetailsUtils.EXPIRED_DATE_FORMAT));
     }
 }
