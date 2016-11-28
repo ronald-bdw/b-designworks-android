@@ -166,11 +166,9 @@ public class EnterPhoneScreen extends BaseActivity {
                 loginFlowInteractor.setPhoneCodeId(result.getPhoneCodeId());
                 loginFlowInteractor.setPhoneRegistered(result.isPhoneRegistered());
                 loginFlowInteractor.setPhoneNumber(areaCode + phone);
-                if (hasHbfProvider) {
-                    Navigator.verificationWithHbfProvider(context());
-                } else {
-                    Navigator.verification(context());
-                }
+
+                userInteractor.setHasHbfProvider(hasHbfProvider);
+                Navigator.verification(context());
             }, error -> {
                 if (error instanceof RetrofitException) {
                     RetrofitException retrofitError = (RetrofitException) error;

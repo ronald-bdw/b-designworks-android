@@ -48,12 +48,6 @@ public class Navigator {
         context.startActivity(new Intent(context, VerifyScreen.class));
     }
 
-    public static void verificationWithHbfProvider(@NonNull Context context) {
-        Intent intent = new Intent(context, VerifyScreen.class);
-        intent.putExtra(VerifyScreen.ARG_HAS_HBF_PROVIDER, true);
-        context.startActivity(intent);
-    }
-
     public static void chat(@NonNull Context context) {
         context.startActivity(clearStack(new Intent(context, ChatScreen.class)));
     }
