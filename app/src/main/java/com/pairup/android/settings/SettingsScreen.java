@@ -70,7 +70,4 @@ public class SettingsScreen extends BaseActivity {
         Navigator.notifications(this);
     }
 
-    @OnClick(R.id.unsubscribe) void onUnsubscribeClick() {
-        Navigator.subscription(this);
-    }
 }
