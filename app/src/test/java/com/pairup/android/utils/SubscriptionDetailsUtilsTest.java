@@ -18,6 +18,8 @@ import java.util.Date;
 public class SubscriptionDetailsUtilsTest {
 
     public static final String SUBSCRIPTION_NAME = "one_month_test_subscription";
+    public static final long SUBSCRIPTION_TEST_PURCHASE_DATE = 1480336855249L;
+    public static final String SUBSCRIPTION_PURCHASE_DATE_STAMP = "2016-12-28T14:40:55Z";
 
     SubscriptionsDetails subscriptionsDetails;
 
@@ -49,6 +51,6 @@ public class SubscriptionDetailsUtilsTest {
 
     @Test
     public void getExpiredDateTest2() {
-        Assert.assertTrue(TestApp.isValidDate(SubscriptionDetailsUtils.getExpiredDate(subscriptionsDetails.getPurchaseDate()), SubscriptionDetailsUtils.EXPIRED_DATE_FORMAT));
+        Assert.assertTrue(TestApp.isValidDate(SubscriptionDetailsUtils.getExpiredDate(SUBSCRIPTION_TEST_PURCHASE_DATE), SUBSCRIPTION_PURCHASE_DATE_STAMP));
     }
 }
