@@ -44,7 +44,6 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
 
     @Bind(R.id.hbf_logo) ImageView uiHbfLogo;
 
-
     @SuppressWarnings("WrongConstant")
     @Override protected void restoreState(@NonNull Bundle savedState) {
         super.restoreState(savedState);
