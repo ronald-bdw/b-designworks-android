@@ -7,8 +7,4 @@ public class TestApp extends App {
 
     @Override protected void setUpServices() {
     }
-
-    public static boolean isValidDate(String result, String demandResult) {
-        return result.equals(demandResult);
-    }
 }
