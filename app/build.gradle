@@ -38,12 +38,12 @@ android {
 
     productFlavors {
         staging {
-            buildConfigField "String", "API_URL", "\"https://b-designworks.herokuapp.com/\""
+            buildConfigField "String", "API_URL", "\"https://pairup-api.herokuapp.com/\""
             applicationIdSuffix ".staging"
         }
 
         production {
-            buildConfigField "String", "API_URL", "\"https://b-designworks.herokuapp.com/\""
+            buildConfigField "String", "API_URL", "\"https://pairup-api.herokuapp.com/\""
         }
     }
 
