@@ -41,6 +41,7 @@ public class UserInteractor {
     private static final String KEY_USER                    = "user";
     private static final String KEY_SHOW_TOUR_TO_USER       = "showTourForUser";
     private static final String KEY_FIRST_VISIT_AFTER_LOGIN = "firstVisitAfterLogin";
+    private static final String KEY_HAS_HBF_PROVIDER        = "hasHbfProvider";
     private static final String DEVICE_TYPE_ANDROID         = "android";
 
     @NonNull private final IStorage     storage;
@@ -251,6 +252,14 @@ public class UserInteractor {
 
     public boolean showTourForUser() {
         return storage.getBoolean(KEY_SHOW_TOUR_TO_USER, true);
+    }
+
+    public void setHasHbfProvider(boolean hasHbfProvider){
+        storage.putBoolean(KEY_HAS_HBF_PROVIDER, hasHbfProvider);
+    }
+
+    public boolean hasHbfProvider(){
+        return storage.getBoolean(KEY_HAS_HBF_PROVIDER, false);
     }
 
 }
