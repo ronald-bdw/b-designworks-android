@@ -250,4 +250,7 @@ public class UserInteractor {
         return storage.getBoolean(KEY_SHOW_TOUR_TO_USER, true);
     }
 
+    public Observable<Void> sendInAppStatus(@NonNull String planName, @NonNull String date, @NonNull boolean isActive) {
+        return api.sendSubscriptionStatus(planName, date, isActive).map(result -> null);
+    }
 }

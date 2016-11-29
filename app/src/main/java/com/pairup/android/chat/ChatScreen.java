@@ -86,7 +86,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         });
     }
 
-    private void setChatGone(boolean gone) {
+     private void setChatGone(boolean gone) {
         if (gone) {
             uiBuySubscription.setVisibility(View.VISIBLE);
         } else {

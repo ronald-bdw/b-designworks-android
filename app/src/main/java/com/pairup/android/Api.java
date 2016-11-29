@@ -5,8 +5,8 @@ import android.support.annotation.Nullable;
 
 import com.pairup.android.login.models.AuthResponse;
 import com.pairup.android.login.models.FitToken;
-import com.pairup.android.login.models.UserStatus;
 import com.pairup.android.login.models.UserResponse;
+import com.pairup.android.login.models.UserStatus;
 import com.pairup.android.sync.Provider;
 
 import okhttp3.MultipartBody;
@@ -89,4 +89,9 @@ public interface Api {
     @POST(V1 + "registration_status")
     Observable<UserStatus> getUserStatus(@Field("phone_number") String phone);
 
+    @FormUrlEncoded
+    @POST(V1 + "subscriptions")
+    Observable<Void> sendSubscriptionStatus(@Field("plan_name") String plan,
+                                                    @Field("expires_at") String date,
+                                                    @Field("active") boolean isActive);
 }
