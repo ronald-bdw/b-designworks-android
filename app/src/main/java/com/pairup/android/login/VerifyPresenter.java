@@ -59,6 +59,10 @@ public class VerifyPresenter {
                 view.openRegistrationScreen(loginFlowInteractor.getPhoneNumber(), verificadtionCode,
                     loginFlowInteractor.getPhoneCodeId());
             }
+        } else {
+            if (view != null) {
+                view.showVerificationCodeError();
+            }
         }
     }
 

@@ -9,6 +9,7 @@ public interface VerifyView {
     void showRequestVerificationCodeProgressDialog();
     void showError(Throwable error);
     void hideRequestVerificationProgressDialog();
+    void showVerificationCodeError();
     void showAuthorizationProgressDialog();
     void hideAuthProgressDialog();
     void openChatScreen();

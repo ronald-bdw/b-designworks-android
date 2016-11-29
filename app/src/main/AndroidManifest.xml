@@ -38,24 +38,6 @@
             android:name=".login.VerifyScreen"
             android:launchMode="singleTop"
             >
-
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-
-                <data
-                    android:host="pearup.com"
-                    android:scheme="pairup"
-                    />
-
-                <data
-                    android:host="b-designworks.herokuapp.com"
-                    android:scheme="http"
-                    />
-            </intent-filter>
-
         </activity>
         <activity android:name=".trial.TrialScreen"/>
         <activity android:name=".profile.ProfileScreen"/>

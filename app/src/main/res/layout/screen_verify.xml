@@ -44,13 +44,49 @@
                 android:textSize="@dimen/font_size_medium"
                 />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                >
+
+                <EditText
+                    android:id="@+id/verification_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="12dp"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:hint="@string/verify_code_format_hint"
+                    android:imeOptions="actionDone"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1"
+                    android:padding="16dp"
+                    />
+
+                <Button
+                    android:id="@+id/resend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:background="@drawable/app_btn_border"
+                    android:text="@string/verify_resend"
+                    />
+
+            </LinearLayout>
+
             <Button
-                android:id="@+id/resend"
+                android:id="@+id/submit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:layout_marginBottom="16dp"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/app_btn_border"
-                android:text="@string/verify_resend"
+                android:background="@drawable/app_btn_filled"
+                android:text="@string/submit"
+                android:textColor="@android:color/white"
                 />
 
         </LinearLayout>
