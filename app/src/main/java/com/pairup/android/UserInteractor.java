@@ -181,15 +181,15 @@ public class UserInteractor {
         if (tokenId != null) {
             api.deleteFitnessToken(tokenId)
                 .subscribeOn(Schedulers.io())
-                .subscribe(result -> removeFitnessTokenLocally(provider.name()), Logger::e);
+                .subscribe(result -> removeFitnessTokenLocally(provider), Logger::e);
         }
     }
 
-    private void removeFitnessTokenLocally(@NonNull String providerName) {
+    private void removeFitnessTokenLocally(@NonNull Provider provider) {
         User user = getUser();
         for (Integration integration : user.getIntegrations()) {
             if (integration.getFitnessTokenId() != null) {
-                if (providerName.equals(integration.getProvider().name())) {
+                if (provider == integration.getProvider()) {
                     integration.setFitnessTokenId(null);
                     integration.setStatus(false);
                     saveUser(user);
