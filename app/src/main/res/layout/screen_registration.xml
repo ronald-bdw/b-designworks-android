@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fbfbfb"
+    android:orientation="vertical"
     >
+
+    <include layout="@layout/layout_toolbar"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="72dp"
         >
 
         <LinearLayout
@@ -21,7 +23,6 @@
             android:orientation="vertical"
             >
 
-            <include layout="@layout/layout_toolbar"/>
 
             <include layout="@layout/layout_profile_fields"/>
 
@@ -43,28 +44,29 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/bg_edit_profile"
+                android:enabled="false"
+                android:imeOptions="actionNone"
                 android:inputType="none"
                 android:maxLines="1"
                 tools:ignore="TextFields"
-                android:enabled="false"
-                android:imeOptions="actionNone"
+                />
+
+            <Button
+                android:id="@+id/choose_your_plan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="24dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/app_btn_filled"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
+                android:text="@string/submit"
+                android:textColor="@android:color/white"
                 />
 
         </LinearLayout>
 
     </ScrollView>
 
-    <Button
-        android:id="@+id/choose_your_plan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
-        android:background="@drawable/app_btn_filled"
-        android:text="@string/submit"
-        android:textColor="@android:color/white"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="16dp"
-        />
-
-</FrameLayout>
+</LinearLayout>
