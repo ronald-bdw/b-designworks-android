@@ -54,8 +54,8 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
-                    android:host="pearup.com"
-                    android:scheme="pearup"/>
+                    android:host="pairup.im"
+                    android:scheme="pairup"/>
 
             </intent-filter>
         </activity>
