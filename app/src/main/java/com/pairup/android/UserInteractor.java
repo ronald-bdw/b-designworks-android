@@ -181,23 +181,21 @@ public class UserInteractor {
         if (tokenId != null) {
             api.deleteFitnessToken(tokenId)
                 .subscribeOn(Schedulers.io())
-                .subscribe(result -> removeFitnessTokenLocally(result.getId()), Logger::e);
+                .subscribe(result -> removeFitnessTokenLocally(provider), Logger::e);
         }
     }
 
-    private void removeFitnessTokenLocally(@NonNull String tokenId) {
+    private void removeFitnessTokenLocally(@NonNull Provider provider) {
         User user = getUser();
         for (Integration integration : user.getIntegrations()) {
-            if (integration.getFitnessTokenId() != null) {
-                if (tokenId.equals(integration.getFitnessTokenId())) {
-                    integration.setFitnessTokenId(null);
-                    integration.setStatus(false);
-                    saveUser(user);
-                    if (Provider.GOOGLE_FIT == integration.getProvider()) {
-                        Bus.event(GoogleFitAuthorizationStateChangedEvent.EVENT);
-                    } else if (Provider.FITBIT == integration.getProvider()) {
-                        Bus.event(FitBitAuthorizationStateChangedEvent.EVENT);
-                    }
+            if (provider == integration.getProvider()) {
+                integration.setFitnessTokenId(null);
+                integration.setStatus(false);
+                saveUser(user);
+                if (Provider.GOOGLE_FIT == integration.getProvider()) {
+                    Bus.event(GoogleFitAuthorizationStateChangedEvent.EVENT);
+                } else if (Provider.FITBIT == integration.getProvider()) {
+                    Bus.event(FitBitAuthorizationStateChangedEvent.EVENT);
                 }
             }
         }
