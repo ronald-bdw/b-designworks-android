@@ -69,7 +69,7 @@ public interface Api {
                                           @NonNull @Part MultipartBody.Part data);
 
     @FormUrlEncoded
-    @POST(V1 + "/fitness_tokens") Observable<FitToken> integrateFitnessApp(
+    @POST(V1 + "fitness_tokens") Observable<FitToken> integrateFitnessApp(
         @NonNull @Field("authorization_code") String code,
         @NonNull @Field("source") Provider provider
     );
