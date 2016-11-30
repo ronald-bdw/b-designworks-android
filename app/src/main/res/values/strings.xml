@@ -59,7 +59,7 @@
     <string name="waiting">Waiting</string>
     <string name="waiting_code_description">For sms code verification</string>
     <string name="title_payment">Payment</string>
-    <string name="warning_you_will_lose_all_data">All user related data will be removed from this phone.</string>
+    <string name="warning_you_will_lose_all_data">Are you sure that you like to logout of the app? You will require to resend an SMS verification to login to the app again.</string>
     <string name="welcome_to_pairup">Welcome to Pair Up!</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
