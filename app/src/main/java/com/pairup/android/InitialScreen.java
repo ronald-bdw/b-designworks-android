@@ -17,7 +17,7 @@ public class InitialScreen extends AppCompatActivity {
 
     @Inject UserSettings userSettings;
 
-    private static final int DELAY_TIME = 1000;
+    private static final int DELAY_TIME = 3000;
     private Handler mHandler;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
