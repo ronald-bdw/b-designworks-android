@@ -59,7 +59,7 @@
     <string name="waiting">Waiting</string>
     <string name="waiting_code_description">For sms code verification</string>
     <string name="title_payment">Payment</string>
-    <string name="warning_you_will_lose_all_data">All user related data will be removed from this phone.</string>
+    <string name="warning_you_will_lose_all_data">Are you sure that you like to logout of the app? You will require to resend an SMS verification to login to the app again.</string>
     <string name="welcome_to_pairup">Welcome to Pair Up!</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
@@ -177,10 +177,10 @@
         <item>Free 30 day trial</item>
     </string-array>
     <string-array name="trial_descriptions">
-        <item>Pair Up uses simple in-app chat conversations with a friendly human coach to help you lead a more active lifestyle.</item>
-        <item>Your Pair Up coach will help you turn small steps into get-active habits that last - for a healthier, happier you!</item>
-        <item>Pair Up syncs with your phone and most activity trackers, providing your coach with key insights to help you lock-in new habits.</item>
-        <item>Try Pair Up free for 30 days. The choice is yours to continue a subscription that is far cheaper than traditional coaching.</item>
+        <item>Pair Up uses simple in-app chat \n conversations with a friendly \n human coach to help you lead \n a more active lifestyle.</item>
+        <item>Your Pair Up coach will help you \n turn small steps into get-active \n habits that last - for \n a healthier, happier you!</item>
+        <item>Pair Up syncs with your phone and \n most activity trackers, providing \n your coach with key insights \n to help you lock-in new habits.</item>
+        <item>Try Pair Up free for 30 days. \n The choice is yours to continue a \n subscription that is far cheaper \n than traditional coaching.</item>
     </string-array>
 
 </resources>
