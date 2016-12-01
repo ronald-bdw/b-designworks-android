@@ -1,7 +1,5 @@
 package com.pairup.android.login.models;
 
-import com.pairup.android.sync.*;
-
 import java.util.List;
 
 /**
@@ -9,6 +7,7 @@ import java.util.List;
  */
 public class User {
     private String            id;
+    private String            zendesk_id;
     private String            authenticationToken;
     private String            firstName;
     private String            lastName;
@@ -24,6 +23,10 @@ public class User {
 
     public String getId() {
         return id;
+    }
+
+    public String getZendesk_id() {
+        return zendesk_id;
     }
 
     public String getAuthenticationToken() {
