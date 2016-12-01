@@ -63,7 +63,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
             }
             com.pairup.android.login.models.User user = userInteractor.getUser();
 
-            Smooch.login(userInteractor.getUserId(), null);
+            Smooch.login(userInteractor.getUserZendeskId(), null);
             User.getCurrentUser().setEmail(user.getEmail());
             User.getCurrentUser().setFirstName(user.getFirstName());
             User.getCurrentUser().setLastName(user.getId());
