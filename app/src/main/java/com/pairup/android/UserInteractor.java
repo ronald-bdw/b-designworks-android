@@ -88,7 +88,7 @@ public class UserInteractor {
     }
 
     public String getUserZendeskId() {
-        return getUser().getZendesk_id();
+        return getUser().getZendeskId();
     }
 
     public void logout() {

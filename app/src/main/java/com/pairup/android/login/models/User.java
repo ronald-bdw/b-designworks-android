@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class User {
     private String            id;
-    private String            zendesk_id;
+    private String            zendeskId;
     private String            authenticationToken;
     private String            firstName;
     private String            lastName;
@@ -25,8 +25,8 @@ public class User {
         return id;
     }
 
-    public String getZendesk_id() {
-        return zendesk_id;
+    public String getZendeskId() {
+        return zendeskId;
     }
 
     public String getAuthenticationToken() {
