@@ -74,7 +74,7 @@ public interface Api {
         @NonNull @Field("source") Provider provider
     );
 
-    @DELETE(V1 + "fitness_tokens/3{id}") Observable<Void> deleteFitnessToken(
+    @DELETE(V1 + "fitness_tokens/{id}") Observable<Void> deleteFitnessToken(
         @NonNull @Path("id") String id
     );
 
