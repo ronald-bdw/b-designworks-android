@@ -111,7 +111,6 @@ public class EnterPhoneScreen extends BaseActivity {
         }
         final String formattedPhone = phone;
         userInteractor.requestUserStatus(areaCode + formattedPhone)
-            .doOnTerminate(() -> hideProgress())
             .compose(Rxs.doInBackgroundDeliverToUI())
             .subscribe(result -> {
                 boolean passed = false;
@@ -160,7 +159,10 @@ public class EnterPhoneScreen extends BaseActivity {
     private void requestAuthorizationCode(@NonNull String areaCode, @NonNull String phone) {
         if (verifyNumberSubs != null) return;
         verifyNumberSubs = userInteractor.requestCode(areaCode + phone)
-            .doOnTerminate(() -> verifyNumberSubs = null)
+            .doOnTerminate(() -> {
+                verifyNumberSubs = null;
+                hideProgress();
+            })
             .compose(Rxs.doInBackgroundDeliverToUI())
             .subscribe(result -> {
                 loginFlowInteractor.setPhoneCodeId(result.getPhoneCodeId());
