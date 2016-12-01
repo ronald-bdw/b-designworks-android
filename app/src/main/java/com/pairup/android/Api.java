@@ -69,12 +69,12 @@ public interface Api {
                                           @NonNull @Part MultipartBody.Part data);
 
     @FormUrlEncoded
-    @POST(V1 + "/fitness_tokens") Observable<FitToken> integrateFitnessApp(
+    @POST(V1 + "fitness_tokens") Observable<FitToken> integrateFitnessApp(
         @NonNull @Field("authorization_code") String code,
         @NonNull @Field("source") Provider provider
     );
 
-    @DELETE(V1 + "fitness_tokens/3{id}") Observable<Void> deleteFitnessToken(
+    @DELETE(V1 + "fitness_tokens/{id}") Observable<Void> deleteFitnessToken(
         @NonNull @Path("id") String id
     );
 
