@@ -1,5 +1,6 @@
 package com.pairup.android;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -22,6 +23,13 @@ public class InitialScreen extends AppCompatActivity {
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!isTaskRoot()
+            && getIntent().hasCategory(Intent.CATEGORY_LAUNCHER)
+            && getIntent().getAction() != null
+            && getIntent().getAction().equals(Intent.ACTION_MAIN)) {
+            finish();
+            return;
+        }
         setContentView(R.layout.screen_splash);
 
         Injector.inject(this);
