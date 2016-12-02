@@ -23,26 +23,27 @@ public class InitialScreen extends AppCompatActivity {
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (!isTaskRoot()
-            && getIntent().hasCategory(Intent.CATEGORY_LAUNCHER)
-            && getIntent().getAction() != null
-            && getIntent().getAction().equals(Intent.ACTION_MAIN)) {
+        if (!isTaskRoot() && isAcitivtyStartedFromLauncherIcon()) {
             finish();
-            return;
+        } else {
+            setContentView(R.layout.screen_splash);
+            Injector.inject(this);
+            mHandler = new Handler();
+            mHandler.postDelayed(() -> {
+                if (userSettings.userHasToken()) {
+                    Navigator.chat(this);
+                } else {
+                    Navigator.welcome(this);
+                }
+                finish();
+            }, DELAY_TIME);
         }
-        setContentView(R.layout.screen_splash);
+    }
 
-        Injector.inject(this);
-
-        mHandler = new Handler();
-        mHandler.postDelayed(() -> {
-            if (userSettings.userHasToken()) {
-                Navigator.chat(this);
-            } else {
-                Navigator.welcome(this);
-            }
-            finish();}
-        , DELAY_TIME);
+    private boolean isAcitivtyStartedFromLauncherIcon() {
+        return getIntent().hasCategory(Intent.CATEGORY_LAUNCHER)
+            && getIntent().getAction() != null
+            && getIntent().getAction().equals(Intent.ACTION_MAIN);
     }
 
     @Override protected void onStop() {
