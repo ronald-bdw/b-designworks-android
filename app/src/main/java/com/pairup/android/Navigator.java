@@ -33,6 +33,13 @@ public class Navigator {
         context.startActivity(clearStack(new Intent(context, WelcomeScreen.class)));
     }
 
+    public static void welcomeWithError(@NonNull Context context, boolean isPhoneRegistered) {
+        Intent intent = new Intent(context, WelcomeScreen.class);
+        intent.putExtra(WelcomeScreen.ARG_HAS_ERROR, true);
+        intent.putExtra(WelcomeScreen.ARG_IS_PHONE_REGISTERED, isPhoneRegistered);
+        context.startActivity(clearStack(intent));
+    }
+
     public static void enterPhone(
         @NonNull Context context, @NonNull AccountVerificationType accountVerificationType) {
         Intent intent = new Intent(context, EnterPhoneScreen.class);

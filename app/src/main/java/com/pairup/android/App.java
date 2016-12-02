@@ -2,9 +2,10 @@ package com.pairup.android;
 
 import android.app.Application;
 
-import com.pairup.android.BuildConfig;
 import com.pairup.android.utils.AndroidUtils;
 import com.pairup.android.utils.Bus;
+import com.pairup.android.utils.Logger;
+import com.pairup.android.utils.Rxs;
 import com.pairup.android.utils.di.AppComponent;
 import com.pairup.android.utils.di.AppModule;
 import com.pairup.android.utils.di.DaggerAppComponent;
@@ -54,9 +55,19 @@ public class App extends Application {
         Crashlytics.setBool("DEBUG", BuildConfig.DEBUG);
     }
 
+    private boolean isInProcess = false;
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(UserUnauthorizedEvent event) {
-        userInteractor.logout();
-        Navigator.welcome(getApplicationContext());
+        if(!isInProcess) {
+            isInProcess = true;
+            userInteractor.requestUserStatus(userInteractor.getPhone())
+                    .compose(Rxs.doInBackgroundDeliverToUI())
+                    .subscribe(result -> {
+                        userInteractor.logout();
+                        Navigator.welcomeWithError(getApplicationContext(), result.isPhoneRegistered());
+                    }, Logger::e);
+            isInProcess = false;
+        }
     }
 }
