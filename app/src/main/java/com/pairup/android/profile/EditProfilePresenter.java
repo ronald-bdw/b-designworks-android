@@ -58,6 +58,7 @@ public class EditProfilePresenter {
             .subscribe(result -> {
                 view.showUserInfo(result.getUser());
                 view.profileHasBeenUpdated();
+                view.closeEditor();
             }, view::showError);
     }
 
