@@ -20,6 +20,7 @@ public interface EditProfileView {
     void showAvatarUploadingProgress();
     void showUploadAvatarError(String avatarUrl);
     void avatarSuccessfullyUploaded();
+    void closeEditor();
 
     @NonNull String getEmail();
     @NonNull String getLastName();
