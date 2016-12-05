@@ -53,13 +53,13 @@ public class WelcomeScreen extends BaseActivity {
         underlineHaveAccountLinkText();
 
         if(hasError){
-            String message;
+            String errorMessage;
             if(isPhoneRegistered){
-                message = getString(R.string.someone_accessed_your_account_message);
+                errorMessage = getString(R.string.someone_accessed_your_account_message);
             } else {
-                message = getString(R.string.account_deleted_message);
+                errorMessage = getString(R.string.account_deleted_message);
             }
-            SimpleDialog.show(this, getString(R.string.error), message, getString(R.string.ok), null);
+            SimpleDialog.show(this, getString(R.string.error), errorMessage, getString(R.string.ok), null);
         }
     }
 
