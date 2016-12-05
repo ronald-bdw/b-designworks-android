@@ -19,6 +19,7 @@ import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.login.functional_area.Area;
 import com.pairup.android.login.functional_area.FunctionalToAreaCodeScreen;
+import com.pairup.android.utils.Areas;
 import com.pairup.android.utils.Keyboard;
 import com.pairup.android.utils.Rxs;
 import com.pairup.android.utils.di.Injector;
@@ -27,6 +28,8 @@ import com.pairup.android.utils.network.RetrofitException;
 import com.pairup.android.utils.ui.SimpleDialog;
 import com.pairup.android.utils.ui.TextViews;
 import com.pairup.android.utils.ui.UiInfo;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -144,13 +147,12 @@ public class EnterPhoneScreen extends BaseActivity {
         return areaCode.startsWith("+") ? areaCode : ("+" + areaCode);
     }
 
-    /** @param areaCode always has "+" in the head from getAreaCode() method */
+    /** @param areaCode always has "+" in the head cause getAreaCode() method was called before*/
     private boolean isCorrectAreaCode(String areaCode) {
         String areaCodeWithoutPlus = areaCode.substring(1, areaCode.length());
-        String[] unparsedCountries = getString(R.string.countries).split("\n");
-        for (String unparsedCountry : unparsedCountries) {
-            String[] fields = unparsedCountry.split(";");
-            if (areaCodeWithoutPlus.equals(fields[0].substring(1, fields[0].length())))
+        List<Area> areas = Areas.getAreas(this);
+        for (Area area : areas) {
+            if (areaCodeWithoutPlus.equals(area.getCode().trim()))
                 return true;
         }
         return false;
