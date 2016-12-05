@@ -1,5 +1,6 @@
 package com.pairup.android;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -22,19 +23,27 @@ public class InitialScreen extends AppCompatActivity {
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.screen_splash);
+        if (!isTaskRoot() && isAcitivtyStartedFromLauncherIcon()) {
+            finish();
+        } else {
+            setContentView(R.layout.screen_splash);
+            Injector.inject(this);
+            mHandler = new Handler();
+            mHandler.postDelayed(() -> {
+                if (userSettings.userHasToken()) {
+                    Navigator.chat(this);
+                } else {
+                    Navigator.welcome(this);
+                }
+                finish();
+            }, DELAY_TIME);
+        }
+    }
 
-        Injector.inject(this);
-
-        mHandler = new Handler();
-        mHandler.postDelayed(() -> {
-            if (userSettings.userHasToken()) {
-                Navigator.chat(this);
-            } else {
-                Navigator.welcome(this);
-            }
-            finish();}
-        , DELAY_TIME);
+    private boolean isAcitivtyStartedFromLauncherIcon() {
+        return getIntent().hasCategory(Intent.CATEGORY_LAUNCHER)
+            && getIntent().getAction() != null
+            && getIntent().getAction().equals(Intent.ACTION_MAIN);
     }
 
     @Override protected void onStop() {

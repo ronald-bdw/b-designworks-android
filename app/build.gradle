@@ -9,7 +9,7 @@ apply from: '../deps.gradle'
 ext {
     APPLICATION_ID = "com.pairup.android"
     isCI = "true".equals(System.getenv("CI"))
-    BUILD_NUMBER = System.getenv("CIRCLE_BUILD_NUM") ?: new Date().format('yyyy-MM-dd-HH:mm:ss')
+    BUILD_NUMBER = System.getenv("CIRCLE_BUILD_NUM") ?: new Date().format('yyyy-MM-dd-HH:mm')
     LAST_COMMIT_MESSAGE = 'git log -1 --pretty=%B'.execute().text.trim()
 }
 
@@ -38,11 +38,13 @@ android {
 
     productFlavors {
         staging {
+            versionName android.defaultConfig.versionName + "-STAGING (" + BUILD_NUMBER + ")"
             buildConfigField "String", "API_URL", "\"https://pairup-api.herokuapp.com/\""
             applicationIdSuffix ".staging"
         }
 
         production {
+            versionName android.defaultConfig.versionName + " (" + BUILD_NUMBER + ")"
             buildConfigField "String", "API_URL", "\"https://pairup-api.herokuapp.com/\""
         }
     }
