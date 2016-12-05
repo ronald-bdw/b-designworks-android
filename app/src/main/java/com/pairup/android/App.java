@@ -19,6 +19,7 @@ import javax.inject.Inject;
 
 import io.fabric.sdk.android.Fabric;
 import io.smooch.core.Smooch;
+import rx.Subscription;
 
 public class App extends Application {
 
@@ -32,8 +33,8 @@ public class App extends Application {
         // Dagger%COMPONENT_NAME%
         appComponent = DaggerAppComponent.builder()
 //             list of modules that are part of this component need to be created here too
-            .appModule(new AppModule(this)) // This also corresponds to the name of your module: %component_name%Module
-            .build();
+                .appModule(new AppModule(this)) // This also corresponds to the name of your module: %component_name%Module
+                .build();
         AndroidUtils.initialize(this);
         setUpServices();
         Injector.inject(this);
@@ -55,18 +56,17 @@ public class App extends Application {
         Crashlytics.setBool("DEBUG", BuildConfig.DEBUG);
     }
 
-    private boolean isInUnauthorizingProcess = false;
+    private Subscription unauthorizingSubscription = null;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(UserUnauthorizedEvent event) {
-        if(!isInUnauthorizingProcess) {
-            isInUnauthorizingProcess = true;
-            userInteractor.requestUserStatus(userInteractor.getPhone())
+        if (unauthorizingSubscription == null) {
+            unauthorizingSubscription = userInteractor.requestUserStatus(userInteractor.getPhone())
+                    .doOnTerminate(() -> unauthorizingSubscription = null)
                     .compose(Rxs.doInBackgroundDeliverToUI())
                     .subscribe(result -> {
                         userInteractor.logout();
                         Navigator.welcomeWithError(getApplicationContext(), result.isPhoneRegistered());
-                        isInUnauthorizingProcess = false;
                     }, Logger::e);
         }
     }

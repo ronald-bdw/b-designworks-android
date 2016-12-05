@@ -52,9 +52,9 @@ public class WelcomeScreen extends BaseActivity {
         super.onCreate(savedState);
         underlineHaveAccountLinkText();
 
-        if(hasError){
+        if (hasError) {
             String errorMessage;
-            if(isPhoneRegistered){
+            if (isPhoneRegistered) {
                 errorMessage = getString(R.string.someone_accessed_your_account_message);
             } else {
                 errorMessage = getString(R.string.account_deleted_message);
