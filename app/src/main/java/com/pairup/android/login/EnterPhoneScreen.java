@@ -97,7 +97,11 @@ public class EnterPhoneScreen extends BaseActivity {
         String phone = TextViews.textOf(uiPhone);
         String areaCode = getAreaCode();
         if (!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(areaCode)) {
-            manageSubmit(areaCode, phone);
+            if(areaCode.length() < 6) {
+                manageSubmit(areaCode, phone);
+            } else {
+                uiAreaCode.setError(getString(R.string.registration_error_fill_area_code));
+            }
         } else {
             uiPhone.setError(getString(R.string.registration_error_fill_phone));
         }

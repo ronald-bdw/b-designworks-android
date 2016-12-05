@@ -51,6 +51,7 @@
     <string name="error_incorrect_email">Enter valid email</string>
     <string name="registration_error_fill_code">Enter verification code</string>
     <string name="registration_error_fill_phone">Enter phone number</string>
+    <string name="registration_error_fill_area_code">Enter area code</string>
     <string name="registration_loading">Creating account…</string>
     <string name="verify">Verify</string>
     <string name="enter_phone_description">Welcome! Please enter your mobile\nphone number for SMS verification</string>
