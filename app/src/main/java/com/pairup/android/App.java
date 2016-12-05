@@ -55,19 +55,19 @@ public class App extends Application {
         Crashlytics.setBool("DEBUG", BuildConfig.DEBUG);
     }
 
-    private boolean isInProcess = false;
+    private boolean isInUnauthorizingProcess = false;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(UserUnauthorizedEvent event) {
-        if(!isInProcess) {
-            isInProcess = true;
+        if(!isInUnauthorizingProcess) {
+            isInUnauthorizingProcess = true;
             userInteractor.requestUserStatus(userInteractor.getPhone())
                     .compose(Rxs.doInBackgroundDeliverToUI())
                     .subscribe(result -> {
                         userInteractor.logout();
                         Navigator.welcomeWithError(getApplicationContext(), result.isPhoneRegistered());
+                        isInUnauthorizingProcess = false;
                     }, Logger::e);
-            isInProcess = false;
         }
     }
 }
