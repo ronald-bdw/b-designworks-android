@@ -174,6 +174,10 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
         uiAvatarUploadingProgress.setVisibility(View.GONE);
     }
 
+    @Override public void closeEditor() {
+        finish();
+    }
+
     @Override protected void onPause() {
         editProfilePresenter.onScreenHidden();
         super.onPause();
