@@ -57,8 +57,8 @@ public class EnterPhoneScreen extends BaseActivity {
 
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_enter_phone)
-                .setTitleRes(R.string.title_verification)
-                .enableBackButton();
+            .setTitleRes(R.string.title_verification)
+            .enableBackButton();
     }
 
     @Override protected void parseArguments(@NonNull Bundle extras) {
@@ -116,27 +116,27 @@ public class EnterPhoneScreen extends BaseActivity {
         }
         final String formattedPhone = phone;
         userInteractor.requestUserStatus(areaCode + formattedPhone)
-                .compose(Rxs.doInBackgroundDeliverToUI())
-                .subscribe(result -> {
-                    boolean passed = false;
-                    hasHbfProvider = result.userHasHbfProvider();
-                    switch (accountVerificationType) {
-                        case IS_REGISTERED:
-                            passed = result.isPhoneRegistered();
-                            break;
-                        case IS_NOT_REGISTERED:
-                            passed = !result.isPhoneRegistered();
-                            break;
-                        case HAS_PROVIDER:
-                            passed = hasHbfProvider;
-                            break;
-                    }
-                    if (passed) {
-                        requestAuthorizationCode(areaCode, formattedPhone);
-                    } else {
-                        showErrorDialog();
-                    }
-                }, ErrorUtils.handle(this));
+            .compose(Rxs.doInBackgroundDeliverToUI())
+            .subscribe(result -> {
+                boolean passed = false;
+                hasHbfProvider = result.userHasHbfProvider();
+                switch (accountVerificationType) {
+                    case IS_REGISTERED:
+                        passed = result.isPhoneRegistered();
+                        break;
+                    case IS_NOT_REGISTERED:
+                        passed = !result.isPhoneRegistered();
+                        break;
+                    case HAS_PROVIDER:
+                        passed = hasHbfProvider;
+                        break;
+                }
+                if (passed) {
+                    requestAuthorizationCode(areaCode, formattedPhone);
+                } else {
+                    showErrorDialog();
+                }
+            }, ErrorUtils.handle(this));
     }
 
     private String getAreaCode() {
@@ -144,7 +144,7 @@ public class EnterPhoneScreen extends BaseActivity {
         return areaCode.startsWith("+") ? areaCode : ("+" + areaCode);
     }
 
-
+    /** @param areaCode always has "+" in the head from getAreaCode() method */
     private boolean isCorrectAreaCode(String areaCode) {
         String areaCodeWithoutPlus = areaCode.substring(1, areaCode.length());
         String[] unparsedCountries = getString(R.string.countries).split("\n");
@@ -170,34 +170,34 @@ public class EnterPhoneScreen extends BaseActivity {
                 break;
         }
         SimpleDialog.show(context(), getString(R.string.error), errorMessage,
-                          getString(R.string.ok), () -> Navigator.welcome(this));
+            getString(R.string.ok), () -> Navigator.welcome(this));
     }
 
     private void requestAuthorizationCode(@NonNull String areaCode, @NonNull String phone) {
         if (verifyNumberSubs != null) return;
         verifyNumberSubs = userInteractor.requestCode(areaCode + phone)
-                .doOnTerminate(() -> {
-                    verifyNumberSubs = null;
-                    hideProgress();
-                })
-                .compose(Rxs.doInBackgroundDeliverToUI())
-                .subscribe(result -> {
-                    loginFlowInteractor.setPhoneCodeId(result.getPhoneCodeId());
-                    loginFlowInteractor.setPhoneRegistered(result.isPhoneRegistered());
-                    loginFlowInteractor.setPhoneNumber(areaCode + phone);
+            .doOnTerminate(() -> {
+                verifyNumberSubs = null;
+                hideProgress();
+            })
+            .compose(Rxs.doInBackgroundDeliverToUI())
+            .subscribe(result -> {
+                loginFlowInteractor.setPhoneCodeId(result.getPhoneCodeId());
+                loginFlowInteractor.setPhoneRegistered(result.isPhoneRegistered());
+                loginFlowInteractor.setPhoneNumber(areaCode + phone);
 
-                    loginFlowInteractor.setHasHbfProvider(hasHbfProvider);
-                    Navigator.verification(context());
-                }, error -> {
-                    if (error instanceof RetrofitException) {
-                        RetrofitException retrofitError = (RetrofitException) error;
-                        if (retrofitError.getKind() == RetrofitException.Kind.NETWORK) {
-                            SimpleDialog.networkProblem(context());
-                        } else {
-                            uiPhone.setError(getString(R.string.error_incorrect_phone));
-                        }
+                loginFlowInteractor.setHasHbfProvider(hasHbfProvider);
+                Navigator.verification(context());
+            }, error -> {
+                if (error instanceof RetrofitException) {
+                    RetrofitException retrofitError = (RetrofitException) error;
+                    if (retrofitError.getKind() == RetrofitException.Kind.NETWORK) {
+                        SimpleDialog.networkProblem(context());
+                    } else {
+                        uiPhone.setError(getString(R.string.error_incorrect_phone));
                     }
-                });
+                }
+            });
     }
 
     @Override protected void onStop() {

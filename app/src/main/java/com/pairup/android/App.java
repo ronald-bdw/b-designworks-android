@@ -33,8 +33,8 @@ public class App extends Application {
         // Dagger%COMPONENT_NAME%
         appComponent = DaggerAppComponent.builder()
 //             list of modules that are part of this component need to be created here too
-                .appModule(new AppModule(this)) // This also corresponds to the name of your module: %component_name%Module
-                .build();
+            .appModule(new AppModule(this)) // This also corresponds to the name of your module: %component_name%Module
+            .build();
         AndroidUtils.initialize(this);
         setUpServices();
         Injector.inject(this);
@@ -62,12 +62,12 @@ public class App extends Application {
     public void onEvent(UserUnauthorizedEvent event) {
         if (unauthorizingSubscription == null) {
             unauthorizingSubscription = userInteractor.requestUserStatus(userInteractor.getPhone())
-                    .doOnTerminate(() -> unauthorizingSubscription = null)
-                    .compose(Rxs.doInBackgroundDeliverToUI())
-                    .subscribe(result -> {
-                        userInteractor.logout();
-                        Navigator.welcomeWithError(getApplicationContext(), result.isPhoneRegistered());
-                    }, Logger::e);
+                .doOnTerminate(() -> unauthorizingSubscription = null)
+                .compose(Rxs.doInBackgroundDeliverToUI())
+                .subscribe(result -> {
+                    userInteractor.logout();
+                    Navigator.welcomeWithError(getApplicationContext(), result.isPhoneRegistered());
+                }, Logger::e);
         }
     }
 }
