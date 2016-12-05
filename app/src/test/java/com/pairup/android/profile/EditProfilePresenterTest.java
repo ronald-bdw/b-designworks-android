@@ -72,6 +72,7 @@ public class EditProfilePresenterTest {
         verify(editProfileView).hideProgress();
         verify(editProfileView).profileHasBeenUpdated();
         verify(editProfileView).showUserInfo(user);
+        verify(editProfileView).closeEditor();
     }
 
     @Test
