@@ -108,6 +108,7 @@ public class EnterPhoneScreen extends BaseActivity {
             }
         } else {
             uiPhone.setError(getString(R.string.registration_error_fill_phone));
+            uiPhone.requestFocus();
         }
     }
 
@@ -197,6 +198,7 @@ public class EnterPhoneScreen extends BaseActivity {
                         SimpleDialog.networkProblem(context());
                     } else {
                         uiPhone.setError(getString(R.string.error_incorrect_phone));
+                        uiPhone.requestFocus();
                     }
                 }
             });
