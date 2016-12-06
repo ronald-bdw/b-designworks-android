@@ -14,7 +14,7 @@ import java.util.List;
  */
 
 public class Areas {
-    public static List<Area> getAreas(@NonNull Context context){
+    public static List<Area> getAreas(@NonNull Context context) {
         List<Area> areas = new ArrayList<>();
         String[] unparsedCountries = context.getString(R.string.countries).split("\n");
         for (String unparsedCountry : unparsedCountries) {
