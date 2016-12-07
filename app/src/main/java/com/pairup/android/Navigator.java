@@ -18,7 +18,6 @@ import com.pairup.android.profile.EditProfileScreen;
 import com.pairup.android.profile.ProfileScreen;
 import com.pairup.android.settings.PushNotificationsSettingsScreen;
 import com.pairup.android.settings.SettingsScreen;
-import com.pairup.android.subscription.SubscriptionScreen;
 import com.pairup.android.sync.SyncScreen;
 import com.pairup.android.tour_app.TourScreenProfile;
 import com.pairup.android.tour_app.TourScreenUploadAvatar;
@@ -106,10 +105,6 @@ public class Navigator {
         sharingIntent.setType("text/plain");
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, text);
         context.startActivity(Intent.createChooser(sharingIntent, context.getString(R.string.share_using)));
-    }
-
-    public static void subscription(@NonNull Context context) {
-        context.startActivity(new Intent(context, SubscriptionScreen.class));
     }
 
     public static void notifications(@NonNull Context context) {

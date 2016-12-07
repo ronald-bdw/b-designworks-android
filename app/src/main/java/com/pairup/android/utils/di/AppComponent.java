@@ -11,7 +11,6 @@ import com.pairup.android.profile.EditProfileScreen;
 import com.pairup.android.profile.ProfileScreen;
 import com.pairup.android.settings.PushNotificationsSettingsScreen;
 import com.pairup.android.settings.SettingsScreen;
-import com.pairup.android.subscription.SubscriptionScreen;
 import com.pairup.android.sync.SyncScreen;
 import com.pairup.android.tour_app.TourScreenProfile;
 import com.pairup.android.tour_app.TourScreenUploadAvatar;
@@ -40,6 +39,5 @@ public interface AppComponent {
     void inject(TourScreenUploadAvatar tourScreenUploadAvatar);
     void inject(EnterPhoneScreen enterPhoneScreen);
     void inject(SyncScreen syncScreen);
-    void inject(SubscriptionScreen subscriptionScreen);
     void inject(PushNotificationsSettingsScreen pushNotificationsSettingsScreen);
 }

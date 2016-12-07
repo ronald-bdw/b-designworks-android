@@ -12,6 +12,7 @@ import com.pairup.android.utils.network.CommonError;
 import com.pairup.android.utils.network.RetrofitException;
 
 import rx.functions.Action0;
+import rx.functions.Action1;
 
 /**
  * Created by Ilya Eremin on 12.08.2016.
@@ -86,4 +87,18 @@ public class SimpleDialog {
         withOkBtn(context, context.getString(R.string.error_network));
     }
 
+    public static void showList(
+        @NonNull Context context,
+        @Nullable String title, @NonNull String[] items,
+        @Nullable Action1<Integer> firstBtnAction) {
+
+        DialogInterface.OnClickListener dialogClickListener = (dialog, id) -> {
+            firstBtnAction.call(id);
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context)
+            .setTitle(title)
+            .setItems(items, dialogClickListener);
+        builder.show();
+    }
 }

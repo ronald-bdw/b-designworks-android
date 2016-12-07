@@ -183,4 +183,9 @@
         <item>Try Pair Up free for 30 days. \n The choice is yours to continue a \n subscription that is far cheaper \n than traditional coaching.</item>
     </string-array>
 
+    <string-array name="subscriptions">
+        <item>Habit Starter (3 month 134$)</item>
+        <item>Habit Stabliser (6 month 199$)</item>
+        <item>Habit Master (one year 299$)</item>
+    </string-array>
 </resources>
