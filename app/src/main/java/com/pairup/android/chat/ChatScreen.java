@@ -191,7 +191,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
 
     @Override public void showSubscriptionDialog() {
         SimpleDialog.showList(this,
-            getString(R.string.subscription),
+            getString(R.string.subscriptions),
             getResources().getStringArray(R.array.subscriptions),
             new Action1<Integer>() {
                 @Override public void call(Integer integer) {
