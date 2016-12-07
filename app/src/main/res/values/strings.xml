@@ -51,6 +51,7 @@
     <string name="error_incorrect_email">Enter valid email</string>
     <string name="registration_error_fill_code">Enter verification code</string>
     <string name="registration_error_fill_phone">Enter phone number</string>
+    <string name="registration_error_fill_area_code">Invalid area code format</string>
     <string name="registration_loading">Creating account…</string>
     <string name="verify">Verify</string>
     <string name="enter_phone_description">Welcome! Please enter your mobile\nphone number for SMS verification</string>
@@ -164,6 +165,9 @@
     <string name="about_us_information">Our professional team of healthy habit coaches are based in Perth, Western Australia. We have helped over 23,000 Australians get more active over the past few years.</string>
     <string name="about_us_website_info">Pair Up cares about your privacy. To learn more, please visit our website to review our Privacy Policy and our End-User Licensing Agreement</string>
     <string name="website_link">www.pairup.im</string>
+
+    <string name="account_deleted_message">Your account have been deleted. Please sign up with Pair Up to use the app.</string>
+    <string name="someone_accessed_your_account_message">Someone accessed your account. You will be redirected to authentication screen.</string>
 
     <string-array name="select_provider_options">
         <item>HBF</item>
