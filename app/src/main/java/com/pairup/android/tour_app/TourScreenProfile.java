@@ -17,6 +17,7 @@ import com.pairup.android.UserInteractor;
 import com.pairup.android.login.models.User;
 import com.pairup.android.sync.GoogleFitPresenter;
 import com.pairup.android.sync.GoogleFitView;
+import com.pairup.android.utils.Keyboard;
 import com.pairup.android.utils.Logger;
 import com.pairup.android.utils.Rxs;
 import com.pairup.android.utils.di.Injector;
@@ -166,6 +167,7 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView {
 
     @OnEditorAction(R.id.email) boolean onEnterClick(int actionId) {
         if (actionId == EditorInfo.IME_ACTION_DONE) {
+            Keyboard.hide(this);
             onSubmitClick();
             return true;
         }
