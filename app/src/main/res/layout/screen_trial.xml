@@ -23,7 +23,7 @@
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginTop="96dp"
-        android:background="@color/default_background"
+        android:background="@android:color/white"
         android:orientation="vertical"
         >
 
