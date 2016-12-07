@@ -76,6 +76,7 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView {
     }
 
     private void sendInfoAndMoveToNextScreen() {
+        Keyboard.hide(this);
         userInteractor.setShowTourForUser();
         if (fieldsChanged()) {
             showUpdateProfileProgress();
@@ -167,7 +168,6 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView {
 
     @OnEditorAction(R.id.email) boolean onEnterClick(int actionId) {
         if (actionId == EditorInfo.IME_ACTION_DONE) {
-            Keyboard.hide(this);
             onSubmitClick();
             return true;
         }
