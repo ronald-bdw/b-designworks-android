@@ -19,6 +19,7 @@ import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.login.functional_area.Area;
 import com.pairup.android.login.functional_area.FunctionalToAreaCodeScreen;
+import com.pairup.android.utils.Areas;
 import com.pairup.android.utils.Keyboard;
 import com.pairup.android.utils.Rxs;
 import com.pairup.android.utils.di.Injector;
@@ -27,6 +28,8 @@ import com.pairup.android.utils.network.RetrofitException;
 import com.pairup.android.utils.ui.SimpleDialog;
 import com.pairup.android.utils.ui.TextViews;
 import com.pairup.android.utils.ui.UiInfo;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -97,9 +100,15 @@ public class EnterPhoneScreen extends BaseActivity {
         String phone = TextViews.textOf(uiPhone);
         String areaCode = getAreaCode();
         if (!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(areaCode)) {
-            manageSubmit(areaCode, phone);
+            if (isCorrectAreaCode(areaCode)) {
+                manageSubmit(areaCode, phone);
+            } else {
+                uiAreaCode.setError(getString(R.string.registration_error_fill_area_code));
+                uiAreaCode.requestFocus();
+            }
         } else {
             uiPhone.setError(getString(R.string.registration_error_fill_phone));
+            uiPhone.requestFocus();
         }
     }
 
@@ -111,7 +120,6 @@ public class EnterPhoneScreen extends BaseActivity {
         }
         final String formattedPhone = phone;
         userInteractor.requestUserStatus(areaCode + formattedPhone)
-            .doOnTerminate(() -> hideProgress())
             .compose(Rxs.doInBackgroundDeliverToUI())
             .subscribe(result -> {
                 boolean passed = false;
@@ -140,6 +148,17 @@ public class EnterPhoneScreen extends BaseActivity {
         return areaCode.startsWith("+") ? areaCode : ("+" + areaCode);
     }
 
+    /** @param areaCode always has "+" in the head cause getAreaCode() method was called before*/
+    private boolean isCorrectAreaCode(String areaCode) {
+        String areaCodeWithoutPlus = areaCode.substring(1, areaCode.length());
+        List<Area> areas = Areas.getAreas(this);
+        for (Area area : areas) {
+            if (areaCodeWithoutPlus.equals(area.getCode().trim()))
+                return true;
+        }
+        return false;
+    }
+
     private void showErrorDialog() {
         String errorMessage = getString(R.string.screen_enter_phone_error);
         switch (accountVerificationType) {
@@ -160,7 +179,10 @@ public class EnterPhoneScreen extends BaseActivity {
     private void requestAuthorizationCode(@NonNull String areaCode, @NonNull String phone) {
         if (verifyNumberSubs != null) return;
         verifyNumberSubs = userInteractor.requestCode(areaCode + phone)
-            .doOnTerminate(() -> verifyNumberSubs = null)
+            .doOnTerminate(() -> {
+                verifyNumberSubs = null;
+                hideProgress();
+            })
             .compose(Rxs.doInBackgroundDeliverToUI())
             .subscribe(result -> {
                 loginFlowInteractor.setPhoneCodeId(result.getPhoneCodeId());
@@ -176,6 +198,7 @@ public class EnterPhoneScreen extends BaseActivity {
                         SimpleDialog.networkProblem(context());
                     } else {
                         uiPhone.setError(getString(R.string.error_incorrect_phone));
+                        uiPhone.requestFocus();
                     }
                 }
             });

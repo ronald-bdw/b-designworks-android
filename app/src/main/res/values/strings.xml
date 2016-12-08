@@ -3,8 +3,8 @@
     <string name="app_name">PairUp</string>
     <string name="menu_right">Right menu</string>
     <string name="title_settings">Settings</string>
-    <string name="title_push_notifications">Push notifications</string>
-    <string name="title_sync">Sync</string>
+    <string name="title_push_notifications">Show Notifications</string>
+    <string name="title_sync">Data Sync</string>
     <string name="title_edit_profile">Edit profile</string>
     <string name="title_welcome">Welcome</string>
     <string name="edit_profile_first_name">First name</string>
@@ -31,7 +31,7 @@
     <string name="sync_google_fit">Google Fit</string>
     <string name="sync_fitbit">Fitbit</string>
     <string name="settings_logout">Log Out</string>
-    <string name="settings_sync">Sync</string>
+    <string name="settings_sync">Data Sync</string>
     <string name="profile_phone">Phone number</string>
     <string name="profile_email">Email</string>
     <string name="edit_profile_change_photo">Change photo</string>
@@ -51,6 +51,7 @@
     <string name="error_incorrect_email">Enter valid email</string>
     <string name="registration_error_fill_code">Enter verification code</string>
     <string name="registration_error_fill_phone">Enter phone number</string>
+    <string name="registration_error_fill_area_code">Invalid area code format</string>
     <string name="registration_loading">Creating account…</string>
     <string name="verify">Verify</string>
     <string name="enter_phone_description">Welcome! Please enter your mobile\nphone number for SMS verification</string>
@@ -64,13 +65,13 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="trial_dialog_no_worries">No worries. Pair Up is open to everyone!</string>
-    <string name="start_free_30_day_trial_now">Start free 30 days trial now</string>
+    <string name="start_free_30_day_trial_now">Start a free 30 day trial now</string>
     <string name="trial_dialog_learn_more">Learn more</string>
     <string name="select_provider_label">Please select your provider from the list:</string>
     <string name="welcome_question">Did you receive a personal\nsign-up invitation?</string>
     <string name="confirm">Confirm</string>
     <string name="title_start_trial">Start your free trial</string>
-    <string name="trial_start_trial">Start a free 30 days trial now</string>
+    <string name="trial_start_trial">Start a free 30 day trial now</string>
     <string name="verify_resend">Re-send</string>
     <string name="loading_sending_request_for_code">Requesting verification code</string>
     <string name="verify_waiting_for_sms">Success! Please wait for your SMS confirmation to complete the verification process.</string>
@@ -112,11 +113,11 @@
     <string name="error_incorrect_phone">Invalid phone format</string>
     <string name="progress_verifying_phone_number">Verifying phone number</string>
 
-    <string name="Smooch_startOfConversation"/>
+    <string name="Smooch_startOfConversation">\nWelcome to the Pair Up main page. This is where you will connect with your Pair Up coach.\n\nTap the upper right  menu to edit settings and learn more about Pair Up. Explore the About Us section to find our Privacy Policy and Licencing Agreement.</string>
     <string name="Smooch_welcome"/>
     <string name="Smooch_messageHint">Input chat message</string>
     <string name="show_notifications">Show Notifications</string>
-    <string name="settings_notifications">Push Notifications</string>
+    <string name="settings_notifications">Show Notifications</string>
     <string name="error_phone_taken">Phone number already taken</string>
     <string name="error_phone_not_registered">Phone number is not registered yet</string>
     <string name="title_area_code">Area code</string>
@@ -164,6 +165,9 @@
     <string name="about_us_information">Our professional team of healthy habit coaches are based in Perth, Western Australia. We have helped over 23,000 Australians get more active over the past few years.</string>
     <string name="about_us_website_info">Pair Up cares about your privacy. To learn more, please visit our website to review our Privacy Policy and our End-User Licensing Agreement</string>
     <string name="website_link">www.pairup.im</string>
+
+    <string name="account_deleted_message">Your account have been deleted. Please sign up with Pair Up to use the app.</string>
+    <string name="someone_accessed_your_account_message">Someone accessed your account. You will be redirected to authentication screen.</string>
 
     <string-array name="select_provider_options">
         <item>HBF</item>

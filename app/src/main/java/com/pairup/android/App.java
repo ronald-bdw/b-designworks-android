@@ -2,9 +2,10 @@ package com.pairup.android;
 
 import android.app.Application;
 
-import com.pairup.android.BuildConfig;
 import com.pairup.android.utils.AndroidUtils;
 import com.pairup.android.utils.Bus;
+import com.pairup.android.utils.Logger;
+import com.pairup.android.utils.Rxs;
 import com.pairup.android.utils.di.AppComponent;
 import com.pairup.android.utils.di.AppModule;
 import com.pairup.android.utils.di.DaggerAppComponent;
@@ -18,6 +19,7 @@ import javax.inject.Inject;
 
 import io.fabric.sdk.android.Fabric;
 import io.smooch.core.Smooch;
+import rx.Subscription;
 
 public class App extends Application {
 
@@ -54,9 +56,18 @@ public class App extends Application {
         Crashlytics.setBool("DEBUG", BuildConfig.DEBUG);
     }
 
+    private Subscription unauthorizingSubscription = null;
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(UserUnauthorizedEvent event) {
-        userInteractor.logout();
-        Navigator.welcome(getApplicationContext());
+        if (unauthorizingSubscription == null) {
+            unauthorizingSubscription = userInteractor.requestUserStatus(userInteractor.getPhone())
+                .doOnTerminate(() -> unauthorizingSubscription = null)
+                .compose(Rxs.doInBackgroundDeliverToUI())
+                .subscribe(result -> {
+                    userInteractor.logout();
+                    Navigator.welcomeWithError(getApplicationContext(), result.isPhoneRegistered());
+                }, Logger::e);
+        }
     }
 }

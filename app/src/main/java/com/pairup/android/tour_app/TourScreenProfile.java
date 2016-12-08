@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import com.pairup.android.UserInteractor;
 import com.pairup.android.login.models.User;
 import com.pairup.android.sync.GoogleFitPresenter;
 import com.pairup.android.sync.GoogleFitView;
+import com.pairup.android.utils.Keyboard;
 import com.pairup.android.utils.Logger;
 import com.pairup.android.utils.Rxs;
 import com.pairup.android.utils.di.Injector;
@@ -27,6 +29,7 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
 import rx.Subscription;
 
 import static com.pairup.android.utils.ui.TextViews.textOf;
@@ -73,6 +76,7 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView {
     }
 
     private void sendInfoAndMoveToNextScreen() {
+        Keyboard.hide(this);
         userInteractor.setShowTourForUser();
         if (fieldsChanged()) {
             showUpdateProfileProgress();
@@ -160,5 +164,13 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView {
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         googleFitPresenter.handleResponse(requestCode, resultCode, data);
+    }
+
+    @OnEditorAction(R.id.email) boolean onEnterClick(int actionId) {
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            onSubmitClick();
+            return true;
+        }
+        return false;
     }
 }

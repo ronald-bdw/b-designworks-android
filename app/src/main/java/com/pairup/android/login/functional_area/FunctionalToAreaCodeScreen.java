@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import com.pairup.android.BaseActivity;
 import com.pairup.android.R;
 import com.pairup.android.login.OnAreaSelectedEvent;
+import com.pairup.android.utils.Areas;
 import com.pairup.android.utils.Bus;
 import com.pairup.android.utils.ui.UiInfo;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
@@ -43,22 +44,12 @@ public class FunctionalToAreaCodeScreen extends BaseActivity {
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
-        List<Area> areas = parseAreas();
+        List<Area> areas = Areas.getAreas(this);
         Collections.sort(areas, (lhs, rhs) -> lhs.getCountry().compareTo(rhs.getCountry()));
         areaCodesAdapter = new AreaCodesAdapter(areas);
         uiList.setAdapter(areaCodesAdapter);
         uiList.setLayoutManager(new LinearLayoutManager(context()));
         uiList.addItemDecoration(new StickyRecyclerHeadersDecoration(areaCodesAdapter));
-    }
-
-    private List<Area> parseAreas() {
-        List<Area> areas = new ArrayList<>();
-        String[] unparsedCountries = getString(R.string.countries).split("\n");
-        for (String unparsedCountry : unparsedCountries) {
-            String[] fields = unparsedCountry.split(";");
-            areas.add(new Area(fields[2], fields[0]));
-        }
-        return areas;
     }
 
     @Override protected void onResume() {
