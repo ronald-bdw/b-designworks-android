@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -23,6 +24,7 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
 
 /**
  * Created by Ilya Eremin on 03.08.2016.
@@ -67,18 +69,6 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
 
     @Nullable private ProgressDialog authorizeProgressDialog;
     @Nullable private ProgressDialog requestVerificationCodeProgressDialog;
-
-    @Override protected void onStop() {
-        hideAuthProgressDialog();
-        hideRequestVerificationProgressDialog();
-        verifyPresenter.onShown();
-        super.onStop();
-    }
-
-    @Override protected void onPause() {
-        verifyPresenter.onHidden();
-        super.onPause();
-    }
 
     @Override public void showRequestVerificationCodeProgressDialog() {
         requestVerificationCodeProgressDialog = ProgressDialog.show(context(), getString(R.string.loading), getString(R.string.loading_sending_request_for_code));
@@ -126,5 +116,13 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
     @Override protected void onDestroy() {
         verifyPresenter.detachView();
         super.onDestroy();
+    }
+
+    @OnEditorAction(R.id.verification_code) boolean onEnterClick(int actionId) {
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            onSubmitClick();
+            return true;
+        }
+        return false;
     }
 }
