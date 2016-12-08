@@ -47,6 +47,7 @@
     <string name="register_choose_your_plan">Choose your plan</string>
     <string name="registration_error_fill_first_name">Enter first name</string>
     <string name="registration_error_fill_last_name">Enter last name</string>
+    <string name="registration_choose_subscriptions_btn">Choose your subscription</string>
     <string name="error_empty_email">Enter email</string>
     <string name="error_incorrect_email">Enter valid email</string>
     <string name="registration_error_fill_code">Enter verification code</string>
@@ -134,7 +135,7 @@
     <string name="unsubscribe">Unsubscribe</string>
     <string name="subscribe">Subscribe</string>
     <string name="subscription_status">Subscription status</string>
-    <string name="subscription">Subscription</string>
+    <string name="subscriptions">Subscriptions</string>
     <string name="subscription_request">Please, subscribe to continue using PairUp</string>
     <string name="chat_screen_blocked">Chat is blocked!</string>
 
@@ -187,4 +188,9 @@
         <item>Try Pair Up free for 30 days. \n The choice is yours to continue a \n subscription that is far cheaper \n than traditional coaching.</item>
     </string-array>
 
+    <string-array name="subscriptions">
+        <item>Habit Starter (3 month)</item>
+        <item>Habit Stabliser (6 month)</item>
+        <item>Habit Master (one year)</item>
+    </string-array>
 </resources>
