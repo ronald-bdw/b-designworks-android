@@ -47,6 +47,7 @@
     <string name="register_choose_your_plan">Choose your plan</string>
     <string name="registration_error_fill_first_name">Enter first name</string>
     <string name="registration_error_fill_last_name">Enter last name</string>
+    <string name="registration_choose_subscriptions_btn">Choose your subscription</string>
     <string name="error_empty_email">Enter email</string>
     <string name="error_incorrect_email">Enter valid email</string>
     <string name="registration_error_fill_code">Enter verification code</string>
@@ -184,8 +185,8 @@
     </string-array>
 
     <string-array name="subscriptions">
-        <item>Habit Starter (3 month 134$)</item>
-        <item>Habit Stabliser (6 month 199$)</item>
-        <item>Habit Master (one year 299$)</item>
+        <item>Habit Starter (3 month)</item>
+        <item>Habit Stabliser (6 month)</item>
+        <item>Habit Master (one year)</item>
     </string-array>
 </resources>

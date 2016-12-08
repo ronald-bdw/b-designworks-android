@@ -94,4 +94,8 @@ public interface Api {
     Observable<Void> sendSubscriptionStatus(@Field("plan_name") String plan,
                                                     @Field("expires_at") String date,
                                                     @Field("active") boolean isActive);
+
+    @FormUrlEncoded
+    @POST(V1 + "subscriptions")
+    Observable<Void> sendSubscriptionStatus(@Field("active") boolean isActive);
 }

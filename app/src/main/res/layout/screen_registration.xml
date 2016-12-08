@@ -61,7 +61,7 @@
                 android:background="@drawable/app_btn_filled"
                 android:paddingLeft="24dp"
                 android:paddingRight="24dp"
-                android:text="@string/submit"
+                android:text="@string/registration_choose_subscriptions_btn"
                 android:textColor="@android:color/white"
                 />
 
