@@ -120,7 +120,7 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
 
     @OnEditorAction(R.id.verification_code) boolean onEnterClick(int actionId) {
         if (actionId == EditorInfo.IME_ACTION_DONE) {
-            verifyPresenter.handleSmsCode(TextViews.textOf(uiVerificationCode));
+            onSubmitClick();
             return true;
         }
         return false;
