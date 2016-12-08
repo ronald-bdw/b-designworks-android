@@ -41,7 +41,6 @@ import butterknife.Bind;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import rx.Subscription;
-import rx.functions.Action1;
 
 import static com.pairup.android.utils.ui.TextViews.textOf;
 
@@ -111,9 +110,11 @@ public class RegistrationScreen extends BaseActivity implements SubscriptionView
     }
 
     @OnClick(R.id.choose_your_plan) void onRegisterClick() {
-        if (!subscriptionPresenter.isSubscribed()) {
+        if (subscriptionPresenter.isSubscribed()) {
+            tryRegistration();
+        } else {
             subscriptionPresenter.showSubscriptionDialog();
-        } else tryRegistration();
+        }
     }
 
     private void tryRegistration() {
@@ -219,17 +220,15 @@ public class RegistrationScreen extends BaseActivity implements SubscriptionView
         SimpleDialog.showList(this,
             getString(R.string.subscriptions),
             getResources().getStringArray(R.array.subscriptions),
-            new Action1<Integer>() {
-                @Override public void call(Integer integer) {
-                    subscriptionPresenter.subscribe(integer);
-                }
-            });
+            integer -> subscriptionPresenter.subscribe(integer));
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             tryRegistration();
-        } else super.onActivityResult(requestCode, resultCode, data);
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

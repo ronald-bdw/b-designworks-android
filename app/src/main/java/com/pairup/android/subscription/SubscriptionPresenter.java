@@ -106,6 +106,8 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
             case 2:
                 bp.subscribe(activity, ONE_YEAR_SUBSCRIPTION_ID);
                 break;
+            default:
+                return;
         }
     }
 

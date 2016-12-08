@@ -92,13 +92,9 @@ public class SimpleDialog {
         @Nullable String title, @NonNull String[] items,
         @Nullable Action1<Integer> firstBtnAction) {
 
-        DialogInterface.OnClickListener dialogClickListener = (dialog, id) -> {
-            firstBtnAction.call(id);
-        };
-
         AlertDialog.Builder builder = new AlertDialog.Builder(context)
             .setTitle(title)
-            .setItems(items, dialogClickListener);
+            .setItems(items, (dialog, id) -> firstBtnAction.call(id));
         builder.show();
     }
 }
