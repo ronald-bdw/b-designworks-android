@@ -83,7 +83,8 @@ public interface Api {
         @Field("notification[kind]") String kind
     );
 
-    @DELETE("v1/notifications/message_push") Observable<ResponseBody> userDisabledPushNotificatinos();
+    @DELETE("v1/notifications/message_push")
+    Observable<ResponseBody> userDisabledPushNotificatinos();
 
     @FormUrlEncoded
     @POST(V1 + "registration_status")
@@ -92,6 +93,6 @@ public interface Api {
     @FormUrlEncoded
     @POST(V1 + "subscriptions")
     Observable<Void> sendSubscriptionStatus(@Field("plan_name") String plan,
-                                                    @Field("expires_at") String date,
-                                                    @Field("active") boolean isActive);
+                                            @Field("expires_at") String date,
+                                            @Field("active") boolean isActive);
 }

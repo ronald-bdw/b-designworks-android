@@ -53,19 +53,6 @@ public class RegistrationScreen extends BaseActivity implements SubscriptionView
     private static final String ARG_PHONE_NUMBER          = "argPhoneNumber";
     private static final String ARG_PHONE_CODE_ID         = "argPhoneCodeId";
 
-    public static Intent createIntent(Context context, String phoneNumber,
-                                      String verificationCode, String phoneCodeId) {
-        Intent intent = new Intent(context, RegistrationScreen.class);
-        intent.putExtra(ARG_KEY_VERIFICATION_CODE, verificationCode);
-        intent.putExtra(ARG_PHONE_NUMBER, phoneNumber);
-        intent.putExtra(ARG_PHONE_CODE_ID, phoneCodeId);
-        return intent;
-    }
-
-    @NonNull @Override public UiInfo getUiInfo() {
-        return new UiInfo(R.layout.screen_registration).setTitleRes(R.string.title_start_trial).enableBackButton();
-    }
-
     @InjectExtra(ARG_KEY_VERIFICATION_CODE) String argVerificationCode;
     @InjectExtra(ARG_PHONE_CODE_ID)         String argPhoneCodeId;
     @InjectExtra(ARG_PHONE_NUMBER)          String argPhoneNumber;
@@ -81,6 +68,19 @@ public class RegistrationScreen extends BaseActivity implements SubscriptionView
 
     @Nullable private Subscription   progressSubs;
     @Nullable private ProgressDialog progressDialog;
+
+    public static Intent createIntent(Context context, String phoneNumber,
+                                      String verificationCode, String phoneCodeId) {
+        Intent intent = new Intent(context, RegistrationScreen.class);
+        intent.putExtra(ARG_KEY_VERIFICATION_CODE, verificationCode);
+        intent.putExtra(ARG_PHONE_NUMBER, phoneNumber);
+        intent.putExtra(ARG_PHONE_CODE_ID, phoneCodeId);
+        return intent;
+    }
+
+    @NonNull @Override public UiInfo getUiInfo() {
+        return new UiInfo(R.layout.screen_registration).setTitleRes(R.string.title_start_trial).enableBackButton();
+    }
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);

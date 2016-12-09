@@ -6,17 +6,20 @@ import org.greenrobot.eventbus.EventBus;
  * Created by Ilya Eremin on 18.08.2016.
  */
 public class Bus {
+
     public static final boolean STICKY = true;
-    public static boolean DISABLE_FOR_TEST;
+    private static boolean disableForTest;
 
     /**
      * to speed up eventBus use code generation.
      *
-     * @see <a href="http://greenrobot.org/eventbus/documentation/subscriber-index/">GreenRobot Eventbus docs</a>
+     * @see <a href="http://greenrobot.org/eventbus/documentation/subscriber-index/">
+     * GreenRobot Eventbus docs</a>
      */
     private static EventBus bus;
 
-    private Bus() {}
+    private Bus() {
+    }
 
     public static void subscribe(Object object) {
         initialize();
@@ -35,7 +38,7 @@ public class Bus {
     }
 
     public static void event(Object object, boolean... sticky) {
-        if(DISABLE_FOR_TEST) return;
+        if (disableForTest) return;
         initialize();
         if (sticky != null && sticky.length > 0) {
             bus.postSticky(object);
@@ -50,5 +53,9 @@ public class Bus {
 
     public static boolean hasSubscribersForType(Class clazz) {
         return bus.hasSubscriberForEvent(clazz);
+    }
+
+    public static void disableForTest() {
+        disableForTest = true;
     }
 }

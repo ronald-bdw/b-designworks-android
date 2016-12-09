@@ -8,13 +8,13 @@ import android.os.Parcelable;
  */
 public class Area implements Parcelable {
 
+    private String country;
+    private String code;
+
     public Area(String country, String code) {
         this.country = country;
         this.code = code;
     }
-
-    String country;
-    String code;
 
     public String getCountry() {
         return country;
@@ -24,8 +24,9 @@ public class Area implements Parcelable {
         return code;
     }
 
-
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.country);
@@ -38,8 +39,12 @@ public class Area implements Parcelable {
     }
 
     public static final Parcelable.Creator<Area> CREATOR = new Parcelable.Creator<Area>() {
-        @Override public Area createFromParcel(Parcel source) {return new Area(source);}
+        @Override public Area createFromParcel(Parcel source) {
+            return new Area(source);
+        }
 
-        @Override public Area[] newArray(int size) {return new Area[size];}
+        @Override public Area[] newArray(int size) {
+            return new Area[size];
+        }
     };
 }

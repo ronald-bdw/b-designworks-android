@@ -15,13 +15,13 @@ import butterknife.ButterKnife;
  */
 public abstract class BaseHolder<T> extends RecyclerView.ViewHolder implements CanDraw<T> {
 
-    protected static View inflate(ViewGroup viewGroup, @LayoutRes int layoutId) {
-        return LayoutInflater.from(viewGroup.getContext()).inflate(layoutId, viewGroup, false);
-    }
-
     public BaseHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+    }
+
+    protected static View inflate(ViewGroup viewGroup, @LayoutRes int layoutId) {
+        return LayoutInflater.from(viewGroup.getContext()).inflate(layoutId, viewGroup, false);
     }
 
     protected Context context() { return itemView.getContext(); }

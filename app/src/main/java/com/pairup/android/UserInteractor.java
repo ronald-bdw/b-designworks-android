@@ -40,9 +40,9 @@ public class UserInteractor {
     private static final String KEY_FIRST_VISIT_AFTER_LOGIN = "firstVisitAfterLogin";
     private static final String DEVICE_TYPE_ANDROID         = "android";
 
-    @NonNull private final IStorage     storage;
-    @NonNull private final UserSettings userSettings;
-    @NonNull private final Api          api;
+    @NonNull private final IStorage                  storage;
+    @NonNull private final UserSettings              userSettings;
+    @NonNull private final Api                       api;
     @NonNull private final NotificationManagerCompat notificationManager;
 
     public UserInteractor(@NonNull IStorage storage,
@@ -135,7 +135,8 @@ public class UserInteractor {
 
     public Observable<UserResponse> uploadAvatar(String imageUrl) {
         RequestBody body = RequestBody.create(MediaType.parse("image/jpg"), new File(imageUrl));
-        return api.uploadAvatar(getUserId(), MultipartBody.Part.createFormData("user[avatar]", imageUrl, body)).map(result -> {
+        return api.uploadAvatar(getUserId(), MultipartBody.Part.createFormData("user[avatar]",
+            imageUrl, body)).map(result -> {
             saveUser(result.getUser());
             return result;
         });
@@ -162,7 +163,7 @@ public class UserInteractor {
     }
 
     public boolean areNotificationsEnabled() {
-        if(DeviceInteractor.isSdkSupportsNotifications()) {
+        if (DeviceInteractor.isSdkSupportsNotifications()) {
             return notificationManager.areNotificationsEnabled();
         } else {
             return true;
@@ -230,7 +231,7 @@ public class UserInteractor {
         return false;
     }
 
-    public @Nullable String getFitnessToken(@NonNull Provider provider) {
+    @Nullable public String getFitnessToken(@NonNull Provider provider) {
         String id = null;
         for (Integration integration : getUser().getIntegrations()) {
             if (provider == integration.getProvider()) {
@@ -252,7 +253,8 @@ public class UserInteractor {
         return storage.getBoolean(KEY_SHOW_TOUR_TO_USER, true);
     }
 
-    public Observable<Void> sendInAppStatus(@NonNull String planName, @NonNull String date, boolean isActive) {
+    public Observable<Void> sendInAppStatus(@NonNull String planName, @NonNull String date,
+                                            boolean isActive) {
         return api.sendSubscriptionStatus(planName, date, isActive).map(result -> null);
     }
 }

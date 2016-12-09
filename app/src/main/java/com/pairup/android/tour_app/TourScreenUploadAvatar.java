@@ -38,19 +38,19 @@ import rx.Subscription;
 
 public class TourScreenUploadAvatar extends BaseActivity {
 
-    @NonNull @Override public UiInfo getUiInfo() {
-        return new UiInfo(R.layout.screen_tour_upload_avatar)
-            .enableBackButton()
-            .setTitleRes(R.string.title_tour_2_page)
-            .setMenuRes(R.menu.menu_with_next_btn);
-    }
-
     @Inject UserInteractor userInteractor;
     @Inject ImageLoader    imageLoader;
     @Inject File           filePath;
 
     @Bind(R.id.avatar)   ImageView uiAvatar;
     @Bind(R.id.progress) View      uiProgress;
+
+    @NonNull @Override public UiInfo getUiInfo() {
+        return new UiInfo(R.layout.screen_tour_upload_avatar)
+            .enableBackButton()
+            .setTitleRes(R.string.title_tour_2_page)
+            .setMenuRes(R.menu.menu_with_next_btn);
+    }
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
@@ -75,11 +75,13 @@ public class TourScreenUploadAvatar extends BaseActivity {
             .subscribe(granted -> {
                 if (granted) {
                     TedBottomPicker tedBottomPicker = new TedBottomPicker.Builder(this)
-                        .setOnImageSelectedListener(uri -> CropUtil.startCropImageActivity(this, uri, filePath.getAbsolutePath()))
+                        .setOnImageSelectedListener(uri -> CropUtil.startCropImageActivity(this,
+                            uri, filePath.getAbsolutePath()))
                         .create();
                     tedBottomPicker.show(getSupportFragmentManager());
                 } else {
-                    Toast.makeText(this, R.string.edit_profile_error_access_storage, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.edit_profile_error_access_storage,
+                        Toast.LENGTH_SHORT).show();
                 }
             });
     }

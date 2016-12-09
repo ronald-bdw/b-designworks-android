@@ -26,18 +26,32 @@ import dagger.Component;
 @Singleton
 @Component(modules = {AppModule.class})
 public interface AppComponent {
+
     void inject(App app);
+
     void inject(InitialScreen activity);
+
     void inject(RegistrationScreen registrationScreen);
+
     void inject(VerifyScreen verifyScreen);
+
     void inject(ChatScreen chatScreen);
+
     void inject(ChatSidePanelFragment chatSidePanelFragment);
+
     void inject(EditProfileScreen editProfileScreen);
+
     void inject(ProfileScreen profileScreen);
+
     void inject(SettingsScreen settingsScreen);
+
     void inject(TourScreenProfile tourScreenProfile);
+
     void inject(TourScreenUploadAvatar tourScreenUploadAvatar);
+
     void inject(EnterPhoneScreen enterPhoneScreen);
+
     void inject(SyncScreen syncScreen);
+
     void inject(PushNotificationsSettingsScreen pushNotificationsSettingsScreen);
 }

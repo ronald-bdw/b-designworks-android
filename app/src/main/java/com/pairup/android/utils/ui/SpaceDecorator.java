@@ -17,9 +17,9 @@ public class SpaceDecorator extends RecyclerView.ItemDecoration {
     private final int bottom;
 
     /**
-     * @param top in dp
-     * @param left in dp
-     * @param right in dp
+     * @param top    in dp
+     * @param left   in dp
+     * @param right  in dp
      * @param bottom in dp
      */
     public SpaceDecorator(int left, int top, int right, int bottom) {
@@ -30,7 +30,8 @@ public class SpaceDecorator extends RecyclerView.ItemDecoration {
     }
 
     @Override
-    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+    public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
+                               RecyclerView.State state) {
         outRect.left = AndroidUtils.dp(left);
         outRect.right = AndroidUtils.dp(right);
         outRect.top = AndroidUtils.dp(top);

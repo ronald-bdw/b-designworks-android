@@ -31,9 +31,16 @@ public class UserManagerTest {
 
     private static final String MY_FAKE_NUMBER         = "my_fake_number";
     private static final String MY_FAKE_NUMBER_CODE_ID = "1234";
-    private static final String FAKE_AUTH_RESPONSE     = "{\"auth_phone_code\":{\"id\":" + MY_FAKE_NUMBER_CODE_ID + ",\"phone_registered\":false}}";
+    private static final String FAKE_AUTH_RESPONSE     = "{\"auth_phone_code\":{\"id\":" +
+        MY_FAKE_NUMBER_CODE_ID + ",\"phone_registered\":false}}";
     private static final String FAKE_TOKEN             = "123123fake_token_haha";
-    private static final String FAKE_REGISTER_RESPONSE = "{\"user\":{\"id\":1,\"authentication_token\":\"" + FAKE_TOKEN + "\"}}";
+    private static final String FAKE_REGISTER_RESPONSE = "{\"user\":{\"id\":1," +
+        "\"authentication_token\":\"" + FAKE_TOKEN + "\"}}";
+
+    private UserInteractor            userManager;
+    private UserSettings              userSettings;
+    private NotificationManagerCompat notificationManager;
+    private Context                   context;
 
     private static AuthResponse getFakeAuthResponse() {
         return MapperUtils.getInstance().fromJson(FAKE_AUTH_RESPONSE, AuthResponse.class);
@@ -43,11 +50,6 @@ public class UserManagerTest {
         return MapperUtils.getInstance().fromJson(FAKE_REGISTER_RESPONSE, UserResponse.class);
     }
 
-    private UserInteractor            userManager;
-    private UserSettings              userSettings;
-    private NotificationManagerCompat notificationManager;
-    private Context                   context;
-
     @Before public void setUp() throws Exception {
         context = mock(Context.class);
         Api mockedApi = mock(Api.class);
@@ -55,18 +57,20 @@ public class UserManagerTest {
         userSettings = new UserSettings(storage);
         notificationManager = NotificationManagerCompat.from(context);
         when(mockedApi.sendMeCode(any(), any())).thenReturn(Observable.just(getFakeAuthResponse()));
-        when(mockedApi.register(anyString(), anyString(), anyString(), anyString(), eq(MY_FAKE_NUMBER), eq(MY_FAKE_NUMBER_CODE_ID)))
+        when(mockedApi.register(anyString(), anyString(), anyString(), anyString(),
+            eq(MY_FAKE_NUMBER), eq(MY_FAKE_NUMBER_CODE_ID)))
             .thenReturn(Observable.just(getFakeRegisterResponse()));
         userManager = new UserInteractor(storage, userSettings, mockedApi, notificationManager);
     }
 
     @Test
     public void testRegister() throws Exception {
-        Bus.DISABLE_FOR_TEST = true;
+        Bus.disableForTest();
         userManager.requestCode(MY_FAKE_NUMBER)
             .subscribe(ignoreResult -> {
             }, ErrorUtils.onError());
-        userManager.register("Danny", "Makaskill", "example@mail.com", "1234", MY_FAKE_NUMBER, MY_FAKE_NUMBER_CODE_ID)
+        userManager.register("Danny", "Makaskill", "example@mail.com", "1234",
+            MY_FAKE_NUMBER, MY_FAKE_NUMBER_CODE_ID)
             .subscribe(ignoreResult -> {
             }, ErrorUtils.onError());
         Assert.assertEquals(FAKE_TOKEN, userSettings.getToken());

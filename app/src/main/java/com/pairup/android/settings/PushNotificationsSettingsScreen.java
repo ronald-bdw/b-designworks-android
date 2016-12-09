@@ -3,7 +3,6 @@ package com.pairup.android.settings;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.widget.TextView;
@@ -26,12 +25,12 @@ import butterknife.OnClick;
  */
 public class PushNotificationsSettingsScreen extends BaseActivity {
 
+    @Inject UserInteractor userInteractor;
+
     @Bind(R.id.status)               TextView     uiStatus;
     @Bind(R.id.hint)                 TextView     uiHint;
     @Bind(R.id.change_notifications) TextView     uiChangeNotifications;
     @Bind(R.id.notifications_toggle) SwitchCompat uiNotificationsToggle;
-
-    @Inject UserInteractor userInteractor;
 
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_push_notifications_settings)

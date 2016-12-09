@@ -43,13 +43,6 @@ import gun0912.tedbottompicker.TedBottomPicker;
  */
 public class EditProfileScreen extends BaseActivity implements EditProfileView {
 
-    @NonNull @Override public UiInfo getUiInfo() {
-        return new UiInfo(R.layout.screen_edit_profile)
-            .enableBackButton()
-            .setTitleRes(R.string.title_edit_profile)
-            .setMenuRes(R.menu.edit_profile);
-    }
-
     @Bind(R.id.avatar)                    ImageView uiAvatar;
     @Bind(R.id.avatar_uploading_progress) View      uiAvatarUploadingProgress;
     @Bind(R.id.current_full_name)         TextView  uiCurrentFullName;
@@ -61,6 +54,13 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
     @Inject EditProfilePresenter editProfilePresenter;
     @Inject ImageLoader          imageLoader;
     @Inject File                 filePath;
+
+    @NonNull @Override public UiInfo getUiInfo() {
+        return new UiInfo(R.layout.screen_edit_profile)
+            .enableBackButton()
+            .setTitleRes(R.string.title_edit_profile)
+            .setMenuRes(R.menu.edit_profile);
+    }
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);

@@ -56,6 +56,9 @@ public class EnterPhoneScreen extends BaseActivity {
     @Inject UserInteractor      userInteractor;
     @Inject LoginFlowInteractor loginFlowInteractor;
 
+    @Nullable private Subscription   verifyNumberSubs;
+    @Nullable private ProgressDialog progressDialog;
+
     private boolean hasHbfProvider;
 
     @NonNull @Override public UiInfo getUiInfo() {
@@ -65,7 +68,8 @@ public class EnterPhoneScreen extends BaseActivity {
     }
 
     @Override protected void parseArguments(@NonNull Bundle extras) {
-        accountVerificationType = (AccountVerificationType) extras.getSerializable(ARG_ACCOUNT_VERIFICATION_TYPE);
+        accountVerificationType = (AccountVerificationType) extras
+            .getSerializable(ARG_ACCOUNT_VERIFICATION_TYPE);
     }
 
     @SuppressLint("SetTextI18n") @Override protected void onCreate(@Nullable Bundle savedState) {
@@ -85,9 +89,6 @@ public class EnterPhoneScreen extends BaseActivity {
         }
         return false;
     }
-
-    @Nullable private Subscription   verifyNumberSubs;
-    @Nullable private ProgressDialog progressDialog;
 
     @Override protected void onResume() {
         super.onResume();
@@ -134,6 +135,8 @@ public class EnterPhoneScreen extends BaseActivity {
                     case HAS_PROVIDER:
                         passed = hasHbfProvider;
                         break;
+                    default:
+                        break;
                 }
                 if (passed) {
                     requestAuthorizationCode(areaCode, formattedPhone);
@@ -148,7 +151,9 @@ public class EnterPhoneScreen extends BaseActivity {
         return areaCode.startsWith("+") ? areaCode : ("+" + areaCode);
     }
 
-    /** @param areaCode always has "+" in the head cause getAreaCode() method was called before*/
+    /**
+     * @param areaCode always has "+" in the head cause getAreaCode() method was called before
+     */
     private boolean isCorrectAreaCode(String areaCode) {
         String areaCodeWithoutPlus = areaCode.substring(1, areaCode.length());
         List<Area> areas = Areas.getAreas(this);
@@ -171,6 +176,7 @@ public class EnterPhoneScreen extends BaseActivity {
             case HAS_PROVIDER:
                 errorMessage = getString(R.string.screen_enter_phone_error_has_no_provider);
                 break;
+            default: break;
         }
         SimpleDialog.show(context(), getString(R.string.error), errorMessage,
             getString(R.string.ok), () -> Navigator.welcome(this));
@@ -217,12 +223,13 @@ public class EnterPhoneScreen extends BaseActivity {
     }
 
     private void showProgress() {
-        progressDialog = ProgressDialog.show(context(), getString(R.string.loading), getString(R.string.progress_verifying_phone_number), true, true, dialog -> {
-            if (verifyNumberSubs != null && !verifyNumberSubs.isUnsubscribed()) {
-                verifyNumberSubs.unsubscribe();
-                verifyNumberSubs = null;
-            }
-        });
+        progressDialog = ProgressDialog.show(context(), getString(R.string.loading), getString(R.string.progress_verifying_phone_number), true,
+            true, dialog -> {
+                if (verifyNumberSubs != null && !verifyNumberSubs.isUnsubscribed()) {
+                    verifyNumberSubs.unsubscribe();
+                    verifyNumberSubs = null;
+                }
+            });
     }
 
     @OnClick(R.id.area_code_btn) void onAreaBtnClick() {
