@@ -12,11 +12,16 @@ import android.text.InputType;
 import android.util.Patterns;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.anjlab.android.iab.v3.TransactionDetails;
+import com.f2prateek.dart.InjectExtra;
 import com.pairup.android.BaseActivity;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
+import com.pairup.android.subscription.SubscriptionPresenter;
+import com.pairup.android.subscription.SubscriptionView;
 import com.pairup.android.utils.Keyboard;
 import com.pairup.android.utils.Rxs;
 import com.pairup.android.utils.Strings;
@@ -26,7 +31,6 @@ import com.pairup.android.utils.network.ErrorUtils;
 import com.pairup.android.utils.network.RetrofitException;
 import com.pairup.android.utils.ui.SimpleDialog;
 import com.pairup.android.utils.ui.UiInfo;
-import com.f2prateek.dart.InjectExtra;
 import com.trello.rxlifecycle.ActivityEvent;
 
 import java.util.Random;
@@ -43,7 +47,7 @@ import static com.pairup.android.utils.ui.TextViews.textOf;
 /**
  * Created by Ilya Eremin on 09.08.2016.
  */
-public class RegistrationScreen extends BaseActivity {
+public class RegistrationScreen extends BaseActivity implements SubscriptionView{
 
     private static final String ARG_KEY_VERIFICATION_CODE = "argVerificationCode";
     private static final String ARG_PHONE_NUMBER          = "argPhoneNumber";
@@ -66,8 +70,9 @@ public class RegistrationScreen extends BaseActivity {
     @InjectExtra(ARG_PHONE_CODE_ID)         String argPhoneCodeId;
     @InjectExtra(ARG_PHONE_NUMBER)          String argPhoneNumber;
 
-    @Inject UserInteractor      userInteractor;
-    @Inject LoginFlowInteractor loginFlowInteractor;
+    @Inject UserInteractor        userInteractor;
+    @Inject LoginFlowInteractor   loginFlowInteractor;
+    @Inject SubscriptionPresenter subscriptionPresenter;
 
     @Bind(R.id.first_name) EditText uiFirstName;
     @Bind(R.id.last_name)  EditText uiLastName;
@@ -80,6 +85,7 @@ public class RegistrationScreen extends BaseActivity {
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
         Injector.inject(this);
+        subscriptionPresenter.attachView(this, this);
         if (savedState == null) {
             if (BuildConfig.DEBUG) {
                 fillFakeData();
@@ -104,7 +110,11 @@ public class RegistrationScreen extends BaseActivity {
     }
 
     @OnClick(R.id.choose_your_plan) void onRegisterClick() {
-        tryRegistration();
+        if (subscriptionPresenter.isSubscribed()) {
+            tryRegistration();
+        } else {
+            subscriptionPresenter.showSubscriptionDialog();
+        }
     }
 
     private void tryRegistration() {
@@ -200,5 +210,25 @@ public class RegistrationScreen extends BaseActivity {
             return true;
         }
         return false;
+    }
+
+    @Override public void onProductPurchased(String productId, TransactionDetails details) {
+        Toast.makeText(this, R.string.subscription_owned_text, Toast.LENGTH_LONG).show();
+    }
+
+    @Override public void showSubscriptionDialog() {
+        SimpleDialog.showList(this,
+            getString(R.string.subscriptions),
+            getResources().getStringArray(R.array.subscriptions),
+            integer -> subscriptionPresenter.subscribe(integer));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            tryRegistration();
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

@@ -30,7 +30,9 @@ import rx.schedulers.Schedulers;
 
 public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
 
-    private static final String ONE_MONTH_TEST_SUBSCRIPTION_ID = "one_month_test_subscription";
+    private static final String THREE_MONTH_SUBSCRIPTION_ID = "three_month_subscription_v1";
+    private static final String SIX_MONTH_SUBSCRIPTION_ID = "six_month_subscription_v1";
+    private static final String ONE_YEAR_SUBSCRIPTION_ID = "one_year_subscription_v1";
     private static final String PURCHASE_KEY                   = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAorESPZk0zw3hhu3kFGoGm1wsJJX/TJWOB/+q9LQ+VpN2TVuyzouVaYSxOSaHXg3/s1t4tUni7Ih3EVwR4//dbTH7ob3JdDoRzlWsgJaHeytH8qW6hPCdRX/cHLT0PbldwryUh92/yjBeel4Lo7McirS97MYElfsSQ52bEo8GOhG8SPYTHruh4WNp/LD/NO042AZUfi6+9fITzgNe2PeUKvGaFB9CrPpdbylExGhXhjjUhodZEjoUUtvCFG82lkvQHjnrUOs1PdHIhOk2IVVjpLHkX++9188ASEOflNNfnQIbRprjTuKFZG9NX/DTunzJNnH183fvyVQCX/r+ciFkAQIDAQAB";
 
     private SubscriptionView     view;
@@ -84,15 +86,29 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
     }
 
     public boolean isSubscribed() {
-        return bp.isSubscribed(ONE_MONTH_TEST_SUBSCRIPTION_ID);
+        return bp.isSubscribed(THREE_MONTH_SUBSCRIPTION_ID)
+            || bp.isSubscribed(SIX_MONTH_SUBSCRIPTION_ID)
+            || bp.isSubscribed(ONE_YEAR_SUBSCRIPTION_ID);
     }
 
     public @StringRes int getSubscriptionStatusText() {
         return isSubscribed() ? R.string.subscribed_status : R.string.subscription_request;
     }
 
-    public void subscribe() {
-        bp.subscribe(activity, ONE_MONTH_TEST_SUBSCRIPTION_ID);
+    public void subscribe(int subscription) {
+        switch (subscription) {
+            case 0:
+                bp.subscribe(activity, THREE_MONTH_SUBSCRIPTION_ID);
+                break;
+            case 1:
+                bp.subscribe(activity, SIX_MONTH_SUBSCRIPTION_ID);
+                break;
+            case 2:
+                bp.subscribe(activity, ONE_YEAR_SUBSCRIPTION_ID);
+                break;
+            default:
+                return;
+        }
     }
 
     public void showSubscriptionDialog() {
@@ -112,7 +128,9 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
     public void receiveSubscriptionDetails() {
 
         ArrayList<String> skuList = new ArrayList<> ();
-        skuList.add(ONE_MONTH_TEST_SUBSCRIPTION_ID);
+        skuList.add(THREE_MONTH_SUBSCRIPTION_ID);
+        skuList.add(SIX_MONTH_SUBSCRIPTION_ID);
+        skuList.add(ONE_YEAR_SUBSCRIPTION_ID);
         Bundle querySkus = new Bundle();
         querySkus.putStringArrayList("ITEM_ID_LIST", skuList);
 
