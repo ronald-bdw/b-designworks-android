@@ -73,7 +73,7 @@ public class VerifyPresenter {
         if (view != null) {
             view.showAuthorizationProgressDialog();
         }
-        verifyingCodeSubs = userInteractor.checkVerificationNumber(loginFlowInteractor.getPhoneNumber(), verificationCode)
+        verifyingCodeSubs = userInteractor.checkVerificationNumber(loginFlowInteractor.getPhoneCodeId(), verificationCode)
             .doOnTerminate(() -> {
                 verifyingCodeSubs = null;
                 if (view != null) {
@@ -81,7 +81,7 @@ public class VerifyPresenter {
                 }
             })
             .compose(Rxs.doInBackgroundDeliverToUI())
-            .subscribe(result -> view.openRegistrationScreen(loginFlowInteractor.getPhoneCodeId(),
+            .subscribe(result -> view.openRegistrationScreen(loginFlowInteractor.getPhoneNumber(),
                 verificationCode, loginFlowInteractor.getPhoneCodeId()), error -> {
                 if (view != null) {
                     view.showError(error);
