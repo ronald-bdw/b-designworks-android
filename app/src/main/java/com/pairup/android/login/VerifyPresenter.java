@@ -81,8 +81,11 @@ public class VerifyPresenter {
                 }
             })
             .compose(Rxs.doInBackgroundDeliverToUI())
-            .subscribe(result -> view.openRegistrationScreen(loginFlowInteractor.getPhoneNumber(),
-                verificationCode, loginFlowInteractor.getPhoneCodeId()), error -> {
+            .subscribe(result -> {
+                if (view != null) {
+                    view.openRegistrationScreen(loginFlowInteractor.getPhoneNumber(), verificationCode, loginFlowInteractor.getPhoneCodeId());
+                }
+            }, error -> {
                 if (view != null) {
                     view.showError(error);
                 }
