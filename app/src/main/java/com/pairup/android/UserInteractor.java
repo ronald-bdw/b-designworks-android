@@ -25,6 +25,7 @@ import io.smooch.core.Smooch;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 import rx.Observable;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
@@ -254,5 +255,9 @@ public class UserInteractor {
 
     public Observable<Void> sendInAppStatus(@NonNull String planName, @NonNull String date, @NonNull boolean isActive) {
         return api.sendSubscriptionStatus(planName, date, isActive).map(result -> null);
+    }
+
+    public Observable<Void> checkVerificationNumber(@NonNull String id, @NonNull String code){
+        return api.checkVerificationCode(id, code).map(result -> null);
     }
 }
