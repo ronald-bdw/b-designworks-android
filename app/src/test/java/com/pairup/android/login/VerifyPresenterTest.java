@@ -45,7 +45,7 @@ public class VerifyPresenterTest {
 
     private VerifyPresenter     presenter;
     private LoginFlowInteractor loginFlowInteractor;
-    
+
     @Before public void setUp() throws Exception {
         when(userInteractor.requestCode(REGISTERED_PHONE_NUMBER)).thenReturn(Observable.just(new AuthResponse(true, PHONE_CODE_ID)));
         when(userInteractor.requestCode(NEW_PHONE_NUMBER)).thenReturn(Observable.just(new AuthResponse(false, PHONE_CODE_ID)));
