@@ -55,6 +55,7 @@ public class VerifyPresenterTest {
         when(userInteractor.login(eq(CORRECT_SMS_CODE), any(), any())).thenReturn(Observable.just(null));
         when(userInteractor.login(eq(WRONG_SMS_CODE), any(), any())).thenReturn(Observable.error(new Exception()));
         when(userInteractor.login(eq(LONG_REQUEST_FLAG), any(), any())).thenReturn(Observable.just(null).delay(100, TimeUnit.MILLISECONDS).subscribeOn(Schedulers.computation()));
+        when(userInteractor.checkVerificationNumber(any(), any())).thenReturn(Observable.just(null));
         loginFlowInteractor = new LoginFlowInteractor(new RuntimeStorage());
 
         presenter = new VerifyPresenter(userInteractor, loginFlowInteractor);
@@ -83,6 +84,9 @@ public class VerifyPresenterTest {
         verify(userInteractor).requestCode(any());
         verify(view).hideRequestVerificationProgressDialog();
         presenter.handleSmsCode(CORRECT_SMS_CODE);
+        verify(view).showAuthorizationProgressDialog();
+        verify(userInteractor).checkVerificationNumber(any(), any());
+        verify(view).hideAuthProgressDialog();
         verify(view).openRegistrationScreen(NEW_PHONE_NUMBER, CORRECT_SMS_CODE, PHONE_CODE_ID);
     }
 
