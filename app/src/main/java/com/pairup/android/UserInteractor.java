@@ -41,9 +41,9 @@ public class UserInteractor {
     private static final String KEY_FIRST_VISIT_AFTER_LOGIN = "firstVisitAfterLogin";
     private static final String DEVICE_TYPE_ANDROID         = "android";
 
-    @NonNull private final IStorage     storage;
-    @NonNull private final UserSettings userSettings;
-    @NonNull private final Api          api;
+    @NonNull private final IStorage                  storage;
+    @NonNull private final UserSettings              userSettings;
+    @NonNull private final Api                       api;
     @NonNull private final NotificationManagerCompat notificationManager;
 
     public UserInteractor(@NonNull IStorage storage,
@@ -163,7 +163,7 @@ public class UserInteractor {
     }
 
     public boolean areNotificationsEnabled() {
-        if(DeviceInteractor.isSdkSupportsNotifications()) {
+        if (DeviceInteractor.isSdkSupportsNotifications()) {
             return notificationManager.areNotificationsEnabled();
         } else {
             return true;
@@ -257,7 +257,7 @@ public class UserInteractor {
         return api.sendSubscriptionStatus(planName, date, isActive).map(result -> null);
     }
 
-    public Observable<Void> checkVerificationNumber(@NonNull String id, @NonNull String code){
+    public Observable<Void> checkVerificationNumber(@NonNull String id, @NonNull String code) {
         return api.checkVerificationCode(id, code).map(result -> null);
     }
 }
