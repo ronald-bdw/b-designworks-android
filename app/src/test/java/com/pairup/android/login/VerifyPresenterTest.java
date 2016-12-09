@@ -40,10 +40,10 @@ public class VerifyPresenterTest {
 
     private static final String LONG_REQUEST_FLAG = "veryLongRequestToVerifyShownHidden";
 
-    @Mock   UserInteractor  userInteractor;
-    @Mock   VerifyView      view;
+    @Mock UserInteractor userInteractor;
+    @Mock VerifyView     view;
 
-    private VerifyPresenter presenter;
+    private VerifyPresenter     presenter;
     private LoginFlowInteractor loginFlowInteractor;
 
     @Before public void setUp() throws Exception {
