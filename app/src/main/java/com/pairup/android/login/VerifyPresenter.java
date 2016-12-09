@@ -73,7 +73,7 @@ public class VerifyPresenter {
         if (view != null) {
             view.showAuthorizationProgressDialog();
         }
-        verifyingCodeSubs = userInteractor.checkVerificationNumber(loginFlowInteractor.getPhoneCodeId(), verificationCode)
+        verifyingCodeSubs = userInteractor.checkVerificationNumber(loginFlowInteractor.getPhoneNumber(), verificationCode)
             .doOnTerminate(() -> {
                 verifyingCodeSubs = null;
                 if (view != null) {
