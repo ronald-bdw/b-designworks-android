@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="196dp"
     android:background="@drawable/profile_background"
@@ -19,9 +19,9 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
         android:src="@drawable/avatar_placeholder"
-        app:civ_border_width="1dp"
         app:civ_border_color="@android:color/white"
-        />
+        app:civ_border_width="3dp"
+    />
 
     <TextView
         android:id="@+id/current_full_name"
@@ -33,7 +33,7 @@
         android:textSize="@dimen/font_size_medium"
         android:textStyle="bold"
         tools:text="Vladimir Eremin"
-        />
+    />
 
     <TextView
         android:id="@+id/current_email"
@@ -43,6 +43,6 @@
         android:layout_marginBottom="16dp"
         android:textColor="@android:color/white"
         tools:text="example@email.com"
-        />
+    />
 
 </FrameLayout>
