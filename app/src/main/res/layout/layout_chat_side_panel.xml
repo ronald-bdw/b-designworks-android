@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="match_parent" android:layout_height="match_parent"
     android:background="@drawable/chat_side_panel_background"
-    >
+>
 
 
     <LinearLayout
@@ -13,16 +13,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        >
+    >
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/avatar"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_width="76dp"
+            android:layout_height="76dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="16dp"
             android:src="@drawable/avatar_placeholder"
-            />
+            app:civ_border_color="@android:color/white"
+            app:civ_border_width="2dp"
+        />
 
         <TextView
             android:id="@+id/full_name"
@@ -37,7 +39,7 @@
             android:textSize="@dimen/font_size_medium"
             android:textStyle="bold"
             tools:text="Vladimir Eremin\nololo"
-            />
+        />
 
         <TextView
             android:id="@+id/email"
@@ -46,7 +48,7 @@
             android:layout_gravity="center_horizontal"
             android:textColor="@android:color/white"
             tools:text="example@email.com"
-            />
+        />
 
         <LinearLayout
             android:id="@+id/settings"
@@ -57,14 +59,14 @@
             android:orientation="horizontal"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            >
+        >
 
             <ImageView
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/ic_settings"
-                />
+            />
 
             <TextView
                 android:layout_width="match_parent"
@@ -74,7 +76,7 @@
                 android:text="@string/chat_drawer_settings"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/font_size_medium"
-                />
+            />
 
         </LinearLayout>
 
@@ -86,14 +88,14 @@
             android:orientation="horizontal"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            >
+        >
 
             <ImageView
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/ic_share"
-                />
+            />
 
             <TextView
                 android:layout_width="match_parent"
@@ -103,7 +105,7 @@
                 android:text="@string/share"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/font_size_medium"
-                />
+            />
 
         </LinearLayout>
 
@@ -119,14 +121,14 @@
         android:orientation="horizontal"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        >
+    >
 
         <ImageView
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/ic_about"
-            />
+        />
 
         <TextView
             android:layout_width="match_parent"
@@ -135,7 +137,7 @@
             android:gravity="center_vertical"
             android:text="@string/chat_drawer_about_us"
             android:textColor="@android:color/white"
-            />
+        />
 
     </LinearLayout>
 
