@@ -2,6 +2,7 @@ package com.pairup.android;
 
 import android.app.Application;
 
+import com.flurry.android.FlurryAgent;
 import com.pairup.android.utils.AndroidUtils;
 import com.pairup.android.utils.Bus;
 import com.pairup.android.utils.Logger;
@@ -39,6 +40,7 @@ public class App extends Application {
         setUpServices();
         Injector.inject(this);
         Bus.subscribe(this);
+        startFlurry();
     }
 
     public AppComponent getAppComponent() {
@@ -68,6 +70,12 @@ public class App extends Application {
                     userInteractor.logout();
                     Navigator.welcomeWithError(getApplicationContext(), result.isPhoneRegistered());
                 }, Logger::e);
+        }
+    }
+
+    private void startFlurry() {
+        if (io.fabric.sdk.android.BuildConfig.FLAVOR.equals("production")) {
+            FlurryAgent.init(this, "J3MBP2PXHXFS49K7T6QJ");
         }
     }
 }
