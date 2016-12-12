@@ -3,7 +3,6 @@ package com.pairup.android.settings;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.widget.TextView;
@@ -54,7 +53,7 @@ public class PushNotificationsSettingsScreen extends BaseActivity {
     }
 
     private void customizeUi() {
-        if (DeviceInteractor.isSdkSupportsNotifications()) {
+        if (DeviceInteractor.doesSdkSupportNotifications()) {
             if (userInteractor.areNotificationsEnabled()) {
                 uiStatus.setText(R.string.notification_status_enabled);
                 uiHint.setText(R.string.notification_hint_off);

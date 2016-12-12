@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anjlab.android.iab.v3.TransactionDetails;
+import com.pairup.android.DeviceInteractor;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.subscription.SubscriptionPresenter;
@@ -86,7 +87,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         });
     }
 
-     private void setChatGone(boolean gone) {
+    private void setChatGone(boolean gone) {
         if (gone) {
             uiBuySubscription.setVisibility(View.VISIBLE);
         } else {
@@ -139,14 +140,18 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) uiInputText.getLayoutParams();
         layoutParams.topMargin = AndroidUtils.dp(8);
         layoutParams.bottomMargin = AndroidUtils.dp(8);
-        layoutParams.leftMargin = AndroidUtils.dp(8);
+        layoutParams.leftMargin = AndroidUtils.dp(36);
 
         layoutParams.addRule(RelativeLayout.RIGHT_OF, 0);
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 
         ((View) uiInputText.getParent()).setBackgroundColor(0xFFECF3FA);
-        findViewById(R.id.Smooch_btnCamera).setVisibility(View.GONE);
         ((ImageView) findViewById(R.id.Smooch_btnSend)).setImageResource(R.drawable.ic_send);
+
+        if (!DeviceInteractor.doesSdkSupportSmoochPhotos()) {
+            layoutParams.leftMargin = AndroidUtils.dp(8);
+            findViewById(R.id.Smooch_btnCamera).setVisibility(View.GONE);
+        }
 
         showUserName(userInteractor.getFullName());
         setUpProviderLogo();

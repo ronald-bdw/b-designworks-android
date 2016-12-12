@@ -3,7 +3,6 @@ package com.pairup.android.settings;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.widget.ImageView;
@@ -41,7 +40,7 @@ public class SettingsScreen extends BaseActivity {
         super.onCreate(savedState);
         Injector.inject(this);
 
-        if (!DeviceInteractor.isSdkSupportsNotifications())
+        if (!DeviceInteractor.doesSdkSupportNotifications())
             uiNotificationsToggle.setVisibility(View.GONE);
     }
 

@@ -162,7 +162,7 @@ public class UserInteractor {
     }
 
     public boolean areNotificationsEnabled() {
-        if (DeviceInteractor.isSdkSupportsNotifications()) {
+        if (DeviceInteractor.doesSdkSupportNotifications()) {
             return notificationManager.areNotificationsEnabled();
         } else {
             return true;
