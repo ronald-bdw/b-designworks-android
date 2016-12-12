@@ -93,18 +93,14 @@ public class VerifyPresenterTest {
 
     @Test
     public void testIncorrectVerificationCode() throws Exception {
-        when(userInteractor.checkVerificationNumber(any(), any())).thenReturn(Observable.error(new Throwable("invalid code")));
+        Throwable error = new Throwable(("invalid code"));
+        when(userInteractor.checkVerificationNumber(any(), eq(WRONG_SMS_CODE))).thenReturn(Observable.error(error));
 
-        loginFlowInteractor.setPhoneNumber(NEW_PHONE_NUMBER);
-        presenter.sendCode();
-        verify(view).showRequestVerificationCodeProgressDialog();
-        verify(userInteractor).requestCode(any());
-        verify(view).hideRequestVerificationProgressDialog();
         presenter.handleSmsCode(WRONG_SMS_CODE);
         verify(view).showAuthorizationProgressDialog();
-        verify(userInteractor).checkVerificationNumber(any(), any());
+        verify(userInteractor).checkVerificationNumber(any(), eq(WRONG_SMS_CODE));
         verify(view).hideAuthProgressDialog();
-        verify(view).showError(any());
+        verify(view).showError(error);
     }
 
     @Test
