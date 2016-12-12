@@ -140,7 +140,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) uiInputText.getLayoutParams();
         layoutParams.topMargin = AndroidUtils.dp(8);
         layoutParams.bottomMargin = AndroidUtils.dp(8);
-        layoutParams.leftMargin = AndroidUtils.dp(44);
+        layoutParams.leftMargin = AndroidUtils.dp(36);
 
         layoutParams.addRule(RelativeLayout.RIGHT_OF, 0);
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
