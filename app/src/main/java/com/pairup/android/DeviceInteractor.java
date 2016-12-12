@@ -7,7 +7,7 @@ import android.os.Build;
  */
 
 public class DeviceInteractor {
-    public static boolean isSdkSupportsNotifications() {
+    public static boolean doesSdkSupportNotifications() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
     }
 }
