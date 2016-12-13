@@ -2,6 +2,7 @@ package com.pairup.android;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,6 +30,8 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     public abstract @NonNull UiInfo getUiInfo();
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         super.onCreate(savedState);
         Dart.inject(this);
         setContentView(getUiInfo().getLayoutRes());
