@@ -39,13 +39,13 @@ android {
     productFlavors {
         staging {
             versionName android.defaultConfig.versionName + "-STAGING (" + BUILD_NUMBER + ")"
-            buildConfigField "String", "API_URL", "\"https://pairup-api.herokuapp.com/\""
+            buildConfigField "String", "API_URL", "\"https://api.pairup.im/\""
             applicationIdSuffix ".staging"
         }
 
         production {
             versionName android.defaultConfig.versionName + " (" + BUILD_NUMBER + ")"
-            buildConfigField "String", "API_URL", "\"https://pairup-api.herokuapp.com/\""
+            buildConfigField "String", "API_URL", "\"https://api.pairup.im/\""
         }
     }
 
