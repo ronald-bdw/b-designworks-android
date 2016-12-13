@@ -74,8 +74,8 @@ public class App extends Application {
     }
 
     private void startFlurry() {
-//        if (io.fabric.sdk.android.BuildConfig.FLAVOR.equals("production")) {
+        if (BuildConfig.FLAVOR.equals("production")) {
             FlurryAgent.init(this, "J3MBP2PXHXFS49K7T6QJ");
-//        }
+        }
     }
 }

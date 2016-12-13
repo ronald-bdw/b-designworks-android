@@ -17,6 +17,7 @@ import com.pairup.android.UserInteractor;
 import com.pairup.android.login.models.User;
 import com.pairup.android.sync.GoogleFitPresenter;
 import com.pairup.android.sync.GoogleFitView;
+import com.pairup.android.utils.FlurryUtil;
 import com.pairup.android.utils.Keyboard;
 import com.pairup.android.utils.Logger;
 import com.pairup.android.utils.Rxs;
@@ -56,6 +57,9 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView {
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
         Injector.inject(this);
+
+        FlurryUtil.logEvent(FlurryUtil.EVENT_OPEN_TOUR_PROFILE_SCREEN);
+
         User user = userInteractor.getUser();
         uiFirstName.setText(user.getFirstName());
         uiLastName.setText(user.getLastName());

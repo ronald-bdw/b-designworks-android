@@ -3,7 +3,6 @@ package com.pairup.android.settings;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,6 +12,7 @@ import com.pairup.android.DeviceInteractor;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
+import com.pairup.android.utils.FlurryUtil;
 import com.pairup.android.utils.ImageLoader;
 import com.pairup.android.utils.di.Injector;
 import com.pairup.android.utils.ui.AreYouSureDialog;
@@ -40,6 +40,8 @@ public class SettingsScreen extends BaseActivity {
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
         Injector.inject(this);
+
+        FlurryUtil.logEvent(FlurryUtil.EVENT_OPEN_SETTINGS_SCREEN);
 
         if (!DeviceInteractor.isSdkSupportsNotifications())
             uiNotificationsToggle.setVisibility(View.GONE);

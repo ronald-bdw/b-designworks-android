@@ -12,8 +12,8 @@ import android.widget.Toast;
 import com.pairup.android.BaseActivity;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
+import com.pairup.android.utils.FlurryUtil;
 import com.pairup.android.utils.ui.UiInfo;
-import com.pairup.android.login.TrialDialog;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -33,6 +33,8 @@ public class SelectProviderScreen extends BaseActivity{
         super.onCreate(savedState);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.select_provider_options));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        FlurryUtil.logEvent(FlurryUtil.EVENT_OPEN_SELECT_PROVIDER_SCREEN);
 
         uiSelectProviderSpinner.setAdapter(adapter);
         uiSelectProviderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

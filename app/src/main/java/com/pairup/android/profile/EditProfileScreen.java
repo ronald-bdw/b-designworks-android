@@ -19,6 +19,7 @@ import com.pairup.android.BaseActivity;
 import com.pairup.android.R;
 import com.pairup.android.login.models.User;
 import com.pairup.android.utils.CropUtil;
+import com.pairup.android.utils.FlurryUtil;
 import com.pairup.android.utils.ImageLoader;
 import com.pairup.android.utils.Keyboard;
 import com.pairup.android.utils.di.Injector;
@@ -65,6 +66,9 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
         Injector.inject(this);
+
+        FlurryUtil.logEvent(FlurryUtil.EVENT_OPEN_EDIT_PROFILE_SCREEN);
+
         editProfilePresenter.attachView(this);
         editProfilePresenter.showUserInfo();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);

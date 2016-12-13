@@ -15,6 +15,7 @@ import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.utils.Bus;
+import com.pairup.android.utils.FlurryUtil;
 import com.pairup.android.utils.Logger;
 import com.pairup.android.utils.di.Injector;
 import com.pairup.android.utils.network.ErrorUtils;
@@ -60,6 +61,9 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
         Injector.inject(this);
+
+        FlurryUtil.logEvent(FlurryUtil.EVENT_OPEN_SYNC_SCREEN);
+
         Bus.subscribe(this);
         googleFitPresenter.attachView(this, this);
         fitbitPresenter.attach(this);

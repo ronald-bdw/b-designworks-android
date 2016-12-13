@@ -20,6 +20,7 @@ import com.pairup.android.UserInteractor;
 import com.pairup.android.login.functional_area.Area;
 import com.pairup.android.login.functional_area.FunctionalToAreaCodeScreen;
 import com.pairup.android.utils.Areas;
+import com.pairup.android.utils.FlurryUtil;
 import com.pairup.android.utils.Keyboard;
 import com.pairup.android.utils.Rxs;
 import com.pairup.android.utils.di.Injector;
@@ -71,6 +72,9 @@ public class EnterPhoneScreen extends BaseActivity {
     @SuppressLint("SetTextI18n") @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
         Injector.inject(this);
+
+        FlurryUtil.logEvent(FlurryUtil.EVENT_OPEN_ENTER_CODE_SCREEN);
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         if (BuildConfig.DEBUG && savedState == null) {
             uiAreaCode.setText("+7");

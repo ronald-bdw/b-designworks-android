@@ -15,6 +15,7 @@ import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.utils.CropUtil;
+import com.pairup.android.utils.FlurryUtil;
 import com.pairup.android.utils.ImageLoader;
 import com.pairup.android.utils.Rxs;
 import com.pairup.android.utils.di.Injector;
@@ -55,6 +56,8 @@ public class TourScreenUploadAvatar extends BaseActivity {
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
         Injector.inject(this);
+
+        FlurryUtil.logEvent(FlurryUtil.EVENT_OPEN_TOUR_AVATAR_SCREEN);
     }
 
     @OnClick(R.id.skip) void onSkipClick() {

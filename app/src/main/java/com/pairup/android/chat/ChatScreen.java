@@ -21,6 +21,7 @@ import com.pairup.android.subscription.SubscriptionPresenter;
 import com.pairup.android.subscription.SubscriptionView;
 import com.pairup.android.utils.AndroidUtils;
 import com.pairup.android.utils.Bus;
+import com.pairup.android.utils.FlurryUtil;
 import com.pairup.android.utils.Keyboard;
 import com.pairup.android.utils.di.Injector;
 import com.pairup.android.utils.ui.SimpleDialog;
@@ -53,6 +54,8 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
         Injector.inject(this);
+
+        FlurryUtil.logEvent(FlurryUtil.EVENT_OPEN_CHAT_SCREEN);
 
         customizeSmoochInterface();
 

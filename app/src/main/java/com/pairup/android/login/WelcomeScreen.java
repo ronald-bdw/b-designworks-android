@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.pairup.android.BaseActivity;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
+import com.pairup.android.utils.FlurryUtil;
 import com.pairup.android.utils.ui.SimpleDialog;
 import com.pairup.android.utils.ui.UiInfo;
 
@@ -51,6 +52,8 @@ public class WelcomeScreen extends BaseActivity {
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
         underlineHaveAccountLinkText();
+
+        FlurryUtil.logEvent(FlurryUtil.EVENT_OPEN_WELCOME_SCREEN);
 
         if (hasError) {
             String errorMessage;
