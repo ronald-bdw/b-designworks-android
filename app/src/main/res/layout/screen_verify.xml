@@ -7,14 +7,14 @@
     android:background="@drawable/initial_screen_gradient"
     android:keepScreenOn="true"
     android:orientation="vertical"
-    >
+>
 
-    <include layout="@layout/layout_toolbar"/>
+    <include layout="@layout/layout_toolbar" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+    >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -22,9 +22,9 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:orientation="vertical"
-            >
+        >
 
-            <include layout="@layout/logo"/>
+            <include layout="@layout/logo" />
 
             <ImageView
                 android:id="@+id/hbf_logo"
@@ -32,7 +32,7 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="36dp"
                 android:src="@drawable/hbf_logo"
-                />
+            />
 
             <TextView
                 android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                 android:text="@string/verify_waiting_for_sms"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/font_size_medium"
-                />
+            />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -50,7 +50,7 @@
                 android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:orientation="horizontal"
-                >
+            >
 
                 <EditText
                     android:id="@+id/verification_code"
@@ -64,30 +64,30 @@
                     android:inputType="numberDecimal"
                     android:maxLines="1"
                     android:padding="16dp"
-                    />
+                />
 
                 <Button
-                    android:id="@+id/resend"
+                    android:id="@+id/submit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
-                    android:background="@drawable/app_btn_border"
-                    android:text="@string/verify_resend"
-                    />
+                    android:background="@drawable/app_btn_filled"
+                    android:text="@string/submit"
+                    android:textColor="@android:color/white"
+                />
 
             </LinearLayout>
 
             <Button
-                android:id="@+id/submit"
+                android:id="@+id/resend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
                 android:layout_marginBottom="16dp"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/app_btn_filled"
-                android:text="@string/submit"
-                android:textColor="@android:color/white"
-                />
+                android:background="@drawable/app_btn_border"
+                android:text="@string/verify_resend"
+            />
 
         </LinearLayout>
 
