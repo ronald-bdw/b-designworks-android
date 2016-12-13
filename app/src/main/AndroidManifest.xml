@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-    package="com.pairup.android"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    >
+    package="com.pairup.android"
+>
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="com.android.vending.BILLING"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.android.vending.BILLING" />
 
     <application
         android:name=".App"
@@ -15,73 +15,73 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/PairUpTheme"
-        >
+    >
 
         <activity android:name=".InitialScreen"
-                  android:theme="@style/Invisible">
+            android:theme="@style/Invisible">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".login.WelcomeScreen"/>
-        <activity android:name=".login.SelectProviderScreen"/>
-        <activity android:name=".login.EnterPhoneScreen"/>
+        <activity android:name=".login.WelcomeScreen" />
+        <activity android:name=".login.SelectProviderScreen" />
+        <activity android:name=".login.EnterPhoneScreen" />
         <activity
             android:name=".chat.ChatScreen"
             android:launchMode="singleTop"
-            />
             android:screenOrientation="portrait"
+        />
 
         <activity
             android:name=".login.VerifyScreen"
             android:launchMode="singleTop"
-            >
+        >
         </activity>
-        <activity android:name=".trial.TrialScreen"/>
-        <activity android:name=".profile.ProfileScreen"/>
-        <activity android:name=".settings.SettingsScreen"/>
-        <activity android:name=".settings.PushNotificationsSettingsScreen"/>
+        <activity android:name=".trial.TrialScreen" />
+        <activity android:name=".profile.ProfileScreen" />
+        <activity android:name=".settings.SettingsScreen" />
+        <activity android:name=".settings.PushNotificationsSettingsScreen" />
         <activity
             android:name=".sync.SyncScreen"
             android:launchMode="singleTop"
-            >
+        >
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
                     android:host="pairup.im"
-                    android:scheme="pairup"/>
+                    android:scheme="pairup" />
 
             </intent-filter>
         </activity>
-        <activity android:name=".login.RegistrationScreen"/>
-        <activity android:name=".profile.EditProfileScreen"/>
-        <activity android:name="com.pairup.android.AboutUsScreen"/>
-        <activity android:name=".login.functional_area.FunctionalToAreaCodeScreen"/>
-        <activity android:name=".tour_app.TourScreenProfile"/>
-        <activity android:name=".tour_app.TourScreenUploadAvatar"/>
+        <activity android:name=".login.RegistrationScreen" />
+        <activity android:name=".profile.EditProfileScreen" />
+        <activity android:name="com.pairup.android.AboutUsScreen" />
+        <activity android:name=".login.functional_area.FunctionalToAreaCodeScreen" />
+        <activity android:name=".tour_app.TourScreenProfile" />
+        <activity android:name=".tour_app.TourScreenUploadAvatar" />
 
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="26e8ad9c560c2cc08a320c0e96eed4f489ae1901"
-            />
+        />
 
         <service
             android:name=".chat.pushes.PushInstanceIdService"
             android:exported="false"
-            >
+        >
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
