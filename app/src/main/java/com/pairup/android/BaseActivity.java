@@ -30,9 +30,8 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     public abstract @NonNull UiInfo getUiInfo();
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
         super.onCreate(savedState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Dart.inject(this);
         setContentView(getUiInfo().getLayoutRes());
         ButterKnife.bind(this);
