@@ -29,6 +29,9 @@ import com.pairup.android.utils.ui.SimpleDialog;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import butterknife.Bind;
@@ -65,6 +68,9 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
             com.pairup.android.login.models.User user = userInteractor.getUser();
 
             Smooch.login(userInteractor.getUserZendeskId(), null);
+            Map<String, Object> additionalPropertyForPushes = new HashMap<>();
+            additionalPropertyForPushes.put("isNotDefaultUser", true);
+            User.getCurrentUser().addProperties(additionalPropertyForPushes);
             User.getCurrentUser().setEmail(user.getEmail());
             User.getCurrentUser().setFirstName(user.getFirstName());
             User.getCurrentUser().setLastName(user.getId());
