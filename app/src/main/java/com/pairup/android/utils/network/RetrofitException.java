@@ -13,39 +13,15 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class RetrofitException extends RuntimeException {
-    public static RetrofitException httpError(String url, Response response, Retrofit retrofit) {
-        String message = response.code() + " " + response.message();
-        return new RetrofitException(message, url, response, Kind.HTTP, null, retrofit);
-    }
-
-    public static RetrofitException networkError(IOException exception) {
-        return new RetrofitException(exception.getMessage(), null, null, Kind.NETWORK, exception, null);
-    }
-
-    public static RetrofitException unexpectedError(Throwable exception) {
-        return new RetrofitException(exception.getMessage(), null, null, Kind.UNEXPECTED, exception, null);
-    }
-
-    /** Identifies the event kind which triggered a {@link RetrofitException}. */
-    public enum Kind {
-        /** An {@link IOException} occurred while communicating to the server. */
-        NETWORK,
-        /** A non-200 HTTP status code was received from the server. */
-        HTTP,
-        /**
-         * An internal error occurred while attempting to execute a request. It is best practice to
-         * re-throw this exception so your application crashes.
-         */
-        UNEXPECTED
-    }
 
     private final String   url;
     private final Response response;
     private final Kind     kind;
     private final Retrofit retrofit;
-    private String fakeAnswer;
+    private       String   fakeAnswer;
 
-    RetrofitException(String message, String url, Response response, Kind kind, Throwable exception, Retrofit retrofit) {
+    RetrofitException(String message, String url, Response response, Kind kind,
+                      Throwable exception, Retrofit retrofit) {
         super(message, exception);
         this.url = url;
         this.response = response;
@@ -54,27 +30,70 @@ public class RetrofitException extends RuntimeException {
     }
 
     public static RetrofitException fakeBody(String message) {
-        RetrofitException retrofitException = new RetrofitException(null, null, null, Kind.HTTP, null, null);
+        RetrofitException retrofitException = new RetrofitException(null, null, null, Kind.HTTP,
+            null, null);
         retrofitException.fakeAnswer = message;
         return retrofitException;
     }
 
-    /** The request URL which produced the error. */
+    public static RetrofitException httpError(String url, Response response, Retrofit retrofit) {
+        String message = response.code() + " " + response.message();
+        return new RetrofitException(message, url, response, Kind.HTTP, null, retrofit);
+    }
+
+    public static RetrofitException networkError(IOException exception) {
+        return new RetrofitException(exception.getMessage(), null, null, Kind.NETWORK, exception,
+            null);
+    }
+
+    public static RetrofitException unexpectedError(Throwable exception) {
+        return new RetrofitException(exception.getMessage(), null, null, Kind.UNEXPECTED,
+            exception, null);
+    }
+
+    /**
+     * Identifies the event kind which triggered a {@link RetrofitException}.
+     */
+    public enum Kind {
+        /**
+         * An {@link IOException} occurred while communicating to the server.
+         */
+        NETWORK,
+        /**
+         * A non-200 HTTP status code was received from the server.
+         */
+        HTTP,
+        /**
+         * An internal error occurred while attempting to execute a request. It is best practice to
+         * re-throw this exception so your application crashes.
+         */
+        UNEXPECTED
+    }
+
+    /**
+     * The request URL which produced the error.
+     */
     public String getUrl() {
         return url;
     }
 
-    /** Response object containing status code, headers, body, etc. */
+    /**
+     * Response object containing status code, headers, body, etc.
+     */
     public Response getResponse() {
         return response;
     }
 
-    /** The event kind which triggered this error. */
+    /**
+     * The event kind which triggered this error.
+     */
     public Kind getKind() {
         return kind;
     }
 
-    /** The Retrofit this request was executed on */
+    /**
+     * The Retrofit this request was executed on
+     */
     public Retrofit getRetrofit() {
         return retrofit;
     }
@@ -89,7 +108,8 @@ public class RetrofitException extends RuntimeException {
         if (response == null || response.errorBody() == null) {
             return null;
         }
-        Converter<ResponseBody, T> converter = retrofit.responseBodyConverter(type, new Annotation[0]);
+        Converter<ResponseBody, T> converter = retrofit.responseBodyConverter(type,
+            new Annotation[0]);
         try {
             return converter.convert(response.errorBody());
         } catch (IOException e) {

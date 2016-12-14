@@ -17,7 +17,6 @@ import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,15 +31,15 @@ public class FunctionalToAreaCodeScreen extends BaseActivity {
 
     public static final String KEY_SELECTED_AREA = "selectedArea";
 
+    @Bind(R.id.list) RecyclerView uiList;
+
+    private AreaCodesAdapter areaCodesAdapter;
+
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_country_code)
             .enableBackButton()
             .setTitleRes(R.string.title_area_code);
     }
-
-    @Bind(R.id.list) RecyclerView uiList;
-
-    private AreaCodesAdapter areaCodesAdapter;
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);

@@ -51,18 +51,19 @@ public class TrialScreen extends BaseActivity {
         private final String[] titles;
         private final String[] descriptions;
 
+        @DrawableRes private int[] images = {
+            R.drawable.trial_1, R.drawable.trial_2,
+            R.drawable.trial_3, R.drawable.trial_4,
+        };
+
         TrialPager(@NonNull Context context) {
             titles = context.getResources().getStringArray(R.array.trial_titles);
             descriptions = context.getResources().getStringArray(R.array.trial_descriptions);
         }
 
-        @DrawableRes int[] images = {
-            R.drawable.trial_1, R.drawable.trial_2,
-            R.drawable.trial_3, R.drawable.trial_4,
-        };
-
         @Override public Object instantiateItem(ViewGroup container, int position) {
-            View view = LayoutInflater.from(container.getContext()).inflate(R.layout.item_trial, container, false);
+            View view = LayoutInflater.from(container.getContext())
+                .inflate(R.layout.item_trial, container, false);
             TextView titleView = (TextView) view.findViewById(R.id.title);
             TextView description = (TextView) view.findViewById(R.id.description);
             description.setGravity(Gravity.CENTER);

@@ -29,15 +29,17 @@ public class FitbitPresenterTest {
 
     @Rule public RxSchedulersOverrideRule rxRule = new RxSchedulersOverrideRule();
 
-    @Mock FitbitView     fitbitView;
-    @Mock UserInteractor userInteractor;
+    @Mock private FitbitView     fitbitView;
+    @Mock private UserInteractor userInteractor;
 
     private FitbitPresenter fitbitPresenter;
 
     @Before
     public void setUp() throws Exception {
-        when(userInteractor.integrateFitbit(FITBIT_CORRECT_AUTH_CODE)).thenReturn(Observable.just(new FitToken()));
-        when(userInteractor.integrateFitbit(FITBIT_INCORRECT_AUTH_CODE)).thenReturn(Observable.error(new Throwable()));
+        when(userInteractor.integrateFitbit(FITBIT_CORRECT_AUTH_CODE))
+            .thenReturn(Observable.just(new FitToken()));
+        when(userInteractor.integrateFitbit(FITBIT_INCORRECT_AUTH_CODE))
+            .thenReturn(Observable.error(new Throwable()));
         fitbitPresenter = new FitbitPresenter(userInteractor);
         fitbitPresenter.attach(fitbitView);
     }

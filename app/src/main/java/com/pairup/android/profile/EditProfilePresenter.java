@@ -18,6 +18,8 @@ import rx.schedulers.Schedulers;
 public class EditProfilePresenter {
 
     @Nullable private EditProfileView view;
+    @Nullable private Subscription    updateProfileSubscribtion;
+    @Nullable private Subscription    uploadingSubscription;
 
     private final UserInteractor userInteractor;
 
@@ -33,8 +35,6 @@ public class EditProfilePresenter {
         view.showUserInfo(userInteractor.getUser());
     }
 
-    @Nullable private Subscription updateProfileSubscribtion;
-
     public void updateUser() {
         if (updateProfileSubscribtion != null) return;
         String email = view.getEmail();
@@ -48,7 +48,8 @@ public class EditProfilePresenter {
         }
         view.showProgressDialog();
         view.hideKeyboard();
-        updateProfileSubscribtion = userInteractor.updateUser(view.getFirstName(), view.getLastName(), email)
+        updateProfileSubscribtion = userInteractor
+            .updateUser(view.getFirstName(), view.getLastName(), email)
             .subscribeOn(Schedulers.io())
             .doOnTerminate(() -> {
                 view.hideProgress();
@@ -65,7 +66,6 @@ public class EditProfilePresenter {
     private boolean isCorrectEmailAdress(String email) {
         return EmailVerifier.EMAIL_ADDRESS_PATTERN.matcher(email).matches();
     }
-
 
     public void onScreenShown() {
         if (updateProfileSubscribtion != null) {
@@ -89,8 +89,6 @@ public class EditProfilePresenter {
     public void detachView() {
         this.view = null;
     }
-
-    @Nullable private Subscription uploadingSubscription;
 
     public void updateAvatar(@Nullable String imageUrl) {
         if (view != null) {

@@ -25,10 +25,13 @@ import butterknife.ButterKnife;
  */
 public abstract class BaseDialogFragment extends DialogFragment {
 
+    protected UiInfo uiInfo;
+
     protected static <T extends BaseDialogFragment> T show(@NonNull T dialogFragment,
                                                            @NonNull FragmentActivity activity) {
         FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
-        Fragment prev = activity.getSupportFragmentManager().findFragmentByTag(dialogFragment.getClass().getName());
+        Fragment prev = activity.getSupportFragmentManager()
+            .findFragmentByTag(dialogFragment.getClass().getName());
         if (prev != null) {
             ft.remove(prev);
             DialogFragment df = (DialogFragment) prev;
@@ -41,8 +44,6 @@ public abstract class BaseDialogFragment extends DialogFragment {
 
     protected abstract UiInfo getUiInfo();
 
-    protected UiInfo uiInfo;
-
     @Override public void onAttach(Activity activity) {
         super.onAttach(activity);
         uiInfo = getUiInfo();
@@ -54,11 +55,11 @@ public abstract class BaseDialogFragment extends DialogFragment {
             parseArguments(getArguments());
         }
         if (savedInstanceState != null) {
-            _restoreState(savedInstanceState);
+            restoreState(savedInstanceState);
         }
     }
 
-    protected void _restoreState(@NonNull Bundle savedState) {
+    protected void restoreState(@NonNull Bundle savedState) {
 
     }
 
@@ -93,9 +94,13 @@ public abstract class BaseDialogFragment extends DialogFragment {
         super.onDestroyView();
     }
 
-    protected Context context() { return getActivity(); }
+    protected Context context() {
+        return getActivity();
+    }
 
-    public FragmentActivity activity() { return getActivity(); }
+    public FragmentActivity activity() {
+        return getActivity();
+    }
 
     protected String textOf(@NonNull TextView tv) {
         return tv.getText().toString();

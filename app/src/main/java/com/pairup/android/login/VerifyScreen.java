@@ -31,11 +31,6 @@ import butterknife.OnEditorAction;
  */
 public class VerifyScreen extends BaseActivity implements VerifyView {
 
-    @NonNull @Override public UiInfo getUiInfo() {
-        return new UiInfo(R.layout.screen_verify)
-            .enableBackButton();
-    }
-
     @Inject VerifyPresenter     verifyPresenter;
     @Inject LoginFlowInteractor loginFlowInteractor;
     @Inject UserInteractor      userInteractor;
@@ -43,9 +38,12 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
     @Bind(R.id.hbf_logo)          ImageView uiHbfLogo;
     @Bind(R.id.verification_code) EditText  uiVerificationCode;
 
-    @SuppressWarnings("WrongConstant")
-    @Override protected void restoreState(@NonNull Bundle savedState) {
-        super.restoreState(savedState);
+    @Nullable private ProgressDialog authorizeProgressDialog;
+    @Nullable private ProgressDialog requestVerificationCodeProgressDialog;
+
+    @NonNull @Override public UiInfo getUiInfo() {
+        return new UiInfo(R.layout.screen_verify)
+            .enableBackButton();
     }
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
@@ -67,11 +65,9 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
         verifyPresenter.sendCode();
     }
 
-    @Nullable private ProgressDialog authorizeProgressDialog;
-    @Nullable private ProgressDialog requestVerificationCodeProgressDialog;
-
     @Override public void showRequestVerificationCodeProgressDialog() {
-        requestVerificationCodeProgressDialog = ProgressDialog.show(context(), getString(R.string.loading), getString(R.string.loading_sending_request_for_code));
+        requestVerificationCodeProgressDialog = ProgressDialog.show(context(),
+            getString(R.string.loading), getString(R.string.loading_sending_request_for_code));
     }
 
     @Override public void showError(Throwable error) {
@@ -90,7 +86,8 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
     }
 
     @Override public void showAuthorizationProgressDialog() {
-        authorizeProgressDialog = ProgressDialog.show(context(), getString(R.string.loading), getString(R.string.loading_sending_code));
+        authorizeProgressDialog = ProgressDialog.show(context(),
+            getString(R.string.loading), getString(R.string.loading_sending_code));
     }
 
     @Override public void hideAuthProgressDialog() {

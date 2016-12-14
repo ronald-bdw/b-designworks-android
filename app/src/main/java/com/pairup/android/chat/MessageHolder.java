@@ -35,8 +35,10 @@ public class MessageHolder extends BaseHolder<Message> {
     @Override public void draw(Message message) {
         LinearLayout uiRoot = (LinearLayout) this.itemView;
         uiRoot.removeView(uiAvatar);
-        RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) uiRoot.getLayoutParams();
-        LinearLayout.LayoutParams msgParams = (LinearLayout.LayoutParams) uiMessageContainer.getLayoutParams();
+        RecyclerView.LayoutParams layoutParams =
+            (RecyclerView.LayoutParams) uiRoot.getLayoutParams();
+        LinearLayout.LayoutParams msgParams =
+            (LinearLayout.LayoutParams) uiMessageContainer.getLayoutParams();
 
         if ("i".equals(message.getSenderId())) {
             uiRoot.addView(uiAvatar);
@@ -44,7 +46,8 @@ public class MessageHolder extends BaseHolder<Message> {
             msgParams.leftMargin = 0;
             layoutParams.rightMargin = AndroidUtils.dp(16);
             layoutParams.leftMargin = AndroidUtils.dp(32);
-            uiMessage.setBackgroundColor(context().getResources().getColor(R.color.coach_message_bg));
+            uiMessage
+                .setBackgroundColor(context().getResources().getColor(R.color.coach_message_bg));
         } else {
             uiRoot.addView(uiAvatar, 0);
             msgParams.leftMargin = AndroidUtils.dp(8);

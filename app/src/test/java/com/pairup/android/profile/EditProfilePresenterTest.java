@@ -33,11 +33,10 @@ public class EditProfilePresenterTest {
 
     @Rule public RxSchedulersOverrideRule rxRule = new RxSchedulersOverrideRule();
 
-    @Mock EditProfileView editProfileView;
-    @Mock UserInteractor  userInteractor;
+    @Mock private EditProfileView editProfileView;
+    @Mock private UserInteractor  userInteractor;
 
     private EditProfilePresenter editProfilePresenter;
-
 
     @Before public void setUp() throws Exception {
         editProfilePresenter = new EditProfilePresenter(userInteractor);
@@ -66,7 +65,8 @@ public class EditProfilePresenterTest {
     public void testUpdateUserCorrectly() throws Exception {
         when(editProfileView.getEmail()).thenReturn(CORRECT_EMAIL);
         User user = new User();
-        when(userInteractor.updateUser(any(), any(), any())).thenReturn(Observable.just(new UserResponse(user)));
+        when(userInteractor.updateUser(any(), any(), any()))
+            .thenReturn(Observable.just(new UserResponse(user)));
         editProfilePresenter.updateUser();
         verify(editProfileView).showProgressDialog();
         verify(editProfileView).hideProgress();
@@ -79,7 +79,8 @@ public class EditProfilePresenterTest {
     public void testUpdateUserOnThrowable() throws Exception {
         when(editProfileView.getEmail()).thenReturn(CORRECT_EMAIL);
         Exception exception = new Exception();
-        when(userInteractor.updateUser(any(), any(), any())).thenReturn(Observable.error(exception));
+        when(userInteractor.updateUser(any(), any(), any()))
+            .thenReturn(Observable.error(exception));
         editProfilePresenter.updateUser();
         verify(editProfileView).showProgressDialog();
         verify(editProfileView).hideProgress();
@@ -89,7 +90,8 @@ public class EditProfilePresenterTest {
     @Test
     public void testDontSendTwoRequestOnUserUpdate() throws Exception {
         when(editProfileView.getEmail()).thenReturn(CORRECT_EMAIL);
-        when(userInteractor.updateUser(any(), any(), anyString())).thenReturn(Observable.just(new UserResponse()).delay(100, TimeUnit.MILLISECONDS));
+        when(userInteractor.updateUser(any(), any(), anyString()))
+            .thenReturn(Observable.just(new UserResponse()).delay(100, TimeUnit.MILLISECONDS));
         editProfilePresenter.updateUser();
         editProfilePresenter.updateUser();
         verify(editProfileView).showProgressDialog();

@@ -10,12 +10,9 @@ public class SubscriptionsDetails {
 
     private static final String TYPE_TRIAL = "trial";
 
-    @SerializedName("productId")
-    private String planName;
-    @SerializedName("purchaseTime")
-    private long   purchaseDate;
-    @SerializedName("autoRenewing")
-    boolean isRenewing;
+    @SerializedName("productId") private    String  planName;
+    @SerializedName("purchaseTime") private long    purchaseDate;
+    @SerializedName("autoRenewing") private boolean isRenewing;
 
     public String getPlanName() {
         //TODO change it when all subscriptions will be added

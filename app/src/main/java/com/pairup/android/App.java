@@ -23,9 +23,10 @@ import rx.Subscription;
 
 public class App extends Application {
 
-    private AppComponent appComponent;
-
     @Inject UserInteractor userInteractor;
+
+    private AppComponent appComponent;
+    private Subscription unauthorizingSubscription = null;
 
     @Override
     public void onCreate() {
@@ -33,7 +34,8 @@ public class App extends Application {
         // Dagger%COMPONENT_NAME%
         appComponent = DaggerAppComponent.builder()
 //             list of modules that are part of this component need to be created here too
-            .appModule(new AppModule(this)) // This also corresponds to the name of your module: %component_name%Module
+//             This also corresponds to the name of your module: %component_name%Module
+            .appModule(new AppModule(this))
             .build();
         AndroidUtils.initialize(this);
         setUpServices();
@@ -55,8 +57,6 @@ public class App extends Application {
         Crashlytics.setString("GIT_SHA", BuildConfig.GIT_SHA);
         Crashlytics.setBool("DEBUG", BuildConfig.DEBUG);
     }
-
-    private Subscription unauthorizingSubscription = null;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(UserUnauthorizedEvent event) {

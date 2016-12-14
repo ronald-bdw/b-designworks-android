@@ -25,12 +25,12 @@ import butterknife.OnClick;
  */
 public class PushNotificationsSettingsScreen extends BaseActivity {
 
+    @Inject UserInteractor userInteractor;
+
     @Bind(R.id.status)               TextView     uiStatus;
     @Bind(R.id.hint)                 TextView     uiHint;
     @Bind(R.id.change_notifications) TextView     uiChangeNotifications;
     @Bind(R.id.notifications_toggle) SwitchCompat uiNotificationsToggle;
-
-    @Inject UserInteractor userInteractor;
 
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_push_notifications_settings)

@@ -13,7 +13,6 @@ import com.pairup.android.BaseActivity;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.utils.ui.UiInfo;
-import com.pairup.android.login.TrialDialog;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -21,7 +20,7 @@ import butterknife.OnClick;
 /**
  * Created by Ilya Eremin on 12.08.2016.
  */
-public class SelectProviderScreen extends BaseActivity{
+public class SelectProviderScreen extends BaseActivity {
 
     @Bind(R.id.select_provider_spinner) Spinner uiSelectProviderSpinner;
 
@@ -31,7 +30,9 @@ public class SelectProviderScreen extends BaseActivity{
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.select_provider_options));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+            android.R.layout.simple_spinner_item,
+            getResources().getStringArray(R.array.select_provider_options));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         uiSelectProviderSpinner.setAdapter(adapter);

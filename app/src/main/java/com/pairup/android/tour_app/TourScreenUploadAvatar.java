@@ -38,19 +38,21 @@ import rx.Subscription;
 
 public class TourScreenUploadAvatar extends BaseActivity {
 
-    @NonNull @Override public UiInfo getUiInfo() {
-        return new UiInfo(R.layout.screen_tour_upload_avatar)
-            .enableBackButton()
-            .setTitleRes(R.string.title_tour_2_page)
-            .setMenuRes(R.menu.menu_with_next_btn);
-    }
-
     @Inject UserInteractor userInteractor;
     @Inject ImageLoader    imageLoader;
     @Inject File           filePath;
 
     @Bind(R.id.avatar)   ImageView uiAvatar;
     @Bind(R.id.progress) View      uiProgress;
+
+    @Nullable private Subscription uploadAvatarSubs;
+
+    @NonNull @Override public UiInfo getUiInfo() {
+        return new UiInfo(R.layout.screen_tour_upload_avatar)
+            .enableBackButton()
+            .setTitleRes(R.string.title_tour_2_page)
+            .setMenuRes(R.menu.menu_with_next_btn);
+    }
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
@@ -75,16 +77,16 @@ public class TourScreenUploadAvatar extends BaseActivity {
             .subscribe(granted -> {
                 if (granted) {
                     TedBottomPicker tedBottomPicker = new TedBottomPicker.Builder(this)
-                        .setOnImageSelectedListener(uri -> CropUtil.startCropImageActivity(this, uri, filePath.getAbsolutePath()))
+                        .setOnImageSelectedListener(uri -> CropUtil.startCropImageActivity(this,
+                            uri, filePath.getAbsolutePath()))
                         .create();
                     tedBottomPicker.show(getSupportFragmentManager());
                 } else {
-                    Toast.makeText(this, R.string.edit_profile_error_access_storage, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.edit_profile_error_access_storage,
+                        Toast.LENGTH_SHORT).show();
                 }
             });
     }
-
-    @Nullable private Subscription uploadAvatarSubs;
 
     private void updateAvatar(String url) {
         if (uploadAvatarSubs != null) return;
@@ -121,9 +123,13 @@ public class TourScreenUploadAvatar extends BaseActivity {
 
     private void showUploadAvatarError(String url) {
         uiProgress.setVisibility(View.GONE);
-        SimpleDialog.show(context(), getString(R.string.error), getString(R.string.error_uploading_photo),
-            getString(R.string.retry), () -> updateAvatar(url),
-            getString(R.string.cancel), () -> showAvatar(userInteractor.getUser().getAvatar().getThumb()));
+        SimpleDialog.show(context(),
+            getString(R.string.error),
+            getString(R.string.error_uploading_photo),
+            getString(R.string.retry),
+            () -> updateAvatar(url),
+            getString(R.string.cancel),
+            () -> showAvatar(userInteractor.getUser().getAvatar().getThumb()));
     }
 
     private void showAvatarUploadingProgress() {

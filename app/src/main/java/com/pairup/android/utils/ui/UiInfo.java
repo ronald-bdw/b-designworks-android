@@ -9,14 +9,23 @@ import android.support.annotation.StringRes;
  * Created by Ilya Eremin on 03.08.2016.
  */
 public class UiInfo {
-    private final @LayoutRes int     layoutRes;
-    private @StringRes       int     titleRes;
+
+    @LayoutRes private final int     layoutRes;
+
+    @MenuRes private         int     menuRes;
+
+    @StringRes private       int     titleRes;
+
     private                  String  titleStr;
     private                  boolean hasBackButton;
-    private @MenuRes         int     menuRes;
 
-    public int getMenuRes() {
-        return menuRes;
+    public UiInfo(@LayoutRes int layoutRes) {
+        this.layoutRes = layoutRes;
+    }
+
+    public UiInfo setTitle(@NonNull String title) {
+        this.titleStr = title;
+        return this;
     }
 
     public UiInfo setMenuRes(int menuRes) {
@@ -24,8 +33,18 @@ public class UiInfo {
         return this;
     }
 
-    public UiInfo(@LayoutRes int layoutRes) {
-        this.layoutRes = layoutRes;
+    public UiInfo setTitleRes(int titleRes) {
+        this.titleRes = titleRes;
+        return this;
+    }
+
+    public UiInfo enableBackButton() {
+        this.hasBackButton = true;
+        return this;
+    }
+
+    public int getMenuRes() {
+        return menuRes;
     }
 
     public int getLayoutRes() {
@@ -36,26 +55,11 @@ public class UiInfo {
         return titleRes;
     }
 
-    public UiInfo setTitleRes(int titleRes) {
-        this.titleRes = titleRes;
-        return this;
-    }
-
-    public UiInfo setTitle(@NonNull String title) {
-        this.titleStr = title;
-        return this;
-    }
-
-    public String getTitle(){
+    public String getTitle() {
         return titleStr;
     }
 
     public boolean isHasBackButton() {
         return hasBackButton;
-    }
-
-    public UiInfo enableBackButton() {
-        this.hasBackButton = true;
-        return this;
     }
 }
