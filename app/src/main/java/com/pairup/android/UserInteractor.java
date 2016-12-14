@@ -163,7 +163,7 @@ public class UserInteractor {
     }
 
     public boolean areNotificationsEnabled() {
-        if (DeviceInteractor.isSdkSupportsNotifications()) {
+        if (DeviceInteractor.doesSdkSupportNotifications()) {
             return notificationManager.areNotificationsEnabled();
         } else {
             return true;
@@ -256,5 +256,9 @@ public class UserInteractor {
     public Observable<Void> sendInAppStatus(@NonNull String planName, @NonNull String date,
                                             boolean isActive) {
         return api.sendSubscriptionStatus(planName, date, isActive).map(result -> null);
+    }
+
+    public Observable<Void> checkVerificationNumber(@NonNull String id, @NonNull String code) {
+        return api.checkVerificationCode(id, code).map(result -> null);
     }
 }

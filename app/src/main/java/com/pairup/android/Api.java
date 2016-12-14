@@ -39,6 +39,12 @@ public interface Api {
     @GET(V1 + "users/account") Observable<UserResponse> currentUser();
 
     @FormUrlEncoded
+    @POST(V1 + "auth_phone_codes/{id}/check") Observable<ResponseBody> checkVerificationCode(
+        @NonNull @Path("id") String id,
+        @NonNull @Field("sms_code") String code
+    );
+
+    @FormUrlEncoded
     @POST(V1 + "users") Observable<UserResponse> register(
         @NonNull @Field(value = "first_name", encoded = true) String firstName,
         @NonNull @Field(value = "last_name", encoded = true) String lastName,

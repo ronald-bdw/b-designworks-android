@@ -51,13 +51,12 @@ public class VerifyPresenter {
             }, view::showError);
     }
 
-    public void handleSmsCode(String verificadtionCode) {
-        if (!Strings.isEmpty(verificadtionCode)) {
+    public void handleSmsCode(String verificationCode) {
+        if (!Strings.isEmpty(verificationCode)) {
             if (loginFlowInteractor.isUserRegistered()) {
-                login(verificadtionCode);
+                login(verificationCode);
             } else {
-                view.openRegistrationScreen(loginFlowInteractor.getPhoneNumber(), verificadtionCode,
-                    loginFlowInteractor.getPhoneCodeId());
+                checkVerificationCodeAndGoRegister(verificationCode);
             }
         } else {
             if (view != null) {
@@ -67,6 +66,31 @@ public class VerifyPresenter {
     }
 
     @Nullable private Subscription verifyingCodeSubs;
+
+    private void checkVerificationCodeAndGoRegister(@NonNull String verificationCode) {
+        if (verifyingCodeSubs != null && !verifyingCodeSubs.isUnsubscribed())
+            return;
+        if (view != null) {
+            view.showAuthorizationProgressDialog();
+        }
+        verifyingCodeSubs = userInteractor.checkVerificationNumber(loginFlowInteractor.getPhoneCodeId(), verificationCode)
+            .doOnTerminate(() -> {
+                verifyingCodeSubs = null;
+                if (view != null) {
+                    view.hideAuthProgressDialog();
+                }
+            })
+            .compose(Rxs.doInBackgroundDeliverToUI())
+            .subscribe(result -> {
+                if (view != null) {
+                    view.openRegistrationScreen(loginFlowInteractor.getPhoneNumber(), verificationCode, loginFlowInteractor.getPhoneCodeId());
+                }
+            }, error -> {
+                if (view != null) {
+                    view.showError(error);
+                }
+            });
+    }
 
     private void login(@NonNull String verifyCode) {
         if (verifyingCodeSubs != null && !verifyingCodeSubs.isUnsubscribed())

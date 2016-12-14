@@ -27,7 +27,7 @@ android {
         ext.betaDistributionGroupAliases = "qa"
 
         applicationId APPLICATION_ID
-        versionCode 5
+        versionCode 6
         versionName "1.0.0-beta"
 
         def gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
@@ -40,13 +40,13 @@ android {
     productFlavors {
         staging {
             versionName android.defaultConfig.versionName + "-STAGING (" + BUILD_NUMBER + ")"
-            buildConfigField "String", "API_URL", "\"https://pairup-api.herokuapp.com/\""
+            buildConfigField "String", "API_URL", "\"https://api.pairup.im/\""
             applicationIdSuffix ".staging"
         }
 
         production {
             versionName android.defaultConfig.versionName + " (" + BUILD_NUMBER + ")"
-            buildConfigField "String", "API_URL", "\"https://pairup-api.herokuapp.com/\""
+            buildConfigField "String", "API_URL", "\"https://api.pairup.im/\""
         }
     }
 

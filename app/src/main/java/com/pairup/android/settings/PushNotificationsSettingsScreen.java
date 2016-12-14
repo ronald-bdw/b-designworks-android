@@ -53,7 +53,7 @@ public class PushNotificationsSettingsScreen extends BaseActivity {
     }
 
     private void customizeUi() {
-        if (DeviceInteractor.isSdkSupportsNotifications()) {
+        if (DeviceInteractor.doesSdkSupportNotifications()) {
             if (userInteractor.areNotificationsEnabled()) {
                 uiStatus.setText(R.string.notification_status_enabled);
                 uiHint.setText(R.string.notification_hint_off);
