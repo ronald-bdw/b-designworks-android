@@ -91,12 +91,12 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
     }
 
     public boolean isSubscribed() {
-        return bp.isSubscribed(THREE_MONTH_SUBSCRIPTION_ID)
-            || bp.isSubscribed(SIX_MONTH_SUBSCRIPTION_ID)
-            || bp.isSubscribed(ONE_YEAR_SUBSCRIPTION_ID);
+        return bp.isSubscribed(THREE_MONTH_SUBSCRIPTION_ID) ||
+            bp.isSubscribed(SIX_MONTH_SUBSCRIPTION_ID) ||
+            bp.isSubscribed(ONE_YEAR_SUBSCRIPTION_ID);
     }
 
-    public @StringRes int getSubscriptionStatusText() {
+    @StringRes public int getSubscriptionStatusText() {
         return isSubscribed() ? R.string.subscribed_status : R.string.subscription_request;
     }
 
@@ -148,11 +148,12 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
                 if (purchaseDataList != null && purchaseDataList.size() > 0) {
                     subscriptionsDetails = getSubscribeDataFromString(purchaseDataList.get(0));
                     userInteractor.sendInAppStatus(subscriptionsDetails.getPlanName(),
-                        SubscriptionDetailsUtils.getExpiredDate(subscriptionsDetails.getPurchaseDate()),
+                        SubscriptionDetailsUtils
+                            .getExpiredDate(subscriptionsDetails.getPurchaseDate()),
                         SubscriptionDetailsUtils.isActive(subscriptionsDetails.isRenewing(),
                             subscriptionsDetails.getPurchaseDate()))
                         .subscribeOn(Schedulers.io())
-                        .subscribe(result -> {}, ignoreError -> {});
+                        .subscribe(result -> { }, ignoreError -> { });
                 }
             }
         } catch (RemoteException e) {

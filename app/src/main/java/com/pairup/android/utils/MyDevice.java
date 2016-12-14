@@ -15,10 +15,10 @@ public class MyDevice {
     }
 
     public static int getScreenWidthInPixels() {
-        return AndroidUtils.displayMetrics.widthPixels;
+        return AndroidUtils.getDisplayMetrics().widthPixels;
     }
 
     public static int getScreenHeightInPixels() {
-        return AndroidUtils.displayMetrics.heightPixels;
+        return AndroidUtils.getDisplayMetrics().heightPixels;
     }
 }

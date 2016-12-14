@@ -27,7 +27,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         context.startActivity(intent);
     }
 
-    public abstract @NonNull UiInfo getUiInfo();
+    @NonNull public abstract UiInfo getUiInfo();
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
@@ -55,9 +55,11 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         }
     }
 
-    protected void restoreState(@NonNull Bundle savedState) {}
+    protected void restoreState(@NonNull Bundle savedState) {
+    }
 
-    protected void parseArguments(@NonNull Bundle extras) {}
+    protected void parseArguments(@NonNull Bundle extras) {
+    }
 
     @Override public boolean onCreateOptionsMenu(Menu menu) {
         if (getUiInfo().getMenuRes() != 0) {
@@ -82,7 +84,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         super.onBackPressed();
     }
 
-    protected Context context(){
+    protected Context context() {
         return this;
     }
 

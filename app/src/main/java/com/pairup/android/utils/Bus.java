@@ -5,10 +5,10 @@ import org.greenrobot.eventbus.EventBus;
 /**
  * Created by Ilya Eremin on 18.08.2016.
  */
-public class Bus {
+public final class Bus {
 
     public static final boolean STICKY = true;
-    private static boolean disableForTest;
+    private static boolean sDisableForTest;
 
     /**
      * to speed up eventBus use code generation.
@@ -16,46 +16,46 @@ public class Bus {
      * @see <a href="http://greenrobot.org/eventbus/documentation/subscriber-index/">
      * GreenRobot Eventbus docs</a>
      */
-    private static EventBus bus;
+    private static EventBus sBus;
 
     private Bus() {
     }
 
     public static void subscribe(Object object) {
         initialize();
-        bus.register(object);
+        sBus.register(object);
     }
 
     private static void initialize() {
-        if (bus == null) {
-            bus = EventBus.builder().build();
+        if (sBus == null) {
+            sBus = EventBus.builder().build();
         }
     }
 
     public static void unsubscribe(Object object) {
         initialize();
-        bus.unregister(object);
+        sBus.unregister(object);
     }
 
     public static void event(Object object, boolean... sticky) {
-        if (disableForTest) return;
+        if (sDisableForTest) return;
         initialize();
         if (sticky != null && sticky.length > 0) {
-            bus.postSticky(object);
+            sBus.postSticky(object);
         } else {
-            bus.post(object);
+            sBus.post(object);
         }
     }
 
     public static void removeSticky(Class clazz) {
-        bus.removeStickyEvent(clazz);
+        sBus.removeStickyEvent(clazz);
     }
 
     public static boolean hasSubscribersForType(Class clazz) {
-        return bus.hasSubscriberForEvent(clazz);
+        return sBus.hasSubscriberForEvent(clazz);
     }
 
     public static void disableForTest() {
-        disableForTest = true;
+        sDisableForTest = true;
     }
 }

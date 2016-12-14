@@ -14,7 +14,6 @@ public class FitbitPresenter {
     @Nullable private FitbitView     view;
     private final     UserInteractor userInteractor;
 
-
     public FitbitPresenter(UserInteractor userInteractor) {
         this.userInteractor = userInteractor;
     }
@@ -32,8 +31,8 @@ public class FitbitPresenter {
                     view.dismissSendingFitbitCodeProgress();
                 }
             })
-            .subscribe(fitToken -> userInteractor.saveFitnessTokenLocally(fitToken.getId(), Provider.FITBIT),
-                error -> {
+            .subscribe(fitToken -> userInteractor
+                .saveFitnessTokenLocally(fitToken.getId(), Provider.FITBIT), error -> {
                     if (view != null) {
                         view.onError(error);
                     }

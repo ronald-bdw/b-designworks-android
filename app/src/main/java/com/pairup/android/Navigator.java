@@ -104,14 +104,16 @@ public class Navigator {
     }
 
     public static void areaCode(@NonNull EnterPhoneScreen enterPhoneScreen, int requestCode) {
-        enterPhoneScreen.startActivityForResult(new Intent(enterPhoneScreen, FunctionalToAreaCodeScreen.class), requestCode);
+        enterPhoneScreen.startActivityForResult(
+            new Intent(enterPhoneScreen, FunctionalToAreaCodeScreen.class), requestCode);
     }
 
     public static void share(@NonNull Context context, @NonNull String text) {
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, text);
-        context.startActivity(Intent.createChooser(sharingIntent, context.getString(R.string.share_using)));
+        context.startActivity(Intent
+            .createChooser(sharingIntent, context.getString(R.string.share_using)));
     }
 
     public static void notifications(@NonNull Context context) {
@@ -120,11 +122,13 @@ public class Navigator {
 
     public static void applicationSettings(@NonNull Context context) {
         try {
-            Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            Intent intent =
+                new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
             intent.setData(Uri.parse("package:com.pairup.android"));
             context.startActivity(intent);
         } catch (ActivityNotFoundException e) {
-            Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS);
+            Intent intent =
+                new Intent(android.provider.Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS);
             context.startActivity(intent);
         }
     }

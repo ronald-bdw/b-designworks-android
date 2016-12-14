@@ -62,6 +62,7 @@ public class SimpleDialog {
                     }
                     dialog.dismiss();
                     break;
+                default:
             }
         };
 

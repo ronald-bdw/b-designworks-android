@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="36dp"
+    android:background="@drawable/area_code_item_unselected"
     android:gravity="center_vertical"
     android:paddingLeft="16dp"
     android:textColor="@color/app_accent"
     android:textSize="@dimen/font_size_medium"
     android:textStyle="bold"
     tools:text="B"
-    android:background="@drawable/area_code_item_unselected"
-    />
+/>

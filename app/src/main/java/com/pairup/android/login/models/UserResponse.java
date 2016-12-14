@@ -1,7 +1,5 @@
 package com.pairup.android.login.models;
 
-import android.support.annotation.Nullable;
-
 import java.util.List;
 
 /**
@@ -9,13 +7,14 @@ import java.util.List;
  */
 public class UserResponse {
 
-    public UserResponse(){}
+    private User user;
+
+    public UserResponse() {
+    }
 
     public UserResponse(User user) {
         this.user = user;
     }
-
-    private User user;
 
     public User getUser() {
         return user;
@@ -45,7 +44,7 @@ public class UserResponse {
         return user.getId();
     }
 
-    public List<Integration> getIntegrations(){
+    public List<Integration> getIntegrations() {
         return user.getIntegrations();
     }
 

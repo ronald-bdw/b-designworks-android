@@ -24,7 +24,9 @@ public abstract class BaseHolder<T> extends RecyclerView.ViewHolder implements C
         return LayoutInflater.from(viewGroup.getContext()).inflate(layoutId, viewGroup, false);
     }
 
-    protected Context context() { return itemView.getContext(); }
+    protected Context context() {
+        return itemView.getContext();
+    }
 
     protected String getString(@StringRes int str, Object... args) {
         return context().getString(str, args);

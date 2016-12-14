@@ -66,7 +66,8 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
     }
 
     @Override public void showRequestVerificationCodeProgressDialog() {
-        requestVerificationCodeProgressDialog = ProgressDialog.show(context(), getString(R.string.loading), getString(R.string.loading_sending_request_for_code));
+        requestVerificationCodeProgressDialog = ProgressDialog.show(context(),
+            getString(R.string.loading), getString(R.string.loading_sending_request_for_code));
     }
 
     @Override public void showError(Throwable error) {
@@ -85,7 +86,8 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
     }
 
     @Override public void showAuthorizationProgressDialog() {
-        authorizeProgressDialog = ProgressDialog.show(context(), getString(R.string.loading), getString(R.string.loading_sending_code));
+        authorizeProgressDialog = ProgressDialog.show(context(),
+            getString(R.string.loading), getString(R.string.loading_sending_code));
     }
 
     @Override public void hideAuthProgressDialog() {

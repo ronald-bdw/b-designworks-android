@@ -1,6 +1,5 @@
 package com.pairup.android.login;
 
-
 import com.pairup.android.login.functional_area.Area;
 
 /**

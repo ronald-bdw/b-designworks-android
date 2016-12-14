@@ -79,11 +79,14 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
                 Keyboard.hide(ChatScreen.this);
             }
 
-            @Override public void onDrawerOpened(View drawerView) {}
+            @Override public void onDrawerOpened(View drawerView) {
+            }
 
-            @Override public void onDrawerClosed(View drawerView) {}
+            @Override public void onDrawerClosed(View drawerView) {
+            }
 
-            @Override public void onDrawerStateChanged(int newState) {}
+            @Override public void onDrawerStateChanged(int newState) {
+            }
         });
     }
 
@@ -130,14 +133,17 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         super.onResume();
         Bus.subscribe(this);
         subscriptionPresenter.attachView(this, this);
-        setChatGone(!(subscriptionPresenter.isSubscribed() || userInteractor.getUser().hasHbfProvider()));
+        setChatGone(!(subscriptionPresenter.isSubscribed() ||
+            userInteractor.getUser().hasHbfProvider()));
 
-        // we could not customize part of the UI in on create because not all necessary views present in the hierarcy
+        // we could not customize part of the UI in on create
+        // because not all necessary views present in the hierarcy
         // that's the reason why we split customize process between onCreate/onResume
         findViewById(R.id.scrollView).setBackgroundResource(R.drawable.white_with_round_corners);
         View uiInputText = findViewById(R.id.Smooch_inputText);
         uiInputText.setBackgroundColor(Color.WHITE);
-        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) uiInputText.getLayoutParams();
+        RelativeLayout.LayoutParams layoutParams =
+            (RelativeLayout.LayoutParams) uiInputText.getLayoutParams();
         layoutParams.topMargin = AndroidUtils.dp(8);
         layoutParams.bottomMargin = AndroidUtils.dp(8);
         layoutParams.leftMargin = AndroidUtils.dp(36);
@@ -207,7 +213,8 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (!subscriptionPresenter.getBillingProcessor().handleActivityResult(requestCode, resultCode, data))
+        if (!subscriptionPresenter.getBillingProcessor()
+            .handleActivityResult(requestCode, resultCode, data))
             super.onActivityResult(requestCode, resultCode, data);
     }
 }

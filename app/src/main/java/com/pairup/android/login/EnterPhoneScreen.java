@@ -47,19 +47,18 @@ public class EnterPhoneScreen extends BaseActivity {
 
     private static final int CODE_REQUEST_AREA = 1121;
 
-    private AccountVerificationType accountVerificationType;
-
-    @Bind(R.id.phone)     EditText uiPhone;
-    @Bind(R.id.submit)    Button   uiSubmit;
-    @Bind(R.id.area_code) EditText uiAreaCode;
-
     @Inject UserInteractor      userInteractor;
     @Inject LoginFlowInteractor loginFlowInteractor;
+
+    @Bind(R.id.phone)     EditText uiPhone;
+    @Bind(R.id.area_code) EditText uiAreaCode;
+    @Bind(R.id.submit)    Button   uiSubmit;
 
     @Nullable private Subscription   verifyNumberSubs;
     @Nullable private ProgressDialog progressDialog;
 
-    private boolean hasHbfProvider;
+    private AccountVerificationType accountVerificationType;
+    private boolean                 hasHbfProvider;
 
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_enter_phone)
@@ -116,10 +115,12 @@ public class EnterPhoneScreen extends BaseActivity {
     private void manageSubmit(@NonNull String areaCode, @NonNull String phone) {
         Keyboard.hide(this);
         showProgress();
+        final String formattedPhone;
         if ("+61".equals(areaCode) && '0' == phone.charAt(0)) {
-            phone = phone.substring(1, phone.length());
+            formattedPhone = phone.substring(1, phone.length());
+        } else {
+            formattedPhone = phone;
         }
-        final String formattedPhone = phone;
         userInteractor.requestUserStatus(areaCode + formattedPhone)
             .compose(Rxs.doInBackgroundDeliverToUI())
             .subscribe(result -> {
@@ -176,7 +177,8 @@ public class EnterPhoneScreen extends BaseActivity {
             case HAS_PROVIDER:
                 errorMessage = getString(R.string.screen_enter_phone_error_has_no_provider);
                 break;
-            default: break;
+            default:
+                break;
         }
         SimpleDialog.show(context(), getString(R.string.error), errorMessage,
             getString(R.string.ok), () -> Navigator.welcome(this));
@@ -223,8 +225,8 @@ public class EnterPhoneScreen extends BaseActivity {
     }
 
     private void showProgress() {
-        progressDialog = ProgressDialog.show(context(), getString(R.string.loading), getString(R.string.progress_verifying_phone_number), true,
-            true, dialog -> {
+        progressDialog = ProgressDialog.show(context(), getString(R.string.loading),
+            getString(R.string.progress_verifying_phone_number), true, true, dialog -> {
                 if (verifyNumberSubs != null && !verifyNumberSubs.isUnsubscribed()) {
                     verifyNumberSubs.unsubscribe();
                     verifyNumberSubs = null;

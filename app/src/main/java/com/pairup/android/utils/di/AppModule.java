@@ -93,7 +93,8 @@ public class AppModule {
     public UserInteractor providesUserInteractor(@NonNull IStorage storage,
                                                  @NonNull UserSettings userSettings,
                                                  @NonNull Api api,
-                                                 @NonNull NotificationManagerCompat notificationManager) {
+                                                 @NonNull NotificationManagerCompat
+                                                         notificationManager) {
         return new UserInteractor(storage, userSettings, api, notificationManager);
     }
 
@@ -151,7 +152,8 @@ public class AppModule {
     }
 
     @Provides @Singleton
-    public SubscriptionPresenter provideSubscriptionPresenter(Gson gson, UserInteractor userInteractor){
+    public SubscriptionPresenter provideSubscriptionPresenter(Gson gson,
+                                                              UserInteractor userInteractor) {
         return new SubscriptionPresenter(gson, userInteractor);
     }
 

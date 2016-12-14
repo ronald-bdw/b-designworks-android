@@ -47,7 +47,7 @@ import static com.pairup.android.utils.ui.TextViews.textOf;
 /**
  * Created by Ilya Eremin on 09.08.2016.
  */
-public class RegistrationScreen extends BaseActivity implements SubscriptionView{
+public class RegistrationScreen extends BaseActivity implements SubscriptionView {
 
     private static final String ARG_KEY_VERIFICATION_CODE = "argVerificationCode";
     private static final String ARG_PHONE_NUMBER          = "argPhoneNumber";
@@ -79,7 +79,9 @@ public class RegistrationScreen extends BaseActivity implements SubscriptionView
     }
 
     @NonNull @Override public UiInfo getUiInfo() {
-        return new UiInfo(R.layout.screen_registration).setTitleRes(R.string.title_start_trial).enableBackButton();
+        return new UiInfo(R.layout.screen_registration)
+            .setTitleRes(R.string.title_start_trial)
+            .enableBackButton();
     }
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
@@ -138,14 +140,20 @@ public class RegistrationScreen extends BaseActivity implements SubscriptionView
                 Navigator.tour(context());
             }, error -> {
                 if (error instanceof RetrofitException) {
-                    CommonError parsedError = ((RetrofitException) error).getErrorBodyAs(CommonError.class);
+                    CommonError parsedError = ((RetrofitException) error)
+                        .getErrorBodyAs(CommonError.class);
                     if (parsedError != null && parsedError.getValidations() != null) {
                         for (String key : parsedError.getValidations().keySet()) {
-                            String errorMsg = Strings.listToString(parsedError.getValidations().get(key));
+                            String errorMsg = Strings
+                                .listToString(parsedError.getValidations().get(key));
                             if (key.equals("sms_code")) {
-                                SimpleDialog.show(context(), null, getString(R.string.error_incorrect_verification_code),
+                                SimpleDialog.show(context(), null,
+                                    getString(R.string.error_incorrect_verification_code),
                                     getString(R.string.try_again), () -> {
-                                        loginFlowInteractor.saveRegistrationData(textOf(uiFirstName), textOf(uiLastName), textOf(uiEmail));
+                                        loginFlowInteractor.saveRegistrationData(
+                                            textOf(uiFirstName),
+                                            textOf(uiLastName),
+                                            textOf(uiEmail));
                                         finish();
                                     });
                             } else if (key.equals("email")) {

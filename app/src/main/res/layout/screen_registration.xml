@@ -6,14 +6,14 @@
     android:layout_height="match_parent"
     android:background="#fbfbfb"
     android:orientation="vertical"
-    >
+>
 
-    <include layout="@layout/layout_toolbar"/>
+    <include layout="@layout/layout_toolbar" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+    >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,10 +21,10 @@
             android:dividerPadding="8dp"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            >
+        >
 
 
-            <include layout="@layout/layout_profile_fields"/>
+            <include layout="@layout/layout_profile_fields" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -34,7 +34,7 @@
                 android:text="@string/profile_phone"
                 android:textColor="#5e7489"
                 android:textStyle="bold"
-                />
+            />
 
             <EditText
                 android:id="@+id/phone"
@@ -49,7 +49,7 @@
                 android:inputType="none"
                 android:maxLines="1"
                 tools:ignore="TextFields"
-                />
+            />
 
             <Button
                 android:id="@+id/choose_your_plan"
@@ -63,7 +63,7 @@
                 android:paddingRight="24dp"
                 android:text="@string/registration_choose_subscriptions_btn"
                 android:textColor="@android:color/white"
-                />
+            />
 
         </LinearLayout>
 

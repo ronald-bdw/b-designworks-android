@@ -9,7 +9,8 @@ public class AuthResponse {
 
     private InnerAuthResponse authPhoneCode;
 
-    public AuthResponse() {}
+    public AuthResponse() {
+    }
 
     @VisibleForTesting
     public AuthResponse(boolean isPhoneRegistered, String phoneCodeId) {

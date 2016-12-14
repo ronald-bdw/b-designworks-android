@@ -29,7 +29,8 @@ public class GoogleFitPresenter {
 
     private static final String TAG                  = "GoogleFitPresenter";
     private static final int    REQUEST_CODE_SIGN_IN = 5599;
-    private static final String SERVER_KEY           = "1031731430214-cgrtpcni90gh3lmmr3fem5nihb4b3iuk.apps.googleusercontent.com";
+    private static final String SERVER_KEY           =
+        "1031731430214-cgrtpcni90gh3lmmr3fem5nihb4b3iuk.apps.googleusercontent.com";
 
     @Nullable private GoogleFitView view;
 
@@ -69,7 +70,8 @@ public class GoogleFitPresenter {
                             if (view != null) {
                                 view.showInternetConnectionError();
                             }
-                        } else if (i == GoogleApiClient.ConnectionCallbacks.CAUSE_SERVICE_DISCONNECTED) {
+                        } else if (i == GoogleApiClient
+                            .ConnectionCallbacks.CAUSE_SERVICE_DISCONNECTED) {
                             if (view != null) {
                                 view.showGoogleServiceDisconected();
                             }
@@ -101,7 +103,8 @@ public class GoogleFitPresenter {
                         userInteractor.integrateGoogleFit(acct.getServerAuthCode())
                             .compose(Rxs.doInBackgroundDeliverToUI())
                             .subscribe(
-                                fitToken -> userInteractor.saveFitnessTokenLocally(fitToken.getId(), Provider.GOOGLE_FIT),
+                                fitToken -> userInteractor
+                                    .saveFitnessTokenLocally(fitToken.getId(), Provider.GOOGLE_FIT),
                                 (error) -> {
                                     if (view != null) {
                                         view.onError(error);

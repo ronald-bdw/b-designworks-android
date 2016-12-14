@@ -45,6 +45,8 @@ public class TourScreenUploadAvatar extends BaseActivity {
     @Bind(R.id.avatar)   ImageView uiAvatar;
     @Bind(R.id.progress) View      uiProgress;
 
+    @Nullable private Subscription uploadAvatarSubs;
+
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_tour_upload_avatar)
             .enableBackButton()
@@ -86,8 +88,6 @@ public class TourScreenUploadAvatar extends BaseActivity {
             });
     }
 
-    @Nullable private Subscription uploadAvatarSubs;
-
     private void updateAvatar(String url) {
         if (uploadAvatarSubs != null) return;
         showAvatar(url);
@@ -123,9 +123,13 @@ public class TourScreenUploadAvatar extends BaseActivity {
 
     private void showUploadAvatarError(String url) {
         uiProgress.setVisibility(View.GONE);
-        SimpleDialog.show(context(), getString(R.string.error), getString(R.string.error_uploading_photo),
-            getString(R.string.retry), () -> updateAvatar(url),
-            getString(R.string.cancel), () -> showAvatar(userInteractor.getUser().getAvatar().getThumb()));
+        SimpleDialog.show(context(),
+            getString(R.string.error),
+            getString(R.string.error_uploading_photo),
+            getString(R.string.retry),
+            () -> updateAvatar(url),
+            getString(R.string.cancel),
+            () -> showAvatar(userInteractor.getUser().getAvatar().getThumb()));
     }
 
     private void showAvatarUploadingProgress() {

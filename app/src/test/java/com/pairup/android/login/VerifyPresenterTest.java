@@ -39,8 +39,8 @@ public class VerifyPresenterTest {
 
     @Rule public RxSchedulersOverrideRule rxRule = new RxSchedulersOverrideRule();
 
-    @Mock UserInteractor userInteractor;
-    @Mock VerifyView     view;
+    @Mock private UserInteractor userInteractor;
+    @Mock private VerifyView     view;
 
     private VerifyPresenter     presenter;
     private LoginFlowInteractor loginFlowInteractor;
@@ -83,7 +83,8 @@ public class VerifyPresenterTest {
 
     @Test
     public void testUnregisteredUserFlow() throws Exception {
-        when(userInteractor.checkVerificationNumber(any(), any())).thenReturn(Observable.just(null));
+        when(userInteractor.checkVerificationNumber(any(), any()))
+            .thenReturn(Observable.just(null));
 
         loginFlowInteractor.setPhoneNumber(NEW_PHONE_NUMBER);
         presenter.sendCode();
@@ -100,7 +101,8 @@ public class VerifyPresenterTest {
     @Test
     public void testIncorrectVerificationCode() throws Exception {
         Throwable error = new Throwable(("invalid code"));
-        when(userInteractor.checkVerificationNumber(any(), eq(WRONG_SMS_CODE))).thenReturn(Observable.error(error));
+        when(userInteractor.checkVerificationNumber(any(), eq(WRONG_SMS_CODE)))
+            .thenReturn(Observable.error(error));
 
         presenter.handleSmsCode(WRONG_SMS_CODE);
         verify(view).showAuthorizationProgressDialog();

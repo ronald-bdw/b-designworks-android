@@ -39,5 +39,8 @@
     <suppress checks="[a-zA-Z0-9]*" files=".*ViewInjector.java" />
     <suppress checks="[a-zA-Z0-9]*" files=".*_MembersInjector.java" />
     <suppress checks="HideUtilityClassConstructorCheck" files=".*.java" />
+    <suppress checks="InnerAssignmentCheck" files="MapperUtils.java" />
+    <suppress checks="InnerAssignmentCheck" files="Storage.java" />
+    <suppress checks="VisibilityModifierCheck" files="WelcomeScreen.java" />
 
 </suppressions>
