@@ -53,7 +53,7 @@ public class SelectProviderScreen extends BaseActivity {
         } else if (uiSelectProviderSpinner.getSelectedItemPosition() == 1) {
             TrialDialog.show(this);
         } else {
-            Toast.makeText(context(), R.string.provider_not_chosen, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context(), R.string.select_provider_label, Toast.LENGTH_SHORT).show();
         }
     }
 }
