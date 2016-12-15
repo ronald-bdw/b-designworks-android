@@ -2,6 +2,7 @@ package com.pairup.android;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,10 +27,11 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         context.startActivity(intent);
     }
 
-    public abstract @NonNull UiInfo getUiInfo();
+    @NonNull public abstract UiInfo getUiInfo();
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Dart.inject(this);
         setContentView(getUiInfo().getLayoutRes());
         ButterKnife.bind(this);
@@ -53,9 +55,11 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         }
     }
 
-    protected void restoreState(@NonNull Bundle savedState) {}
+    protected void restoreState(@NonNull Bundle savedState) {
+    }
 
-    protected void parseArguments(@NonNull Bundle extras) {}
+    protected void parseArguments(@NonNull Bundle extras) {
+    }
 
     @Override public boolean onCreateOptionsMenu(Menu menu) {
         if (getUiInfo().getMenuRes() != 0) {
@@ -80,7 +84,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         super.onBackPressed();
     }
 
-    protected Context context(){
+    protected Context context() {
         return this;
     }
 

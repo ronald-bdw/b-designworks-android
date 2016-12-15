@@ -12,13 +12,14 @@ import rx.functions.Action1;
  * Created by Ilya Eremin on 12.08.2016.
  */
 public class ErrorUtils {
+
     private static final String TAG = "Errors";
 
     public static Action1<Throwable> onError() {
         return ErrorUtils::logError;
     }
 
-    public static void logError(Throwable throwable){
+    public static void logError(Throwable throwable) {
         Log.d(TAG, "oh shit error occured", throwable);
     }
 

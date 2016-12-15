@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:id="@+id/sync_container"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sync_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical"
-    >
+>
 
-    <include layout="@layout/layout_toolbar"/>
+    <include layout="@layout/layout_toolbar" />
 
     <LinearLayout
         android:id="@+id/google_fit"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settings_item_height"
         android:orientation="horizontal"
-        >
+    >
 
         <ImageView
             android:layout_width="36dp"
@@ -23,7 +23,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="24dp"
             android:background="@drawable/ic_google_fit"
-            />
+        />
 
         <TextView
             android:layout_width="0dp"
@@ -33,7 +33,7 @@
             android:paddingLeft="16dp"
             android:text="@string/sync_google_fit"
             android:textSize="@dimen/font_size_medium"
-            />
+        />
 
         <android.support.v7.widget.SwitchCompat
             android:id="@+id/google_fit_switch_compat"
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="24dp"
             android:clickable="false"
-            />
+        />
 
     </LinearLayout>
 
@@ -49,7 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/separator"
-        />
+    />
 
     <LinearLayout
         android:id="@+id/fitbit"
@@ -57,7 +57,7 @@
         android:layout_height="@dimen/settings_item_height"
         android:layout_marginTop="1dp"
         android:orientation="horizontal"
-        >
+    >
 
         <ImageView
             android:layout_width="36dp"
@@ -65,7 +65,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="24dp"
             android:background="@drawable/ic_fitbit"
-            />
+        />
 
         <TextView
             android:layout_width="0dp"
@@ -75,7 +75,7 @@
             android:paddingLeft="16dp"
             android:text="@string/sync_fitbit"
             android:textSize="@dimen/font_size_medium"
-            />
+        />
 
         <android.support.v7.widget.SwitchCompat
             android:id="@+id/fitbit_switch_compat"
@@ -83,7 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="24dp"
             android:clickable="false"
-            />
+        />
 
     </LinearLayout>
 
@@ -91,6 +91,6 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/separator"
-        />
+    />
 
 </LinearLayout>

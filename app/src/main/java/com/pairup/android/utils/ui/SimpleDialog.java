@@ -38,7 +38,8 @@ public class SimpleDialog {
 
     public static void withOkBtn(@NonNull Context context, @StringRes int labelRes,
                                  @StringRes int descriptionRes, @NonNull Action0 onOkClick) {
-        show(context, context.getString(labelRes), context.getString(descriptionRes), context.getString(R.string.ok),
+        show(context, context.getString(labelRes), context.getString(descriptionRes),
+            context.getString(R.string.ok),
             onOkClick);
     }
 
@@ -61,6 +62,7 @@ public class SimpleDialog {
                     }
                     dialog.dismiss();
                     break;
+                default:
             }
         };
 
@@ -90,7 +92,7 @@ public class SimpleDialog {
     public static void showList(
         @NonNull Context context,
         @Nullable String title, @NonNull String[] items,
-        @Nullable Action1<Integer> firstBtnAction) {
+        @NonNull Action1<Integer> firstBtnAction) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context)
             .setTitle(title)

@@ -5,9 +5,9 @@ package com.pairup.android.chat.pushes;
  */
 
 public class PushMessage {
-    String text;
-    String name;
-    String avatarUrl;
+    private String text;
+    private String name;
+    private String avatarUrl;
 
     public String getText() {
         return text;

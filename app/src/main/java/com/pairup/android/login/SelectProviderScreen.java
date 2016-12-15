@@ -21,7 +21,7 @@ import butterknife.OnClick;
 /**
  * Created by Ilya Eremin on 12.08.2016.
  */
-public class SelectProviderScreen extends BaseActivity{
+public class SelectProviderScreen extends BaseActivity {
 
     @Bind(R.id.select_provider_spinner) Spinner uiSelectProviderSpinner;
 
@@ -31,7 +31,9 @@ public class SelectProviderScreen extends BaseActivity{
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.select_provider_options));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+            android.R.layout.simple_spinner_item,
+            getResources().getStringArray(R.array.select_provider_options));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         Analytics.logScreenOpened(Analytics.EVENT_OPEN_SELECT_PROVIDER_SCREEN);

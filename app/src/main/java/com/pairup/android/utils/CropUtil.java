@@ -15,8 +15,8 @@ public class CropUtil {
     private static final String CROP_PROFILE_IMG_NAME = "profile_img.jpg";
 
     public static void startCropImageActivity(@NonNull Activity activity,
-                                       @NonNull Uri imageLink,
-                                       @NonNull String filePath) {
+                                              @NonNull Uri imageLink,
+                                              @NonNull String filePath) {
         UCrop.Options cropOptions = new UCrop.Options();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             cropOptions.setStatusBarColor(activity.getColor(R.color.settings_font));

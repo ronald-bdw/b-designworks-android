@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public class RuntimeStorage implements IStorage {
 
-    Map<String, Object> map = new HashMap<>();
+    private Map<String, Object> map = new HashMap<>();
 
     @Override public void put(@NonNull String key, @NonNull Object item) {
         map.put(key, item);

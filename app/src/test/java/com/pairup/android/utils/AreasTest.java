@@ -1,12 +1,6 @@
 package com.pairup.android.utils;
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.filters.MediumTest;
-import android.support.test.runner.AndroidJUnit4;
-import android.support.v4.app.FragmentActivity;
 
 import com.pairup.android.R;
 import com.pairup.android.login.functional_area.Area;
@@ -28,7 +22,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class AreasTest {
 
-    @Mock Context mockedContext;
+    @Mock private Context mockedContext;
 
     @Test public void getAreasTest() throws Exception {
         when(mockedContext.getString(R.string.countries)).thenReturn("" +

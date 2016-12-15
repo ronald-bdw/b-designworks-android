@@ -54,8 +54,8 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
     @Inject GoogleFitPresenter googleFitPresenter;
     @Inject FitbitPresenter    fitbitPresenter;
 
-    @Nullable         String         code;
-    @Nullable         Subscription   sendingFitbitCodeSubs;
+    @Nullable private String         code;
+    @Nullable private Subscription   sendingFitbitCodeSubs;
     @Nullable private ProgressDialog progressDialog;
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
@@ -128,12 +128,13 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
 
     //FitBit
     @Override public void showSendingFitbitCodeProgress() {
-        progressDialog = SimpleLoadingDialog.show(context(), getString(R.string.sending_fitbit_code), () -> {
-            if (sendingFitbitCodeSubs != null) {
-                sendingFitbitCodeSubs.unsubscribe();
-                sendingFitbitCodeSubs = null;
-            }
-        });
+        progressDialog = SimpleLoadingDialog.show(context(),
+            getString(R.string.sending_fitbit_code), () -> {
+                if (sendingFitbitCodeSubs != null) {
+                    sendingFitbitCodeSubs.unsubscribe();
+                    sendingFitbitCodeSubs = null;
+                }
+            });
     }
 
     @Override public void dismissSendingFitbitCodeProgress() {
@@ -144,7 +145,8 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
     }
 
     @Override public void fitbitSuccessfullyIntegrated() {
-        Toast.makeText(context(), R.string.fitbit_integration_successful, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context(), R.string.fitbit_integration_successful, Toast.LENGTH_SHORT)
+            .show();
     }
 
     private void handleIntent(Intent intent) {

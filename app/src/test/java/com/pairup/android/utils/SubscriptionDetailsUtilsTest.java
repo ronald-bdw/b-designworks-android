@@ -17,7 +17,7 @@ public class SubscriptionDetailsUtilsTest {
 
     public static final String SUBSCRIPTION_NAME = "one_month_test_subscription";
 
-    SubscriptionsDetails subscriptionsDetails;
+    private SubscriptionsDetails subscriptionsDetails;
 
     @Before
     public void createSubscriptionDetails() {
@@ -29,7 +29,8 @@ public class SubscriptionDetailsUtilsTest {
 
     @Test
     public void isActiveTest() {
-        Assert.assertTrue(SubscriptionDetailsUtils.isActive(subscriptionsDetails.isRenewing(), subscriptionsDetails.getPurchaseDate()));
+        Assert.assertTrue(SubscriptionDetailsUtils
+            .isActive(subscriptionsDetails.isRenewing(), subscriptionsDetails.getPurchaseDate()));
     }
 
     @Test
@@ -42,11 +43,13 @@ public class SubscriptionDetailsUtilsTest {
 
     @Test
     public void getExpiredDateTest() {
-        Assert.assertNotNull(SubscriptionDetailsUtils.getExpiredDate(subscriptionsDetails.getPurchaseDate()));
+        Assert.assertNotNull(SubscriptionDetailsUtils
+            .getExpiredDate(subscriptionsDetails.getPurchaseDate()));
     }
 
     @Test
     public void getExpiredDateTest2() {
-        Assert.assertEquals(SubscriptionDetailsUtils.getExpiredDate(1480336855249L), "2016-12-28T12:40:55Z");
+        Assert.assertEquals(SubscriptionDetailsUtils
+            .getExpiredDate(1480336855249L), "2016-12-28T12:40:55Z");
     }
 }

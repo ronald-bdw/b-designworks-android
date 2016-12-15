@@ -3,82 +3,82 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/initial_screen_gradient"
-    >
+    android:orientation="vertical"
+>
 
     <TextView
+        android:id="@+id/have_account_link"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/have_account_link"
-        android:textColor="@color/app_accent"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="24dp"
-        />
+        android:textColor="@color/app_accent"
+    />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
         android:layout_gravity="center"
         android:layout_marginBottom="48dp"
-        >
+        android:gravity="center"
+        android:orientation="vertical"
+    >
 
-        <include layout="@layout/logo"/>
+        <include layout="@layout/logo" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:text="@string/welcome_to_pairup"
             android:textAllCaps="true"
-            android:layout_marginTop="24dp"
-            android:textStyle="bold"
             android:textColor="@color/app_accent"
             android:textSize="@dimen/font_size_big"
-            />
+            android:textStyle="bold"
+        />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/welcome_question"
-            android:gravity="center"
             android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="@string/welcome_question"
             android:textColor="#61615f"
             android:textSize="@dimen/font_size_medium"
-            />
+        />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_gravity="bottom"
-        android:gravity="center"
         android:layout_marginBottom="64dp"
-        >
+        android:gravity="center"
+        android:orientation="horizontal"
+    >
 
         <Button
             android:id="@+id/no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/no"
-            android:background="@drawable/app_btn_border"
-            android:textColor="@color/app_accent"
             android:layout_marginRight="36dp"
-            />
+            android:background="@drawable/app_btn_border"
+            android:text="@string/no"
+            android:textColor="@color/app_accent"
+        />
 
 
         <Button
             android:id="@+id/yes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/yes"
-            android:background="@drawable/app_btn_filled"
-            android:textColor="@android:color/white"
             android:layout_marginLeft="36dp"
-            />
+            android:background="@drawable/app_btn_filled"
+            android:text="@string/yes"
+            android:textColor="@android:color/white"
+        />
 
     </LinearLayout>
 

@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    >
+>
 
-    <include layout="@layout/layout_toolbar"/>
+    <include layout="@layout/layout_toolbar" />
 
     <ImageView
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         android:layout_marginTop="?attr/actionBarSize"
         android:scaleType="centerCrop"
         android:src="@drawable/trial_bg"
-        />
+    />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,13 +25,13 @@
         android:layout_marginTop="96dp"
         android:background="@android:color/white"
         android:orientation="vertical"
-        >
+    >
 
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            />
+        />
 
     </LinearLayout>
 
@@ -45,7 +45,7 @@
         android:background="@drawable/app_btn_filled"
         android:text="@string/trial_start_trial"
         android:textColor="@android:color/white"
-        />
+    />
 
     <com.viewpagerindicator.CirclePageIndicator
         android:id="@+id/dots"
@@ -53,6 +53,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top"
         android:layout_marginTop="72dp"
-        />
+    />
 
 </FrameLayout>

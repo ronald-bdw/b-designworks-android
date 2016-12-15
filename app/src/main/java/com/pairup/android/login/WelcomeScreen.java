@@ -26,12 +26,12 @@ public class WelcomeScreen extends BaseActivity {
     public static final String ARG_HAS_ERROR           = "hasError";
     public static final String ARG_IS_PHONE_REGISTERED = "isPhoneRegistered";
 
-    private boolean hasError;
-    private boolean isPhoneRegistered;
-
     @Bind(R.id.have_account_link) TextView uiHaveAccountLink;
 
     @BindString(R.string.screen_welcome_user_have_account) String mHaveAccountLinkTxt;
+
+    private boolean hasError;
+    private boolean isPhoneRegistered;
 
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_welcome);
@@ -62,7 +62,8 @@ public class WelcomeScreen extends BaseActivity {
             } else {
                 errorMessage = getString(R.string.account_deleted_message);
             }
-            SimpleDialog.show(this, getString(R.string.error), errorMessage, getString(R.string.ok), null);
+            SimpleDialog
+                .show(this, getString(R.string.error), errorMessage, getString(R.string.ok), null);
         }
     }
 

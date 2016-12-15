@@ -12,8 +12,8 @@ import rx.functions.Func1;
  * Created by Ilya Eremin on 04.08.2016.
  */
 public class BaseAdapter<T, VH extends BaseHolder<T>> extends RecyclerView.Adapter<VH> {
-    @NonNull       List<T>              items;
-    final @NonNull Func1<ViewGroup, VH> func0;
+    @NonNull private final Func1<ViewGroup, VH> func0;
+    @NonNull private       List<T>              items;
 
     public BaseAdapter(@NonNull List<T> items, @NonNull Func1<ViewGroup, VH> func0) {
         this.items = items;

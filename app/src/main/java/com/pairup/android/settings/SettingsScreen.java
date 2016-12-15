@@ -34,7 +34,9 @@ public class SettingsScreen extends BaseActivity {
     @Bind(R.id.notifications_toggle) SwitchCompat uiNotificationsToggle;
 
     @NonNull @Override public UiInfo getUiInfo() {
-        return new UiInfo(R.layout.screen_settings).enableBackButton().setTitleRes(R.string.title_settings);
+        return new UiInfo(R.layout.screen_settings)
+            .enableBackButton()
+            .setTitleRes(R.string.title_settings);
     }
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
@@ -43,7 +45,7 @@ public class SettingsScreen extends BaseActivity {
 
         Analytics.logScreenOpened(Analytics.EVENT_OPEN_SETTINGS_SCREEN);
 
-        if (!DeviceInteractor.isSdkSupportsNotifications())
+        if (!DeviceInteractor.doesSdkSupportNotifications())
             uiNotificationsToggle.setVisibility(View.GONE);
     }
 

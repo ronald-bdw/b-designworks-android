@@ -16,9 +16,10 @@ import javax.inject.Inject;
  */
 public class InitialScreen extends AppCompatActivity {
 
+    private static final int DELAY_TIME = 3000;
+
     @Inject UserSettings userSettings;
 
-    private static final int DELAY_TIME = 3000;
     private Handler mHandler;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,9 +42,9 @@ public class InitialScreen extends AppCompatActivity {
     }
 
     private boolean isAcitivtyStartedFromLauncherIcon() {
-        return getIntent().hasCategory(Intent.CATEGORY_LAUNCHER)
-            && getIntent().getAction() != null
-            && getIntent().getAction().equals(Intent.ACTION_MAIN);
+        return getIntent().hasCategory(Intent.CATEGORY_LAUNCHER) &&
+            getIntent().getAction() != null &&
+            getIntent().getAction().equals(Intent.ACTION_MAIN);
     }
 
     @Override protected void onStop() {

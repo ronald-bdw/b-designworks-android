@@ -48,6 +48,9 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView {
     @Inject UserInteractor     userInteractor;
     @Inject GoogleFitPresenter googleFitPresenter;
 
+    @Nullable private Subscription   updateProfileSubs;
+    @Nullable private ProgressDialog updateProfileProgress;
+
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_tour_profile)
             .setTitleRes(R.string.title_tour_1_page)
@@ -67,9 +70,6 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView {
         googleFitPresenter.attachView(this, this);
     }
 
-    @Nullable private Subscription   updateProfileSubs;
-    @Nullable private ProgressDialog updateProfileProgress;
-
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.next) {
             if (updateProfileSubs != null) return true;
@@ -84,14 +84,16 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView {
         userInteractor.setShowTourForUser();
         if (fieldsChanged()) {
             showUpdateProfileProgress();
-            updateProfileSubs = userInteractor.updateUser(textOf(uiFirstName), textOf(uiLastName), textOf(uiEmail))
+            updateProfileSubs = userInteractor
+                .updateUser(textOf(uiFirstName), textOf(uiLastName), textOf(uiEmail))
                 .doOnTerminate(() -> {
                     updateProfileSubs = null;
                     hideProgress();
                 })
                 .compose(Rxs.doInBackgroundDeliverToUI())
                 .subscribe(result -> {
-                    Toast.makeText(context(), R.string.edit_profile_profile_updated, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context(), R.string.edit_profile_profile_updated,
+                        Toast.LENGTH_SHORT).show();
                     integrateGoogleFit();
                 }, ErrorUtils.handle(context()));
         } else {
@@ -111,7 +113,8 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView {
 
     private void showUpdateProfileProgress() {
         hideProgress();
-        updateProfileProgress = ProgressDialog.show(context(), getString(R.string.loading), getString(R.string.loading_user_info));
+        updateProfileProgress = ProgressDialog
+            .show(context(), getString(R.string.loading), getString(R.string.loading_user_info));
         updateProfileProgress.setOnDismissListener(dialog -> {
             if (updateProfileSubs != null && !updateProfileSubs.isUnsubscribed()) {
                 updateProfileSubs.unsubscribe();

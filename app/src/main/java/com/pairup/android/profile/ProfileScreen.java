@@ -31,16 +31,16 @@ public class ProfileScreen extends BaseActivity implements SwipeRefreshLayout.On
 
     @Inject UserInteractor userInteractor;
 
-    @NonNull @Override public UiInfo getUiInfo() {
-        return new UiInfo(R.layout.screen_profile).enableBackButton().setMenuRes(R.menu.profile);
-    }
-
     @Bind(R.id.avatar)            ImageView          uiAvatar;
     @Bind(R.id.email)             TextView           uiEmail;
     @Bind(R.id.phone)             TextView           uiPhone;
     @Bind(R.id.current_full_name) TextView           uiCurrentFullName;
     @Bind(R.id.current_email)     TextView           uiCurrentEmail;
     @Bind(R.id.swipe_to_refresh)  SwipeRefreshLayout uiSwipeRefreshLayout;
+
+    @NonNull @Override public UiInfo getUiInfo() {
+        return new UiInfo(R.layout.screen_profile).enableBackButton().setMenuRes(R.menu.profile);
+    }
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
@@ -75,7 +75,8 @@ public class ProfileScreen extends BaseActivity implements SwipeRefreshLayout.On
     private void showUser(User user) {
         if (context() != null) {
             ImageLoader.load(this, uiAvatar, user.getAvatar().getThumb());
-            uiCurrentFullName.setText(getString(R.string.edit_profile_name_surname_pattern, user.getFirstName(), user.getLastName()));
+            uiCurrentFullName.setText(getString(R.string.edit_profile_name_surname_pattern,
+                user.getFirstName(), user.getLastName()));
             uiEmail.setText(user.getEmail());
             uiCurrentEmail.setText(user.getEmail());
             uiPhone.setText(user.getPhoneNumber());
@@ -87,5 +88,4 @@ public class ProfileScreen extends BaseActivity implements SwipeRefreshLayout.On
         uiSwipeRefreshLayout.setOnRefreshListener(this);
         uiSwipeRefreshLayout.setColorSchemeResources(R.color.app_accent);
     }
-
 }
