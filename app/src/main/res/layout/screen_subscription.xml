@@ -4,63 +4,63 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+>
 
-    <include layout="@layout/layout_toolbar"/>
+    <include layout="@layout/layout_toolbar" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="?actionBarSize"
         android:background="@android:color/white"
-        >
+    >
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            >
+            android:orientation="vertical"
+        >
 
             <TextView
                 android:id="@+id/status"
                 style="@style/settings_item_container"
                 android:paddingLeft="16dp"
-                android:textColor="@color/settings_font"
                 android:text="@string/subscription_status"
-                />
+                android:textColor="@color/settings_font"
+            />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:background="@color/separator"
-                />
+            />
 
             <TextView
                 android:id="@+id/subscribe"
                 style="@style/settings_item_container"
                 android:paddingLeft="16dp"
-                android:textColor="@color/settings_font"
                 android:text="@string/subscribe"
-                />
+                android:textColor="@color/settings_font"
+            />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:background="@color/separator"
-                />
+            />
 
             <TextView
                 android:id="@+id/unsubscribe"
                 style="@style/settings_item_container"
                 android:paddingLeft="16dp"
-                android:textColor="@color/settings_font"
                 android:text="@string/unsubscribe"
-                />
+                android:textColor="@color/settings_font"
+            />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:background="@color/separator"
-                />
+            />
 
         </LinearLayout>
 

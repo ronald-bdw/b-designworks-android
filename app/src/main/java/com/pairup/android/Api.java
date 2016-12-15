@@ -39,6 +39,12 @@ public interface Api {
     @GET(V1 + "users/account") Observable<UserResponse> currentUser();
 
     @FormUrlEncoded
+    @POST(V1 + "auth_phone_codes/{id}/check") Observable<ResponseBody> checkVerificationCode(
+        @NonNull @Path("id") String id,
+        @NonNull @Field("sms_code") String code
+    );
+
+    @FormUrlEncoded
     @POST(V1 + "users") Observable<UserResponse> register(
         @NonNull @Field(value = "first_name", encoded = true) String firstName,
         @NonNull @Field(value = "last_name", encoded = true) String lastName,
@@ -83,7 +89,8 @@ public interface Api {
         @Field("notification[kind]") String kind
     );
 
-    @DELETE("v1/notifications/message_push") Observable<ResponseBody> userDisabledPushNotificatinos();
+    @DELETE("v1/notifications/message_push")
+    Observable<ResponseBody> userDisabledPushNotificatinos();
 
     @FormUrlEncoded
     @POST(V1 + "registration_status")
@@ -92,6 +99,6 @@ public interface Api {
     @FormUrlEncoded
     @POST(V1 + "subscriptions")
     Observable<Void> sendSubscriptionStatus(@Field("plan_name") String plan,
-                                                    @Field("expires_at") String date,
-                                                    @Field("active") boolean isActive);
+                                            @Field("expires_at") String date,
+                                            @Field("active") boolean isActive);
 }

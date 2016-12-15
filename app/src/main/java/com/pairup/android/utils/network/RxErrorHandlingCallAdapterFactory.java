@@ -19,7 +19,7 @@ import rx.functions.Func1;
 /**
  * Created by Ilya Eremin on 12.08.2016.
  */
-public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory  {
+public final class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory {
     private final RxJavaCallAdapterFactory original;
 
     private RxErrorHandlingCallAdapterFactory() {
@@ -55,7 +55,8 @@ public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory  {
             return ((Observable) wrapped.adapt(call))
                 .onErrorResumeNext(new Func1<Throwable, Observable>() {
                     @Override public Observable call(Throwable throwable) {
-                        return Observable.error(RxCallAdapterWrapper.this.asRetrofitException(throwable));
+                        return Observable
+                            .error(RxCallAdapterWrapper.this.asRetrofitException(throwable));
                     }
                 });
         }
@@ -68,7 +69,8 @@ public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory  {
                 if (response.code() == 401) {
                     Bus.event(UserUnauthorizedEvent.EVENT);
                 }
-                return RetrofitException.httpError(response.raw().request().url().toString(), response, retrofit);
+                return RetrofitException
+                    .httpError(response.raw().request().url().toString(), response, retrofit);
             }
             // A network error happened
             if (throwable instanceof IOException) {

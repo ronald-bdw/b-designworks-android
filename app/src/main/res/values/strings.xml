@@ -114,7 +114,7 @@
     <string name="error_incorrect_phone">Invalid phone format</string>
     <string name="progress_verifying_phone_number">Verifying phone number</string>
 
-    <string name="Smooch_startOfConversation">\nWelcome to the Pair Up main page. This is where you will connect with your Pair Up coach.\n\nTap the upper right  menu to edit settings and learn more about Pair Up. Explore the About Us section to find our Privacy Policy and Licencing Agreement.</string>
+    <string name="Smooch_startOfConversation">\nWelcome to the Pair Up main page. This is where you will connect with your Pair Up coach.\n\nTap the upper right menu to edit settings and learn more about Pair Up. Explore the About Us section to find our Privacy Policy and Licensing Agreement.</string>
     <string name="Smooch_welcome"/>
     <string name="Smooch_messageHint">Input chat message</string>
     <string name="show_notifications">Show Notifications</string>

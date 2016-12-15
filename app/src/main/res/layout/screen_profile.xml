@@ -5,28 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    >
+>
 
-    <include layout="@layout/layout_toolbar"/>
+    <include layout="@layout/layout_toolbar" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_to_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+    >
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            >
+        >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                >
+            >
 
-                <include layout="@layout/layout_user_info_header"/>
+                <include layout="@layout/layout_user_info_header" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -38,7 +38,7 @@
                     android:textColor="@color/app_accent"
                     android:textSize="@dimen/font_size_medium"
                     android:textStyle="bold"
-                    />
+                />
 
                 <View
                     android:layout_width="match_parent"
@@ -47,21 +47,21 @@
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="8dp"
                     android:background="@color/app_accent"
-                    />
+                />
 
                 <TextView
                     android:id="@+id/email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="24dp"
+                    android:layout_marginTop="12dp"
                     android:gravity="end|center_vertical"
                     android:text="sexy_dmitry@gmail.com"
                     android:textColor="#686868"
+                    android:textSize="@dimen/font_size_medium"
                     tools:ignore="HardcodedText"
                     tools:text="example@email.com"
-                    android:layout_marginTop="12dp"
-                    android:textSize="@dimen/font_size_medium"
-                    />
+                />
 
 
                 <TextView
@@ -74,7 +74,7 @@
                     android:textColor="@color/app_accent"
                     android:textSize="@dimen/font_size_medium"
                     android:textStyle="bold"
-                    />
+                />
 
                 <View
                     android:layout_width="match_parent"
@@ -83,21 +83,21 @@
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="8dp"
                     android:background="@color/app_accent"
-                    />
+                />
 
                 <TextView
                     android:id="@+id/phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="24dp"
+                    android:layout_marginTop="12dp"
                     android:gravity="end|center_vertical"
                     android:textColor="#686868"
+                    android:textSize="@dimen/font_size_medium"
                     tools:ignore="HardcodedText"
                     tools:text="8912345678"
-                    android:layout_marginTop="12dp"
-                    android:textSize="@dimen/font_size_medium"
 
-                    />
+                />
 
 
             </LinearLayout>

@@ -7,16 +7,20 @@ import android.util.DisplayMetrics;
  * Created by Ilya Eremin on 04.08.2016.
  */
 public class AndroidUtils {
-    private static float density = 1;
-    static DisplayMetrics displayMetrics;
+    private static float sDensity = 1;
+
+    private static DisplayMetrics sDisplayMetrics;
 
     public static int dp(float value) {
-        return (int) Math.ceil(density * value);
+        return (int) Math.ceil(sDensity * value);
     }
 
     public static void initialize(Context context) {
-        displayMetrics = context.getResources().getDisplayMetrics();
-        density = displayMetrics.density;
+        sDisplayMetrics = context.getResources().getDisplayMetrics();
+        sDensity = sDisplayMetrics.density;
     }
 
+    public static DisplayMetrics getDisplayMetrics() {
+        return sDisplayMetrics;
+    }
 }

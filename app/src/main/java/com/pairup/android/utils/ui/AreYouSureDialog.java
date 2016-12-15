@@ -32,7 +32,6 @@ public class AreYouSureDialog {
         show(context, context.getString(titleRes), context.getString(messageRes), okClickListener);
     }
 
-
     public static void show(
         @NonNull Context context,
         @Nullable String title, String message,
@@ -49,6 +48,8 @@ public class AreYouSureDialog {
                 case DialogInterface.BUTTON_NEGATIVE:
                     dialog.dismiss();
                     break;
+
+                default:
             }
         };
 

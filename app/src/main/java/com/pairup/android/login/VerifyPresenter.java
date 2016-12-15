@@ -17,15 +17,15 @@ public class VerifyPresenter {
     private final UserInteractor      userInteractor;
     private final LoginFlowInteractor loginFlowInteractor;
 
-    @Nullable private VerifyView view;
+    @Nullable private VerifyView   view;
+    @Nullable private Subscription requestingSmsCodeSubs;
+    @Nullable private Subscription verifyingCodeSubs;
 
     public VerifyPresenter(@NonNull UserInteractor userInteractor,
                            @NonNull LoginFlowInteractor loginFlowInteractor) {
         this.userInteractor = userInteractor;
         this.loginFlowInteractor = loginFlowInteractor;
     }
-
-    @Nullable private Subscription requestingSmsCodeSubs;
 
     public void attachView(@NonNull VerifyView view) {
         this.view = view;
@@ -51,13 +51,12 @@ public class VerifyPresenter {
             }, view::showError);
     }
 
-    public void handleSmsCode(String verificadtionCode) {
-        if (!Strings.isEmpty(verificadtionCode)) {
+    public void handleSmsCode(String verificationCode) {
+        if (!Strings.isEmpty(verificationCode)) {
             if (loginFlowInteractor.isUserRegistered()) {
-                login(verificadtionCode);
+                login(verificationCode);
             } else {
-                view.openRegistrationScreen(loginFlowInteractor.getPhoneNumber(), verificadtionCode,
-                    loginFlowInteractor.getPhoneCodeId());
+                checkVerificationCodeAndGoRegister(verificationCode);
             }
         } else {
             if (view != null) {
@@ -66,7 +65,32 @@ public class VerifyPresenter {
         }
     }
 
-    @Nullable private Subscription verifyingCodeSubs;
+    private void checkVerificationCodeAndGoRegister(@NonNull String verificationCode) {
+        if (verifyingCodeSubs != null && !verifyingCodeSubs.isUnsubscribed())
+            return;
+        if (view != null) {
+            view.showAuthorizationProgressDialog();
+        }
+        verifyingCodeSubs = userInteractor
+            .checkVerificationNumber(loginFlowInteractor.getPhoneCodeId(), verificationCode)
+            .doOnTerminate(() -> {
+                verifyingCodeSubs = null;
+                if (view != null) {
+                    view.hideAuthProgressDialog();
+                }
+            })
+            .compose(Rxs.doInBackgroundDeliverToUI())
+            .subscribe(result -> {
+                if (view != null) {
+                    view.openRegistrationScreen(loginFlowInteractor.getPhoneNumber(),
+                        verificationCode, loginFlowInteractor.getPhoneCodeId());
+                }
+            }, error -> {
+                if (view != null) {
+                    view.showError(error);
+                }
+            });
+    }
 
     private void login(@NonNull String verifyCode) {
         if (verifyingCodeSubs != null && !verifyingCodeSubs.isUnsubscribed())

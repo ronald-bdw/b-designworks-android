@@ -31,7 +31,6 @@ import butterknife.OnClick;
 
 public class ChatSidePanelFragment extends Fragment {
 
-
     @Inject UserInteractor userInteractor;
 
     @Bind(R.id.avatar)    ImageView uiAvatar;
@@ -49,7 +48,8 @@ public class ChatSidePanelFragment extends Fragment {
     private void showUser(User user) {
         if (getContext() != null) {
             ImageLoader.load(getContext(), uiAvatar, user.getAvatar().getThumb());
-            uiFullname.setText(getString(R.string.edit_profile_name_surname_pattern, user.getFirstName(), user.getLastName()));
+            uiFullname.setText(getString(R.string.edit_profile_name_surname_pattern,
+                user.getFirstName(), user.getLastName()));
             uiEmail.setText(user.getEmail());
         }
     }
@@ -80,6 +80,7 @@ public class ChatSidePanelFragment extends Fragment {
     }
 
     @OnClick(R.id.share) void onShareClick() {
+        // TODO replace text with real one
         Navigator.share(getContext(), "Sharing text here");
         Bus.event(CloseDrawerEvent.EVENT);
     }

@@ -9,17 +9,17 @@ import com.google.gson.GsonBuilder;
  */
 public class MapperUtils {
 
-    private static volatile Gson instance;
+    private static volatile Gson sInstance;
 
     public static Gson getInstance() {
-        Gson localInstance = instance;
+        Gson localInstance = sInstance;
         if (localInstance == null) {
             synchronized (Gson.class) {
-                localInstance = instance;
+                localInstance = sInstance;
                 if (localInstance == null) {
-                    instance = localInstance = new GsonBuilder()
+                    sInstance = localInstance = new GsonBuilder()
                         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                        .create();;
+                        .create();
                 }
             }
         }

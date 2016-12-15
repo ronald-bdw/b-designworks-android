@@ -7,10 +7,16 @@ import com.google.android.gms.common.ConnectionResult;
  */
 public interface GoogleFitView {
     void codeRetrievedSuccessfull();
+
     void errorWhileRetrievingCode();
+
     void onGoogleServicesError(ConnectionResult result);
+
     void showInternetConnectionError();
+
     void showGoogleServiceDisconected();
+
     void onError(Throwable error);
+
     void userCancelIntegration();
 }

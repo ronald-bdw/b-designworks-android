@@ -16,20 +16,7 @@ import java.util.List;
  */
 public class Storage implements IStorage {
 
-    private static volatile Storage instance;
-
-    public static Storage getInstance(SharedPreferences sp, Gson gson) {
-        Storage localInstance = instance;
-        if (localInstance == null) {
-            synchronized (Storage.class) {
-                localInstance = instance;
-                if (localInstance == null) {
-                    instance = localInstance = new Storage(sp, gson);
-                }
-            }
-        }
-        return localInstance;
-    }
+    private static volatile Storage sInstance;
 
     private final SharedPreferences sp;
     private final Gson              gson;
@@ -37,6 +24,19 @@ public class Storage implements IStorage {
     public Storage(SharedPreferences sp, Gson gson) {
         this.sp = sp;
         this.gson = gson;
+    }
+
+    public static Storage getInstance(SharedPreferences sp, Gson gson) {
+        Storage localInstance = sInstance;
+        if (localInstance == null) {
+            synchronized (Storage.class) {
+                localInstance = sInstance;
+                if (localInstance == null) {
+                    sInstance = localInstance = new Storage(sp, gson);
+                }
+            }
+        }
+        return localInstance;
     }
 
     @Override public void put(@NonNull String key, @NonNull Object items) {

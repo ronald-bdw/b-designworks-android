@@ -13,7 +13,7 @@ public enum Provider {
     @SerializedName("Googlefit")GOOGLE_FIT("Googlefit"),
     @SerializedName("Healthkit")HEALTH_KIT("Healthkit");
 
-    String name;
+    private String name;
 
     Provider(String name) {
         this.name = name;

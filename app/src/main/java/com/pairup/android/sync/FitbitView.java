@@ -5,7 +5,10 @@ package com.pairup.android.sync;
  */
 public interface FitbitView {
     void showSendingFitbitCodeProgress();
+
     void dismissSendingFitbitCodeProgress();
+
     void fitbitSuccessfullyIntegrated();
+
     void onError(Throwable error);
 }

@@ -15,14 +15,17 @@ import rx.functions.Action0;
 
 public class SimpleLoadingDialog {
 
-    public static ProgressDialog show(@NonNull Context context, @NonNull String message, @NonNull Action0 doOnCancel) {
+    public static ProgressDialog show(@NonNull Context context,
+                                      @NonNull String message,
+                                      @NonNull Action0 doOnCancel) {
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setTitle(context.getString(R.string.loading));
         progressDialog.setMessage(message);
         progressDialog.setCancelable(true);
-        progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, context.getString(R.string.cancel), (dialog, which) -> {
-            dialog.dismiss();
-        });
+        progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE,
+            context.getString(R.string.cancel), (dialog, which) -> {
+                dialog.dismiss();
+            });
         progressDialog.setOnCancelListener(dialog -> doOnCancel.call());
         progressDialog.setOnDismissListener(dialog -> doOnCancel.call());
         progressDialog.show();

@@ -6,27 +6,27 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical"
-    >
+>
 
-    <include layout="@layout/layout_toolbar"/>
+    <include layout="@layout/layout_toolbar" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+    >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            >
+        >
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
+            >
 
-                <include layout="@layout/layout_user_info_header"/>
+                <include layout="@layout/layout_user_info_header" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/change_avatar"
@@ -36,7 +36,7 @@
                     android:layout_marginTop="52dp"
                     android:alpha="0.4"
                     android:src="@drawable/ic_camera_overlay"
-                    />
+                />
 
                 <ProgressBar
                     android:id="@+id/avatar_uploading_progress"
@@ -47,11 +47,11 @@
                     android:padding="8dp"
                     android:visibility="gone"
                     tools:visibility="visible"
-                    />
+                />
 
             </FrameLayout>
 
-            <include layout="@layout/layout_profile_fields"/>
+            <include layout="@layout/layout_profile_fields" />
 
         </LinearLayout>
 

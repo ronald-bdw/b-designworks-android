@@ -7,6 +7,8 @@ import com.anjlab.android.iab.v3.TransactionDetails;
  */
 
 public interface SubscriptionView {
+
     void onProductPurchased(String productId, TransactionDetails details);
+
     void showSubscriptionDialog();
 }

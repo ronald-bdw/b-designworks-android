@@ -7,13 +7,13 @@ package com.pairup.android.login.models;
 public class UserStatus {
 
     private boolean phoneRegistered;
-    private String provider;
+    private String  provider;
 
     public boolean isPhoneRegistered() {
         return phoneRegistered;
     }
 
-    public boolean userHasHbfProvider(){
+    public boolean userHasHbfProvider() {
         return "HBF".equals(provider);
     }
 }

@@ -31,9 +31,14 @@ import rx.schedulers.Schedulers;
 public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
 
     private static final String THREE_MONTH_SUBSCRIPTION_ID = "three_month_subscription_v1";
-    private static final String SIX_MONTH_SUBSCRIPTION_ID = "six_month_subscription_v1";
-    private static final String ONE_YEAR_SUBSCRIPTION_ID = "one_year_subscription_v1";
-    private static final String PURCHASE_KEY                   = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAorESPZk0zw3hhu3kFGoGm1wsJJX/TJWOB/+q9LQ+VpN2TVuyzouVaYSxOSaHXg3/s1t4tUni7Ih3EVwR4//dbTH7ob3JdDoRzlWsgJaHeytH8qW6hPCdRX/cHLT0PbldwryUh92/yjBeel4Lo7McirS97MYElfsSQ52bEo8GOhG8SPYTHruh4WNp/LD/NO042AZUfi6+9fITzgNe2PeUKvGaFB9CrPpdbylExGhXhjjUhodZEjoUUtvCFG82lkvQHjnrUOs1PdHIhOk2IVVjpLHkX++9188ASEOflNNfnQIbRprjTuKFZG9NX/DTunzJNnH183fvyVQCX/r+ciFkAQIDAQAB";
+    private static final String SIX_MONTH_SUBSCRIPTION_ID   = "six_month_subscription_v1";
+    private static final String ONE_YEAR_SUBSCRIPTION_ID    = "one_year_subscription_v1";
+    private static final String PURCHASE_KEY                = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8" +
+        "AMIIBCgKCAQEAorESPZk0zw3hhu3kFGoGm1wsJJX/TJWOB/+q9LQ+VpN2TVuyzouVaYSxOSaHXg3/s1t4tUni" +
+        "7Ih3EVwR4//dbTH7ob3JdDoRzlWsgJaHeytH8qW6hPCdRX/cHLT0PbldwryUh92/yjBeel4Lo7McirS97MYEl" +
+        "fsSQ52bEo8GOhG8SPYTHruh4WNp/LD/NO042AZUfi6+9fITzgNe2PeUKvGaFB9CrPpdbylExGhXhjjUhodZEj" +
+        "oUUtvCFG82lkvQHjnrUOs1PdHIhOk2IVVjpLHkX++9188ASEOflNNfnQIbRprjTuKFZG9NX/DTunzJNnH183f" +
+        "vyVQCX/r+ciFkAQIDAQAB";
 
     private SubscriptionView     view;
     private FragmentActivity     activity;
@@ -42,8 +47,8 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
     private Gson                 gson;
     private UserInteractor       userInteractor;
 
-    IInAppBillingService mBillingService;
-    ServiceConnection mServiceConnection = new ServiceConnection() {
+    private IInAppBillingService mBillingService;
+    private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             mBillingService = IInAppBillingService.Stub.asInterface(service);
@@ -56,7 +61,7 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
         }
     };
 
-    public SubscriptionPresenter(Gson gson,UserInteractor userInteractor) {
+    public SubscriptionPresenter(Gson gson, UserInteractor userInteractor) {
         this.gson = gson;
         this.userInteractor = userInteractor;
     }
@@ -86,12 +91,12 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
     }
 
     public boolean isSubscribed() {
-        return bp.isSubscribed(THREE_MONTH_SUBSCRIPTION_ID)
-            || bp.isSubscribed(SIX_MONTH_SUBSCRIPTION_ID)
-            || bp.isSubscribed(ONE_YEAR_SUBSCRIPTION_ID);
+        return bp.isSubscribed(THREE_MONTH_SUBSCRIPTION_ID) ||
+            bp.isSubscribed(SIX_MONTH_SUBSCRIPTION_ID) ||
+            bp.isSubscribed(ONE_YEAR_SUBSCRIPTION_ID);
     }
 
-    public @StringRes int getSubscriptionStatusText() {
+    @StringRes public int getSubscriptionStatusText() {
         return isSubscribed() ? R.string.subscribed_status : R.string.subscription_request;
     }
 
@@ -107,7 +112,6 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
                 bp.subscribe(activity, ONE_YEAR_SUBSCRIPTION_ID);
                 break;
             default:
-                return;
         }
     }
 
@@ -126,8 +130,7 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
     }
 
     public void receiveSubscriptionDetails() {
-
-        ArrayList<String> skuList = new ArrayList<> ();
+        ArrayList<String> skuList = new ArrayList<>();
         skuList.add(THREE_MONTH_SUBSCRIPTION_ID);
         skuList.add(SIX_MONTH_SUBSCRIPTION_ID);
         skuList.add(ONE_YEAR_SUBSCRIPTION_ID);
@@ -135,20 +138,22 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
         querySkus.putStringArrayList("ITEM_ID_LIST", skuList);
 
         try {
-            Bundle skuDetails = mBillingService.getPurchases(3,
-                activity.getPackageName(), "subs", null);
+            Bundle skuDetails = mBillingService.getPurchases(3, activity.getPackageName(),
+                "subs", null);
 
             int response = skuDetails.getInt("RESPONSE_CODE");
             if (response == 0) {
-                ArrayList<String>  purchaseDataList =
+                ArrayList<String> purchaseDataList =
                     skuDetails.getStringArrayList("INAPP_PURCHASE_DATA_LIST");
                 if (purchaseDataList != null && purchaseDataList.size() > 0) {
                     subscriptionsDetails = getSubscribeDataFromString(purchaseDataList.get(0));
                     userInteractor.sendInAppStatus(subscriptionsDetails.getPlanName(),
-                        SubscriptionDetailsUtils.getExpiredDate(subscriptionsDetails.getPurchaseDate()),
-                        SubscriptionDetailsUtils.isActive(subscriptionsDetails.isRenewing(), subscriptionsDetails.getPurchaseDate()))
+                        SubscriptionDetailsUtils
+                            .getExpiredDate(subscriptionsDetails.getPurchaseDate()),
+                        SubscriptionDetailsUtils.isActive(subscriptionsDetails.isRenewing(),
+                            subscriptionsDetails.getPurchaseDate()))
                         .subscribeOn(Schedulers.io())
-                        .subscribe(result -> {}, ignoreError -> {});
+                        .subscribe(result -> { }, ignoreError -> { });
                 }
             }
         } catch (RemoteException e) {
@@ -164,9 +169,12 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
         view.onProductPurchased(productId, details);
     }
 
-    @Override public void onPurchaseHistoryRestored() {}
+    @Override public void onPurchaseHistoryRestored() {
+    }
 
-    @Override public void onBillingError(int errorCode, Throwable error) {}
+    @Override public void onBillingError(int errorCode, Throwable error) {
+    }
 
-    @Override public void onBillingInitialized() {}
+    @Override public void onBillingInitialized() {
+    }
 }

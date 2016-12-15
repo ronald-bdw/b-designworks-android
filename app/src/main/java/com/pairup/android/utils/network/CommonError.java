@@ -10,14 +10,7 @@ import java.util.Map;
  */
 public class CommonError {
 
-    private _Error error;
-
-    public static class _Error {
-//        String                    id;
-//        int                       status;
-        String                    error;
-        Map<String, List<String>> validations;
-    }
+    private Error error;
 
     public String getMessage() {
         String message = error.error == null ? "" : (error.error + '\n');
@@ -31,6 +24,13 @@ public class CommonError {
 
     public Map<String, List<String>> getValidations() {
         return error.validations;
+    }
+
+    public static class Error {
+//        String                    id;
+//        int                       status;
+        private String                    error;
+        private Map<String, List<String>> validations;
     }
 
 }

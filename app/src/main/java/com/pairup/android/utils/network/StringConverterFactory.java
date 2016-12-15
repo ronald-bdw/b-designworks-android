@@ -22,7 +22,9 @@ public class StringConverterFactory extends Converter.Factory {
     }
 
     @Override
-    public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
+    public Converter<ResponseBody, ?> responseBodyConverter(Type type,
+                                                            Annotation[] annotations,
+                                                            Retrofit retrofit) {
         if (String.class.equals(type)) {
             return new Converter<ResponseBody, String>() {
 
@@ -36,7 +38,10 @@ public class StringConverterFactory extends Converter.Factory {
     }
 
     @Override
-    public Converter<?, RequestBody> requestBodyConverter(Type type, Annotation[] parameterAnnotations, Annotation[] methodAnnotations, Retrofit retrofit) {
+    public Converter<?, RequestBody> requestBodyConverter(Type type,
+                                                          Annotation[] parameterAnnotations,
+                                                          Annotation[] methodAnnotations,
+                                                          Retrofit retrofit) {
         if (String.class.equals(type)) {
             return new Converter<String, RequestBody>() {
                 @Override

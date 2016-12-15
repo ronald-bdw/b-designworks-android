@@ -3,7 +3,6 @@ package com.pairup.android.settings;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.widget.ImageView;
@@ -34,14 +33,16 @@ public class SettingsScreen extends BaseActivity {
     @Bind(R.id.notifications_toggle) SwitchCompat uiNotificationsToggle;
 
     @NonNull @Override public UiInfo getUiInfo() {
-        return new UiInfo(R.layout.screen_settings).enableBackButton().setTitleRes(R.string.title_settings);
+        return new UiInfo(R.layout.screen_settings)
+            .enableBackButton()
+            .setTitleRes(R.string.title_settings);
     }
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
         Injector.inject(this);
 
-        if (!DeviceInteractor.isSdkSupportsNotifications())
+        if (!DeviceInteractor.doesSdkSupportNotifications())
             uiNotificationsToggle.setVisibility(View.GONE);
     }
 

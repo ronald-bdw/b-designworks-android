@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anjlab.android.iab.v3.TransactionDetails;
+import com.pairup.android.DeviceInteractor;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.subscription.SubscriptionPresenter;
@@ -27,6 +28,9 @@ import com.pairup.android.utils.ui.SimpleDialog;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -64,6 +68,9 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
             com.pairup.android.login.models.User user = userInteractor.getUser();
 
             Smooch.login(userInteractor.getUserZendeskId(), null);
+            Map<String, Object> additionalPropertyForPushes = new HashMap<>();
+            additionalPropertyForPushes.put("isNotDefaultUser", true);
+            User.getCurrentUser().addProperties(additionalPropertyForPushes);
             User.getCurrentUser().setEmail(user.getEmail());
             User.getCurrentUser().setFirstName(user.getFirstName());
             User.getCurrentUser().setLastName(user.getId());
@@ -78,15 +85,18 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
                 Keyboard.hide(ChatScreen.this);
             }
 
-            @Override public void onDrawerOpened(View drawerView) {}
+            @Override public void onDrawerOpened(View drawerView) {
+            }
 
-            @Override public void onDrawerClosed(View drawerView) {}
+            @Override public void onDrawerClosed(View drawerView) {
+            }
 
-            @Override public void onDrawerStateChanged(int newState) {}
+            @Override public void onDrawerStateChanged(int newState) {
+            }
         });
     }
 
-     private void setChatGone(boolean gone) {
+    private void setChatGone(boolean gone) {
         if (gone) {
             uiBuySubscription.setVisibility(View.VISIBLE);
         } else {
@@ -129,24 +139,31 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         super.onResume();
         Bus.subscribe(this);
         subscriptionPresenter.attachView(this, this);
-        setChatGone(!(subscriptionPresenter.isSubscribed() || userInteractor.getUser().hasHbfProvider()));
+        setChatGone(!(subscriptionPresenter.isSubscribed() ||
+            userInteractor.getUser().hasHbfProvider()));
 
-        // we could not customize part of the UI in on create because not all necessary views present in the hierarcy
+        // we could not customize part of the UI in on create
+        // because not all necessary views present in the hierarcy
         // that's the reason why we split customize process between onCreate/onResume
         findViewById(R.id.scrollView).setBackgroundResource(R.drawable.white_with_round_corners);
         View uiInputText = findViewById(R.id.Smooch_inputText);
         uiInputText.setBackgroundColor(Color.WHITE);
-        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) uiInputText.getLayoutParams();
+        RelativeLayout.LayoutParams layoutParams =
+            (RelativeLayout.LayoutParams) uiInputText.getLayoutParams();
         layoutParams.topMargin = AndroidUtils.dp(8);
         layoutParams.bottomMargin = AndroidUtils.dp(8);
-        layoutParams.leftMargin = AndroidUtils.dp(8);
+        layoutParams.leftMargin = AndroidUtils.dp(36);
 
         layoutParams.addRule(RelativeLayout.RIGHT_OF, 0);
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 
         ((View) uiInputText.getParent()).setBackgroundColor(0xFFECF3FA);
-        findViewById(R.id.Smooch_btnCamera).setVisibility(View.GONE);
         ((ImageView) findViewById(R.id.Smooch_btnSend)).setImageResource(R.drawable.ic_send);
+
+        if (!DeviceInteractor.doesSdkSupportSmoochPhotos()) {
+            layoutParams.leftMargin = AndroidUtils.dp(8);
+            findViewById(R.id.Smooch_btnCamera).setVisibility(View.GONE);
+        }
 
         showUserName(userInteractor.getFullName());
         setUpProviderLogo();
@@ -202,7 +219,8 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (!subscriptionPresenter.getBillingProcessor().handleActivityResult(requestCode, resultCode, data))
+        if (!subscriptionPresenter.getBillingProcessor()
+            .handleActivityResult(requestCode, resultCode, data))
             super.onActivityResult(requestCode, resultCode, data);
     }
 }
