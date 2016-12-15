@@ -150,6 +150,7 @@
     <string name="subscription_owned_text">Congratulations! You are now subscribed for Pair Up for 1 month.</string>
     <string name="subscription_status_time">"Subscription was paid in "</string>
     <string name="subscribed_status">You are already subscribed</string>
+    <string name="provider_not_chosen">Please select your provider:</string>
     <string name="notification_status_enabled">Notifications are enabled!</string>
     <string name="notification_status_disabled">Notifications are disabled!</string>
     <string name="notification_hint">Change your settings to get or don\'t get notified when your coach sends you message</string>
