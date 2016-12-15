@@ -35,7 +35,7 @@ public class Times {
         return System.currentTimeMillis();
     }
 
-    public static long getMessageTimeResponse(@NonNull Date start) {
-        return (new Date().getTime() - start.getTime()) / 60;
+    public static long timePassedFromInSeconds(@NonNull Date start) {
+        return (Times.now() - start.getTime()) / 60;
     }
 }

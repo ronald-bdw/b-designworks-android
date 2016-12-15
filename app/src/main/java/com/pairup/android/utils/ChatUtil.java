@@ -14,7 +14,7 @@ import io.smooch.core.Smooch;
 
 public class ChatUtil {
 
-    @Nullable public static Date getLastMessageDateFromCoach() {
+    @Nullable public static Date getLastMessageFromCoachDate() {
         Message message = getLastMessageFromCoach();
         if (message != null) {
             return getLastMessageFromCoach().getDate();

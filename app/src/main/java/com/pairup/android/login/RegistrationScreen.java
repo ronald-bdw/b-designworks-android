@@ -22,7 +22,7 @@ import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.subscription.SubscriptionPresenter;
 import com.pairup.android.subscription.SubscriptionView;
-import com.pairup.android.utils.FlurryUtil;
+import com.pairup.android.utils.Analytics;
 import com.pairup.android.utils.Keyboard;
 import com.pairup.android.utils.Rxs;
 import com.pairup.android.utils.Strings;
@@ -87,7 +87,7 @@ public class RegistrationScreen extends BaseActivity implements SubscriptionView
         super.onCreate(savedState);
         Injector.inject(this);
 
-        FlurryUtil.logEvent(FlurryUtil.EVENT_OPEN_REGISTRATION_SCREEN);
+        Analytics.logScreenOpened(Analytics.EVENT_OPEN_REGISTRATION_SCREEN);
 
         subscriptionPresenter.attachView(this, this);
         if (savedState == null) {

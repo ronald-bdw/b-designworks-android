@@ -3,13 +3,15 @@ package com.pairup.android.utils;
 import com.flurry.android.FlurryAgent;
 import com.pairup.android.BuildConfig;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by Klymenko on 12.12.2016.
  */
 
-public class FlurryUtil {
+public class Analytics {
 
     public static final String EVENT_OPEN_CHAT_SCREEN            = "open_chat_screen";
     public static final String EVENT_OPEN_WELCOME_SCREEN         = "open_welcome_screen";
@@ -28,6 +30,19 @@ public class FlurryUtil {
     public static final String EVENT_WRONG_FLOW                  = "wrong_flow";
 
     public static final String PARAM_MESSAGE_TIME_RESPONSE = "message_time_response";
+
+    public static void logScreenOpened(String screenName) {
+        logEvent(screenName);
+    }
+
+    public static void logUserTimeResponseForCoachMessage() {
+        Date lastCoachDate = ChatUtil.getLastMessageFromCoachDate();
+        if (lastCoachDate != null) {
+            Map<String, String> param = new HashMap<>();
+            param.put(PARAM_MESSAGE_TIME_RESPONSE, Long.toString(Times.timePassedFromInSeconds(lastCoachDate)));
+            logEvent(Analytics.EVENT_MESSAGE_RESPONSE, param);
+        }
+    }
 
     public static void logEvent(String event) {
         if (BuildConfig.FLAVOR.equals("production")) {
