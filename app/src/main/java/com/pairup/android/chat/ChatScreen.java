@@ -21,19 +21,29 @@ import com.pairup.android.subscription.SubscriptionPresenter;
 import com.pairup.android.subscription.SubscriptionView;
 import com.pairup.android.utils.AndroidUtils;
 import com.pairup.android.utils.Bus;
+import com.pairup.android.utils.ChatUtil;
 import com.pairup.android.utils.FlurryUtil;
 import com.pairup.android.utils.Keyboard;
+import com.pairup.android.utils.Times;
 import com.pairup.android.utils.di.Injector;
 import com.pairup.android.utils.ui.SimpleDialog;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.smooch.core.Conversation;
+import io.smooch.core.Message;
+import io.smooch.core.MessageUploadStatus;
 import io.smooch.core.Smooch;
 import io.smooch.core.User;
 import io.smooch.ui.ConversationActivity;
@@ -207,5 +217,19 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (!subscriptionPresenter.getBillingProcessor().handleActivityResult(requestCode, resultCode, data))
             super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override public void onMessageSent(Message message, MessageUploadStatus messageUploadStatus) {
+        super.onMessageSent(message, messageUploadStatus);
+        Date lastCoachDate = ChatUtil.getLastMessageDateFromCoach();
+        if (lastCoachDate != null) {
+            Map<String, String> param = new HashMap<>();
+            param.put(FlurryUtil.PARAM_MESSAGE_TIME_RESPONSE, Long.toString(Times.getMessageTimeResponse(lastCoachDate)));
+            FlurryUtil.logEvent(FlurryUtil.EVENT_MESSAGE_RESPONSE, param);
+        }
+    }
+
+    @Override public void onMessagesReceived(Conversation conversation, List<Message> list) {
+        super.onMessagesReceived(conversation, list);
     }
 }
