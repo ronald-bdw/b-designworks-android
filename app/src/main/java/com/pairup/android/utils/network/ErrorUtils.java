@@ -3,6 +3,7 @@ package com.pairup.android.utils.network;
 import android.content.Context;
 import android.util.Log;
 
+import com.pairup.android.utils.FlurryUtil;
 import com.pairup.android.utils.ui.SimpleDialog;
 
 import rx.functions.Action1;
@@ -30,6 +31,7 @@ public class ErrorUtils {
     }
 
     public static Action1<Throwable> handle(Context context) {
+        FlurryUtil.logEvent(FlurryUtil.EVENT_WRONG_FLOW);
         return error -> ErrorUtils.handle(context, error);
     }
 }
