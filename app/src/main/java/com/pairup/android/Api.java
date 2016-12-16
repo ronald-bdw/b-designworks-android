@@ -16,6 +16,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
@@ -101,4 +102,7 @@ public interface Api {
     Observable<Void> sendSubscriptionStatus(@Field("plan_name") String plan,
                                             @Field("expires_at") String date,
                                             @Field("active") boolean isActive);
+
+    @PATCH(V1 + "subscriptions/expire")
+    Observable<Void> sendSubscriptionExpired();
 }
