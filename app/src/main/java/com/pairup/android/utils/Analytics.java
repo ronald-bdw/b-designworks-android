@@ -39,7 +39,8 @@ public class Analytics {
         Date lastCoachDate = ChatUtil.getLastMessageFromCoachDate();
         if (lastCoachDate != null) {
             Map<String, String> param = new HashMap<>();
-            param.put(PARAM_MESSAGE_TIME_RESPONSE, Long.toString(Times.timePassedFromInSeconds(lastCoachDate)));
+            param.put(PARAM_MESSAGE_TIME_RESPONSE,
+                Long.toString(Times.timePassedFromInSeconds(lastCoachDate)));
             logEvent(Analytics.EVENT_MESSAGE_RESPONSE, param);
         }
     }
