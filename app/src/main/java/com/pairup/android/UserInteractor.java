@@ -258,6 +258,10 @@ public class UserInteractor {
         return api.sendSubscriptionStatus(planName, date, isActive).map(result -> null);
     }
 
+    public Observable<Void> sendInAppStatusExpired() {
+        return api.sendSubscriptionExpired();
+    }
+
     public Observable<Void> checkVerificationNumber(@NonNull String id, @NonNull String code) {
         return api.checkVerificationCode(id, code).map(result -> null);
     }
