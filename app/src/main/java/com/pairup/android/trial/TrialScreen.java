@@ -18,6 +18,7 @@ import com.pairup.android.BaseActivity;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.login.AccountVerificationType;
+import com.pairup.android.utils.Analytics;
 import com.pairup.android.utils.ui.UiInfo;
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -38,6 +39,9 @@ public class TrialScreen extends BaseActivity {
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
+
+        Analytics.logScreenOpened(Analytics.EVENT_OPEN_TRIAL_SCREEN);
+
         uiPager.setAdapter(new TrialPager(context()));
         uiPagerIndicator.setViewPager(uiPager);
     }

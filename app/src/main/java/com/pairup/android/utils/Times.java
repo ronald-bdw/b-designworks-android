@@ -34,4 +34,8 @@ public class Times {
     public static long now() {
         return System.currentTimeMillis();
     }
+
+    public static long timePassedFromInSeconds(@NonNull Date start) {
+        return (Times.now() - start.getTime()) / 60;
+    }
 }
