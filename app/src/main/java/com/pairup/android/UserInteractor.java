@@ -258,7 +258,7 @@ public class UserInteractor {
         return api.sendSubscriptionStatus(planName, date, isActive).map(result -> null);
     }
 
-    public Observable<Void> sendInApStatusExpired() {
+    public Observable<Void> sendInAppStatusExpired() {
         return api.sendSubscriptionExpired();
     }
 
