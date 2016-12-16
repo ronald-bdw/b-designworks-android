@@ -14,6 +14,7 @@ import com.pairup.android.BaseActivity;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
+import com.pairup.android.utils.Analytics;
 import com.pairup.android.utils.Keyboard;
 import com.pairup.android.utils.di.Injector;
 import com.pairup.android.utils.network.ErrorUtils;
@@ -49,6 +50,9 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
         Injector.inject(this);
+
+        Analytics.logScreenOpened(Analytics.EVENT_OPEN_VERIFY_SCREEN);
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         if (!loginFlowInteractor.hasHbfProvider()) {
             uiHbfLogo.setVisibility(View.GONE);

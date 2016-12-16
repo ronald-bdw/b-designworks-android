@@ -20,6 +20,7 @@ import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.subscription.SubscriptionPresenter;
 import com.pairup.android.subscription.SubscriptionView;
+import com.pairup.android.utils.Analytics;
 import com.pairup.android.utils.AndroidUtils;
 import com.pairup.android.utils.Bus;
 import com.pairup.android.utils.Keyboard;
@@ -37,6 +38,8 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.smooch.core.Message;
+import io.smooch.core.MessageUploadStatus;
 import io.smooch.core.Smooch;
 import io.smooch.core.User;
 import io.smooch.ui.ConversationActivity;
@@ -57,6 +60,8 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
         Injector.inject(this);
+
+        Analytics.logScreenOpened(Analytics.EVENT_OPEN_CHAT_SCREEN);
 
         customizeSmoochInterface();
 
@@ -222,5 +227,10 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         if (!subscriptionPresenter.getBillingProcessor()
             .handleActivityResult(requestCode, resultCode, data))
             super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override public void onMessageSent(Message message, MessageUploadStatus messageUploadStatus) {
+        super.onMessageSent(message, messageUploadStatus);
+        Analytics.logUserResponseSpeed();
     }
 }

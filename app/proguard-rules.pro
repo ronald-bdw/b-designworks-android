@@ -90,5 +90,13 @@
 -renamesourcefileattribute SourceFile
 -keepattributes SourceFile,LineNumberTable
 
+#flurry
+-keep class com.flurry.** { *; }
+-dontwarn com.flurry.**
+-keepattributes *Annotation*,EnclosingMethod,Signature
+-keepclasseswithmembers class * {
+    public (android.content.Context, android.util.AttributeSet, int);
+}
+
 
 
