@@ -35,7 +35,7 @@ public class Analytics {
         logEvent(screenName);
     }
 
-    public static void logUserTimeResponseForCoachMessage() {
+    public static void logUserResponseSpeed() {
         Date lastCoachDate = ChatUtil.getLastMessageFromCoachDate();
         if (lastCoachDate != null) {
             Map<String, String> param = new HashMap<>();

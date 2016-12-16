@@ -231,6 +231,6 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
 
     @Override public void onMessageSent(Message message, MessageUploadStatus messageUploadStatus) {
         super.onMessageSent(message, messageUploadStatus);
-        Analytics.logUserTimeResponseForCoachMessage();
+        Analytics.logUserResponseSpeed();
     }
 }
