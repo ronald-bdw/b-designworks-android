@@ -133,7 +133,7 @@ dependencies {
     compile 'com.timehop.stickyheadersrecyclerview:library:0.4.3@aar'
     compile 'com.simplecityapps:recyclerview-fastscroll:1.0.11'
 
-    compile 'com.anjlab.android.iab.v3:library:1.0.+'
+    compile 'com.anjlab.android.iab.v3:library:1.0.36'
 
     compile 'com.yalantis:ucrop:2.2.0'
 
