@@ -8,7 +8,8 @@ ext {
             BUILD_TOOLS_VERSION  : '24.0.1',
             MIN_SDK_VERSION      : 16,
             TARGET_SDK_VERSION   : 23,
-            dagger               : "2.5"
+            dagger               : "2.5",
+            smooch               : "4.0.7"
     ]
     supportDeps = [
             appcompatV7      : "com.android.support:appcompat-v7:$versions.support",
@@ -46,10 +47,15 @@ ext {
             auth            : "com.google.firebase:firebase-auth:$versions.googleServicesVersion",
             playServicesAuth: "com.google.android.gms:play-services-auth:$versions.googleServicesVersion"
     ]
+    smooch = [
+            core: "io.smooch:core:$versions.smooch",
+            ui  : "io.smooch:ui:$versions.smooch"
+    ]
     supportLibs = supportDeps.values()
     retrofitLibs = retrofit.values()
     okHttpLibs = okHttp.values()
     rxJavaLibs = rxJava.values()
     androidTestsLibs = androidTests.values() + supportLibs
     googleServicesLibs = googleServices.values()
+    smoochLibs = smooch.values()
 }
