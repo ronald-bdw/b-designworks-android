@@ -112,7 +112,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
                 .compose(Rxs.doInBackgroundDeliverToUI())
                 .subscribe(new Action1<UserStatus>() {
                     @Override public void call(UserStatus result) {
-                        if (!result.isPhoneRegistered()&&!result.userHasHbfProvider()) {
+                        if (!result.isPhoneRegistered() && !result.userHasHbfProvider()) {
                             userInteractor.logout();
                             Navigator.welcomeWithError(getApplicationContext()
                                 , result.isPhoneRegistered());
