@@ -114,7 +114,8 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
                     @Override public void call(UserStatus result) {
                         if (!result.isPhoneRegistered()&&!result.userHasHbfProvider()) {
                             userInteractor.logout();
-                            Navigator.welcomeWithError(getApplicationContext(), result.isPhoneRegistered());
+                            Navigator.welcomeWithError(getApplicationContext()
+                                , result.isPhoneRegistered());
                         }
                     }
                 });
