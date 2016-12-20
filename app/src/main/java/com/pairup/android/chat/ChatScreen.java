@@ -16,14 +16,17 @@ import android.widget.Toast;
 
 import com.anjlab.android.iab.v3.TransactionDetails;
 import com.pairup.android.DeviceInteractor;
+import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
+import com.pairup.android.login.models.UserStatus;
 import com.pairup.android.subscription.SubscriptionPresenter;
 import com.pairup.android.subscription.SubscriptionView;
 import com.pairup.android.utils.Analytics;
 import com.pairup.android.utils.AndroidUtils;
 import com.pairup.android.utils.Bus;
 import com.pairup.android.utils.Keyboard;
+import com.pairup.android.utils.Rxs;
 import com.pairup.android.utils.di.Injector;
 import com.pairup.android.utils.ui.SimpleDialog;
 
@@ -63,6 +66,8 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
 
         Analytics.logScreenOpened(Analytics.EVENT_OPEN_CHAT_SCREEN);
 
+        checkUserAuthorization();
+
         customizeSmoochInterface();
 
         if (savedState == null) {
@@ -99,6 +104,22 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
             @Override public void onDrawerStateChanged(int newState) {
             }
         });
+    }
+
+    private void checkUserAuthorization() {
+        if (userInteractor.getUser() != null) {
+            userInteractor.requestUserStatus(userInteractor.getPhone())
+                .compose(Rxs.doInBackgroundDeliverToUI())
+                .subscribe(new Action1<UserStatus>() {
+                    @Override public void call(UserStatus result) {
+                        if (!result.isPhoneRegistered() && !result.userHasHbfProvider()) {
+                            userInteractor.logout();
+                            Navigator.welcomeWithError(ChatScreen.this,
+                                result.isPhoneRegistered());
+                        }
+                    }
+                });
+        }
     }
 
     private void setChatGone(boolean gone) {
