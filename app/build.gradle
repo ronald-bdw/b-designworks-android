@@ -27,7 +27,7 @@ android {
         ext.betaDistributionGroupAliases = "qa"
 
         applicationId APPLICATION_ID
-        versionCode 7
+        versionCode 8
         versionName "1.0.0"
 
         def gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
