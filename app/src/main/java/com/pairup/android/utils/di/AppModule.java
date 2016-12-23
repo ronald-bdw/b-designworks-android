@@ -10,6 +10,7 @@ import android.support.v4.app.NotificationManagerCompat;
 import com.pairup.android.Api;
 import com.pairup.android.BuildConfig;
 import com.pairup.android.UserInteractor;
+import com.pairup.android.chat.ChatPresenter;
 import com.pairup.android.login.LoginFlowInteractor;
 import com.pairup.android.login.VerifyPresenter;
 import com.pairup.android.profile.EditProfilePresenter;
@@ -167,5 +168,11 @@ public class AppModule {
 
     @Provides @Singleton NotificationManagerCompat provideNotificationManager(Context context) {
         return NotificationManagerCompat.from(context);
+    }
+
+    @Provides
+    @Singleton
+    ChatPresenter provideChatPresenter(UserInteractor userInteractor) {
+        return new ChatPresenter(userInteractor);
     }
 }

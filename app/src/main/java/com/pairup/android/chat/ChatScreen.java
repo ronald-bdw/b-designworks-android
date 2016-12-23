@@ -51,10 +51,11 @@ import rx.functions.Action1;
 /**
  * Created by Ilya Eremin on 04.08.2016.
  */
-public class ChatScreen extends ConversationActivity implements SubscriptionView {
+public class ChatScreen extends ConversationActivity implements SubscriptionView, ChatView {
 
     @Inject UserInteractor        userInteractor;
     @Inject SubscriptionPresenter subscriptionPresenter;
+    @Inject ChatPresenter         chatPresenter;
 
     @Bind(R.id.drawer)                     DrawerLayout uiDrawer;
     @Bind(R.id.provider_logo)              ImageView    uiProviderLogo;
@@ -66,7 +67,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
 
         Analytics.logScreenOpened(Analytics.EVENT_OPEN_CHAT_SCREEN);
 
-        checkUserAuthorization();
+        chatPresenter.checkUserAuthorization();
 
         customizeSmoochInterface();
 
@@ -104,22 +105,6 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
             @Override public void onDrawerStateChanged(int newState) {
             }
         });
-    }
-
-    private void checkUserAuthorization() {
-        if (userInteractor.getUser() != null) {
-            userInteractor.requestUserStatus(userInteractor.getPhone())
-                .compose(Rxs.doInBackgroundDeliverToUI())
-                .subscribe(new Action1<UserStatus>() {
-                    @Override public void call(UserStatus result) {
-                        if (!result.isPhoneRegistered() && !result.userHasHbfProvider()) {
-                            userInteractor.logout();
-                            Navigator.welcomeWithError(ChatScreen.this,
-                                result.isPhoneRegistered());
-                        }
-                    }
-                });
-        }
     }
 
     private void setChatGone(boolean gone) {
@@ -253,5 +238,11 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     @Override public void onMessageSent(Message message, MessageUploadStatus messageUploadStatus) {
         super.onMessageSent(message, messageUploadStatus);
         Analytics.logUserResponseSpeed();
+    }
+
+    @Override
+    public void openWelconScreenWithError(boolean isPhoneRegistered) {
+        Navigator.welcomeWithError(ChatScreen.this,
+                isPhoneRegistered);
     }
 }
