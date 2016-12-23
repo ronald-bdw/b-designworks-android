@@ -154,7 +154,8 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
                             subscriptionsDetails.getPurchaseDate()))
                         .subscribeOn(Schedulers.io())
                         .subscribe(result -> { }, ignoreError -> { });
-                } else if (userInteractor.getUser() != null && userInteractor.getUser().getProvider() == null) {
+                } else if (userInteractor.getUser() != null
+                        && userInteractor.getUser().getProvider() == null) {
                     userInteractor.sendInAppStatusExpired()
                         .subscribeOn(Schedulers.io())
                         .subscribe(result -> { }, ignoreError -> { });
