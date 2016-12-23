@@ -71,26 +71,8 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
 
         customizeSmoochInterface();
 
-        if (savedState == null) {
-            if (userInteractor.firstVisitAfterLogin()) {
-                Smooch.logout();
-                userInteractor.trackFirstVisit();
-            }
-            com.pairup.android.login.models.User user = userInteractor.getUser();
+        chatPresenter.initSmooch(savedState);
 
-            Smooch.login(userInteractor.getUserZendeskId(), null);
-            Map<String, Object> additionalPropertyForPushes = new HashMap<>();
-            additionalPropertyForPushes.put("isNotDefaultUser", true);
-            User.getCurrentUser().addProperties(additionalPropertyForPushes);
-            User.getCurrentUser().setEmail(user.getEmail());
-            User.getCurrentUser().setFirstName(user.getFirstName());
-            User.getCurrentUser().setLastName(user.getId());
-            userInteractor.sendNotificationsStatus();
-
-            getSupportFragmentManager().beginTransaction()
-                .replace(R.id.side_panel_container, new ChatSidePanelFragment())
-                .commit();
-        }
         uiDrawer.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override public void onDrawerSlide(View drawerView, float slideOffset) {
                 Keyboard.hide(ChatScreen.this);
@@ -244,5 +226,12 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     public void openWelconScreenWithError(boolean isPhoneRegistered) {
         Navigator.welcomeWithError(ChatScreen.this,
                 isPhoneRegistered);
+    }
+
+    @Override
+    public void initSidePanel() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.side_panel_container, new ChatSidePanelFragment())
+                .commit();
     }
 }

@@ -1,13 +1,21 @@
 package com.pairup.android.chat;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.pairup.android.Navigator;
+import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.login.VerifyView;
 import com.pairup.android.login.models.UserStatus;
 import com.pairup.android.utils.Rxs;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import io.smooch.core.Smooch;
+import io.smooch.core.User;
 import rx.functions.Action1;
 
 /**
@@ -40,6 +48,27 @@ public class ChatPresenter {
                             }
                         }
                     });
+        }
+    }
+
+    public void initSmooch(@Nullable Bundle savedState) {
+        if (savedState == null) {
+            if (userInteractor.firstVisitAfterLogin()) {
+                Smooch.logout();
+                userInteractor.trackFirstVisit();
+            }
+            com.pairup.android.login.models.User user = userInteractor.getUser();
+
+            Smooch.login(userInteractor.getUserZendeskId(), null);
+            Map<String, Object> additionalPropertyForPushes = new HashMap<>();
+            additionalPropertyForPushes.put("isNotDefaultUser", true);
+            User.getCurrentUser().addProperties(additionalPropertyForPushes);
+            User.getCurrentUser().setEmail(user.getEmail());
+            User.getCurrentUser().setFirstName(user.getFirstName());
+            User.getCurrentUser().setLastName(user.getId());
+            userInteractor.sendNotificationsStatus();
+
+            view.initSidePanel();
         }
     }
 }
