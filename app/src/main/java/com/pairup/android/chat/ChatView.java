@@ -6,7 +6,5 @@ package com.pairup.android.chat;
 
 public interface ChatView {
 
-    void openWelconScreenWithError(boolean isPhoneRegistered);
-
-    void initSidePanel();
+    void openWelcomeScreenWithError(boolean isPhoneRegistered);
 }

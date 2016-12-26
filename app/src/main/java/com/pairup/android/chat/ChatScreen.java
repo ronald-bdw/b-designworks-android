@@ -62,11 +62,13 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
 
         Analytics.logScreenOpened(Analytics.EVENT_OPEN_CHAT_SCREEN);
 
-        chatPresenter.checkUserAuthorization();
-
         customizeSmoochInterface();
 
-        chatPresenter.initSmooch(savedState);
+        initSidePanel();
+
+        if (savedState == null) {
+            chatPresenter.initSmooch();
+        }
 
         uiDrawer.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override public void onDrawerSlide(View drawerView, float slideOffset) {
@@ -186,6 +188,12 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         super.onStop();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        chatPresenter.detachView();
+    }
+
     private void closeDrawer() {
         uiDrawer.closeDrawer(GravityCompat.END);
     }
@@ -218,12 +226,10 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     }
 
     @Override
-    public void openWelconScreenWithError(boolean isPhoneRegistered) {
-        Navigator.welcomeWithError(ChatScreen.this,
-                isPhoneRegistered);
+    public void openWelcomeScreenWithError(boolean isPhoneRegistered) {
+        Navigator.welcomeWithError(ChatScreen.this, isPhoneRegistered);
     }
 
-    @Override
     public void initSidePanel() {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.side_panel_container, new ChatSidePanelFragment())
