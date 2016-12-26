@@ -13,23 +13,25 @@ import java.util.Map;
 
 public class Analytics {
 
-    public static final String EVENT_OPEN_CHAT_SCREEN            = "open_chat_screen";
-    public static final String EVENT_OPEN_WELCOME_SCREEN         = "open_welcome_screen";
-    public static final String EVENT_OPEN_VERIFY_SCREEN          = "open_verify_screen";
-    public static final String EVENT_OPEN_SELECT_PROVIDER_SCREEN = "open_select_provider_screen";
-    public static final String EVENT_OPEN_REGISTRATION_SCREEN    = "open_registration_screen";
-    public static final String EVENT_OPEN_ENTER_CODE_SCREEN      = "open_enter_code_screen";
-    public static final String EVENT_OPEN_EDIT_PROFILE_SCREEN    = "open_edit_profile_screen";
-    public static final String EVENT_OPEN_PROFILE_SCREEN         = "open_profile_screen";
-    public static final String EVENT_OPEN_SETTINGS_SCREEN        = "open_settings_screen";
-    public static final String EVENT_OPEN_SYNC_SCREEN            = "open_sync_screen";
-    public static final String EVENT_OPEN_TRIAL_SCREEN           = "open_trial_screen";
-    public static final String EVENT_OPEN_TOUR_PROFILE_SCREEN    = "open_tour_profile_screen";
-    public static final String EVENT_OPEN_TOUR_AVATAR_SCREEN     = "open_tour_avatar_screen";
-    public static final String EVENT_MESSAGE_RESPONSE            = "message_response";
-    public static final String EVENT_WRONG_FLOW                  = "wrong_flow";
+    public static final String EVENT_OPEN_CHAT_SCREEN            = "Conversation screen";
+    public static final String EVENT_OPEN_WELCOME_SCREEN         = "Welcome screen";
+    public static final String EVENT_OPEN_VERIFY_SCREEN          = "Verification screen";
+    public static final String EVENT_OPEN_SELECT_PROVIDER_SCREEN = "Select provider screen";
+    public static final String EVENT_OPEN_CHOOSE_AREA_SCREEN     = "Area code screen";
+    public static final String EVENT_OPEN_REGISTRATION_SCREEN    = "Registration screen";
+    public static final String EVENT_OPEN_ENTER_CODE_SCREEN      = "Enter code screen";
+    public static final String EVENT_OPEN_EDIT_PROFILE_SCREEN    = "Profile Edit screen";
+    public static final String EVENT_OPEN_PROFILE_SCREEN         = "Profile screen";
+    public static final String EVENT_OPEN_SETTINGS_SCREEN        = "Settings screen";
+    public static final String EVENT_OPEN_SYNC_SCREEN            = "Data sync screen";
+    public static final String EVENT_OPEN_TRIAL_SCREEN           = "Trial Screens";
+    public static final String EVENT_OPEN_TOUR_PROFILE_SCREEN    = "Tour app user info screen";
+    public static final String EVENT_OPEN_ABPUT_US_SCREEN        = "About us screen";
+    public static final String EVENT_OPEN_TOUR_AVATAR_SCREEN     = "Tour app avatar screen";
+    public static final String EVENT_MESSAGE_RESPONSE            = "Message sent";
+    public static final String EVENT_WRONG_FLOW                  = "Wrong flow";
 
-    public static final String PARAM_MESSAGE_TIME_RESPONSE = "message_time_response";
+    public static final String PARAM_MESSAGE_TIME_RESPONSE = "Response time";
 
     public static void logScreenOpened(String screenName) {
         logEvent(screenName);
