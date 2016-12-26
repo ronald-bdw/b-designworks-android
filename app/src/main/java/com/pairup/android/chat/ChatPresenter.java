@@ -34,7 +34,7 @@ public class ChatPresenter {
         if (userInteractor.getUser() != null) {
             userInteractor.requestUserStatus(userInteractor.getPhone())
                     .compose(Rxs.doInBackgroundDeliverToUI())
-                    .subscribe( result -> {
+                    .subscribe(result -> {
                         if (!result.isPhoneRegistered() &&
                                 !result.userHasHbfProvider() &&
                                 view != null) {
