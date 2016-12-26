@@ -4,10 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.pairup.android.Navigator;
-import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
-import com.pairup.android.login.VerifyView;
 import com.pairup.android.login.models.UserStatus;
 import com.pairup.android.utils.Rxs;
 
