@@ -19,22 +19,17 @@ import com.pairup.android.DeviceInteractor;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
-import com.pairup.android.login.models.UserStatus;
 import com.pairup.android.subscription.SubscriptionPresenter;
 import com.pairup.android.subscription.SubscriptionView;
 import com.pairup.android.utils.Analytics;
 import com.pairup.android.utils.AndroidUtils;
 import com.pairup.android.utils.Bus;
 import com.pairup.android.utils.Keyboard;
-import com.pairup.android.utils.Rxs;
 import com.pairup.android.utils.di.Injector;
 import com.pairup.android.utils.ui.SimpleDialog;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -43,18 +38,17 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.smooch.core.Message;
 import io.smooch.core.MessageUploadStatus;
-import io.smooch.core.Smooch;
-import io.smooch.core.User;
 import io.smooch.ui.ConversationActivity;
 import rx.functions.Action1;
 
 /**
  * Created by Ilya Eremin on 04.08.2016.
  */
-public class ChatScreen extends ConversationActivity implements SubscriptionView {
+public class ChatScreen extends ConversationActivity implements SubscriptionView, ChatView {
 
     @Inject UserInteractor        userInteractor;
     @Inject SubscriptionPresenter subscriptionPresenter;
+    @Inject ChatPresenter         chatPresenter;
 
     @Bind(R.id.drawer)                     DrawerLayout uiDrawer;
     @Bind(R.id.provider_logo)              ImageView    uiProviderLogo;
@@ -64,32 +58,18 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         super.onCreate(savedState);
         Injector.inject(this);
 
-        Analytics.logScreenOpened(Analytics.EVENT_OPEN_CHAT_SCREEN);
+        chatPresenter.attachView(this);
 
-        checkUserAuthorization();
+        Analytics.logScreenOpened(Analytics.EVENT_OPEN_CHAT_SCREEN);
 
         customizeSmoochInterface();
 
+        initSidePanel();
+
         if (savedState == null) {
-            if (userInteractor.firstVisitAfterLogin()) {
-                Smooch.logout();
-                userInteractor.trackFirstVisit();
-            }
-            com.pairup.android.login.models.User user = userInteractor.getUser();
-
-            Smooch.login(userInteractor.getUserZendeskId(), null);
-            Map<String, Object> additionalPropertyForPushes = new HashMap<>();
-            additionalPropertyForPushes.put("isNotDefaultUser", true);
-            User.getCurrentUser().addProperties(additionalPropertyForPushes);
-            User.getCurrentUser().setEmail(user.getEmail());
-            User.getCurrentUser().setFirstName(user.getFirstName());
-            User.getCurrentUser().setLastName(user.getId());
-            userInteractor.sendNotificationsStatus();
-
-            getSupportFragmentManager().beginTransaction()
-                .replace(R.id.side_panel_container, new ChatSidePanelFragment())
-                .commit();
+            chatPresenter.initSmooch();
         }
+
         uiDrawer.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override public void onDrawerSlide(View drawerView, float slideOffset) {
                 Keyboard.hide(ChatScreen.this);
@@ -104,22 +84,6 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
             @Override public void onDrawerStateChanged(int newState) {
             }
         });
-    }
-
-    private void checkUserAuthorization() {
-        if (userInteractor.getUser() != null) {
-            userInteractor.requestUserStatus(userInteractor.getPhone())
-                .compose(Rxs.doInBackgroundDeliverToUI())
-                .subscribe(new Action1<UserStatus>() {
-                    @Override public void call(UserStatus result) {
-                        if (!result.isPhoneRegistered() && !result.userHasHbfProvider()) {
-                            userInteractor.logout();
-                            Navigator.welcomeWithError(ChatScreen.this,
-                                result.isPhoneRegistered());
-                        }
-                    }
-                });
-        }
     }
 
     private void setChatGone(boolean gone) {
@@ -224,6 +188,12 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         super.onStop();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        chatPresenter.detachView();
+    }
+
     private void closeDrawer() {
         uiDrawer.closeDrawer(GravityCompat.END);
     }
@@ -253,5 +223,16 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     @Override public void onMessageSent(Message message, MessageUploadStatus messageUploadStatus) {
         super.onMessageSent(message, messageUploadStatus);
         Analytics.logUserResponseSpeed();
+    }
+
+    @Override
+    public void openWelcomeScreenWithError(boolean isPhoneRegistered) {
+        Navigator.welcomeWithError(ChatScreen.this, isPhoneRegistered);
+    }
+
+    public void initSidePanel() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.side_panel_container, new ChatSidePanelFragment())
+                .commit();
     }
 }
