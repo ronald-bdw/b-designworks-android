@@ -35,11 +35,11 @@ public class ChatPresenter {
             userInteractor.requestUserStatus(userInteractor.getPhone())
                     .compose(Rxs.doInBackgroundDeliverToUI())
                     .subscribe(result -> {
-                        if (!result.isPhoneRegistered() &&
-                                !result.userHasHbfProvider() &&
-                                view != null) {
+                        if (!result.isPhoneRegistered() && !result.userHasHbfProvider()) {
                             userInteractor.logout();
-                            view.openWelcomeScreenWithError(result.isPhoneRegistered());
+                            if (view != null) {
+                                view.openWelcomeScreenWithError(result.isPhoneRegistered());
+                            }
                         }
                     });
         }
