@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anjlab.android.iab.v3.TransactionDetails;
+import com.bumptech.glide.Glide;
 import com.pairup.android.DeviceInteractor;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
@@ -112,7 +113,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
                 .compose(Rxs.doInBackgroundDeliverToUI())
                 .subscribe(new Action1<UserStatus>() {
                     @Override public void call(UserStatus result) {
-                        if (!result.isPhoneRegistered() && !result.userHasHbfProvider()) {
+                        if (!result.isPhoneRegistered() && !result.userHasProvider()) {
                             userInteractor.logout();
                             Navigator.welcomeWithError(ChatScreen.this,
                                 result.isPhoneRegistered());
@@ -165,8 +166,8 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         super.onResume();
         Bus.subscribe(this);
         subscriptionPresenter.attachView(this, this);
-        setChatGone(!(subscriptionPresenter.isSubscribed() ||
-            userInteractor.getUser().hasHbfProvider()));
+        setChatGone(!(userInteractor.getUser().hasProvider() ||
+            subscriptionPresenter.isSubscribed()));
 
         // we could not customize part of the UI in on create
         // because not all necessary views present in the hierarcy
@@ -200,8 +201,17 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     }
 
     private void setUpProviderLogo() {
-        if (userInteractor.getUser().hasHbfProvider()) {
-            uiProviderLogo.setVisibility(View.VISIBLE);
+        if (userInteractor.getUser().hasProvider()) {
+            switch (userInteractor.getUser().getProvider().getProviderType()) {
+                case HBF:
+                    Glide.with(this).load(R.drawable.logo_hbf_white).into(uiProviderLogo);
+                    break;
+                case BDW:
+//                    Glide.with(this).load(R.drawable.logo_bdw_white).into(uiProviderLogo);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
