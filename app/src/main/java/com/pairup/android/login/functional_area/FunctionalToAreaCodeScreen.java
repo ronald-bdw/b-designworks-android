@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import com.pairup.android.BaseActivity;
 import com.pairup.android.R;
 import com.pairup.android.login.OnAreaSelectedEvent;
+import com.pairup.android.utils.Analytics;
 import com.pairup.android.utils.Areas;
 import com.pairup.android.utils.Bus;
 import com.pairup.android.utils.ui.UiInfo;
@@ -43,6 +44,9 @@ public class FunctionalToAreaCodeScreen extends BaseActivity {
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
+
+        Analytics.logScreenOpened(Analytics.EVENT_OPEN_CHOOSE_AREA_SCREEN);
+
         List<Area> areas = Areas.getAreas(this);
         Collections.sort(areas, (lhs, rhs) -> lhs.getCountry().compareTo(rhs.getCountry()));
         areaCodesAdapter = new AreaCodesAdapter(areas);

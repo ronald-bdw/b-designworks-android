@@ -1,7 +1,10 @@
 package com.pairup.android;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
+import com.pairup.android.utils.Analytics;
 import com.pairup.android.utils.ui.UiInfo;
 
 import butterknife.OnClick;
@@ -21,5 +24,12 @@ public class AboutUsScreen extends BaseActivity {
 
     @OnClick(R.id.website_link) void onClicKWeblink() {
         Navigator.openUrl(this, WEBLINK);
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedState) {
+        super.onCreate(savedState);
+
+        Analytics.logScreenOpened(Analytics.EVENT_OPEN_ABPUT_US_SCREEN);
     }
 }
