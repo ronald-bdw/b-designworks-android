@@ -14,7 +14,7 @@ public class UserStatus {
     }
 
     public boolean userHasProvider() {
-        return ProviderType.HBF == provider || ProviderType.BDW == provider;
+        return provider != null;
     }
 
     public ProviderType getProvider() {

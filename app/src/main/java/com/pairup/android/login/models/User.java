@@ -54,9 +54,7 @@ public class User {
     }
 
     public boolean hasProvider() {
-        return provider != null &&
-            (ProviderType.HBF == provider.getProviderType() ||
-                ProviderType.BDW == provider.getProviderType());
+        return provider != null;
     }
 
     public List<Integration> getIntegrations() {
