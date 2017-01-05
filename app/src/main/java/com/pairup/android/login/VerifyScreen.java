@@ -55,7 +55,7 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
         Analytics.logScreenOpened(Analytics.EVENT_OPEN_VERIFY_SCREEN);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        if(loginFlowInteractor.getProvider() != null) {
+        if (loginFlowInteractor.getProvider() != null) {
             switch (loginFlowInteractor.getProvider()) {
                 case HBF:
                     Glide.with(this).load(R.drawable.hbf_logo).into(uiProviderLogo);
