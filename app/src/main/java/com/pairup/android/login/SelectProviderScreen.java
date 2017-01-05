@@ -23,6 +23,10 @@ import butterknife.OnClick;
  */
 public class SelectProviderScreen extends BaseActivity {
 
+    private static final int HBF_POSITION = 0;
+    private static final int BDW_POSITION = 1;
+    private static final int NO_PROVIDER_POSITION = 2;
+
     @Bind(R.id.select_provider_spinner) Spinner uiSelectProviderSpinner;
 
     @NonNull @Override public UiInfo getUiInfo() {
@@ -52,13 +56,13 @@ public class SelectProviderScreen extends BaseActivity {
 
     @OnClick(R.id.next) void onNextClick() {
         switch (uiSelectProviderSpinner.getSelectedItemPosition()) {
-            case 0:
+            case HBF_POSITION:
                 Navigator.enterPhone(context(), AccountVerificationType.HAS_HBF_PROVIDER);
                 break;
-            case 1:
+            case BDW_POSITION:
                 Navigator.enterPhone(context(), AccountVerificationType.HAS_BDW_PROVIDER);
                 break;
-            case 2:
+            case NO_PROVIDER_POSITION:
                 TrialDialog.show(this);
                 break;
             default:
