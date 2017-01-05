@@ -15,6 +15,7 @@ import com.pairup.android.BaseActivity;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
+import com.pairup.android.login.models.ProviderType;
 import com.pairup.android.utils.Analytics;
 import com.pairup.android.utils.Keyboard;
 import com.pairup.android.utils.di.Injector;
@@ -55,8 +56,9 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
         Analytics.logScreenOpened(Analytics.EVENT_OPEN_VERIFY_SCREEN);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        if (loginFlowInteractor.getProvider() != null) {
-            switch (loginFlowInteractor.getProvider()) {
+        ProviderType provider = loginFlowInteractor.getProvider();
+        if (provider != null) {
+            switch (provider) {
                 case HBF:
                     Glide.with(this).load(R.drawable.hbf_logo).into(uiProviderLogo);
                     break;
