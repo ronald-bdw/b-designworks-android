@@ -1,5 +1,7 @@
 package com.pairup.android.login.models;
 
+import android.support.annotation.DrawableRes;
+
 import com.google.gson.annotations.SerializedName;
 import com.pairup.android.R;
 
@@ -11,17 +13,29 @@ public enum ProviderType {
     @SerializedName("HBF")HBF("HBF", R.drawable.hbf_logo, R.drawable.logo_hbf_white),
     @SerializedName("BDW")BDW("BDW", 0, 0);
 
-    private final Object[] values;
+    private              String name;
+    @DrawableRes private int    verifyLogoRes;
+    @DrawableRes private int    chatLogoRes;
 
-    ProviderType(Object... values) {
-        this.values = values;
+    ProviderType(String name, @DrawableRes int verifyLogoRes, @DrawableRes int chatLogoRes) {
+        this.name = name;
+        this.verifyLogoRes = verifyLogoRes;
+        this.chatLogoRes = chatLogoRes;
     }
 
-    public int getVerifyLogo() {
-        return (int) values[1];
+    @DrawableRes public int getVerifyLogoRes() {
+        return verifyLogoRes;
     }
 
-    public int getChatLogo() {
-        return (int) values[2];
+    @DrawableRes public int getChatLogoRes() {
+        return chatLogoRes;
+    }
+
+    public boolean hasVerifyLogo() {
+        return verifyLogoRes != 0;
+    }
+
+    public boolean hasChatLogo() {
+        return chatLogoRes != 0;
     }
 }

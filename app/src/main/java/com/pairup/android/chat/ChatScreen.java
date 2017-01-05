@@ -167,8 +167,8 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
 
     private void setUpProviderLogo() {
         ProviderType provider = userInteractor.getUser().getProvider().getProviderType();
-        if (provider != null && provider.getChatLogo() != 0) {
-            Glide.with(this).load(provider.getChatLogo()).into(uiProviderLogo);
+        if (provider != null && provider.hasChatLogo()) {
+            Glide.with(this).load(provider.getChatLogoRes()).into(uiProviderLogo);
         } else {
             uiProviderLogo.setVisibility(View.GONE);
         }
