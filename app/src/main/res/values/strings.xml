@@ -172,6 +172,7 @@
 
     <string-array name="select_provider_options">
         <item>HBF</item>
+        <item>BDW</item>
         <item>I don\'t have a provider</item>
     </string-array>
 
