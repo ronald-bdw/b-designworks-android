@@ -10,6 +10,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.pairup.android.BaseActivity;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
@@ -36,7 +37,7 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
     @Inject LoginFlowInteractor loginFlowInteractor;
     @Inject UserInteractor      userInteractor;
 
-    @Bind(R.id.hbf_logo)          ImageView uiHbfLogo;
+    @Bind(R.id.provider_logo)     ImageView uiProviderLogo;
     @Bind(R.id.verification_code) EditText  uiVerificationCode;
 
     @Nullable private ProgressDialog authorizeProgressDialog;
@@ -54,8 +55,20 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
         Analytics.logScreenOpened(Analytics.EVENT_OPEN_VERIFY_SCREEN);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        if (!loginFlowInteractor.hasHbfProvider()) {
-            uiHbfLogo.setVisibility(View.GONE);
+        if(loginFlowInteractor.getProvider() != null) {
+            switch (loginFlowInteractor.getProvider()) {
+                case HBF:
+                    Glide.with(this).load(R.drawable.hbf_logo).into(uiProviderLogo);
+                    break;
+                case BDW:
+//                    Glide.with(this).load(R.drawable.bdw_logo);
+                    break;
+                default:
+//                    uiProviderLogo.setVisibility(View.GONE);
+                    break;
+            }
+        } else {
+            uiProviderLogo.setVisibility(View.GONE);
         }
         verifyPresenter.attachView(this);
     }
