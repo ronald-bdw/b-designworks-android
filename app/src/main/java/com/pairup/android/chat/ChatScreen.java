@@ -20,6 +20,7 @@ import com.pairup.android.DeviceInteractor;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
+import com.pairup.android.login.models.ProviderType;
 import com.pairup.android.subscription.SubscriptionPresenter;
 import com.pairup.android.subscription.SubscriptionView;
 import com.pairup.android.utils.Analytics;
@@ -165,17 +166,11 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     }
 
     private void setUpProviderLogo() {
-        if (userInteractor.getUser().hasProvider()) {
-            switch (userInteractor.getUser().getProvider().getProviderType()) {
-                case HBF:
-                    Glide.with(this).load(R.drawable.logo_hbf_white).into(uiProviderLogo);
-                    break;
-                case BDW:
-                    //TODO set bdw icon to uiProviderLogo when it becomes
-                    break;
-                default:
-                    break;
-            }
+        ProviderType provider = userInteractor.getUser().getProvider().getProviderType();
+        if (provider != null && provider.getChatLogo() != 0) {
+            Glide.with(this).load(provider.getChatLogo()).into(uiProviderLogo);
+        } else {
+            uiProviderLogo.setVisibility(View.GONE);
         }
     }
 
@@ -242,7 +237,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
 
     public void initSidePanel() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.side_panel_container, new ChatSidePanelFragment())
-                .commit();
+            .replace(R.id.side_panel_container, new ChatSidePanelFragment())
+            .commit();
     }
 }

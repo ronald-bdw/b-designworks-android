@@ -57,18 +57,8 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         ProviderType provider = loginFlowInteractor.getProvider();
-        if (provider != null) {
-            switch (provider) {
-                case HBF:
-                    Glide.with(this).load(R.drawable.hbf_logo).into(uiProviderLogo);
-                    break;
-                case BDW:
-                    //TODO set bdw icon to uiProviderLogo when it becomes
-                    break;
-                default:
-                    uiProviderLogo.setVisibility(View.GONE);
-                    break;
-            }
+        if (provider != null && provider.getVerifyLogo() != 0) {
+            Glide.with(this).load(provider.getVerifyLogo()).into(uiProviderLogo);
         } else {
             uiProviderLogo.setVisibility(View.GONE);
         }
