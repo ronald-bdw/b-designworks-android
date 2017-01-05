@@ -5,14 +5,14 @@ package com.pairup.android.login.models;
  */
 
 public class Provider {
-    private String id;
-    private String name;
+    private String       id;
+    private ProviderType name;
 
     public String getId() {
         return id;
     }
 
-    public String getName() {
+    public ProviderType getProviderType() {
         return name;
     }
 }
