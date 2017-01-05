@@ -63,10 +63,10 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
                     Glide.with(this).load(R.drawable.hbf_logo).into(uiProviderLogo);
                     break;
                 case BDW:
-//                    Glide.with(this).load(R.drawable.bdw_logo);
+                    //TODO set bdw icon to uiProviderLogo when it becomes
                     break;
                 default:
-//                    uiProviderLogo.setVisibility(View.GONE);
+                    uiProviderLogo.setVisibility(View.GONE);
                     break;
             }
         } else {

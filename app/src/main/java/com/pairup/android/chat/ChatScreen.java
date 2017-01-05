@@ -171,7 +171,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
                     Glide.with(this).load(R.drawable.logo_hbf_white).into(uiProviderLogo);
                     break;
                 case BDW:
-//                    Glide.with(this).load(R.drawable.logo_bdw_white).into(uiProviderLogo);
+                    //TODO set bdw icon to uiProviderLogo when it becomes
                     break;
                 default:
                     break;
