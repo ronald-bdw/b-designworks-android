@@ -5,9 +5,12 @@ import android.support.annotation.Nullable;
 
 import com.pairup.android.login.models.AuthResponse;
 import com.pairup.android.login.models.FitToken;
+import com.pairup.android.login.models.Providers;
 import com.pairup.android.login.models.UserResponse;
 import com.pairup.android.login.models.UserStatus;
 import com.pairup.android.sync.Provider;
+
+import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
@@ -105,4 +108,6 @@ public interface Api {
 
     @PATCH(V1 + "subscriptions/expire")
     Observable<Void> sendSubscriptionExpired();
+
+    @GET(V1 + "providers") Observable<Providers> getProviders();
 }

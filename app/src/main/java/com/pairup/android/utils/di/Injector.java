@@ -9,6 +9,7 @@ import com.pairup.android.chat.ChatScreen;
 import com.pairup.android.chat.ChatSidePanelFragment;
 import com.pairup.android.login.EnterPhoneScreen;
 import com.pairup.android.login.RegistrationScreen;
+import com.pairup.android.login.SelectProviderScreen;
 import com.pairup.android.login.VerifyScreen;
 import com.pairup.android.profile.EditProfileScreen;
 import com.pairup.android.profile.ProfileScreen;
@@ -81,5 +82,9 @@ public class Injector {
 
     public static void inject(@NonNull EnterPhoneScreen enterPhoneScreen) {
         ((App) enterPhoneScreen.getApplicationContext()).getAppComponent().inject(enterPhoneScreen);
+    }
+
+    public static void inject(@NonNull SelectProviderScreen selectProviderScreen) {
+        ((App) selectProviderScreen.getApplicationContext()).getAppComponent().inject(selectProviderScreen);
     }
 }

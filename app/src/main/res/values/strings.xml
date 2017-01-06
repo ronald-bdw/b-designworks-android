@@ -170,10 +170,7 @@
     <string name="account_deleted_message">Your account have been deleted. Please sign up with Pair Up to use the app.</string>
     <string name="someone_accessed_your_account_message">Someone accessed your account. You will be redirected to authentication screen.</string>
 
-    <string-array name="select_provider_options">
-        <item>HBF</item>
-        <item>I don\'t have a provider</item>
-    </string-array>
+    <string name="select_providers_list_last_item">I don\'t have a provider</string>
 
     <string-array name="trial_titles">
         <item>Welcome</item>

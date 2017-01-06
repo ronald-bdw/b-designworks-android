@@ -8,6 +8,7 @@ import com.pairup.android.chat.UserProfileUpdatedEvent;
 import com.pairup.android.login.models.AuthResponse;
 import com.pairup.android.login.models.FitToken;
 import com.pairup.android.login.models.Integration;
+import com.pairup.android.login.models.Providers;
 import com.pairup.android.login.models.User;
 import com.pairup.android.login.models.UserResponse;
 import com.pairup.android.login.models.UserStatus;
@@ -20,6 +21,7 @@ import com.pairup.android.utils.storage.IStorage;
 import com.pairup.android.utils.storage.UserSettings;
 
 import java.io.File;
+import java.util.List;
 
 import io.smooch.core.Smooch;
 import okhttp3.MediaType;
@@ -264,5 +266,9 @@ public class UserInteractor {
 
     public Observable<Void> checkVerificationNumber(@NonNull String id, @NonNull String code) {
         return api.checkVerificationCode(id, code).map(result -> null);
+    }
+
+    public Observable<Providers> getProviders() {
+        return api.getProviders();
     }
 }

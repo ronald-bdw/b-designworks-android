@@ -12,6 +12,7 @@ import com.pairup.android.BuildConfig;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.chat.ChatPresenter;
 import com.pairup.android.login.LoginFlowInteractor;
+import com.pairup.android.login.SelectProviderPresenter;
 import com.pairup.android.login.VerifyPresenter;
 import com.pairup.android.profile.EditProfilePresenter;
 import com.pairup.android.subscription.SubscriptionPresenter;
@@ -174,5 +175,11 @@ public class AppModule {
     @Singleton
     ChatPresenter provideChatPresenter(UserInteractor userInteractor) {
         return new ChatPresenter(userInteractor);
+    }
+
+    @Provides
+    @Singleton
+    SelectProviderPresenter provideSelectProviderPresenter(UserInteractor userInteractor) {
+        return new SelectProviderPresenter(userInteractor);
     }
 }
