@@ -35,7 +35,7 @@ public class ChatPresenter {
             userInteractor.requestUserStatus(userInteractor.getPhone())
                     .compose(Rxs.doInBackgroundDeliverToUI())
                     .subscribe(result -> {
-                        if (!result.isPhoneRegistered() && !result.userHasHbfProvider()) {
+                        if (!result.isPhoneRegistered() && !result.userHasProvider()) {
                             userInteractor.logout();
                             if (view != null) {
                                 view.openWelcomeScreenWithError(result.isPhoneRegistered());

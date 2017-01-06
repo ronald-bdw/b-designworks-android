@@ -13,7 +13,7 @@ public class UserStatus {
         return phoneRegistered;
     }
 
-    public boolean userHasHbfProvider() {
-        return "HBF".equals(provider);
+    public boolean userHasProvider() {
+        return !provider.isEmpty();
     }
 }

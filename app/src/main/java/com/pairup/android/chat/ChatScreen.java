@@ -130,7 +130,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         Bus.subscribe(this);
         subscriptionPresenter.attachView(this, this);
         setChatGone(!(subscriptionPresenter.isSubscribed() ||
-            userInteractor.getUser().hasHbfProvider()));
+            userInteractor.getUser().hasProvider()));
 
         // we could not customize part of the UI in on create
         // because not all necessary views present in the hierarcy
@@ -164,7 +164,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     }
 
     private void setUpProviderLogo() {
-        if (userInteractor.getUser().hasHbfProvider()) {
+        if (userInteractor.getUser().hasProvider()) {
             uiProviderLogo.setVisibility(View.VISIBLE);
         }
     }

@@ -54,7 +54,7 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
         Analytics.logScreenOpened(Analytics.EVENT_OPEN_VERIFY_SCREEN);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        if (!loginFlowInteractor.hasHbfProvider()) {
+        if (!loginFlowInteractor.hasProvider()) {
             uiHbfLogo.setVisibility(View.GONE);
         }
         verifyPresenter.attachView(this);

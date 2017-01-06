@@ -59,7 +59,7 @@ public class EnterPhoneScreen extends BaseActivity {
     @Nullable private ProgressDialog progressDialog;
 
     private AccountVerificationType accountVerificationType;
-    private boolean                 hasHbfProvider;
+    private boolean                 hasProvider;
 
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_enter_phone)
@@ -129,7 +129,7 @@ public class EnterPhoneScreen extends BaseActivity {
             .compose(Rxs.doInBackgroundDeliverToUI())
             .subscribe(result -> {
                 boolean passed = false;
-                hasHbfProvider = result.userHasHbfProvider();
+                hasProvider = result.userHasProvider();
                 switch (accountVerificationType) {
                     case IS_REGISTERED:
                         passed = result.isPhoneRegistered();
@@ -138,7 +138,7 @@ public class EnterPhoneScreen extends BaseActivity {
                         passed = !result.isPhoneRegistered();
                         break;
                     case HAS_PROVIDER:
-                        passed = hasHbfProvider;
+                        passed = hasProvider;
                         break;
                     default:
                         break;
@@ -201,7 +201,7 @@ public class EnterPhoneScreen extends BaseActivity {
                 loginFlowInteractor.setPhoneRegistered(result.isPhoneRegistered());
                 loginFlowInteractor.setPhoneNumber(areaCode + phone);
 
-                loginFlowInteractor.setHasHbfProvider(hasHbfProvider);
+                loginFlowInteractor.setHasProvider(hasProvider);
                 Navigator.verification(context());
             }, error -> {
                 if (error instanceof RetrofitException) {

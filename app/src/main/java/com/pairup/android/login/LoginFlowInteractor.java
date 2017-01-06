@@ -18,7 +18,7 @@ public class LoginFlowInteractor {
     private static final String KEY_FIRST_NAME               = PREFIX + "firstName";
     private static final String KEY_LAST_NAME                = PREFIX + "lastName";
     private static final String KEY_EMAIL                    = PREFIX + "email";
-    private static final String KEY_HAS_HBF_PROVIDER         = PREFIX + "hasHbfProvider";
+    private static final String KEY_HAS_PROVIDER = PREFIX + "hasProvider";
 
     private final IStorage storage;
 
@@ -89,11 +89,11 @@ public class LoginFlowInteractor {
         return storage.contains(KEY_PHONE_NUMBER);
     }
 
-    public void setHasHbfProvider(boolean hasHbfProvider) {
-        storage.putBoolean(KEY_HAS_HBF_PROVIDER, hasHbfProvider);
+    public void setHasProvider(boolean hasProvider) {
+        storage.putBoolean(KEY_HAS_PROVIDER, hasProvider);
     }
 
-    public boolean hasHbfProvider() {
-        return storage.getBoolean(KEY_HAS_HBF_PROVIDER, false);
+    public boolean hasProvider() {
+        return storage.getBoolean(KEY_HAS_PROVIDER, false);
     }
 }
