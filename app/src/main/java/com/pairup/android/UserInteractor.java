@@ -21,7 +21,6 @@ import com.pairup.android.utils.storage.IStorage;
 import com.pairup.android.utils.storage.UserSettings;
 
 import java.io.File;
-import java.util.List;
 
 import io.smooch.core.Smooch;
 import okhttp3.MediaType;

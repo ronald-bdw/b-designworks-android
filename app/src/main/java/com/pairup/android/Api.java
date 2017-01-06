@@ -10,8 +10,6 @@ import com.pairup.android.login.models.UserResponse;
 import com.pairup.android.login.models.UserStatus;
 import com.pairup.android.sync.Provider;
 
-import java.util.List;
-
 import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.DELETE;

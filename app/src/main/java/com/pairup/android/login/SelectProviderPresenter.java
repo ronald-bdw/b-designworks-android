@@ -11,8 +11,6 @@ import com.pairup.android.utils.network.ErrorUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Subscription;
-
 /**
  * Created by sergeyklymenko on 1/6/17.
  */
@@ -37,7 +35,7 @@ public class SelectProviderPresenter {
                 .compose(Rxs.doInBackgroundDeliverToUI())
                 .subscribe(result -> {
                     List<String> providers = new ArrayList<>();
-                    for (Provider provider : result.providers) {
+                    for (Provider provider : result.getProviders()) {
                         providers.add(provider.getName());
                     }
                     if (view != null) {
