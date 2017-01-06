@@ -85,6 +85,8 @@ public class Injector {
     }
 
     public static void inject(@NonNull SelectProviderScreen selectProviderScreen) {
-        ((App) selectProviderScreen.getApplicationContext()).getAppComponent().inject(selectProviderScreen);
+        ((App) selectProviderScreen.getApplicationContext())
+                .getAppComponent()
+                .inject(selectProviderScreen);
     }
 }
