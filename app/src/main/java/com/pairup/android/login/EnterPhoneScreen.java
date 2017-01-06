@@ -19,6 +19,7 @@ import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.login.functional_area.Area;
 import com.pairup.android.login.functional_area.FunctionalToAreaCodeScreen;
+import com.pairup.android.login.models.ProviderType;
 import com.pairup.android.utils.Areas;
 import com.pairup.android.utils.Analytics;
 import com.pairup.android.utils.Keyboard;
@@ -59,7 +60,7 @@ public class EnterPhoneScreen extends BaseActivity {
     @Nullable private ProgressDialog progressDialog;
 
     private AccountVerificationType accountVerificationType;
-    private boolean                 hasHbfProvider;
+    private ProviderType            provider;
 
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_enter_phone)
@@ -129,7 +130,7 @@ public class EnterPhoneScreen extends BaseActivity {
             .compose(Rxs.doInBackgroundDeliverToUI())
             .subscribe(result -> {
                 boolean passed = false;
-                hasHbfProvider = result.userHasHbfProvider();
+                provider = result.getProvider();
                 switch (accountVerificationType) {
                     case IS_REGISTERED:
                         passed = result.isPhoneRegistered();
@@ -137,8 +138,11 @@ public class EnterPhoneScreen extends BaseActivity {
                     case IS_NOT_REGISTERED:
                         passed = !result.isPhoneRegistered();
                         break;
-                    case HAS_PROVIDER:
-                        passed = hasHbfProvider;
+                    case HAS_HBF_PROVIDER:
+                        passed = ProviderType.HBF == provider;
+                        break;
+                    case HAS_BDW_PROVIDER:
+                        passed = ProviderType.BDW == provider;
                         break;
                     default:
                         break;
@@ -178,7 +182,8 @@ public class EnterPhoneScreen extends BaseActivity {
             case IS_NOT_REGISTERED:
                 errorMessage = getString(R.string.screen_enter_phone_error_registered);
                 break;
-            case HAS_PROVIDER:
+            case HAS_HBF_PROVIDER:
+            case HAS_BDW_PROVIDER:
                 errorMessage = getString(R.string.screen_enter_phone_error_has_no_provider);
                 break;
             default:
@@ -200,8 +205,7 @@ public class EnterPhoneScreen extends BaseActivity {
                 loginFlowInteractor.setPhoneCodeId(result.getPhoneCodeId());
                 loginFlowInteractor.setPhoneRegistered(result.isPhoneRegistered());
                 loginFlowInteractor.setPhoneNumber(areaCode + phone);
-
-                loginFlowInteractor.setHasHbfProvider(hasHbfProvider);
+                loginFlowInteractor.setProvider(provider);
                 Navigator.verification(context());
             }, error -> {
                 if (error instanceof RetrofitException) {

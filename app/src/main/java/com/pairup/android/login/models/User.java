@@ -53,8 +53,8 @@ public class User {
         return provider;
     }
 
-    public boolean hasHbfProvider() {
-        return provider != null && "HBF".equals(provider.getName());
+    public boolean hasProvider() {
+        return provider != null;
     }
 
     public List<Integration> getIntegrations() {
