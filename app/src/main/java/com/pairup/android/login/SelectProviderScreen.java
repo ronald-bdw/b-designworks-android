@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ public class SelectProviderScreen extends BaseActivity implements SelectProvider
     SelectProviderPresenter selectProviderPresenter;
 
     @Bind(R.id.select_provider_spinner) Spinner uiSelectProviderSpinner;
+    @Bind(R.id.load_providers_progress_bar) ProgressBar uiLoadProvidersProgressBar;
 
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_select_provider);
@@ -48,11 +50,11 @@ public class SelectProviderScreen extends BaseActivity implements SelectProvider
     }
 
     @OnClick(R.id.next) void onNextClick() {
-        if (uiSelectProviderSpinner.getSelectedItemPosition()
-                != uiSelectProviderSpinner.getCount()) {
+
+        int providersSize = uiSelectProviderSpinner.getCount() - 1;
+        if (uiSelectProviderSpinner.getSelectedItemPosition() != providersSize) {
             Navigator.enterPhone(context(), AccountVerificationType.HAS_PROVIDER);
-        } else if (uiSelectProviderSpinner.getSelectedItemPosition()
-                == uiSelectProviderSpinner.getCount()) {
+        } else if (uiSelectProviderSpinner.getSelectedItemPosition() == providersSize) {
             TrialDialog.show(this);
         } else {
             Toast.makeText(context(), R.string.provider_not_chosen, Toast.LENGTH_SHORT).show();
@@ -71,6 +73,8 @@ public class SelectProviderScreen extends BaseActivity implements SelectProvider
 
         Analytics.logScreenOpened(Analytics.EVENT_OPEN_SELECT_PROVIDER_SCREEN);
 
+        uiLoadProvidersProgressBar.setVisibility(View.GONE);
+
         uiSelectProviderSpinner.setAdapter(adapter);
         uiSelectProviderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -81,5 +85,16 @@ public class SelectProviderScreen extends BaseActivity implements SelectProvider
             public void onNothingSelected(AdapterView<?> arg0) {
             }
         });
+    }
+
+    @Override
+    public void closeScreen() {
+        finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        selectProviderPresenter.detachView();
+        super.onDestroy();
     }
 }
