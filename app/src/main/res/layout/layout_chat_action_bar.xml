@@ -16,9 +16,6 @@
         android:adjustViewBounds="true"
         android:paddingBottom="16dp"
         android:paddingTop="16dp"
-        android:src="@drawable/logo_hbf_white"
-        android:visibility="gone"
-        tools:visibility="visible"
     />
 
     <TextView

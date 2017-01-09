@@ -27,11 +27,10 @@
             <include layout="@layout/logo" />
 
             <ImageView
-                android:id="@+id/hbf_logo"
+                android:id="@+id/provider_logo"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_marginTop="36dp"
-                android:src="@drawable/hbf_logo"
             />
 
             <TextView
