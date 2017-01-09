@@ -14,6 +14,9 @@ public class UserStatus {
     }
 
     public boolean userHasProvider() {
-        return !provider.isEmpty();
+        if (provider != null) {
+            return !provider.isEmpty();
+        }
+        return false;
     }
 }
