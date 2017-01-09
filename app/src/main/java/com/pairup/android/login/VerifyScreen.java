@@ -36,7 +36,6 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
     @Inject LoginFlowInteractor loginFlowInteractor;
     @Inject UserInteractor      userInteractor;
 
-    @Bind(R.id.hbf_logo)          ImageView uiHbfLogo;
     @Bind(R.id.verification_code) EditText  uiVerificationCode;
 
     @Nullable private ProgressDialog authorizeProgressDialog;
@@ -54,9 +53,6 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
         Analytics.logScreenOpened(Analytics.EVENT_OPEN_VERIFY_SCREEN);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        if (!loginFlowInteractor.hasProvider()) {
-            uiHbfLogo.setVisibility(View.GONE);
-        }
         verifyPresenter.attachView(this);
     }
 
