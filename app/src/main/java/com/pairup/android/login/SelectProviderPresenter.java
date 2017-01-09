@@ -42,9 +42,8 @@ public class SelectProviderPresenter {
                         view.showProviders(providers);
                     }
                 }, exception -> {
-                    ErrorUtils.onError();
                     if (view != null) {
-                        view.closeScreen();
+                        view.showProvidersLoadError();
                     }
                 });
     }

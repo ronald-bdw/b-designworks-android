@@ -11,4 +11,6 @@ public interface SelectProviderView {
     void showProviders(List<String> providers);
 
     void closeScreen();
+
+    void showProvidersLoadError();
 }

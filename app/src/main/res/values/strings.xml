@@ -86,6 +86,7 @@
     <string name="integration_google_fit">Integrate Google Fit</string>
     <string name="error">Error</string>
     <string name="error_uploading_photo">While photo uploading</string>
+    <string name="error_uploading_providers">Providers not loaded. Try again?</string>
     <string name="retry">Retry</string>
     <string name="edit_profile_error_access_storage">Application needs storage access to pick photo</string>
     <string name="integration_fitbit">Integrate with fitbit</string>

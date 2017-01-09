@@ -15,6 +15,7 @@ import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.utils.Analytics;
 import com.pairup.android.utils.di.Injector;
+import com.pairup.android.utils.ui.SimpleDialog;
 import com.pairup.android.utils.ui.UiInfo;
 
 import java.util.List;
@@ -88,6 +89,17 @@ public class SelectProviderScreen extends BaseActivity implements SelectProvider
     @Override
     public void closeScreen() {
         finish();
+    }
+
+    @Override
+    public void showProvidersLoadError() {
+        SimpleDialog.show(context(),
+                getString(R.string.error),
+                getString(R.string.error_uploading_providers),
+                getString(R.string.retry),
+                () -> selectProviderPresenter.fetchProviders(),
+                getString(R.string.cancel),
+                () -> closeScreen());
     }
 
     @Override
