@@ -18,7 +18,7 @@ public class LoginFlowInteractor {
     private static final String KEY_FIRST_NAME               = PREFIX + "firstName";
     private static final String KEY_LAST_NAME                = PREFIX + "lastName";
     private static final String KEY_EMAIL                    = PREFIX + "email";
-    private static final String KEY_HAS_PROVIDER = PREFIX + "hasProvider";
+    private static final String KEY_HAS_PROVIDER             = PREFIX + "hasProvider";
 
     private final IStorage storage;
 

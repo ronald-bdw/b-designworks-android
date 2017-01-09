@@ -27,7 +27,7 @@ import butterknife.OnClick;
 /**
  * Created by Ilya Eremin on 12.08.2016.
  */
-public class SelectProviderScreen extends BaseActivity implements SelectProviderView{
+public class SelectProviderScreen extends BaseActivity implements SelectProviderView {
 
     @Inject
     SelectProviderPresenter selectProviderPresenter;
@@ -45,12 +45,10 @@ public class SelectProviderScreen extends BaseActivity implements SelectProvider
 
         selectProviderPresenter.attachView(this);
 
-        selectProviderPresenter.setProvidersList();
-
+        selectProviderPresenter.fetchProviders();
     }
 
     @OnClick(R.id.next) void onNextClick() {
-
         int providersSize = uiSelectProviderSpinner.getCount() - 1;
         if (uiSelectProviderSpinner.getSelectedItemPosition() != providersSize) {
             Navigator.enterPhone(context(), AccountVerificationType.HAS_PROVIDER);
@@ -62,7 +60,7 @@ public class SelectProviderScreen extends BaseActivity implements SelectProvider
     }
 
     @Override
-    public void showProvidersList(List<String> providers) {
+    public void showProviders(List<String> providers) {
 
         providers.add(getResources().getString(R.string.select_providers_list_last_item));
 

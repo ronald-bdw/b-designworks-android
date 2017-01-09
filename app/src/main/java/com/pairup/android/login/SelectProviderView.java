@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface SelectProviderView {
 
-    void showProvidersList(List<String> providers);
+    void showProviders(List<String> providers);
 
     void closeScreen();
 }

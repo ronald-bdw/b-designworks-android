@@ -7,16 +7,13 @@ package com.pairup.android.login.models;
 public class UserStatus {
 
     private boolean phoneRegistered;
-    private String  provider;
+    private String provider;
 
     public boolean isPhoneRegistered() {
         return phoneRegistered;
     }
 
     public boolean userHasProvider() {
-        if (provider != null) {
-            return !provider.isEmpty();
-        }
-        return false;
+        return provider != null ? !provider.isEmpty() : false;
     }
 }

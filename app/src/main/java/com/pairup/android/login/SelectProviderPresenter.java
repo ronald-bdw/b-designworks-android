@@ -30,7 +30,7 @@ public class SelectProviderPresenter {
         this.view = view;
     }
 
-    public void setProvidersList() {
+    public void fetchProviders() {
         userInteractor.getProviders()
                 .compose(Rxs.doInBackgroundDeliverToUI())
                 .subscribe(result -> {
@@ -39,7 +39,7 @@ public class SelectProviderPresenter {
                         providers.add(provider.getName());
                     }
                     if (view != null) {
-                        view.showProvidersList(providers);
+                        view.showProviders(providers);
                     }
                 }, exception -> {
                     ErrorUtils.onError();
