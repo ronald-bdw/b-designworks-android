@@ -86,7 +86,6 @@ public class SelectProviderScreen extends BaseActivity implements SelectProvider
         });
     }
 
-    @Override
     public void closeScreen() {
         finish();
     }

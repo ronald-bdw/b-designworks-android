@@ -1,5 +1,7 @@
 package com.pairup.android.login;
 
+import android.support.annotation.NonNull;
+
 import java.util.List;
 
 /**
@@ -8,9 +10,7 @@ import java.util.List;
 
 public interface SelectProviderView {
 
-    void showProviders(List<String> providers);
-
-    void closeScreen();
+    void showProviders(@NonNull List<String> providers);
 
     void showProvidersLoadError();
 }
