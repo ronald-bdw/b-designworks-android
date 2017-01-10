@@ -68,38 +68,4 @@ public class SelectProvidersPresenterTest {
         selectProviderPresenter.fetchProviders();
         verify(selectProviderView).showProvidersLoadError();
     }
-
-    @Test
-    public void isCorrectProviderTest() {
-
-        Provider provider = new Provider();
-        provider.setId("001");
-        provider.setName("Test");
-
-        User user = new User();
-        user.setProvider(provider);
-
-        when(userInteractor.getUser()).thenReturn(user);
-        Assert.assertTrue(selectProviderPresenter.isCorrectProvider("Test"));
-    }
-
-    @Test
-    public void isCorrectProviderWrongTest() {
-
-        Provider provider = new Provider();
-        provider.setId("001");
-        provider.setName("Test2");
-
-        User user = new User();
-        user.setProvider(provider);
-
-        when(userInteractor.getUser()).thenReturn(user);
-        Assert.assertTrue(!selectProviderPresenter.isCorrectProvider("Test"));
-    }
-
-    @Test
-    public void isCorrectProvideNoUserTest() {
-
-        Assert.assertTrue(selectProviderPresenter.isCorrectProvider("Test"));
-    }
 }

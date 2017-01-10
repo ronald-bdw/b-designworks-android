@@ -45,6 +45,7 @@ import rx.Subscription;
 public class EnterPhoneScreen extends BaseActivity {
 
     public static final String ARG_ACCOUNT_VERIFICATION_TYPE = "account_verification_type";
+    public static final String ARG_PROVIDER_NAME = "provider_name";
 
     private static final int CODE_REQUEST_AREA = 1121;
 
@@ -60,6 +61,7 @@ public class EnterPhoneScreen extends BaseActivity {
 
     private AccountVerificationType accountVerificationType;
     private boolean                 hasProvider;
+    @Nullable private String        providerName;
 
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_enter_phone)
@@ -70,6 +72,7 @@ public class EnterPhoneScreen extends BaseActivity {
     @Override protected void parseArguments(@NonNull Bundle extras) {
         accountVerificationType = (AccountVerificationType) extras
             .getSerializable(ARG_ACCOUNT_VERIFICATION_TYPE);
+        providerName = extras.getString(ARG_PROVIDER_NAME);
     }
 
     @SuppressLint("SetTextI18n") @Override protected void onCreate(@Nullable Bundle savedState) {
@@ -138,7 +141,9 @@ public class EnterPhoneScreen extends BaseActivity {
                         passed = !result.isPhoneRegistered();
                         break;
                     case HAS_PROVIDER:
-                        passed = hasProvider;
+                        if (hasProvider && result.isCorrectProvider(providerName)) {
+                            passed = hasProvider;
+                        }
                         break;
                     default:
                         break;
