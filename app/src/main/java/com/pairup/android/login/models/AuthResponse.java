@@ -19,6 +19,10 @@ public class AuthResponse {
         authPhoneCode.phoneRegistered = isPhoneRegistered;
     }
 
+    public void setAuthPhoneCode(InnerAuthResponse authPhoneCode) {
+        this.authPhoneCode = authPhoneCode;
+    }
+
     public boolean isPhoneRegistered() {
         return authPhoneCode.phoneRegistered;
     }
@@ -30,5 +34,13 @@ public class AuthResponse {
     public static class InnerAuthResponse {
         private String  id;
         private boolean phoneRegistered;
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public void setPhoneRegistered(boolean phoneRegistered) {
+            this.phoneRegistered = phoneRegistered;
+        }
     }
 }

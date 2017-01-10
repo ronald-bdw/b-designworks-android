@@ -68,6 +68,7 @@ public class EnterPhoneScreen extends BaseActivity implements EnterPhoneView {
     @SuppressLint("SetTextI18n") @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
         Injector.inject(this);
+        enterPhonePresenter.attachView(this);
 
         Analytics.logScreenOpened(Analytics.EVENT_OPEN_ENTER_CODE_SCREEN);
 
@@ -133,6 +134,12 @@ public class EnterPhoneScreen extends BaseActivity implements EnterPhoneView {
     @Override protected void onStop() {
         super.onStop();
         hideProgress();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        enterPhonePresenter.detachView();
     }
 
     @Override

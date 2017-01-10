@@ -27,8 +27,9 @@ public class EnterPhonePresenter {
     @Nullable
     private EnterPhoneView view;
 
-    private boolean                hasProvider;
-    @Nullable private Subscription verifyNumberSubs;
+    private boolean hasProvider;
+    @Nullable
+    private Subscription verifyNumberSubs;
 
     public EnterPhonePresenter(UserInteractor userInteractor,
                                LoginFlowInteractor loginFlowInteractor) {
@@ -70,10 +71,14 @@ public class EnterPhonePresenter {
         return false;
     }
 
+    public boolean isCorrectProvider(@NonNull String provider, @NonNull String providerName) {
+        return providerName.equals(provider);
+    }
+
     public void manageSubmit(@NonNull String areaCode,
-                              @NonNull String phone,
-                              @NonNull AccountVerificationType accountVerificationType,
-                              @Nullable String providerName) {
+                             @NonNull String phone,
+                             @NonNull AccountVerificationType accountVerificationType,
+                             @Nullable String providerName) {
         if (view != null) {
             view.hideKeyboard();
             view.showProgress();
@@ -97,7 +102,8 @@ public class EnterPhonePresenter {
                             passed = !result.isPhoneRegistered();
                             break;
                         case HAS_PROVIDER:
-                            if (hasProvider && result.isCorrectProvider(providerName)) {
+                            if (hasProvider && isCorrectProvider(result.getProvider(),
+                                    providerName)) {
                                 passed = hasProvider;
                             }
                             break;
