@@ -51,7 +51,9 @@ public class SelectProviderScreen extends BaseActivity implements SelectProvider
 
     @OnClick(R.id.next) void onNextClick() {
         int providersSize = uiSelectProviderSpinner.getCount() - 1;
-        if (uiSelectProviderSpinner.getSelectedItemPosition() != providersSize) {
+        if (uiSelectProviderSpinner.getSelectedItemPosition() != providersSize &&
+                selectProviderPresenter
+                        .isCorrectProvider(uiSelectProviderSpinner.getSelectedItem().toString())) {
             Navigator.enterPhone(context(), AccountVerificationType.HAS_PROVIDER);
         } else if (uiSelectProviderSpinner.getSelectedItemPosition() == providersSize) {
             TrialDialog.show(this);

@@ -51,7 +51,6 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     @Inject ChatPresenter         chatPresenter;
 
     @Bind(R.id.drawer)                     DrawerLayout uiDrawer;
-    @Bind(R.id.provider_logo)              ImageView    uiProviderLogo;
     @Bind(R.id.buy_subscription_container) View         uiBuySubscription;
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
@@ -156,17 +155,10 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         }
 
         showUserName(userInteractor.getFullName());
-        setUpProviderLogo();
     }
 
     private void showUserName(String username) {
         ((TextView) findViewById(R.id.full_name)).setText(username);
-    }
-
-    private void setUpProviderLogo() {
-        if (userInteractor.getUser().hasProvider()) {
-            uiProviderLogo.setVisibility(View.VISIBLE);
-        }
     }
 
     @Subscribe public void onEvent(CloseDrawerEvent event) {

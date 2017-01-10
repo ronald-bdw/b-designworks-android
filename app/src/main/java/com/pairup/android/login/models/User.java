@@ -17,6 +17,10 @@ public class User {
     private List<Integration> integrations;
     private Provider          provider;
 
+    public void setProvider(Provider provider) {
+        this.provider = provider;
+    }
+
     public Avatar getAvatar() {
         return avatar;
     }

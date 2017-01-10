@@ -4,6 +4,9 @@ import com.pairup.android.RxSchedulersOverrideRule;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.login.models.Provider;
 import com.pairup.android.login.models.Providers;
+import com.pairup.android.login.models.User;
+
+import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -64,5 +67,39 @@ public class SelectProvidersPresenterTest {
         when(userInteractor.getProviders()).thenReturn(Observable.error(new Exception()));
         selectProviderPresenter.fetchProviders();
         verify(selectProviderView).showProvidersLoadError();
+    }
+
+    @Test
+    public void isCorrectProviderTest() {
+
+        Provider provider = new Provider();
+        provider.setId("001");
+        provider.setName("Test");
+
+        User user = new User();
+        user.setProvider(provider);
+
+        when(userInteractor.getUser()).thenReturn(user);
+        Assert.assertTrue(selectProviderPresenter.isCorrectProvider("Test"));
+    }
+
+    @Test
+    public void isCorrectProviderWrongTest() {
+
+        Provider provider = new Provider();
+        provider.setId("001");
+        provider.setName("Test2");
+
+        User user = new User();
+        user.setProvider(provider);
+
+        when(userInteractor.getUser()).thenReturn(user);
+        Assert.assertTrue(!selectProviderPresenter.isCorrectProvider("Test"));
+    }
+
+    @Test
+    public void isCorrectProvideNoUserTest() {
+
+        Assert.assertTrue(selectProviderPresenter.isCorrectProvider("Test"));
     }
 }

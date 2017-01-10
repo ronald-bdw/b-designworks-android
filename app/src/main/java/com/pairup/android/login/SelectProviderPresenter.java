@@ -47,6 +47,13 @@ public class SelectProviderPresenter {
                 });
     }
 
+    public boolean isCorrectProvider(@NonNull String providerName) {
+        if (userInteractor.getUser() != null && userInteractor.getUser().getProvider() != null) {
+            return providerName.equals(userInteractor.getUser().getProvider().getName());
+        }
+        return true;
+    }
+
     public void detachView() {
         this.view = null;
     }
