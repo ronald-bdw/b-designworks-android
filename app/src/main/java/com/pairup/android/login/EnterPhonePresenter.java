@@ -1,0 +1,159 @@
+package com.pairup.android.login;
+
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
+import com.pairup.android.UserInteractor;
+import com.pairup.android.login.functional_area.Area;
+import com.pairup.android.utils.Areas;
+import com.pairup.android.utils.Rxs;
+import com.pairup.android.utils.network.RetrofitException;
+
+import java.util.List;
+
+import rx.Subscription;
+
+/**
+ * Created by sergeyklymenko on 1/10/17.
+ */
+
+public class EnterPhonePresenter {
+
+    private final UserInteractor userInteractor;
+    private final LoginFlowInteractor loginFlowInteractor;
+
+
+    @Nullable
+    private EnterPhoneView view;
+
+    private boolean                hasProvider;
+    @Nullable private Subscription verifyNumberSubs;
+
+    public EnterPhonePresenter(UserInteractor userInteractor,
+                               LoginFlowInteractor loginFlowInteractor) {
+        this.userInteractor = userInteractor;
+        this.loginFlowInteractor = loginFlowInteractor;
+    }
+
+    public void attachView(@NonNull EnterPhoneView view) {
+        this.view = view;
+    }
+
+    public boolean isVerifyNumberSubsNotNull() {
+        return verifyNumberSubs != null;
+    }
+
+    public boolean isSubscribe() {
+        return !verifyNumberSubs.isUnsubscribed();
+    }
+
+    public void unsubscribeSubs() {
+        verifyNumberSubs.unsubscribe();
+        verifyNumberSubs = null;
+    }
+
+    public String getAreaCode(@NonNull String areaCode) {
+        return areaCode.startsWith("+") ? areaCode : ("+" + areaCode);
+    }
+
+    /**
+     * @param areaCode always has "+" in the head cause getAreaCode() method was called before
+     */
+    public boolean isCorrectAreaCode(@NonNull String areaCode, @NonNull Context context) {
+        String areaCodeWithoutPlus = areaCode.substring(1, areaCode.length());
+        List<Area> areas = Areas.getAreas(context);
+        for (Area area : areas) {
+            if (areaCodeWithoutPlus.equals(area.getCode().trim()))
+                return true;
+        }
+        return false;
+    }
+
+    public void manageSubmit(@NonNull String areaCode,
+                              @NonNull String phone,
+                              @NonNull AccountVerificationType accountVerificationType,
+                              @Nullable String providerName) {
+        if (view != null) {
+            view.hideKeyboard();
+            view.showProgress();
+        }
+        final String formattedPhone;
+        if ("+61".equals(areaCode) && '0' == phone.charAt(0)) {
+            formattedPhone = phone.substring(1, phone.length());
+        } else {
+            formattedPhone = phone;
+        }
+        userInteractor.requestUserStatus(areaCode + formattedPhone)
+                .compose(Rxs.doInBackgroundDeliverToUI())
+                .subscribe(result -> {
+                    boolean passed = false;
+                    hasProvider = result.userHasProvider();
+                    switch (accountVerificationType) {
+                        case IS_REGISTERED:
+                            passed = result.isPhoneRegistered();
+                            break;
+                        case IS_NOT_REGISTERED:
+                            passed = !result.isPhoneRegistered();
+                            break;
+                        case HAS_PROVIDER:
+                            if (hasProvider && result.isCorrectProvider(providerName)) {
+                                passed = hasProvider;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    if (passed) {
+                        requestAuthorizationCode(areaCode, formattedPhone);
+                    } else {
+                        if (view != null) {
+                            view.showErrorDialog();
+                        }
+                    }
+                }, error -> {
+                    if (view != null) {
+                        view.handleError();
+                    }
+                });
+    }
+
+    private void requestAuthorizationCode(@NonNull String areaCode, @NonNull String phone) {
+        if (verifyNumberSubs != null) return;
+        verifyNumberSubs = userInteractor.requestCode(areaCode + phone)
+                .doOnTerminate(() -> {
+                    verifyNumberSubs = null;
+                    if (view != null) {
+                        view.hideProgress();
+                    }
+                })
+                .compose(Rxs.doInBackgroundDeliverToUI())
+                .subscribe(result -> {
+                    loginFlowInteractor.setPhoneCodeId(result.getPhoneCodeId());
+                    loginFlowInteractor.setPhoneRegistered(result.isPhoneRegistered());
+                    loginFlowInteractor.setPhoneNumber(areaCode + phone);
+
+                    loginFlowInteractor.setHasProvider(hasProvider);
+                    if (view != null) {
+                        view.openVerificationScreen();
+                    }
+                }, error -> {
+                    if (error instanceof RetrofitException) {
+                        RetrofitException retrofitError = (RetrofitException) error;
+                        if (retrofitError.getKind() == RetrofitException.Kind.NETWORK) {
+                            if (view != null) {
+                                view.showDialogNetworkProblem();
+                            }
+                        } else {
+                            if (view != null) {
+                                view.showPhoneError();
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void detachView() {
+        this.view = null;
+    }
+}

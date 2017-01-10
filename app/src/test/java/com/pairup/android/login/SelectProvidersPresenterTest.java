@@ -4,9 +4,6 @@ import com.pairup.android.RxSchedulersOverrideRule;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.login.models.Provider;
 import com.pairup.android.login.models.Providers;
-import com.pairup.android.login.models.User;
-
-import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Rule;

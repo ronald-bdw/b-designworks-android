@@ -11,6 +11,7 @@ import com.pairup.android.Api;
 import com.pairup.android.BuildConfig;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.chat.ChatPresenter;
+import com.pairup.android.login.EnterPhonePresenter;
 import com.pairup.android.login.LoginFlowInteractor;
 import com.pairup.android.login.SelectProviderPresenter;
 import com.pairup.android.login.VerifyPresenter;
@@ -181,5 +182,12 @@ public class AppModule {
     @Singleton
     SelectProviderPresenter provideSelectProviderPresenter(UserInteractor userInteractor) {
         return new SelectProviderPresenter(userInteractor);
+    }
+
+    @Provides
+    @Singleton
+    EnterPhonePresenter provideEnterPhonePresenter(UserInteractor userInteractor,
+                                                   LoginFlowInteractor loginFlowInteractor) {
+        return new EnterPhonePresenter(userInteractor, loginFlowInteractor);
     }
 }
