@@ -28,9 +28,9 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class EnterPhonePresenterTest {
 
-    private static final String PHONE_NUMBER = "+380971741312";
     private static final String PHONE_AREA = "+380";
     private static final String NUMBER = "971741312";
+    private static final String PHONE_NUMBER = PHONE_AREA + NUMBER;
 
     @Rule
     public RxSchedulersOverrideRule rxRule = new RxSchedulersOverrideRule();
@@ -65,38 +65,8 @@ public class EnterPhonePresenterTest {
     }
 
     @Test
-    public void isVerifyNumberSubsNotNullTest() {
-        when(userInteractor.requestCode(PHONE_NUMBER)).thenReturn(Observable.just(response));
-        when(userInteractor.requestUserStatus(PHONE_NUMBER))
-                .thenReturn(Observable.just(userStatus));
-        enterPhonePresenter.manageSubmit(PHONE_AREA, NUMBER,
-                AccountVerificationType.HAS_PROVIDER, "Test");
-        Assert.assertTrue(enterPhonePresenter.isVerifyNumberSubsNotNull());
-    }
-
-    @Test
-    public void isVerifyNumberSubsNotNullErrorTest() {
-        when(userInteractor.requestCode(PHONE_NUMBER)).thenReturn(Observable.just(response));
-        when(userInteractor.requestUserStatus(PHONE_NUMBER))
-                .thenReturn(Observable.just(userStatus));
-        enterPhonePresenter.manageSubmit(PHONE_AREA, NUMBER,
-                AccountVerificationType.HAS_PROVIDER, "Test2");
-        Assert.assertFalse(enterPhonePresenter.isVerifyNumberSubsNotNull());
-    }
-
-    @Test
     public void getAreaCodeTest() {
         Assert.assertTrue(enterPhonePresenter.getAreaCode("452").contains("+"));
-    }
-
-    @Test
-    public void isCorrectProviderTest() {
-        Assert.assertTrue(enterPhonePresenter.isCorrectProvider("BHF", "BHF"));
-    }
-
-    @Test
-    public void isCorrectProviderFalseTest() {
-        Assert.assertFalse(enterPhonePresenter.isCorrectProvider("BHC", "BHF"));
     }
 
     @Test
@@ -104,8 +74,10 @@ public class EnterPhonePresenterTest {
         when(userInteractor.requestCode(PHONE_NUMBER)).thenReturn(Observable.just(response));
         when(userInteractor.requestUserStatus(PHONE_NUMBER))
                 .thenReturn(Observable.just(userStatus));
+
         enterPhonePresenter.manageSubmit(PHONE_AREA, NUMBER,
                 AccountVerificationType.HAS_PROVIDER, "Test");
+
         verify(enterPhoneView).hideKeyboard();
         verify(enterPhoneView).showProgress();
         verify(enterPhoneView).hideProgress();
@@ -117,8 +89,10 @@ public class EnterPhonePresenterTest {
         when(userInteractor.requestCode(PHONE_NUMBER)).thenReturn(Observable.just(response));
         when(userInteractor.requestUserStatus(PHONE_NUMBER))
                 .thenReturn(Observable.error(new Exception()));
+
         enterPhonePresenter.manageSubmit(PHONE_AREA, NUMBER,
                 AccountVerificationType.HAS_PROVIDER, "Test");
+
         verify(enterPhoneView).handleError();
     }
 
@@ -127,8 +101,10 @@ public class EnterPhonePresenterTest {
         when(userInteractor.requestCode(PHONE_NUMBER)).thenReturn(Observable.just(response));
         when(userInteractor.requestUserStatus(PHONE_NUMBER))
                 .thenReturn(Observable.just(userStatus));
+
         enterPhonePresenter.manageSubmit(PHONE_AREA, NUMBER,
                 AccountVerificationType.HAS_PROVIDER, "Test3");
+
         verify(enterPhoneView).showErrorDialog();
     }
 
@@ -138,8 +114,10 @@ public class EnterPhonePresenterTest {
         when(userInteractor.requestCode(PHONE_NUMBER)).thenReturn(Observable.error(exception));
         when(userInteractor.requestUserStatus(PHONE_NUMBER))
                 .thenReturn(Observable.just(userStatus));
+
         enterPhonePresenter.manageSubmit(PHONE_AREA, NUMBER,
                 AccountVerificationType.HAS_PROVIDER, "Test");
+
         verify(enterPhoneView).showDialogNetworkProblem();
     }
 
@@ -149,8 +127,10 @@ public class EnterPhonePresenterTest {
         when(userInteractor.requestCode(PHONE_NUMBER)).thenReturn(Observable.error(exception));
         when(userInteractor.requestUserStatus(PHONE_NUMBER))
                 .thenReturn(Observable.just(userStatus));
+
         enterPhonePresenter.manageSubmit(PHONE_AREA, NUMBER,
                 AccountVerificationType.HAS_PROVIDER, "Test");
+
         verify(enterPhoneView).showPhoneError();
     }
 }

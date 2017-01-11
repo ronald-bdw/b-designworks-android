@@ -21,6 +21,8 @@ public interface EnterPhoneView {
     void showPhoneError();
 
     void handleError();
+
+    void registrationErrorFillAreaCode();
+
+    void registrationErrorFillPhone();
 }
-
-

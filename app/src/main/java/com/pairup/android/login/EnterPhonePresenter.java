@@ -1,8 +1,10 @@
 package com.pairup.android.login;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.pairup.android.UserInteractor;
 import com.pairup.android.login.functional_area.Area;
@@ -41,8 +43,12 @@ public class EnterPhonePresenter {
         this.view = view;
     }
 
-    public boolean isVerifyNumberSubsNotNull() {
-        return verifyNumberSubs != null;
+    public void onViewShown(ProgressDialog progressDialog) {
+        if (verifyNumberSubs != null && progressDialog == null) {
+            if (view != null) {
+                view.showProgress();
+            }
+        }
     }
 
     public boolean isSubscribe() {
@@ -59,7 +65,8 @@ public class EnterPhonePresenter {
     }
 
     /**
-     * @param areaCode always has "+" in the head cause getAreaCode() method was called before
+     * @param areaCode should always starts with + in the head
+     *                 cause getAreaCode() method was called before
      */
     public boolean isCorrectAreaCode(@NonNull String areaCode, @NonNull Context context) {
         String areaCodeWithoutPlus = areaCode.substring(1, areaCode.length());
@@ -71,8 +78,24 @@ public class EnterPhonePresenter {
         return false;
     }
 
-    public boolean isCorrectProvider(@NonNull String provider, @NonNull String providerName) {
-        return providerName.equals(provider);
+    public void onSubmitClick(String phone, String areaCode,
+                              String providerName,
+                              AccountVerificationType accountVerificationType,
+                              Context context) {
+        if (!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(areaCode)) {
+            if (isCorrectAreaCode(areaCode, context)) {
+                manageSubmit(areaCode, phone,
+                        accountVerificationType, providerName);
+            } else {
+                if (view != null) {
+                    view.registrationErrorFillAreaCode();
+                }
+            }
+        } else {
+            if (view != null) {
+                view.registrationErrorFillPhone();
+            }
+        }
     }
 
     public void manageSubmit(@NonNull String areaCode,
@@ -102,8 +125,7 @@ public class EnterPhonePresenter {
                             passed = !result.isPhoneRegistered();
                             break;
                         case HAS_PROVIDER:
-                            if (hasProvider && isCorrectProvider(result.getProvider(),
-                                    providerName)) {
+                            if (hasProvider && result.getProvider().equals(providerName)) {
                                 passed = hasProvider;
                             }
                             break;
@@ -157,6 +179,12 @@ public class EnterPhonePresenter {
                         }
                     }
                 });
+    }
+
+    public void onCancelVerifyingProcess() {
+        if (verifyNumberSubs != null && isSubscribe()) {
+            unsubscribeSubs();
+        }
     }
 
     public void detachView() {

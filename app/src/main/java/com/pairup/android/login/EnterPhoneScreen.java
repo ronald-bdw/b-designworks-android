@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -89,26 +88,14 @@ public class EnterPhoneScreen extends BaseActivity implements EnterPhoneView {
 
     @Override protected void onResume() {
         super.onResume();
-        if (enterPhonePresenter.isVerifyNumberSubsNotNull() && progressDialog == null) {
-            showProgress();
-        }
+        enterPhonePresenter.onViewShown(progressDialog);
     }
 
     @OnClick(R.id.submit) void onSubmitClick() {
         String phone = TextViews.textOf(uiPhone);
         String areaCode = enterPhonePresenter.getAreaCode(TextViews.textOf(uiAreaCode));
-        if (!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(areaCode)) {
-            if (enterPhonePresenter.isCorrectAreaCode(areaCode, this)) {
-                enterPhonePresenter.manageSubmit(areaCode, phone,
-                        accountVerificationType, providerName);
-            } else {
-                uiAreaCode.setError(getString(R.string.registration_error_fill_area_code));
-                uiAreaCode.requestFocus();
-            }
-        } else {
-            uiPhone.setError(getString(R.string.registration_error_fill_phone));
-            uiPhone.requestFocus();
-        }
+        enterPhonePresenter.onSubmitClick(phone, areaCode,
+                providerName, accountVerificationType, this);
     }
 
     @Override
@@ -172,13 +159,22 @@ public class EnterPhoneScreen extends BaseActivity implements EnterPhoneView {
     }
 
     @Override
+    public void registrationErrorFillAreaCode() {
+        uiAreaCode.setError(getString(R.string.registration_error_fill_area_code));
+        uiAreaCode.requestFocus();
+    }
+
+    @Override
+    public void registrationErrorFillPhone() {
+        uiPhone.setError(getString(R.string.registration_error_fill_phone));
+        uiPhone.requestFocus();
+    }
+
+    @Override
     public void showProgress() {
         progressDialog = ProgressDialog.show(context(), getString(R.string.loading),
             getString(R.string.progress_verifying_phone_number), true, true, dialog -> {
-                if (enterPhonePresenter.isVerifyNumberSubsNotNull() &&
-                        enterPhonePresenter.isSubscribe()) {
-                    enterPhonePresenter.unsubscribeSubs();
-                }
+                    enterPhonePresenter.onCancelVerifyingProcess();
             });
     }
 
