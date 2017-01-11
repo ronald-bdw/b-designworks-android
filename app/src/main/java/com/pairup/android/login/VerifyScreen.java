@@ -4,18 +4,14 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.pairup.android.BaseActivity;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
-import com.pairup.android.login.models.ProviderType;
 import com.pairup.android.utils.Analytics;
 import com.pairup.android.utils.Keyboard;
 import com.pairup.android.utils.di.Injector;
@@ -38,7 +34,6 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
     @Inject LoginFlowInteractor loginFlowInteractor;
     @Inject UserInteractor      userInteractor;
 
-    @Bind(R.id.provider_logo)     ImageView uiProviderLogo;
     @Bind(R.id.verification_code) EditText  uiVerificationCode;
 
     @Nullable private ProgressDialog authorizeProgressDialog;
@@ -56,12 +51,6 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
         Analytics.logScreenOpened(Analytics.EVENT_OPEN_VERIFY_SCREEN);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        ProviderType provider = loginFlowInteractor.getProvider();
-        if (provider != null && provider.hasVerifyLogo()) {
-            Glide.with(this).load(provider.getVerifyLogoRes()).into(uiProviderLogo);
-        } else {
-            uiProviderLogo.setVisibility(View.GONE);
-        }
         verifyPresenter.attachView(this);
     }
 

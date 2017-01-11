@@ -6,6 +6,7 @@ import com.pairup.android.chat.ChatScreen;
 import com.pairup.android.chat.ChatSidePanelFragment;
 import com.pairup.android.login.EnterPhoneScreen;
 import com.pairup.android.login.RegistrationScreen;
+import com.pairup.android.login.SelectProviderScreen;
 import com.pairup.android.login.VerifyScreen;
 import com.pairup.android.profile.EditProfileScreen;
 import com.pairup.android.profile.ProfileScreen;
@@ -54,4 +55,6 @@ public interface AppComponent {
     void inject(SyncScreen syncScreen);
 
     void inject(PushNotificationsSettingsScreen pushNotificationsSettingsScreen);
+
+    void inject(SelectProviderScreen selectProviderScreen);
 }

@@ -15,12 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anjlab.android.iab.v3.TransactionDetails;
-import com.bumptech.glide.Glide;
 import com.pairup.android.DeviceInteractor;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
-import com.pairup.android.login.models.ProviderType;
 import com.pairup.android.subscription.SubscriptionPresenter;
 import com.pairup.android.subscription.SubscriptionView;
 import com.pairup.android.utils.Analytics;
@@ -53,7 +51,6 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     @Inject ChatPresenter         chatPresenter;
 
     @Bind(R.id.drawer)                     DrawerLayout uiDrawer;
-    @Bind(R.id.provider_logo)              ImageView    uiProviderLogo;
     @Bind(R.id.buy_subscription_container) View         uiBuySubscription;
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
@@ -131,8 +128,8 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         super.onResume();
         Bus.subscribe(this);
         subscriptionPresenter.attachView(this, this);
-        setChatGone(!(userInteractor.getUser().hasProvider() ||
-            subscriptionPresenter.isSubscribed()));
+        setChatGone(!(subscriptionPresenter.isSubscribed() ||
+            userInteractor.getUser().hasProvider()));
 
         // we could not customize part of the UI in on create
         // because not all necessary views present in the hierarcy
@@ -158,20 +155,10 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         }
 
         showUserName(userInteractor.getFullName());
-        setUpProviderLogo();
     }
 
     private void showUserName(String username) {
         ((TextView) findViewById(R.id.full_name)).setText(username);
-    }
-
-    private void setUpProviderLogo() {
-        ProviderType provider = userInteractor.getUser().getProvider().getProviderType();
-        if (provider != null && provider.hasChatLogo()) {
-            Glide.with(this).load(provider.getChatLogoRes()).into(uiProviderLogo);
-        } else {
-            uiProviderLogo.setVisibility(View.GONE);
-        }
     }
 
     @Subscribe public void onEvent(CloseDrawerEvent event) {
@@ -237,7 +224,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
 
     public void initSidePanel() {
         getSupportFragmentManager().beginTransaction()
-            .replace(R.id.side_panel_container, new ChatSidePanelFragment())
-            .commit();
+                .replace(R.id.side_panel_container, new ChatSidePanelFragment())
+                .commit();
     }
 }

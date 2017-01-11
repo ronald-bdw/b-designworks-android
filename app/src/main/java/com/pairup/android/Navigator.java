@@ -46,6 +46,15 @@ public class Navigator {
         context.startActivity(intent);
     }
 
+    public static void enterPhone(@NonNull Context context,
+                                  @NonNull AccountVerificationType accountVerificationType,
+                                  @NonNull String providerName) {
+        Intent intent = new Intent(context, EnterPhoneScreen.class);
+        intent.putExtra(EnterPhoneScreen.ARG_ACCOUNT_VERIFICATION_TYPE, accountVerificationType);
+        intent.putExtra(EnterPhoneScreen.ARG_PROVIDER_NAME, providerName);
+        context.startActivity(intent);
+    }
+
     public static void trialPage(@NonNull Context context) {
         context.startActivity(new Intent(context, TrialScreen.class));
     }

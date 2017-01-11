@@ -2,7 +2,6 @@ package com.pairup.android.login;
 
 import android.support.annotation.NonNull;
 
-import com.pairup.android.login.models.ProviderType;
 import com.pairup.android.utils.storage.IStorage;
 
 /**
@@ -19,7 +18,7 @@ public class LoginFlowInteractor {
     private static final String KEY_FIRST_NAME               = PREFIX + "firstName";
     private static final String KEY_LAST_NAME                = PREFIX + "lastName";
     private static final String KEY_EMAIL                    = PREFIX + "email";
-    private static final String KEY_HAS_PROVIDER             = PREFIX + "getProvider";
+    private static final String KEY_HAS_PROVIDER             = PREFIX + "hasProvider";
 
     private final IStorage storage;
 
@@ -90,11 +89,11 @@ public class LoginFlowInteractor {
         return storage.contains(KEY_PHONE_NUMBER);
     }
 
-    public void setProvider(ProviderType provider) {
-        storage.put(KEY_HAS_PROVIDER, provider);
+    public void setHasProvider(boolean hasProvider) {
+        storage.putBoolean(KEY_HAS_PROVIDER, hasProvider);
     }
 
-    public ProviderType getProvider() {
-        return storage.get(KEY_HAS_PROVIDER, ProviderType.class);
+    public boolean hasProvider() {
+        return storage.getBoolean(KEY_HAS_PROVIDER, false);
     }
 }

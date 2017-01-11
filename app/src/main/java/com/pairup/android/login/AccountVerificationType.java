@@ -5,5 +5,5 @@ package com.pairup.android.login;
  */
 
 public enum AccountVerificationType {
-    IS_REGISTERED, IS_NOT_REGISTERED, HAS_HBF_PROVIDER, HAS_BDW_PROVIDER
+    IS_REGISTERED, IS_NOT_REGISTERED, HAS_PROVIDER
 }
