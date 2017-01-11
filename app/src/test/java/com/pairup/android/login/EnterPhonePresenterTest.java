@@ -66,7 +66,7 @@ public class EnterPhonePresenterTest {
 
     @Test
     public void getAreaCodeTest() {
-        Assert.assertTrue(enterPhonePresenter.getAreaCode("452").contains("+"));
+        Assert.assertTrue(enterPhonePresenter.getAreaCode("452").startsWith("+"));
     }
 
     @Test
