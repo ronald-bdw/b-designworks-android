@@ -35,9 +35,6 @@ public class EnterPhonePresenter {
     @Nullable
     private Subscription verifyNumberSubs;
 
-
-
-
     public EnterPhonePresenter(UserInteractor userInteractor,
                                LoginFlowInteractor loginFlowInteractor,
                                Analytics analytics) {
