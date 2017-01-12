@@ -37,14 +37,14 @@ public class SelectProviderPresenter {
                 .compose(Rxs.doInBackgroundDeliverToUI())
                 .subscribe(result -> {
                     List<String> providers = new ArrayList<>();
-                    if (isConteainHBF(result)) {
-                        providers.add(HBF_PROVIDER);
-                    }
-                    sortProviders(result.getProviders());
+
+                    sortProviders(providers);
                     for (Provider provider : result.getProviders()) {
-                        if (!HBF_PROVIDER.equals(provider.getName())) {
-                            providers.add(provider.getName());
-                        }
+                        providers.add(provider.getName());
+                    }
+                    if (providers.contains(HBF_PROVIDER)) {
+                        providers.remove(providers.indexOf(HBF_PROVIDER));
+                        providers.add(0, HBF_PROVIDER);
                     }
                     if (view != null) {
                         view.showProviders(providers);
@@ -60,16 +60,7 @@ public class SelectProviderPresenter {
         this.view = null;
     }
 
-    private void sortProviders(List<Provider> providers) {
-        Collections.sort(providers, (provider, t1) -> provider.getName().compareTo(t1.getName()));
-    }
-
-    private boolean isConteainHBF(Providers providers) {
-        for (Provider provider : providers.getProviders()) {
-            if (HBF_PROVIDER.equals(provider.getName())) {
-                return true;
-            }
-        }
-        return false;
+    private void sortProviders(List<String> providers) {
+        Collections.sort(providers, (provider, t1) -> provider.compareTo(t1));
     }
 }
