@@ -59,4 +59,8 @@ public class Analytics {
             FlurryAgent.logEvent(event, param);
         }
     }
+
+    public void logWrongProviderChoosen() {
+        logEvent(Analytics.EVENT_WRONG_PROVIDER);
+    }
 }

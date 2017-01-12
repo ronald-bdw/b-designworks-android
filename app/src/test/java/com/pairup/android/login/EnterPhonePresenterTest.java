@@ -4,6 +4,7 @@ import com.pairup.android.RxSchedulersOverrideRule;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.login.models.AuthResponse;
 import com.pairup.android.login.models.UserStatus;
+import com.pairup.android.utils.Analytics;
 import com.pairup.android.utils.network.RetrofitException;
 
 import org.junit.Assert;
@@ -41,6 +42,8 @@ public class EnterPhonePresenterTest {
     private UserInteractor userInteractor;
     @Mock
     private LoginFlowInteractor loginFlowInteractor;
+    @Mock
+    private Analytics analytics;
 
     private EnterPhonePresenter enterPhonePresenter;
     private InnerAuthResponse innerAuthResponse;
@@ -49,7 +52,8 @@ public class EnterPhonePresenterTest {
 
     @Before
     public void setUp() {
-        enterPhonePresenter = new EnterPhonePresenter(userInteractor, loginFlowInteractor);
+        enterPhonePresenter = new EnterPhonePresenter(userInteractor, loginFlowInteractor,
+            analytics);
         enterPhonePresenter.attachView(enterPhoneView);
 
         innerAuthResponse = new InnerAuthResponse();

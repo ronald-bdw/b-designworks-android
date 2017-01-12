@@ -7,6 +7,9 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationManagerCompat;
 
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.pairup.android.Api;
 import com.pairup.android.BuildConfig;
 import com.pairup.android.UserInteractor;
@@ -19,15 +22,13 @@ import com.pairup.android.profile.EditProfilePresenter;
 import com.pairup.android.subscription.SubscriptionPresenter;
 import com.pairup.android.sync.FitbitPresenter;
 import com.pairup.android.sync.GoogleFitPresenter;
+import com.pairup.android.utils.Analytics;
 import com.pairup.android.utils.ImageLoader;
 import com.pairup.android.utils.network.RxErrorHandlingCallAdapterFactory;
 import com.pairup.android.utils.network.StringConverterFactory;
 import com.pairup.android.utils.storage.IStorage;
 import com.pairup.android.utils.storage.Storage;
 import com.pairup.android.utils.storage.UserSettings;
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -184,10 +185,15 @@ public class AppModule {
         return new SelectProviderPresenter(userInteractor);
     }
 
+    @Provides @Singleton Analytics providesAnalytics() {
+        return new Analytics();
+    }
+
     @Provides
     @Singleton
     EnterPhonePresenter provideEnterPhonePresenter(UserInteractor userInteractor,
-                                                   LoginFlowInteractor loginFlowInteractor) {
-        return new EnterPhonePresenter(userInteractor, loginFlowInteractor);
+                                                   LoginFlowInteractor loginFlowInteractor,
+                                                   Analytics analytics) {
+        return new EnterPhonePresenter(userInteractor, loginFlowInteractor, analytics);
     }
 }
