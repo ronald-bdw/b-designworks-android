@@ -8,6 +8,7 @@ import com.pairup.android.login.models.Provider;
 import com.pairup.android.utils.Rxs;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -34,8 +35,12 @@ public class SelectProviderPresenter {
                 .compose(Rxs.doInBackgroundDeliverToUI())
                 .subscribe(result -> {
                     List<String> providers = new ArrayList<>();
+                    providers.add("HBF");
+                    sortProviders(result.getProviders());
                     for (Provider provider : result.getProviders()) {
-                        providers.add(provider.getName());
+                        if (!"HBF".equals(provider.getName())) {
+                            providers.add(provider.getName());
+                        }
                     }
                     if (view != null) {
                         view.showProviders(providers);
@@ -49,5 +54,9 @@ public class SelectProviderPresenter {
 
     public void detachView() {
         this.view = null;
+    }
+
+    private void sortProviders(List<Provider> providers) {
+        Collections.sort(providers, (provider, t1) -> provider.getName().compareTo(t1.getName()));
     }
 }
