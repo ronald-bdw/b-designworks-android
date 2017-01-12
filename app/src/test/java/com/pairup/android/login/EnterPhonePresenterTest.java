@@ -4,6 +4,7 @@ import com.pairup.android.RxSchedulersOverrideRule;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.login.models.AuthResponse;
 import com.pairup.android.login.models.UserStatus;
+import com.pairup.android.utils.Analytics;
 import com.pairup.android.utils.network.RetrofitException;
 
 import org.junit.Assert;
@@ -19,6 +20,7 @@ import java.io.EOFException;
 import rx.Observable;
 
 import static com.pairup.android.login.models.AuthResponse.*;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -101,7 +103,6 @@ public class EnterPhonePresenterTest {
         when(userInteractor.requestCode(PHONE_NUMBER)).thenReturn(Observable.just(response));
         when(userInteractor.requestUserStatus(PHONE_NUMBER))
                 .thenReturn(Observable.just(userStatus));
-
         enterPhonePresenter.manageSubmit(PHONE_AREA, NUMBER,
                 AccountVerificationType.HAS_PROVIDER, "Test3");
 

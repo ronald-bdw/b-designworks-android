@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 
 import com.pairup.android.UserInteractor;
 import com.pairup.android.login.models.Provider;
-import com.pairup.android.login.models.Providers;
 import com.pairup.android.utils.Rxs;
 
 import java.util.ArrayList;
