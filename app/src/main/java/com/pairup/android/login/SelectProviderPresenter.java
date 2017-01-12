@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.pairup.android.UserInteractor;
 import com.pairup.android.login.models.Provider;
+import com.pairup.android.login.models.Providers;
 import com.pairup.android.utils.Rxs;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.List;
 
 public class SelectProviderPresenter {
 
+    private static final String HBF_PROVIDER = "HBF";
     private final UserInteractor userInteractor;
 
     @Nullable
@@ -35,10 +37,12 @@ public class SelectProviderPresenter {
                 .compose(Rxs.doInBackgroundDeliverToUI())
                 .subscribe(result -> {
                     List<String> providers = new ArrayList<>();
-                    providers.add("HBF");
+                    if (isConteainHBF(result)) {
+                        providers.add(HBF_PROVIDER);
+                    }
                     sortProviders(result.getProviders());
                     for (Provider provider : result.getProviders()) {
-                        if (!"HBF".equals(provider.getName())) {
+                        if (!HBF_PROVIDER.equals(provider.getName())) {
                             providers.add(provider.getName());
                         }
                     }
@@ -58,5 +62,14 @@ public class SelectProviderPresenter {
 
     private void sortProviders(List<Provider> providers) {
         Collections.sort(providers, (provider, t1) -> provider.getName().compareTo(t1.getName()));
+    }
+
+    private boolean isConteainHBF(Providers providers) {
+        for (Provider provider : providers.getProviders()) {
+            if (HBF_PROVIDER.equals(provider.getName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -171,6 +171,11 @@ public class EnterPhoneScreen extends BaseActivity implements EnterPhoneView {
     }
 
     @Override
+    public void logWrongProvider() {
+        Analytics.logScreenOpened(Analytics.EVENT_WRONG_PROVIDER);
+    }
+
+    @Override
     public void showProgress() {
         progressDialog = ProgressDialog.show(context(), getString(R.string.loading),
             getString(R.string.progress_verifying_phone_number), true, true, dialog -> {

@@ -25,4 +25,6 @@ public interface EnterPhoneView {
     void registrationErrorFillAreaCode();
 
     void registrationErrorFillPhone();
+
+    void logWrongProvider();
 }

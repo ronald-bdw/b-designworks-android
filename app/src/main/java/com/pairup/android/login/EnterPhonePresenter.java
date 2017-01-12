@@ -8,7 +8,6 @@ import android.text.TextUtils;
 
 import com.pairup.android.UserInteractor;
 import com.pairup.android.login.functional_area.Area;
-import com.pairup.android.utils.Analytics;
 import com.pairup.android.utils.Areas;
 import com.pairup.android.utils.Rxs;
 import com.pairup.android.utils.network.RetrofitException;
@@ -128,6 +127,10 @@ public class EnterPhonePresenter {
                         case HAS_PROVIDER:
                             if (hasProvider && result.getProvider().equals(providerName)) {
                                 passed = hasProvider;
+                            } else {
+                                if (view != null) {
+                                    view.logWrongProvider();
+                                }
                             }
                             break;
                         default:
@@ -136,7 +139,6 @@ public class EnterPhonePresenter {
                     if (passed) {
                         requestAuthorizationCode(areaCode, formattedPhone);
                     } else {
-                        Analytics.logScreenOpened(Analytics.EVENT_WRONG_PROVIDER);
                         if (view != null) {
                             view.showErrorDialog();
                         }
