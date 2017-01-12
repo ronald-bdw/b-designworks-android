@@ -38,10 +38,10 @@ public class SelectProviderPresenter {
                 .subscribe(result -> {
                     List<String> providers = new ArrayList<>();
 
-                    sortProviders(providers);
                     for (Provider provider : result.getProviders()) {
                         providers.add(provider.getName());
                     }
+                    sortProviders(providers);
                     if (providers.contains(HBF_PROVIDER)) {
                         providers.remove(providers.indexOf(HBF_PROVIDER));
                         providers.add(0, HBF_PROVIDER);
