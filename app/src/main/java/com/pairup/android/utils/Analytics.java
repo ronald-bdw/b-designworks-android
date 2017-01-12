@@ -30,6 +30,7 @@ public class Analytics {
     public static final String EVENT_OPEN_TOUR_AVATAR_SCREEN     = "Tour app avatar screen";
     public static final String EVENT_MESSAGE_RESPONSE            = "Message sent";
     public static final String EVENT_WRONG_FLOW                  = "Wrong flow";
+    public static final String EVENT_WRONG_PROVIDER              = "Wrong provider selected";
 
     public static final String PARAM_MESSAGE_TIME_RESPONSE = "Response time";
 
