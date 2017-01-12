@@ -126,9 +126,7 @@ public class EnterPhonePresenter {
                             passed = !result.isPhoneRegistered();
                             break;
                         case HAS_PROVIDER:
-                            if (hasProvider &&
-                                    result.getProvider() != null &&
-                                    result.getProvider().equals(providerName)) {
+                            if (hasProvider && result.getProvider().equals(providerName)) {
                                 passed = hasProvider;
                             }
                             break;
