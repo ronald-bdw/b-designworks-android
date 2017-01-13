@@ -42,11 +42,11 @@ public class SelectProvidersPresenterTest {
     @Test
     public void fetchProvidersTest() {
         List<String> providersName = new ArrayList<>();
-        providersName.add("Test");
+        providersName.add("HBF");
 
         Provider provider = new Provider();
         provider.setId("001");
-        provider.setName("Test");
+        provider.setName("HBF");
 
         List<Provider> providerList = new ArrayList<>();
         providerList.add(provider);

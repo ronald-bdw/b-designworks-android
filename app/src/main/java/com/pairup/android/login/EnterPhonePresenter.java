@@ -8,6 +8,7 @@ import android.text.TextUtils;
 
 import com.pairup.android.UserInteractor;
 import com.pairup.android.login.functional_area.Area;
+import com.pairup.android.utils.Analytics;
 import com.pairup.android.utils.Areas;
 import com.pairup.android.utils.Rxs;
 import com.pairup.android.utils.network.RetrofitException;
@@ -24,6 +25,7 @@ public class EnterPhonePresenter {
 
     private final UserInteractor userInteractor;
     private final LoginFlowInteractor loginFlowInteractor;
+    private final Analytics analytics;
 
 
     @Nullable
@@ -34,9 +36,11 @@ public class EnterPhonePresenter {
     private Subscription verifyNumberSubs;
 
     public EnterPhonePresenter(UserInteractor userInteractor,
-                               LoginFlowInteractor loginFlowInteractor) {
+                               LoginFlowInteractor loginFlowInteractor,
+                               Analytics analytics) {
         this.userInteractor = userInteractor;
         this.loginFlowInteractor = loginFlowInteractor;
+        this.analytics = analytics;
     }
 
     public void attachView(@NonNull EnterPhoneView view) {
@@ -125,10 +129,10 @@ public class EnterPhonePresenter {
                             passed = !result.isPhoneRegistered();
                             break;
                         case HAS_PROVIDER:
-                            if (hasProvider &&
-                                    result.getProvider() != null &&
-                                    result.getProvider().equals(providerName)) {
+                            if (hasProvider && result.getProvider().equals(providerName)) {
                                 passed = hasProvider;
+                            } else {
+                                analytics.logWrongProviderChoosen();
                             }
                             break;
                         default:
