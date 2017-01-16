@@ -57,8 +57,6 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         super.onCreate(savedState);
         Injector.inject(this);
 
-        chatPresenter.attachView(this);
-
         Analytics.logScreenOpened(Analytics.EVENT_OPEN_CHAT_SCREEN);
 
         customizeSmoochInterface();
