@@ -179,7 +179,6 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     }
 
     @Override public void onStop() {
-        subscriptionPresenter.onViewHiden();
         super.onStop();
     }
 
