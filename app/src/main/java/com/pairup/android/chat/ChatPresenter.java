@@ -25,9 +25,12 @@ public class ChatPresenter {
         this.userInteractor = userInteractor;
     }
 
-    public void attachView(@NonNull ChatView view) {
-        this.view = view;
+    public void initialization() {
         checkUserAuthorization();
+    }
+
+    public void onViewShown(@NonNull ChatView view) {
+        this.view = view;
     }
 
     public void checkUserAuthorization() {
@@ -62,7 +65,7 @@ public class ChatPresenter {
         userInteractor.sendNotificationsStatus();
     }
 
-    public void detachView() {
+    public void onViewHidden() {
         this.view = null;
     }
 }

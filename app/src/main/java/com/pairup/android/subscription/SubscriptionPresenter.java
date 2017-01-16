@@ -78,7 +78,7 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
         initPayments();
     }
 
-    public void detachView() {
+    public void onViewHidden() {
         view = null;
         activity = null;
         if (bp != null) {
