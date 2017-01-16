@@ -57,7 +57,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         super.onCreate(savedState);
         Injector.inject(this);
 
-        chatPresenter.attachView(this);
+        chatPresenter.initialization();
 
         Analytics.logScreenOpened(Analytics.EVENT_OPEN_CHAT_SCREEN);
 
@@ -127,6 +127,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     @Override public void onResume() {
         super.onResume();
         Bus.subscribe(this);
+        chatPresenter.attachView(this);
         subscriptionPresenter.attachView(this, this);
         setChatGone(!(subscriptionPresenter.isSubscribed() ||
             userInteractor.getUser().hasProvider()));
@@ -172,19 +173,14 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
 
     @Override public void onPause() {
         Bus.unsubscribe(this);
+        subscriptionPresenter.onViewHiden();
+        chatPresenter.detachView();
         super.onPause();
     }
 
     @Override public void onStop() {
-        subscriptionPresenter.detachView();
+        subscriptionPresenter.onViewHiden();
         super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        chatPresenter.detachView();
-        subscriptionPresenter.detachView();
     }
 
     private void closeDrawer() {
