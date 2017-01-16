@@ -127,7 +127,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     @Override public void onResume() {
         super.onResume();
         Bus.subscribe(this);
-        chatPresenter.attachView(this);
+        chatPresenter.onViewShown(this);
         subscriptionPresenter.attachView(this, this);
         setChatGone(!(subscriptionPresenter.isSubscribed() ||
             userInteractor.getUser().hasProvider()));
@@ -173,8 +173,8 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
 
     @Override public void onPause() {
         Bus.unsubscribe(this);
-        subscriptionPresenter.onViewHiden();
-        chatPresenter.detachView();
+        subscriptionPresenter.onViewHidden();
+        chatPresenter.onViewHidden();
         super.onPause();
     }
 
