@@ -7,6 +7,7 @@ package com.pairup.android.login.models;
 public class Provider {
     private String id;
     private String name;
+    private int    priority;
 
     public void setId(String id) {
         this.id = id;
@@ -23,4 +24,9 @@ public class Provider {
     public String getName() {
         return name;
     }
+
+    public int getPriority() {
+        return priority;
+    }
+
 }
