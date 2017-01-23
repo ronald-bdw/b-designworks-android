@@ -17,7 +17,6 @@ import java.util.List;
 
 public class SelectProviderPresenter {
 
-    private static final String HBF_PROVIDER = "HBF";
     private final UserInteractor userInteractor;
 
     @Nullable
@@ -35,15 +34,11 @@ public class SelectProviderPresenter {
         userInteractor.getProviders()
                 .compose(Rxs.doInBackgroundDeliverToUI())
                 .subscribe(result -> {
+                    sortProviders(result.getProviders());
                     List<String> providers = new ArrayList<>();
 
                     for (Provider provider : result.getProviders()) {
                         providers.add(provider.getName());
-                    }
-                    sortProviders(providers);
-                    if (providers.contains(HBF_PROVIDER)) {
-                        providers.remove(providers.indexOf(HBF_PROVIDER));
-                        providers.add(0, HBF_PROVIDER);
                     }
                     if (view != null) {
                         view.showProviders(providers);
@@ -59,7 +54,8 @@ public class SelectProviderPresenter {
         this.view = null;
     }
 
-    private void sortProviders(List<String> providers) {
-        Collections.sort(providers, (provider, t1) -> provider.compareTo(t1));
+    private void sortProviders(List<Provider> providers) {
+        Collections.sort(providers, (provider1, provider2) ->
+            provider1.getPriority() - provider2.getPriority());
     }
 }
