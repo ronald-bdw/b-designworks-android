@@ -150,11 +150,6 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         ((View) uiInputText.getParent()).setBackgroundColor(0xFFECF3FA);
         ((ImageView) findViewById(R.id.Smooch_btnSend)).setImageResource(R.drawable.ic_send);
 
-        if (!DeviceInteractor.doesSdkSupportSmoochPhotos()) {
-            layoutParams.leftMargin = AndroidUtils.dp(8);
-            findViewById(R.id.Smooch_btnCamera).setVisibility(View.GONE);
-        }
-
         showUserName(userInteractor.getFullName());
     }
 
