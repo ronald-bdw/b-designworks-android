@@ -71,8 +71,9 @@ public class UserInteractor {
             .map(saveUser());
     }
 
-    public Observable<Object> login(
-        @NonNull String verificationCode, @NonNull String phone, @NonNull String phoneCodeId) {
+    public Observable<Object> login(@NonNull String verificationCode,
+                                    @NonNull String phone,
+                                    @NonNull String phoneCodeId) {
         return api.signIn(verificationCode, phone, phoneCodeId)
             .map(saveUser());
     }
@@ -143,12 +144,8 @@ public class UserInteractor {
         });
     }
 
-    public Observable<FitToken> integrateGoogleFit(@NonNull String serverAuthCode) {
-        return api.integrateFitnessApp(serverAuthCode, Provider.GOOGLE_FIT);
-    }
-
-    public Observable<FitToken> integrateFitbit(@NonNull String serverAuthCode) {
-        return api.integrateFitnessApp(serverAuthCode, Provider.FITBIT);
+    public Observable<FitToken> integrateFitnessApp(@NonNull String serverAuthCode, Provider provider) {
+        return api.integrateFitnessApp(serverAuthCode, provider);
     }
 
     public Observable<User> updateUserProfile() {

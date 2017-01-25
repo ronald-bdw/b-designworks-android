@@ -24,7 +24,7 @@ public class FitbitPresenter {
 
     public void handleCode(String code) {
         view.showSendingFitbitCodeProgress();
-        userInteractor.integrateFitbit(code)
+        userInteractor.integrateFitnessApp(code, Provider.FITBIT)
             .compose(Rxs.doInBackgroundDeliverToUI())
             .doOnTerminate(() -> {
                 if (view != null) {

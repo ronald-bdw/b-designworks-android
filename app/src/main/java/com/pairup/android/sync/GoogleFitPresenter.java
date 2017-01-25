@@ -100,7 +100,7 @@ public class GoogleFitPresenter {
                 if (result.isSuccess()) {
                     GoogleSignInAccount acct = result.getSignInAccount();
                     if (acct != null) {
-                        userInteractor.integrateGoogleFit(acct.getServerAuthCode())
+                        userInteractor.integrateFitnessApp(acct.getServerAuthCode(), Provider.GOOGLE_FIT)
                             .compose(Rxs.doInBackgroundDeliverToUI())
                             .subscribe(
                                 fitToken -> userInteractor

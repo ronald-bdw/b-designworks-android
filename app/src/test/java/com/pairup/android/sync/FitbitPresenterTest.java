@@ -36,9 +36,9 @@ public class FitbitPresenterTest {
 
     @Before
     public void setUp() throws Exception {
-        when(userInteractor.integrateFitbit(FITBIT_CORRECT_AUTH_CODE))
+        when(userInteractor.integrateFitnessApp(FITBIT_CORRECT_AUTH_CODE, Provider.FITBIT))
             .thenReturn(Observable.just(new FitToken()));
-        when(userInteractor.integrateFitbit(FITBIT_INCORRECT_AUTH_CODE))
+        when(userInteractor.integrateFitnessApp(FITBIT_INCORRECT_AUTH_CODE, Provider.FITBIT))
             .thenReturn(Observable.error(new Throwable()));
         fitbitPresenter = new FitbitPresenter(userInteractor);
         fitbitPresenter.attach(fitbitView);
