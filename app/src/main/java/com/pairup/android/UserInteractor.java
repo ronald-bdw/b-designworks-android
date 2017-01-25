@@ -144,7 +144,8 @@ public class UserInteractor {
         });
     }
 
-    public Observable<FitToken> integrateFitnessApp(@NonNull String serverAuthCode, Provider provider) {
+    public Observable<FitToken> integrateFitnessApp(@NonNull String serverAuthCode,
+                                                    @NonNull Provider provider) {
         return api.integrateFitnessApp(serverAuthCode, provider);
     }
 
