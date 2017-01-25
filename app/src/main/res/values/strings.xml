@@ -173,6 +173,8 @@
 
     <string name="select_providers_list_last_item">I don\'t have a provider</string>
 
+    <string name="sharing_text">Check out PairUp for your smartphone. Download it today from https://play.google.com/store/apps/details?id=com.pairup.android</string>
+
     <string-array name="trial_titles">
         <item>Welcome</item>
         <item>Power of Habits</item>

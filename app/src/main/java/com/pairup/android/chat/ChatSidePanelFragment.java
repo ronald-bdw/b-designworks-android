@@ -80,8 +80,7 @@ public class ChatSidePanelFragment extends Fragment {
     }
 
     @OnClick(R.id.share) void onShareClick() {
-        // TODO replace text with real one
-        Navigator.share(getContext(), "Sharing text here");
+        Navigator.share(getContext(), getString(R.string.sharing_text));
         Bus.event(CloseDrawerEvent.EVENT);
     }
 
