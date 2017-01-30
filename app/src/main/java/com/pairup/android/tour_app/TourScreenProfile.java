@@ -34,13 +34,13 @@ import static com.pairup.android.utils.ui.TextViews.textOf;
  * Created by Ilya Eremin on 9/28/16.
  */
 
-public class TourScreenProfile extends BaseActivity{
+public class TourScreenProfile extends BaseActivity {
 
     @Bind(R.id.first_name) TextView uiFirstName;
     @Bind(R.id.last_name)  TextView uiLastName;
     @Bind(R.id.email)      TextView uiEmail;
 
-    @Inject UserInteractor     userInteractor;
+    @Inject UserInteractor userInteractor;
 
     @Nullable private Subscription   updateProfileSubs;
     @Nullable private ProgressDialog updateProfileProgress;
