@@ -52,9 +52,14 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     @Bind(R.id.drawer)                     DrawerLayout uiDrawer;
     @Bind(R.id.buy_subscription_container) View         uiBuySubscription;
 
+    private boolean needGoogleFitIntegration;
+
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
         Injector.inject(this);
+
+        needGoogleFitIntegration = getIntent()
+            .getBooleanExtra(ARG_NEED_GOOGLE_FIT_INTEGRATION, false);
 
         chatPresenter.initialization();
 
