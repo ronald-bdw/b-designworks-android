@@ -241,7 +241,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
             .commit();
     }
 
-    @Override public void codeRetrievedSuccessfull() {
+    @Override public void integrationSuccessful() {
         Toast.makeText(this, R.string.google_fit_token_retrieved, Toast.LENGTH_SHORT).show();
     }
 

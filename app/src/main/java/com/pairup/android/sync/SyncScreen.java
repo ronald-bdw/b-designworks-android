@@ -96,7 +96,7 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
     }
 
     //Google Fit
-    @Override public void codeRetrievedSuccessfull() {
+    @Override public void integrationSuccessful() {
         Toast.makeText(this, R.string.google_fit_token_retrieved, Toast.LENGTH_SHORT).show();
     }
 
@@ -113,8 +113,7 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
         SimpleDialog.networkProblem(context());
     }
 
-    @Override public void showGoogleServiceDisconected() {
-
+    @Override public void showGoogleServiceDisconnected() {
     }
 
     @Override public void onError(Throwable error) {

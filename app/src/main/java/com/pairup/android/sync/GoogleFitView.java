@@ -6,7 +6,7 @@ import com.google.android.gms.common.ConnectionResult;
  * Created by Ilya Eremin on 9/19/16.
  */
 public interface GoogleFitView {
-    void codeRetrievedSuccessfull();
+    void integrationSuccessful();
 
     void errorWhileRetrievingCode();
 
@@ -14,7 +14,7 @@ public interface GoogleFitView {
 
     void showInternetConnectionError();
 
-    void showGoogleServiceDisconected();
+    void showGoogleServiceDisconnected();
 
     void onError(Throwable error);
 

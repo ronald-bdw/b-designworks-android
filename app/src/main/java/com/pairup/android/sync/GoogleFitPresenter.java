@@ -74,7 +74,7 @@ public class GoogleFitPresenter {
                         } else if (i == GoogleApiClient
                             .ConnectionCallbacks.CAUSE_SERVICE_DISCONNECTED) {
                             if (view != null) {
-                                view.showGoogleServiceDisconected();
+                                view.showGoogleServiceDisconnected();
                             }
                         }
                     }
@@ -113,7 +113,7 @@ public class GoogleFitPresenter {
                                     }
                                 });
                         if (view != null) {
-                            view.codeRetrievedSuccessfull();
+                            view.integrationSuccessful();
                         }
                     } else {
                         if (view != null) {

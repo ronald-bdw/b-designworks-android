@@ -133,7 +133,7 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView {
         sendInfoAndMoveToNextScreen();
     }
 
-    @Override public void codeRetrievedSuccessfull() {
+    @Override public void integrationSuccessful() {
         Toast.makeText(this, R.string.google_fit_token_retrieved, Toast.LENGTH_SHORT).show();
         Navigator.tourUploadAvatar(context());
     }
@@ -150,8 +150,8 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView {
         Logger.dToast(this, "showInternetConnectionError: ");
     }
 
-    @Override public void showGoogleServiceDisconected() {
-        Logger.dToast(this, "showGoogleServiceDisconected");
+    @Override public void showGoogleServiceDisconnected() {
+        Logger.dToast(this, "showGoogleServiceDisconnected");
     }
 
     @Override public void onError(Throwable error) {
