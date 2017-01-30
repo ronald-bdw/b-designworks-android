@@ -163,6 +163,10 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView {
         Navigator.tourUploadAvatar(context());
     }
 
+    @Override public void onClientConnected() {
+
+    }
+
     @Override protected void onDestroy() {
         googleFitPresenter.detachView(this);
         super.onDestroy();

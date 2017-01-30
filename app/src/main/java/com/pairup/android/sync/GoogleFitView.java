@@ -19,4 +19,6 @@ public interface GoogleFitView {
     void onError(Throwable error);
 
     void userCancelIntegration();
+
+    void onClientConnected();
 }

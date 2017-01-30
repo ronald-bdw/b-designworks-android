@@ -125,6 +125,10 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
         Logger.dToast(context(), "User cancel google fit integration");
     }
 
+    @Override public void onClientConnected() {
+
+    }
+
     //FitBit
     @Override public void showSendingFitbitCodeProgress() {
         progressDialog = SimpleLoadingDialog.show(context(),
