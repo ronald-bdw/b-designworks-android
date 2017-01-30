@@ -67,8 +67,10 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         super.onCreate(savedState);
         Injector.inject(this);
 
-        needGoogleFitIntegration = getIntent()
-            .getBooleanExtra(ARG_NEED_GOOGLE_FIT_INTEGRATION, false);
+        if (getIntent() != null) {
+            needGoogleFitIntegration = getIntent()
+                .getBooleanExtra(ARG_NEED_GOOGLE_FIT_INTEGRATION, false);
+        }
 
         chatPresenter.initialization();
 
