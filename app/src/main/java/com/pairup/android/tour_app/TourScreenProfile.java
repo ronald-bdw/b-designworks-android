@@ -1,7 +1,6 @@
 package com.pairup.android.tour_app;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,16 +14,12 @@ import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.login.models.User;
-import com.pairup.android.sync.GoogleFitPresenter;
-import com.pairup.android.sync.GoogleFitView;
 import com.pairup.android.utils.Analytics;
 import com.pairup.android.utils.Keyboard;
-import com.pairup.android.utils.Logger;
 import com.pairup.android.utils.Rxs;
 import com.pairup.android.utils.di.Injector;
 import com.pairup.android.utils.network.ErrorUtils;
 import com.pairup.android.utils.ui.UiInfo;
-import com.google.android.gms.common.ConnectionResult;
 
 import javax.inject.Inject;
 
@@ -39,14 +34,13 @@ import static com.pairup.android.utils.ui.TextViews.textOf;
  * Created by Ilya Eremin on 9/28/16.
  */
 
-public class TourScreenProfile extends BaseActivity implements GoogleFitView {
+public class TourScreenProfile extends BaseActivity{
 
     @Bind(R.id.first_name) TextView uiFirstName;
     @Bind(R.id.last_name)  TextView uiLastName;
     @Bind(R.id.email)      TextView uiEmail;
 
     @Inject UserInteractor     userInteractor;
-    @Inject GoogleFitPresenter googleFitPresenter;
 
     @Nullable private Subscription   updateProfileSubs;
     @Nullable private ProgressDialog updateProfileProgress;
@@ -67,7 +61,6 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView {
         uiFirstName.setText(user.getFirstName());
         uiLastName.setText(user.getLastName());
         uiEmail.setText(user.getEmail());
-        googleFitPresenter.attachView(this, this);
     }
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
@@ -89,20 +82,16 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView {
                 .doOnTerminate(() -> {
                     updateProfileSubs = null;
                     hideProgress();
+                    Navigator.tourUploadAvatar(context());
                 })
                 .compose(Rxs.doInBackgroundDeliverToUI())
                 .subscribe(result -> {
                     Toast.makeText(context(), R.string.edit_profile_profile_updated,
                         Toast.LENGTH_SHORT).show();
-                    integrateGoogleFit();
                 }, ErrorUtils.handle(context()));
         } else {
-            integrateGoogleFit();
+            Navigator.tourUploadAvatar(context());
         }
-    }
-
-    private void integrateGoogleFit() {
-        googleFitPresenter.startIntegrate(this);
     }
 
     private void hideProgress() {
@@ -131,50 +120,6 @@ public class TourScreenProfile extends BaseActivity implements GoogleFitView {
 
     @OnClick(R.id.next) void onSubmitClick() {
         sendInfoAndMoveToNextScreen();
-    }
-
-    @Override public void integrationSuccessful() {
-        Toast.makeText(this, R.string.google_fit_token_retrieved, Toast.LENGTH_SHORT).show();
-        Navigator.tourUploadAvatar(context());
-    }
-
-    @Override public void errorWhileRetrievingCode() {
-        Logger.dToast(this, "error while retrieving code");
-    }
-
-    @Override public void onGoogleServicesError(ConnectionResult result) {
-        Logger.dToast(this, "onGoogleServicesError: " + result.getErrorMessage());
-    }
-
-    @Override public void showInternetConnectionError() {
-        Logger.dToast(this, "showInternetConnectionError: ");
-    }
-
-    @Override public void showGoogleServiceDisconnected() {
-        Logger.dToast(this, "showGoogleServiceDisconnected");
-    }
-
-    @Override public void onError(Throwable error) {
-        Logger.dToast(this, "On error" + error.getMessage());
-    }
-
-    @Override public void userCancelIntegration() {
-        Logger.dToast(context(), "User canceled google git integration");
-        Navigator.tourUploadAvatar(context());
-    }
-
-    @Override public void onClientConnected() {
-
-    }
-
-    @Override protected void onDestroy() {
-        googleFitPresenter.detachView(this);
-        super.onDestroy();
-    }
-
-    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        googleFitPresenter.handleResponse(requestCode, resultCode, data);
     }
 
     @OnEditorAction(R.id.email) boolean onEnterClick(int actionId) {

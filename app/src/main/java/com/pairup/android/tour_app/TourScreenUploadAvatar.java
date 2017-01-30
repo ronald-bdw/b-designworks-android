@@ -63,12 +63,12 @@ public class TourScreenUploadAvatar extends BaseActivity {
     }
 
     @OnClick(R.id.skip) void onSkipClick() {
-        Navigator.chat(context());
+        Navigator.chatWithGoogleFitIntegration(context());
     }
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.next) {
-            Navigator.chat(context());
+            Navigator.chatWithGoogleFitIntegration(context());
             return true;
         }
         return super.onOptionsItemSelected(item);
