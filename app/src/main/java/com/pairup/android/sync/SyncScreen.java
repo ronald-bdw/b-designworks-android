@@ -110,7 +110,7 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
             getString(R.string.google_play_services_connecting_exeption) +
                 result.getErrorMessage(),
             getString(R.string.ok),
-            () -> {});
+            () -> { });
     }
 
     @Override public void showInternetConnectionError() {
@@ -122,7 +122,7 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
             getString(R.string.error),
             getString(R.string.google_play_services_disconnected),
             getString(R.string.ok),
-            () -> {});
+            () -> { });
     }
 
     @Override public void onError(Throwable error) {

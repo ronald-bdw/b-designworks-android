@@ -43,6 +43,7 @@ import butterknife.OnClick;
 import io.smooch.core.Message;
 import io.smooch.core.MessageUploadStatus;
 import io.smooch.ui.ConversationActivity;
+import rx.functions.Action0;
 import rx.functions.Action1;
 
 /**
@@ -255,7 +256,10 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
             getString(R.string.google_play_services_connecting_exeption) +
                 result.getErrorMessage(),
             getString(R.string.ok),
-            () -> {});
+            new Action0() {
+                @Override public void call() {
+                }
+            });
     }
 
     @Override public void showInternetConnectionError() {
@@ -267,7 +271,10 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
             getString(R.string.error),
             getString(R.string.google_play_services_disconnected),
             getString(R.string.ok),
-            () -> {});
+            new Action0() {
+                @Override public void call() {
+                }
+            });
     }
 
     @Override public void onError(Throwable error) {
