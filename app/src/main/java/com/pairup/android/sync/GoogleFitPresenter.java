@@ -62,6 +62,7 @@ public class GoogleFitPresenter {
                 new GoogleApiClient.ConnectionCallbacks() {
                     @Override
                     public void onConnected(Bundle bundle) {
+                        view.onClientConnected();
                     }
 
                     @Override
@@ -73,7 +74,7 @@ public class GoogleFitPresenter {
                         } else if (i == GoogleApiClient
                             .ConnectionCallbacks.CAUSE_SERVICE_DISCONNECTED) {
                             if (view != null) {
-                                view.showGoogleServiceDisconected();
+                                view.showGoogleServiceDisconnected();
                             }
                         }
                     }
@@ -112,7 +113,7 @@ public class GoogleFitPresenter {
                                     }
                                 });
                         if (view != null) {
-                            view.codeRetrievedSuccessfull();
+                            view.integrationSuccessful();
                         }
                     } else {
                         if (view != null) {
@@ -135,6 +136,7 @@ public class GoogleFitPresenter {
         if (mClient != null) {
             mClient.stopAutoManage(activity);
             mClient.disconnect();
+            mClient = null;
         }
         view = null;
     }

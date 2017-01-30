@@ -15,16 +15,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anjlab.android.iab.v3.TransactionDetails;
+import com.google.android.gms.common.ConnectionResult;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.subscription.SubscriptionPresenter;
 import com.pairup.android.subscription.SubscriptionView;
+import com.pairup.android.sync.GoogleFitPresenter;
+import com.pairup.android.sync.GoogleFitView;
 import com.pairup.android.utils.Analytics;
 import com.pairup.android.utils.AndroidUtils;
 import com.pairup.android.utils.Bus;
 import com.pairup.android.utils.Keyboard;
+import com.pairup.android.utils.Logger;
 import com.pairup.android.utils.di.Injector;
+import com.pairup.android.utils.network.ErrorUtils;
 import com.pairup.android.utils.ui.SimpleDialog;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -38,23 +43,35 @@ import butterknife.OnClick;
 import io.smooch.core.Message;
 import io.smooch.core.MessageUploadStatus;
 import io.smooch.ui.ConversationActivity;
+import rx.functions.Action0;
 import rx.functions.Action1;
 
 /**
  * Created by Ilya Eremin on 04.08.2016.
  */
-public class ChatScreen extends ConversationActivity implements SubscriptionView, ChatView {
+public class ChatScreen extends ConversationActivity implements SubscriptionView, ChatView,
+    GoogleFitView {
+
+    public static final String ARG_NEED_GOOGLE_FIT_INTEGRATION = "needGoogleFitIntegration";
 
     @Inject UserInteractor        userInteractor;
     @Inject SubscriptionPresenter subscriptionPresenter;
     @Inject ChatPresenter         chatPresenter;
+    @Inject GoogleFitPresenter    googleFitPresenter;
 
     @Bind(R.id.drawer)                     DrawerLayout uiDrawer;
     @Bind(R.id.buy_subscription_container) View         uiBuySubscription;
 
+    private boolean needGoogleFitIntegration;
+
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
         Injector.inject(this);
+
+        if (getIntent() != null) {
+            needGoogleFitIntegration = getIntent()
+                .getBooleanExtra(ARG_NEED_GOOGLE_FIT_INTEGRATION, false);
+        }
 
         chatPresenter.initialization();
 
@@ -82,6 +99,10 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
             @Override public void onDrawerStateChanged(int newState) {
             }
         });
+
+        if (needGoogleFitIntegration) {
+            googleFitPresenter.attachView(this, this);
+        }
     }
 
     private void setChatGone(boolean gone) {
@@ -173,6 +194,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     }
 
     @Override public void onStop() {
+        googleFitPresenter.detachView(this);
         super.onStop();
     }
 
@@ -198,8 +220,10 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (!subscriptionPresenter.getBillingProcessor()
-            .handleActivityResult(requestCode, resultCode, data))
+            .handleActivityResult(requestCode, resultCode, data)) {
             super.onActivityResult(requestCode, resultCode, data);
+            googleFitPresenter.handleResponse(requestCode, resultCode, data);
+        }
     }
 
     @Override public void onMessageSent(Message message, MessageUploadStatus messageUploadStatus) {
@@ -214,7 +238,56 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
 
     public void initSidePanel() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.side_panel_container, new ChatSidePanelFragment())
-                .commit();
+            .replace(R.id.side_panel_container, new ChatSidePanelFragment())
+            .commit();
+    }
+
+    @Override public void integrationSuccessful() {
+        Toast.makeText(this, R.string.google_fit_token_retrieved, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override public void errorWhileRetrievingCode() {
+        Toast.makeText(this, R.string.google_fit_fail_to_retrieve_token, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override public void onGoogleServicesError(ConnectionResult result) {
+        SimpleDialog.show(this,
+            getString(R.string.error),
+            getString(R.string.google_play_services_connecting_exeption) +
+                result.getErrorMessage(),
+            getString(R.string.ok),
+            new Action0() {
+                @Override public void call() {
+                }
+            });
+    }
+
+    @Override public void showInternetConnectionError() {
+        SimpleDialog.networkProblem(this);
+    }
+
+    @Override public void showGoogleServiceDisconnected() {
+        SimpleDialog.show(this,
+            getString(R.string.error),
+            getString(R.string.google_play_services_disconnected),
+            getString(R.string.ok),
+            new Action0() {
+                @Override public void call() {
+                }
+            });
+    }
+
+    @Override public void onError(Throwable error) {
+        ErrorUtils.handle(this, error);
+    }
+
+    @Override public void userCancelIntegration() {
+        Logger.dToast(this, "User cancel google fit integration");
+    }
+
+    @Override public void onClientConnected() {
+        googleFitPresenter.logout();
+        googleFitPresenter.startIntegrate(this);
+        needGoogleFitIntegration = false;
     }
 }

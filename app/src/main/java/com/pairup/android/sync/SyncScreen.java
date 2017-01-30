@@ -96,7 +96,7 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
     }
 
     //Google Fit
-    @Override public void codeRetrievedSuccessfull() {
+    @Override public void integrationSuccessful() {
         Toast.makeText(this, R.string.google_fit_token_retrieved, Toast.LENGTH_SHORT).show();
     }
 
@@ -105,16 +105,24 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
     }
 
     @Override public void onGoogleServicesError(ConnectionResult result) {
-        Toast.makeText(SyncScreen.this, "Exception while connecting to Google Play services: " +
-            result.getErrorMessage(), Toast.LENGTH_LONG).show();
+        SimpleDialog.show(context(),
+            getString(R.string.error),
+            getString(R.string.google_play_services_connecting_exeption) +
+                result.getErrorMessage(),
+            getString(R.string.ok),
+            () -> { });
     }
 
     @Override public void showInternetConnectionError() {
         SimpleDialog.networkProblem(context());
     }
 
-    @Override public void showGoogleServiceDisconected() {
-
+    @Override public void showGoogleServiceDisconnected() {
+        SimpleDialog.show(this,
+            getString(R.string.error),
+            getString(R.string.google_play_services_disconnected),
+            getString(R.string.ok),
+            () -> { });
     }
 
     @Override public void onError(Throwable error) {
@@ -123,7 +131,10 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
 
     @Override public void userCancelIntegration() {
         Logger.dToast(context(), "User cancel google fit integration");
-        finish();
+    }
+
+    @Override public void onClientConnected() {
+
     }
 
     //FitBit

@@ -46,7 +46,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
             } else if (getUiInfo().getTitle() != null) {
                 setTitle(getUiInfo().getTitle());
             }
-            if (getUiInfo().isHasBackButton()) {
+            if (getSupportActionBar() != null && getUiInfo().isHasBackButton()) {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             }
         }

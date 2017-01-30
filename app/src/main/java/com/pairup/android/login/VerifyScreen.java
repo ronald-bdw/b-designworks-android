@@ -96,7 +96,7 @@ public class VerifyScreen extends BaseActivity implements VerifyView {
     }
 
     @Override public void openChatScreen() {
-        Navigator.chat(context());
+        Navigator.chatWithGoogleFitIntegration(context());
     }
 
     @Override public void openTourScreen() {

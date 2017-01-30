@@ -67,6 +67,12 @@ public class Navigator {
         context.startActivity(clearStack(new Intent(context, ChatScreen.class)));
     }
 
+    public static void chatWithGoogleFitIntegration(@NonNull Context context) {
+        Intent intent = new Intent(context, ChatScreen.class);
+        intent.putExtra(ChatScreen.ARG_NEED_GOOGLE_FIT_INTEGRATION, true);
+        context.startActivity(clearStack(intent));
+    }
+
     private static Intent clearStack(Intent intent) {
         return intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
     }
@@ -97,7 +103,8 @@ public class Navigator {
 
     public static void registration(@NonNull Context context, @NonNull String phone,
                                     @NonNull String code, @NonNull String phoneCodeId) {
-        context.startActivity(RegistrationScreen.createIntent(context, phone, code, phoneCodeId));
+        context.startActivity(clearStack(
+            RegistrationScreen.createIntent(context, phone, code, phoneCodeId)));
     }
 
     public static void openUrl(@NonNull Context context, @NonNull String url) {
