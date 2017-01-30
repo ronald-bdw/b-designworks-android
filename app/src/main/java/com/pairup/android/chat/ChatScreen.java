@@ -250,16 +250,24 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     }
 
     @Override public void onGoogleServicesError(ConnectionResult result) {
-        Toast.makeText(this, "Exception while connecting to Google Play services: " +
-            result.getErrorMessage(), Toast.LENGTH_LONG).show();
+        SimpleDialog.show(this,
+            getString(R.string.error),
+            getString(R.string.google_play_services_connecting_exeption) +
+                result.getErrorMessage(),
+            getString(R.string.ok),
+            () -> {});
     }
 
     @Override public void showInternetConnectionError() {
         SimpleDialog.networkProblem(this);
     }
 
-    @Override public void showGoogleServiceDisconected() {
-
+    @Override public void showGoogleServiceDisconnected() {
+        SimpleDialog.show(this,
+            getString(R.string.error),
+            getString(R.string.google_play_services_disconnected),
+            getString(R.string.ok),
+            () -> {});
     }
 
     @Override public void onError(Throwable error) {
