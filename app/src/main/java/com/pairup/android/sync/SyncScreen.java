@@ -105,7 +105,7 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
     }
 
     @Override public void onGoogleServicesError(ConnectionResult result) {
-        Toast.makeText(SyncScreen.this, "Exception while connecting to Google Play services: " +
+        Toast.makeText(this, "Exception while connecting to Google Play services: " +
             result.getErrorMessage(), Toast.LENGTH_LONG).show();
     }
 
@@ -123,7 +123,6 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
 
     @Override public void userCancelIntegration() {
         Logger.dToast(context(), "User cancel google fit integration");
-        finish();
     }
 
     //FitBit
