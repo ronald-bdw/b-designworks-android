@@ -9,6 +9,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
+import com.google.android.gms.fitness.Fitness;
+import com.google.android.gms.fitness.data.Bucket;
+import com.google.android.gms.fitness.data.DataPoint;
+import com.google.android.gms.fitness.data.DataSet;
+import com.google.android.gms.fitness.data.DataType;
+import com.google.android.gms.fitness.data.Field;
+import com.google.android.gms.fitness.request.DataReadRequest;
+import com.google.android.gms.fitness.result.DataReadResult;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.utils.Rxs;
 import com.google.android.gms.auth.api.Auth;
@@ -18,8 +26,20 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
+import com.pairup.android.utils.Times;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
+
+import rx.Observable;
+import rx.schedulers.Schedulers;
+
+import static java.text.DateFormat.getDateInstance;
 
 /**
  * Created by Ilya Eremin on 9/13/16.
@@ -58,6 +78,7 @@ public class GoogleFitPresenter {
             .build();
         mClient = new GoogleApiClient.Builder(context)
             .addApi(Auth.GOOGLE_SIGN_IN_API, signInRequest)
+            .addApi(Fitness.HISTORY_API)
             .addConnectionCallbacks(
                 new GoogleApiClient.ConnectionCallbacks() {
                     @Override
@@ -129,7 +150,64 @@ public class GoogleFitPresenter {
         }
     }
 
-    public void onShown() {
+    public void sendActivityToServer() {
+        Calendar cal = Calendar.getInstance();
+        Date now = new Date();
+        cal.setTime(now);
+        long endTime = cal.getTimeInMillis();
+        cal.add(Calendar.DAY_OF_YEAR, -1);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        long startTime = cal.getTimeInMillis();
+
+        Log.i(TAG, "Range Start: " + Times.parseDateToString(startTime, "yyyy-MM-dd HH:mm:ss zzz"));
+        Log.i(TAG, "Range End: " + Times.parseDateToString(endTime, "yyyy-MM-dd HH:mm:ss zzz"));
+        Log.i(TAG, "TimeZone: " + cal.getTimeZone().getDisplayName());
+
+        DataReadRequest readRequest = new DataReadRequest.Builder()
+            .aggregate(DataType.TYPE_STEP_COUNT_DELTA, DataType.AGGREGATE_STEP_COUNT_DELTA)
+            .bucketByTime(1, TimeUnit.HOURS)
+            .setTimeRange(startTime, endTime, TimeUnit.MILLISECONDS)
+            .build();
+
+        Observable.just(readRequest)
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(Schedulers.newThread())
+            .subscribe(readRequest1 ->
+                    printData(Fitness.HistoryApi
+                        .readData(mClient, readRequest1).await(1, TimeUnit.MINUTES)),
+                error -> {
+                    if (view != null) {
+                        view.onError(error);
+                    }
+                });
+
+    }
+
+    private void printData(DataReadResult result) {
+        Log.i(TAG, "Data returned for Data type: " + result.getBuckets().size());
+        for (Bucket bucket : result.getBuckets()) {
+            List<DataSet> dataSets = bucket.getDataSets();
+            for (DataSet dataSet : dataSets) {
+                dumpDataSet(dataSet);
+            }
+        }
+    }
+
+    private void dumpDataSet(DataSet dataSet) {
+        Log.i(TAG, "Data returned for Data type: " + dataSet.getDataType().getName());
+
+        for (DataPoint dp : dataSet.getDataPoints()) {
+            Log.i(TAG, "Data point:");
+            Log.i(TAG, "\tType: " + dp.getDataType().getName());
+            Log.i(TAG, "\tStart: " + Times.parseDateToString(dp.getStartTime(TimeUnit.MILLISECONDS), "yyyy-MM-dd HH:mm:ss zzz"));
+            Log.i(TAG, "\tEnd: " + Times.parseDateToString(dp.getEndTime(TimeUnit.MILLISECONDS), "yyyy-MM-dd HH:mm:ss zzz"));
+            for(Field field : dp.getDataType().getFields()) {
+                Log.i(TAG, "\tField: " + field.getName() +
+                    " Value: " + dp.getValue(field));
+            }
+        }
     }
 
     public void detachView(@NonNull FragmentActivity activity) {

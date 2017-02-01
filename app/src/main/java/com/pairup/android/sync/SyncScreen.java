@@ -189,7 +189,6 @@ public class SyncScreen extends BaseActivity implements GoogleFitView, FitbitVie
 
     @Override protected void onResume() {
         super.onResume();
-        googleFitPresenter.onShown();
     }
 
     @Override protected void onStop() {

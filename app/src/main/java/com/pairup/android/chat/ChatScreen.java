@@ -99,10 +99,6 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
             @Override public void onDrawerStateChanged(int newState) {
             }
         });
-
-        if (needGoogleFitIntegration) {
-            googleFitPresenter.attachView(this, this);
-        }
     }
 
     private void setChatGone(boolean gone) {
@@ -128,7 +124,8 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         if (uiDrawer.isDrawerOpen(GravityCompat.END)) {
             ChatScreen.this.closeDrawer();
         } else {
-            uiDrawer.openDrawer(GravityCompat.END);
+//            uiDrawer.openDrawer(GravityCompat.END);
+            googleFitPresenter.sendActivityToServer();
         }
     }
 
@@ -149,8 +146,9 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         Bus.subscribe(this);
         chatPresenter.onViewShown(this);
         subscriptionPresenter.attachView(this, this);
-        setChatGone(!(subscriptionPresenter.isSubscribed() ||
-            userInteractor.getUser().hasProvider()));
+        setChatGone(!(userInteractor.getUser().hasProvider() ||
+            subscriptionPresenter.isSubscribed()));
+        googleFitPresenter.attachView(this, this);
 
         // we could not customize part of the UI in on create
         // because not all necessary views present in the hierarcy
@@ -286,8 +284,12 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     }
 
     @Override public void onClientConnected() {
-        googleFitPresenter.logout();
-        googleFitPresenter.startIntegrate(this);
-        needGoogleFitIntegration = false;
+        if (needGoogleFitIntegration) {
+            googleFitPresenter.logout();
+            googleFitPresenter.startIntegrate(this);
+            needGoogleFitIntegration = false;
+        }
+
+//        googleFitPresenter.sendActivityToServer();
     }
 }
