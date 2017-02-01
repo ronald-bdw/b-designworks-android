@@ -42,10 +42,11 @@ ext {
             mockito        : "org.mockito:mockito-core:1.+"
     ]
     googleServices = [
-            core            : "com.google.firebase:firebase-core:$versions.googleServicesVersion",
-            messaging       : "com.google.firebase:firebase-messaging:$versions.googleServicesVersion",
-            auth            : "com.google.firebase:firebase-auth:$versions.googleServicesVersion",
-            playServicesAuth: "com.google.android.gms:play-services-auth:$versions.googleServicesVersion"
+            core               : "com.google.firebase:firebase-core:$versions.googleServicesVersion",
+            messaging          : "com.google.firebase:firebase-messaging:$versions.googleServicesVersion",
+            auth               : "com.google.firebase:firebase-auth:$versions.googleServicesVersion",
+            playServicesAuth   : "com.google.android.gms:play-services-auth:$versions.googleServicesVersion",
+            playServicesFitness: "com.google.android.gms:play-services-fitness:$versions.googleServicesVersion"
     ]
     smooch = [
             core: "io.smooch:core:$versions.smooch",
