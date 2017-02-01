@@ -27,9 +27,14 @@ public class Times {
     @SuppressLint("SimpleDateFormat")
     public static String parseDateToString(@NonNull Date date, @NonNull String format) {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
-        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+//        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
         return sdf.format(date);
     }
+
+    public static String parseDateToString(long date, @NonNull String format) {
+        return parseDateToString(new Date(date), format);
+    }
+
 
     public static long now() {
         return System.currentTimeMillis();
