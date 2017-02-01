@@ -115,4 +115,13 @@ public interface Api {
     Observable<Void> sendSubscriptionExpired();
 
     @GET(V1 + "providers") Observable<Providers> getProviders();
+
+    @FormUrlEncoded
+    @POST(V1 + "activities")
+    Observable<ResponseBody> sendActivity(
+        @NonNull @Field("started_at") String startedAt,
+        @NonNull @Field("finished_at") String finishedAt,
+        @Field("steps_count") int stepsCount,
+        @NonNull @Field("source") String source
+    );
 }
