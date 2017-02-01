@@ -36,7 +36,8 @@ public interface Api {
     @POST(V1 + "auth_phone_codes")
     Observable<AuthResponse> sendMeCode(
         @NonNull @Field("phone_number") String phone,
-        @NonNull @Field("device_type") String deviceType);
+        @NonNull @Field("device_type") String deviceType
+    );
 
     @GET(V1 + "users/account") Observable<UserResponse> currentUser();
 
@@ -73,8 +74,10 @@ public interface Api {
 
     @Multipart
     @PUT(V1 + "users/{id}")
-    Observable<UserResponse> uploadAvatar(@NonNull @Path("id") String id,
-                                          @NonNull @Part MultipartBody.Part data);
+    Observable<UserResponse> uploadAvatar(
+        @NonNull @Path("id") String id,
+        @NonNull @Part MultipartBody.Part data
+    );
 
     @FormUrlEncoded
     @POST(V1 + "fitness_tokens") Observable<FitToken> integrateFitnessApp(
@@ -87,8 +90,8 @@ public interface Api {
     );
 
     @FormUrlEncoded
-    @POST("v1/notifications") Observable<ResponseBody> userEnabledPushNotifications(
-        @Field("notification[kind]") String kind
+    @POST(V1 + "notifications") Observable<ResponseBody> userEnabledPushNotifications(
+        @NonNull @Field("notification[kind]") String kind
     );
 
     @DELETE("v1/notifications/message_push")
@@ -96,13 +99,17 @@ public interface Api {
 
     @FormUrlEncoded
     @POST(V1 + "registration_status")
-    Observable<UserStatus> getUserStatus(@Field("phone_number") String phone);
+    Observable<UserStatus> getUserStatus(
+        @NonNull @Field("phone_number") String phone
+    );
 
     @FormUrlEncoded
     @POST(V1 + "subscriptions")
-    Observable<Void> sendSubscriptionStatus(@Field("plan_name") String plan,
-                                            @Field("expires_at") String date,
-                                            @Field("active") boolean isActive);
+    Observable<Void> sendSubscriptionStatus(
+        @NonNull @Field("plan_name") String plan,
+        @NonNull @Field("expires_at") String date,
+        @Field("active") boolean isActive
+    );
 
     @PATCH(V1 + "subscriptions/expire")
     Observable<Void> sendSubscriptionExpired();
