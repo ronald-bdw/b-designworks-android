@@ -26,6 +26,7 @@ import io.smooch.core.Smooch;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import rx.Observable;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
@@ -267,5 +268,12 @@ public class UserInteractor {
 
     public Observable<Providers> getProviders() {
         return api.getProviders();
+    }
+
+    public Observable<ResponseBody> sendActivity(@NonNull String startTime,
+                                                 @NonNull String finshTime,
+                                                 int stepsCount,
+                                                 @NonNull String source){
+        return api.sendActivity(startTime, finshTime, stepsCount, source);
     }
 }
