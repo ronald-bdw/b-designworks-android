@@ -147,29 +147,16 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
                 ArrayList<String> purchaseDataList =
                     skuDetails.getStringArrayList("INAPP_PURCHASE_DATA_LIST");
                 if (purchaseDataList != null && purchaseDataList.size() > 0) {
-                    for (String purchaseData : purchaseDataList) {
-                        Log.d("SubscriptionPresenter", purchaseData);
-                        subscriptionsDetails = getSubscribeDataFromString(purchaseData);
-                        if (SubscriptionDetailsUtils.isActive(subscriptionsDetails.isRenewing(),
-                            subscriptionsDetails.getPurchaseDate())) {
-                            isSubscribed = true;
-                            Bus.event(SubscriptionChangeEvent.EVENT);
-                            userInteractor.sendInAppStatus(subscriptionsDetails.getPlanName(),
-                                SubscriptionDetailsUtils.getFormattedExpiredDate(subscriptionsDetails),
-                                isSubscribed)
-                                .subscribeOn(Schedulers.io())
-                                .doOnTerminate(() -> {
-                                    isSubscribed = SubscriptionDetailsUtils.isActive(
-                                        subscriptionsDetails.isRenewing(),
-                                        subscriptionsDetails.getPurchaseDate());
-                                })
-                                .subscribe(result -> { }, ignoreError -> { });
-                            break;
-                        }
-                    }
+                    isSubscribed = true;
+                    Bus.event(SubscriptionChangeEvent.EVENT);
+                    subscriptionsDetails = getSubscribeDataFromString(purchaseDataList.get(0));
+                    userInteractor.sendInAppStatus(subscriptionsDetails.getPlanName(),
+                        SubscriptionDetailsUtils.getFormattedExpiredDate(subscriptionsDetails),
+                        SubscriptionDetailsUtils.isActive(subscriptionsDetails))
+                        .subscribeOn(Schedulers.io())
+                        .subscribe(result -> { }, ignoreError -> { });
                 } else if (userInteractor.getUser() != null &&
                     userInteractor.getUser().getProvider() == null) {
-
                     isSubscribed = false;
                     userInteractor.sendInAppStatusExpired()
                         .subscribeOn(Schedulers.io())
