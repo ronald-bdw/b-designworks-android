@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.pairup.android.UserInteractor;
+import com.pairup.android.sync.models.Provider;
 import com.pairup.android.utils.Rxs;
 
 /**

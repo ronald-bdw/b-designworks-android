@@ -3,6 +3,7 @@ package com.pairup.android.sync;
 import com.pairup.android.RxSchedulersOverrideRule;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.login.models.FitToken;
+import com.pairup.android.sync.models.Provider;
 
 import org.junit.Before;
 import org.junit.Rule;

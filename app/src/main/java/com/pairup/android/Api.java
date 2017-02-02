@@ -8,10 +8,12 @@ import com.pairup.android.login.models.FitToken;
 import com.pairup.android.login.models.Providers;
 import com.pairup.android.login.models.UserResponse;
 import com.pairup.android.login.models.UserStatus;
-import com.pairup.android.sync.Provider;
+import com.pairup.android.sync.models.ActivityToSend;
+import com.pairup.android.sync.models.Provider;
 
 import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -116,12 +118,18 @@ public interface Api {
 
     @GET(V1 + "providers") Observable<Providers> getProviders();
 
-    @FormUrlEncoded
+//    @FormUrlEncoded
+//    @POST(V1 + "activities")
+//    Observable<ResponseBody> sendActivity(
+//        @NonNull @Field("started_at") String startedAt,
+//        @NonNull @Field("finished_at") String finishedAt,
+//        @Field("steps_count") int stepsCount,
+//        @NonNull @Field("source") String source
+//    );
+
+//    @FormUrlEncoded
     @POST(V1 + "activities")
     Observable<ResponseBody> sendActivity(
-        @NonNull @Field("started_at") String startedAt,
-        @NonNull @Field("finished_at") String finishedAt,
-        @Field("steps_count") int stepsCount,
-        @NonNull @Field("source") String source
-    );
+            @NonNull @Body ActivityToSend activityToSend
+            );
 }

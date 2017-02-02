@@ -1,6 +1,6 @@
 package com.pairup.android.login.models;
 
-import com.pairup.android.sync.Provider;
+import com.pairup.android.sync.models.Provider;
 
 /**
  * Created by almaziskhakov on 20/10/2016.

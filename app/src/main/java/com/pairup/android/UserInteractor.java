@@ -14,13 +14,16 @@ import com.pairup.android.login.models.UserResponse;
 import com.pairup.android.login.models.UserStatus;
 import com.pairup.android.sync.FitBitAuthorizationStateChangedEvent;
 import com.pairup.android.sync.GoogleFitAuthorizationStateChangedEvent;
-import com.pairup.android.sync.Provider;
+import com.pairup.android.sync.models.Activity;
+import com.pairup.android.sync.models.ActivityToSend;
+import com.pairup.android.sync.models.Provider;
 import com.pairup.android.utils.Bus;
 import com.pairup.android.utils.Logger;
 import com.pairup.android.utils.storage.IStorage;
 import com.pairup.android.utils.storage.UserSettings;
 
 import java.io.File;
+import java.util.List;
 
 import io.smooch.core.Smooch;
 import okhttp3.MediaType;
@@ -270,10 +273,7 @@ public class UserInteractor {
         return api.getProviders();
     }
 
-    public Observable<ResponseBody> sendActivity(@NonNull String startTime,
-                                                 @NonNull String finshTime,
-                                                 int stepsCount,
-                                                 @NonNull String source){
-        return api.sendActivity(startTime, finshTime, stepsCount, source);
+    public Observable<ResponseBody> sendActivity(@NonNull List<Activity> activities){
+        return api.sendActivity(new ActivityToSend(activities));
     }
 }

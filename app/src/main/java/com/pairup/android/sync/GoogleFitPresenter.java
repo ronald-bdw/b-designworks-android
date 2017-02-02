@@ -18,6 +18,7 @@ import com.google.android.gms.fitness.data.Field;
 import com.google.android.gms.fitness.request.DataReadRequest;
 import com.google.android.gms.fitness.result.DataReadResult;
 import com.pairup.android.UserInteractor;
+import com.pairup.android.sync.models.Provider;
 import com.pairup.android.utils.Rxs;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -28,7 +29,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
 import com.pairup.android.utils.Times;
 
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -57,6 +58,9 @@ public class GoogleFitPresenter {
     private final UserInteractor  userInteractor;
     private final Context         context;
     private       GoogleApiClient mClient;
+    private       int             timeZone;
+
+    private List<com.pairup.android.sync.models.Activity> activityList;
 
     @Inject
     public GoogleFitPresenter(@NonNull UserInteractor userInteractor,
@@ -163,7 +167,8 @@ public class GoogleFitPresenter {
 
         Log.i(TAG, "Range Start: " + Times.parseDateToString(startTime, "yyyy-MM-dd HH:mm:ss zzz"));
         Log.i(TAG, "Range End: " + Times.parseDateToString(endTime, "yyyy-MM-dd HH:mm:ss zzz"));
-        Log.i(TAG, "TimeZone: " + cal.getTimeZone().getDisplayName());
+        Log.i(TAG, "TimeZone: " + cal.getTimeZone().getRawOffset()/3600000);
+        timeZone = cal.getTimeZone().getRawOffset()/3600000;
 
         DataReadRequest readRequest = new DataReadRequest.Builder()
             .aggregate(DataType.TYPE_STEP_COUNT_DELTA, DataType.AGGREGATE_STEP_COUNT_DELTA)
@@ -175,7 +180,7 @@ public class GoogleFitPresenter {
             .subscribeOn(Schedulers.newThread())
             .observeOn(Schedulers.newThread())
             .subscribe(readRequest1 ->
-                    printData(Fitness.HistoryApi
+                    sendStepsData(Fitness.HistoryApi
                         .readData(mClient, readRequest1).await(1, TimeUnit.MINUTES)),
                 error -> {
                     if (view != null) {
@@ -185,28 +190,41 @@ public class GoogleFitPresenter {
 
     }
 
-    private void printData(DataReadResult result) {
-        Log.i(TAG, "Data returned for Data type: " + result.getBuckets().size());
+    private void sendStepsData(DataReadResult result) {
+//        Log.i(TAG, "only one or more: " + result.getBuckets().size());
+        activityList = new ArrayList<>();
         for (Bucket bucket : result.getBuckets()) {
             List<DataSet> dataSets = bucket.getDataSets();
             for (DataSet dataSet : dataSets) {
                 dumpDataSet(dataSet);
             }
         }
+        com.pairup.android.sync.models.Activity[] activities = activityList.toArray(new com.pairup.android.sync.models.Activity[activityList.size()]);
+        Log.i(TAG, "before sending");
+        userInteractor.sendActivity(activityList);
+        Log.i(TAG, "after sending");
     }
 
     private void dumpDataSet(DataSet dataSet) {
-        Log.i(TAG, "Data returned for Data type: " + dataSet.getDataType().getName());
+//        Log.i(TAG, "Data returned for Data type: " + dataSet.getDataType().getName());
 
         for (DataPoint dp : dataSet.getDataPoints()) {
-            Log.i(TAG, "Data point:");
-            Log.i(TAG, "\tType: " + dp.getDataType().getName());
-            Log.i(TAG, "\tStart: " + Times.parseDateToString(dp.getStartTime(TimeUnit.MILLISECONDS), "yyyy-MM-dd HH:mm:ss zzz"));
-            Log.i(TAG, "\tEnd: " + Times.parseDateToString(dp.getEndTime(TimeUnit.MILLISECONDS), "yyyy-MM-dd HH:mm:ss zzz"));
+            com.pairup.android.sync.models.Activity activity = new com.pairup.android.sync.models.Activity();
+            activity.setStartedAt(Times.parseDateToString(dp.getStartTime(TimeUnit.MILLISECONDS), "yyyy-MM-dd HH:mm:ss") + " GMT+" + timeZone);
+            activity.setFinishedAt(Times.parseDateToString(dp.getEndTime(TimeUnit.MILLISECONDS), "yyyy-MM-dd HH:mm:ss") + " GMT+" + timeZone);
+            activity.setSource("googlefit");
+
+//            Log.i(TAG, "Data point:");
+//            Log.i(TAG, "\tType: " + dp.getDataType().getName());
+//            Log.i(TAG, "\tStart: " + Times.parseDateToString(dp.getStartTime(TimeUnit.MILLISECONDS), "yyyy-MM-dd HH:mm:ss")+" GMT+");
+//            Log.i(TAG, "\tEnd: " + Times.parseDateToString(dp.getEndTime(TimeUnit.MILLISECONDS), "yyyy-MM-dd HH:mm:ss zzz"));
             for(Field field : dp.getDataType().getFields()) {
-                Log.i(TAG, "\tField: " + field.getName() +
-                    " Value: " + dp.getValue(field));
+//                Log.i(TAG, "\tField: " + field.getName() + " Value: " + dp.getValue(field));
+                if("steps".equals(field.getName())) {
+                    activity.setStepsCount(dp.getValue(field).asInt());
+                }
             }
+            activityList.add(activity);
         }
     }
 

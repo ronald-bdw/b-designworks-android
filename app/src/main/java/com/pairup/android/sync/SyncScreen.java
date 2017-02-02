@@ -14,6 +14,7 @@ import com.pairup.android.BuildConfig;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
+import com.pairup.android.sync.models.Provider;
 import com.pairup.android.utils.Bus;
 import com.pairup.android.utils.Analytics;
 import com.pairup.android.utils.Logger;

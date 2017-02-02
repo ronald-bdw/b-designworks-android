@@ -1,4 +1,4 @@
-package com.pairup.android.sync;
+package com.pairup.android.sync.models;
 
 import com.google.gson.annotations.SerializedName;
 
