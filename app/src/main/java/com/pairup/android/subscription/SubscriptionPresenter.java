@@ -10,6 +10,7 @@ import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 
 import com.android.vending.billing.IInAppBillingService;
 import com.anjlab.android.iab.v3.BillingProcessor;
@@ -31,9 +32,9 @@ import rx.schedulers.Schedulers;
 
 public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
 
-    private static final String THREE_MONTH_SUBSCRIPTION_ID = "three_month_subscription_v1";
-    private static final String SIX_MONTH_SUBSCRIPTION_ID   = "six_month_subscription_v1";
-    private static final String ONE_YEAR_SUBSCRIPTION_ID    = "one_year_subscription_v1";
+    public static final  String THREE_MONTH_SUBSCRIPTION_ID = "three_month_subscription_v1";
+    public static final  String SIX_MONTH_SUBSCRIPTION_ID   = "six_month_subscription_v1";
+    public static final  String ONE_YEAR_SUBSCRIPTION_ID    = "one_year_subscription_v1";
     private static final String PURCHASE_KEY                = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8" +
         "AMIIBCgKCAQEAorESPZk0zw3hhu3kFGoGm1wsJJX/TJWOB/+q9LQ+VpN2TVuyzouVaYSxOSaHXg3/s1t4tUni" +
         "7Ih3EVwR4//dbTH7ob3JdDoRzlWsgJaHeytH8qW6hPCdRX/cHLT0PbldwryUh92/yjBeel4Lo7McirS97MYEl" +
@@ -147,14 +148,15 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
                     skuDetails.getStringArrayList("INAPP_PURCHASE_DATA_LIST");
                 if (purchaseDataList != null && purchaseDataList.size() > 0) {
                     for (String purchaseData : purchaseDataList) {
+                        Log.d("SubscriptionPresenter", purchaseData);
                         subscriptionsDetails = getSubscribeDataFromString(purchaseData);
                         if (SubscriptionDetailsUtils.isActive(subscriptionsDetails.isRenewing(),
                             subscriptionsDetails.getPurchaseDate())) {
                             isSubscribed = true;
                             Bus.event(SubscriptionChangeEvent.EVENT);
                             userInteractor.sendInAppStatus(subscriptionsDetails.getPlanName(),
-                                SubscriptionDetailsUtils.getExpiredDate(
-                                    subscriptionsDetails.getPurchaseDate()), isSubscribed)
+                                SubscriptionDetailsUtils.getFormattedExpiredDate(subscriptionsDetails),
+                                isSubscribed)
                                 .subscribeOn(Schedulers.io())
                                 .doOnTerminate(() -> {
                                     isSubscribed = SubscriptionDetailsUtils.isActive(
@@ -162,7 +164,7 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
                                         subscriptionsDetails.getPurchaseDate());
                                 })
                                 .subscribe(result -> { }, ignoreError -> { });
-                            return;
+                            break;
                         }
                     }
                 } else if (userInteractor.getUser() != null &&

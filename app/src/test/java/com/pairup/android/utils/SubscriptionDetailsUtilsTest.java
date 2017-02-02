@@ -44,12 +44,12 @@ public class SubscriptionDetailsUtilsTest {
     @Test
     public void getExpiredDateTest() {
         Assert.assertNotNull(SubscriptionDetailsUtils
-            .getExpiredDate(subscriptionsDetails.getPurchaseDate()));
+            .getFormattedExpiredDate(subscriptionsDetails.getPurchaseDate()));
     }
 
     @Test
     public void getExpiredDateTest2() {
         Assert.assertEquals(SubscriptionDetailsUtils
-            .getExpiredDate(1480336855249L), "2016-12-28T12:40:55Z");
+            .getFormattedExpiredDate(1480336855249L), "2016-12-28T12:40:55Z");
     }
 }
