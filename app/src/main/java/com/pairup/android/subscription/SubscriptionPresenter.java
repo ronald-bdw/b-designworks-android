@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.chat.models.SubscriptionsDetails;
+import com.pairup.android.utils.Bus;
 import com.pairup.android.utils.SubscriptionDetailsUtils;
 
 import java.util.ArrayList;
@@ -46,6 +47,7 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
     private SubscriptionsDetails subscriptionsDetails;
     private Gson                 gson;
     private UserInteractor       userInteractor;
+    private boolean              isSubscribed;
 
     private IInAppBillingService mBillingService;
     private ServiceConnection mServiceConnection = new ServiceConnection() {
@@ -91,9 +93,7 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
     }
 
     public boolean isSubscribed() {
-        return bp.isSubscribed(THREE_MONTH_SUBSCRIPTION_ID) ||
-            bp.isSubscribed(SIX_MONTH_SUBSCRIPTION_ID) ||
-            bp.isSubscribed(ONE_YEAR_SUBSCRIPTION_ID);
+        return isSubscribed;
     }
 
     @StringRes public int getSubscriptionStatusText() {
@@ -146,16 +146,29 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
                 ArrayList<String> purchaseDataList =
                     skuDetails.getStringArrayList("INAPP_PURCHASE_DATA_LIST");
                 if (purchaseDataList != null && purchaseDataList.size() > 0) {
-                    subscriptionsDetails = getSubscribeDataFromString(purchaseDataList.get(0));
-                    userInteractor.sendInAppStatus(subscriptionsDetails.getPlanName(),
-                        SubscriptionDetailsUtils
-                            .getExpiredDate(subscriptionsDetails.getPurchaseDate()),
-                        SubscriptionDetailsUtils.isActive(subscriptionsDetails.isRenewing(),
-                            subscriptionsDetails.getPurchaseDate()))
-                        .subscribeOn(Schedulers.io())
-                        .subscribe(result -> { }, ignoreError -> { });
+                    for (String purchaseData : purchaseDataList) {
+                        subscriptionsDetails = getSubscribeDataFromString(purchaseData);
+                        if (SubscriptionDetailsUtils.isActive(subscriptionsDetails.isRenewing(),
+                            subscriptionsDetails.getPurchaseDate())) {
+                            isSubscribed = true;
+                            Bus.event(SubscriptionChangeEvent.EVENT);
+                            userInteractor.sendInAppStatus(subscriptionsDetails.getPlanName(),
+                                SubscriptionDetailsUtils.getExpiredDate(
+                                    subscriptionsDetails.getPurchaseDate()), isSubscribed)
+                                .subscribeOn(Schedulers.io())
+                                .doOnTerminate(() -> {
+                                    isSubscribed = SubscriptionDetailsUtils.isActive(
+                                        subscriptionsDetails.isRenewing(),
+                                        subscriptionsDetails.getPurchaseDate());
+                                })
+                                .subscribe(result -> { }, ignoreError -> { });
+                            return;
+                        }
+                    }
                 } else if (userInteractor.getUser() != null &&
-                        userInteractor.getUser().getProvider() == null) {
+                    userInteractor.getUser().getProvider() == null) {
+
+                    isSubscribed = false;
                     userInteractor.sendInAppStatusExpired()
                         .subscribeOn(Schedulers.io())
                         .subscribe(result -> { }, ignoreError -> { });
