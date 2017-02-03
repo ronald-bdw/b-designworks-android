@@ -3,6 +3,7 @@ package com.pairup.android.login;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -37,7 +38,7 @@ import butterknife.OnEditorAction;
 public class EnterPhoneScreen extends BaseActivity implements EnterPhoneView {
 
     public static final String ARG_ACCOUNT_VERIFICATION_TYPE = "account_verification_type";
-    public static final String ARG_PROVIDER_NAME = "provider_name";
+    public static final String ARG_PROVIDER_NAME             = "provider_name";
 
     private static final int CODE_REQUEST_AREA = 1121;
 
@@ -49,8 +50,8 @@ public class EnterPhoneScreen extends BaseActivity implements EnterPhoneView {
 
     @Nullable private ProgressDialog progressDialog;
 
-    private AccountVerificationType accountVerificationType;
-    @Nullable private String        providerName;
+    private           AccountVerificationType accountVerificationType;
+    @Nullable private String                  providerName;
 
     @NonNull @Override public UiInfo getUiInfo() {
         return new UiInfo(R.layout.screen_enter_phone)
@@ -95,7 +96,7 @@ public class EnterPhoneScreen extends BaseActivity implements EnterPhoneView {
         String phone = TextViews.textOf(uiPhone);
         String areaCode = enterPhonePresenter.getAreaCode(TextViews.textOf(uiAreaCode));
         enterPhonePresenter.onSubmitClick(phone, areaCode,
-                providerName, accountVerificationType, this);
+            providerName, accountVerificationType, this);
     }
 
     @Override
@@ -109,13 +110,32 @@ public class EnterPhoneScreen extends BaseActivity implements EnterPhoneView {
                 errorMessage = getString(R.string.screen_enter_phone_error_registered);
                 break;
             case HAS_PROVIDER:
-                errorMessage = getString(R.string.screen_enter_phone_error_has_no_provider);
+                errorMessage = enterPhonePresenter.hasProvider() ?
+                    getString(R.string.screen_enter_phone_error_has_another_provider) :
+                    getString(R.string.screen_enter_phone_error_has_no_provider);
                 break;
             default:
                 break;
         }
-        SimpleDialog.show(context(), getString(R.string.error), errorMessage,
-            getString(R.string.ok), () -> Navigator.welcome(this));
+        if (accountVerificationType == AccountVerificationType.HAS_PROVIDER) {
+            SimpleDialog.show(context(), getString(R.string.error), errorMessage,
+                getString(R.string.ok), () -> Navigator.welcome(this),
+                "contact us", () -> {
+                    Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                    emailIntent.setData(Uri.parse("mailto:"));
+                    emailIntent.setType("text/plain");
+                    emailIntent.putExtra(Intent.EXTRA_EMAIL,
+                        new String[]{getString(R.string.support_email)});
+                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_subject));
+                    startActivity(Intent.createChooser(emailIntent,
+                        getString(R.string.email_chooser)));
+                    Navigator.welcome(this);
+                });
+
+        } else {
+            SimpleDialog.show(context(), getString(R.string.error), errorMessage,
+                getString(R.string.ok), () -> Navigator.welcome(this));
+        }
     }
 
     @Override protected void onStop() {
@@ -174,7 +194,7 @@ public class EnterPhoneScreen extends BaseActivity implements EnterPhoneView {
     public void showProgress() {
         progressDialog = ProgressDialog.show(context(), getString(R.string.loading),
             getString(R.string.progress_verifying_phone_number), true, true, dialog -> {
-                    enterPhonePresenter.onCancelVerifyingProcess();
+                enterPhonePresenter.onCancelVerifyingProcess();
             });
     }
 

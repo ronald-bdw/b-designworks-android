@@ -23,15 +23,15 @@ import rx.Subscription;
 
 public class EnterPhonePresenter {
 
-    private final UserInteractor userInteractor;
+    private final UserInteractor      userInteractor;
     private final LoginFlowInteractor loginFlowInteractor;
-    private final Analytics analytics;
+    private final Analytics           analytics;
 
 
     @Nullable
     private EnterPhoneView view;
 
-    private boolean hasProvider;
+    private boolean      hasProvider;
     @Nullable
     private Subscription verifyNumberSubs;
 
@@ -89,7 +89,7 @@ public class EnterPhonePresenter {
         if (!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(areaCode)) {
             if (isCorrectAreaCode(areaCode, context)) {
                 manageSubmit(areaCode, phone,
-                        accountVerificationType, providerName);
+                    accountVerificationType, providerName);
             } else {
                 if (view != null) {
                     view.registrationErrorFillAreaCode();
@@ -117,74 +117,78 @@ public class EnterPhonePresenter {
             formattedPhone = phone;
         }
         userInteractor.requestUserStatus(areaCode + formattedPhone)
-                .compose(Rxs.doInBackgroundDeliverToUI())
-                .subscribe(result -> {
-                    boolean passed = false;
-                    hasProvider = result.userHasProvider();
-                    switch (accountVerificationType) {
-                        case IS_REGISTERED:
-                            passed = result.isPhoneRegistered();
-                            break;
-                        case IS_NOT_REGISTERED:
-                            passed = !result.isPhoneRegistered();
-                            break;
-                        case HAS_PROVIDER:
-                            if (hasProvider && result.getProvider().equals(providerName)) {
-                                passed = hasProvider;
-                            } else {
-                                analytics.logWrongProviderChoosen();
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-                    if (passed) {
-                        requestAuthorizationCode(areaCode, formattedPhone);
-                    } else {
-                        if (view != null) {
-                            view.showErrorDialog();
+            .compose(Rxs.doInBackgroundDeliverToUI())
+            .subscribe(result -> {
+                boolean passed = false;
+                hasProvider = result.userHasProvider();
+                switch (accountVerificationType) {
+                    case IS_REGISTERED:
+                        passed = result.isPhoneRegistered();
+                        break;
+                    case IS_NOT_REGISTERED:
+                        passed = !result.isPhoneRegistered();
+                        break;
+                    case HAS_PROVIDER:
+                        if (hasProvider && result.getProvider().equals(providerName)) {
+                            passed = hasProvider;
+                        } else {
+                            analytics.logWrongProviderChoosen();
                         }
-                    }
-                }, error -> {
+                        break;
+                    default:
+                        break;
+                }
+                if (passed) {
+                    requestAuthorizationCode(areaCode, formattedPhone);
+                } else {
                     if (view != null) {
-                        view.handleError();
+                        view.showErrorDialog();
                     }
-                });
+                }
+            }, error -> {
+                if (view != null) {
+                    view.handleError();
+                }
+            });
     }
 
     private void requestAuthorizationCode(@NonNull String areaCode, @NonNull String phone) {
         if (verifyNumberSubs != null) return;
         verifyNumberSubs = userInteractor.requestCode(areaCode + phone)
-                .doOnTerminate(() -> {
-                    verifyNumberSubs = null;
-                    if (view != null) {
-                        view.hideProgress();
-                    }
-                })
-                .compose(Rxs.doInBackgroundDeliverToUI())
-                .subscribe(result -> {
-                    loginFlowInteractor.setPhoneCodeId(result.getPhoneCodeId());
-                    loginFlowInteractor.setPhoneRegistered(result.isPhoneRegistered());
-                    loginFlowInteractor.setPhoneNumber(areaCode + phone);
+            .doOnTerminate(() -> {
+                verifyNumberSubs = null;
+                if (view != null) {
+                    view.hideProgress();
+                }
+            })
+            .compose(Rxs.doInBackgroundDeliverToUI())
+            .subscribe(result -> {
+                loginFlowInteractor.setPhoneCodeId(result.getPhoneCodeId());
+                loginFlowInteractor.setPhoneRegistered(result.isPhoneRegistered());
+                loginFlowInteractor.setPhoneNumber(areaCode + phone);
 
-                    loginFlowInteractor.setHasProvider(hasProvider);
-                    if (view != null) {
-                        view.openVerificationScreen();
-                    }
-                }, error -> {
-                    if (error instanceof RetrofitException) {
-                        RetrofitException retrofitError = (RetrofitException) error;
-                        if (retrofitError.getKind() == RetrofitException.Kind.NETWORK) {
-                            if (view != null) {
-                                view.showDialogNetworkProblem();
-                            }
-                        } else {
-                            if (view != null) {
-                                view.showPhoneError();
-                            }
+                loginFlowInteractor.setHasProvider(hasProvider);
+                if (view != null) {
+                    view.openVerificationScreen();
+                }
+            }, error -> {
+                if (error instanceof RetrofitException) {
+                    RetrofitException retrofitError = (RetrofitException) error;
+                    if (retrofitError.getKind() == RetrofitException.Kind.NETWORK) {
+                        if (view != null) {
+                            view.showDialogNetworkProblem();
+                        }
+                    } else {
+                        if (view != null) {
+                            view.showPhoneError();
                         }
                     }
-                });
+                }
+            });
+    }
+
+    public boolean hasProvider() {
+        return hasProvider;
     }
 
     public void onCancelVerifyingProcess() {

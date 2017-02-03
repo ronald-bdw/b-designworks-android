@@ -68,6 +68,7 @@ public class SimpleDialog {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context)
             .setTitle(title)
+            .setCancelable(false)
             .setMessage(message)
             .setPositiveButton(firstButtonLabel, dialogClickListener);
         if (secondBtnLabel != null) {
