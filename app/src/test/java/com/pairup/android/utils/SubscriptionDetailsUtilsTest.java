@@ -1,6 +1,7 @@
 package com.pairup.android.utils;
 
 import com.pairup.android.chat.models.SubscriptionsDetails;
+import com.pairup.android.subscription.SubscriptionPresenter;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -30,26 +31,34 @@ public class SubscriptionDetailsUtilsTest {
     @Test
     public void isActiveTest() {
         Assert.assertTrue(SubscriptionDetailsUtils
-            .isActive(subscriptionsDetails.isRenewing(), subscriptionsDetails.getPurchaseDate()));
+            .isActive(subscriptionsDetails));
     }
 
     @Test
     public void isActiveTest2() {
+        SubscriptionsDetails subscriptionsDetails = new SubscriptionsDetails();
+        subscriptionsDetails.setPlanId(SUBSCRIPTION_NAME);
+        subscriptionsDetails.setRenewing(false);
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date(subscriptionsDetails.getPurchaseDate()));
+        calendar.setTime(new Date());
         calendar.add(Calendar.MONTH, -2);
-        Assert.assertFalse(SubscriptionDetailsUtils.isActive(false, calendar.getTime().getTime()));
+        subscriptionsDetails.setPurchaseDate(calendar.getTime().getTime());
+        Assert.assertFalse(SubscriptionDetailsUtils.isActive(subscriptionsDetails));
     }
 
     @Test
     public void getExpiredDateTest() {
         Assert.assertNotNull(SubscriptionDetailsUtils
-            .getFormattedExpiredDate(subscriptionsDetails.getPurchaseDate()));
+            .getFormattedExpiredDate(subscriptionsDetails));
     }
 
     @Test
     public void getExpiredDateTest2() {
+        SubscriptionsDetails subscriptionsDetails = new SubscriptionsDetails();
+        subscriptionsDetails.setPlanId(SubscriptionPresenter.ONE_YEAR_SUBSCRIPTION_ID);
+        subscriptionsDetails.setRenewing(true);
+        subscriptionsDetails.setPurchaseDate(1480336855249L);
         Assert.assertEquals(SubscriptionDetailsUtils
-            .getFormattedExpiredDate(1480336855249L), "2016-12-28T12:40:55Z");
+            .getFormattedExpiredDate(subscriptionsDetails), "2017-11-28T12:40:55Z");
     }
 }
