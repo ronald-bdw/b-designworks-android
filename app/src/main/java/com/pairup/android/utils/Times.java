@@ -38,4 +38,8 @@ public class Times {
     public static long timePassedFromInSeconds(@NonNull Date start) {
         return (Times.now() - start.getTime()) / 60;
     }
+
+    public static String getTimeZone() {
+        return Calendar.getInstance().getTimeZone().getID();
+    }
 }
