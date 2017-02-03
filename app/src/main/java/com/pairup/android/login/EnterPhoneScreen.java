@@ -130,11 +130,11 @@ public class EnterPhoneScreen extends BaseActivity implements EnterPhoneView {
                     startActivity(Intent.createChooser(emailIntent,
                         getString(R.string.email_chooser)));
                     Navigator.welcome(this);
-                });
+                }, false);
 
         } else {
             SimpleDialog.show(context(), getString(R.string.error), errorMessage,
-                getString(R.string.ok), () -> Navigator.welcome(this));
+                getString(R.string.ok), () -> Navigator.welcome(this), false);
         }
     }
 
