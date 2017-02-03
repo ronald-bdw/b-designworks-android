@@ -31,9 +31,6 @@ import rx.schedulers.Schedulers;
 
 public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
 
-    public static final  String THREE_MONTH_SUBSCRIPTION_ID = "three_month_subscription_v1";
-    public static final  String SIX_MONTH_SUBSCRIPTION_ID   = "six_month_subscription_v1";
-    public static final  String ONE_YEAR_SUBSCRIPTION_ID    = "one_year_subscription_v1";
     private static final String PURCHASE_KEY                = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8" +
         "AMIIBCgKCAQEAorESPZk0zw3hhu3kFGoGm1wsJJX/TJWOB/+q9LQ+VpN2TVuyzouVaYSxOSaHXg3/s1t4tUni" +
         "7Ih3EVwR4//dbTH7ob3JdDoRzlWsgJaHeytH8qW6hPCdRX/cHLT0PbldwryUh92/yjBeel4Lo7McirS97MYEl" +
@@ -106,13 +103,13 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
     public void subscribe(int subscription) {
         switch (subscription) {
             case 0:
-                bp.subscribe(activity, THREE_MONTH_SUBSCRIPTION_ID);
+                bp.subscribe(activity, Subscription.THREE_MONTH_SUBSCRIPTION_ID.getPlanId());
                 break;
             case 1:
-                bp.subscribe(activity, SIX_MONTH_SUBSCRIPTION_ID);
+                bp.subscribe(activity, Subscription.SIX_MONTH_SUBSCRIPTION_ID.getPlanId());
                 break;
             case 2:
-                bp.subscribe(activity, ONE_YEAR_SUBSCRIPTION_ID);
+                bp.subscribe(activity, Subscription.ONE_YEAR_SUBSCRIPTION_ID.getPlanId());
                 break;
             default:
         }
@@ -134,9 +131,9 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
 
     public void receiveSubscriptionDetails() {
         ArrayList<String> skuList = new ArrayList<>();
-        skuList.add(THREE_MONTH_SUBSCRIPTION_ID);
-        skuList.add(SIX_MONTH_SUBSCRIPTION_ID);
-        skuList.add(ONE_YEAR_SUBSCRIPTION_ID);
+        skuList.add(Subscription.THREE_MONTH_SUBSCRIPTION_ID.getPlanId());
+        skuList.add(Subscription.SIX_MONTH_SUBSCRIPTION_ID.getPlanId());
+        skuList.add(Subscription.ONE_YEAR_SUBSCRIPTION_ID.getPlanId());
         Bundle querySkus = new Bundle();
         querySkus.putStringArrayList("ITEM_ID_LIST", skuList);
 

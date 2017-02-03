@@ -3,7 +3,7 @@ package com.pairup.android.utils;
 import android.support.annotation.NonNull;
 
 import com.pairup.android.chat.models.SubscriptionsDetails;
-import com.pairup.android.subscription.SubscriptionPresenter;
+import com.pairup.android.subscription.Subscription;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -28,19 +28,20 @@ public class SubscriptionDetailsUtils {
 
     public static Date getExpireDate(@NonNull SubscriptionsDetails subscriptionsDetails) {
         int monthsCountToExpire = 0;
-        switch (subscriptionsDetails.getPlanId()) {
-            case SubscriptionPresenter.THREE_MONTH_SUBSCRIPTION_ID:
+        switch (Subscription.getEnum(subscriptionsDetails.getPlanId())) {
+            case THREE_MONTH_SUBSCRIPTION_ID:
                 monthsCountToExpire = 3;
                 break;
-            case SubscriptionPresenter.SIX_MONTH_SUBSCRIPTION_ID:
+            case SIX_MONTH_SUBSCRIPTION_ID:
                 monthsCountToExpire = 6;
                 break;
-            case SubscriptionPresenter.ONE_YEAR_SUBSCRIPTION_ID:
+            case ONE_YEAR_SUBSCRIPTION_ID:
                 monthsCountToExpire = 12;
                 break;
             default:
                 break;
         }
+
         return Times.addToDateTime(subscriptionsDetails.getPurchaseDate(),
             Calendar.MONTH, monthsCountToExpire);
     }

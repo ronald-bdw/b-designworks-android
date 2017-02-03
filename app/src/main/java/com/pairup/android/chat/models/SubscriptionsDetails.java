@@ -1,7 +1,8 @@
 package com.pairup.android.chat.models;
 
 import com.google.gson.annotations.SerializedName;
-import com.pairup.android.subscription.SubscriptionPresenter;
+import com.pairup.android.subscription.Subscription;
+
 
 /**
  * Created by Klymenko on 22.11.2016.
@@ -19,14 +20,14 @@ public class SubscriptionsDetails {
 
     public String getPlanName() {
         String planName = "";
-        switch (planId) {
-            case SubscriptionPresenter.THREE_MONTH_SUBSCRIPTION_ID:
+        switch (Subscription.getEnum(planId)) {
+            case THREE_MONTH_SUBSCRIPTION_ID:
                 planName = "habit_starter";
                 break;
-            case SubscriptionPresenter.SIX_MONTH_SUBSCRIPTION_ID:
+            case SIX_MONTH_SUBSCRIPTION_ID:
                 planName = "habit_stabliser";
                 break;
-            case SubscriptionPresenter.ONE_YEAR_SUBSCRIPTION_ID:
+            case ONE_YEAR_SUBSCRIPTION_ID:
                 planName = "habit_master";
                 break;
             default:
