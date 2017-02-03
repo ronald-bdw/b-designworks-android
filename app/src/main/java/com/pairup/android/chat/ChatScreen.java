@@ -19,6 +19,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
+import com.pairup.android.subscription.SubscriptionChangeEvent;
 import com.pairup.android.subscription.SubscriptionPresenter;
 import com.pairup.android.subscription.SubscriptionView;
 import com.pairup.android.sync.GoogleFitPresenter;
@@ -187,6 +188,12 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(UserProfileUpdatedEvent event) {
         showUserName(userInteractor.getFullName());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(SubscriptionChangeEvent event) {
+        setChatGone(!(subscriptionPresenter.isSubscribed() ||
+            userInteractor.getUser().hasProvider()));
     }
 
     @Override public void onPause() {
