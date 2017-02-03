@@ -31,7 +31,7 @@ import rx.schedulers.Schedulers;
 
 public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
 
-    private static final String PURCHASE_KEY                = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8" +
+    private static final String PURCHASE_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8" +
         "AMIIBCgKCAQEAorESPZk0zw3hhu3kFGoGm1wsJJX/TJWOB/+q9LQ+VpN2TVuyzouVaYSxOSaHXg3/s1t4tUni" +
         "7Ih3EVwR4//dbTH7ob3JdDoRzlWsgJaHeytH8qW6hPCdRX/cHLT0PbldwryUh92/yjBeel4Lo7McirS97MYEl" +
         "fsSQ52bEo8GOhG8SPYTHruh4WNp/LD/NO042AZUfi6+9fITzgNe2PeUKvGaFB9CrPpdbylExGhXhjjUhodZEj" +
