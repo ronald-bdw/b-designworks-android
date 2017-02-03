@@ -268,4 +268,10 @@ public class UserInteractor {
     public Observable<Providers> getProviders() {
         return api.getProviders();
     }
+
+    public void sendTimeZoneToServer(@NonNull String timeZone) {
+        api.sendTimeZone(getUserId(), timeZone)
+            .subscribeOn(Schedulers.io())
+            .subscribe(result -> { }, ignoreError -> { });
+    }
 }

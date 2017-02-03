@@ -108,4 +108,10 @@ public interface Api {
     Observable<Void> sendSubscriptionExpired();
 
     @GET(V1 + "providers") Observable<Providers> getProviders();
+
+    @Multipart
+    @PUT(V1 + "users/{id}/time_zone") Observable<ResponseBody> sendTimeZone(
+        @NonNull @Path("id") String id,
+        @NonNull @Part("time_zone") String timeZone
+    );
 }
