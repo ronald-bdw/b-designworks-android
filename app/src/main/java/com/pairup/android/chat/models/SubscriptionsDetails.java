@@ -1,6 +1,7 @@
 package com.pairup.android.chat.models;
 
 import com.google.gson.annotations.SerializedName;
+import com.pairup.android.subscription.Subscription;
 
 /**
  * Created by Klymenko on 22.11.2016.
@@ -8,19 +9,20 @@ import com.google.gson.annotations.SerializedName;
 
 public class SubscriptionsDetails {
 
-    private static final String TYPE_TRIAL = "trial";
-
-    @SerializedName("productId") private    String  planName;
+    @SerializedName("productId") private    String  planId;
     @SerializedName("purchaseTime") private long    purchaseDate;
     @SerializedName("autoRenewing") private boolean isRenewing;
 
-    public String getPlanName() {
-        //TODO change it when all subscriptions will be added
-        return TYPE_TRIAL;
+    public String getPlanId() {
+        return planId;
     }
 
-    public void setPlanName(String planName) {
-        this.planName = planName;
+    public String getPlanName() {
+        return Subscription.getEnum(planId).getPlanName();
+    }
+
+    public void setPlanId(String planId) {
+        this.planId = planId;
     }
 
     public boolean isRenewing() {

@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.chat.models.SubscriptionsDetails;
+import com.pairup.android.utils.Bus;
 import com.pairup.android.utils.SubscriptionDetailsUtils;
 
 import java.util.ArrayList;
@@ -30,10 +31,7 @@ import rx.schedulers.Schedulers;
 
 public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
 
-    private static final String THREE_MONTH_SUBSCRIPTION_ID = "three_month_subscription_v1";
-    private static final String SIX_MONTH_SUBSCRIPTION_ID   = "six_month_subscription_v1";
-    private static final String ONE_YEAR_SUBSCRIPTION_ID    = "one_year_subscription_v1";
-    private static final String PURCHASE_KEY                = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8" +
+    private static final String PURCHASE_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8" +
         "AMIIBCgKCAQEAorESPZk0zw3hhu3kFGoGm1wsJJX/TJWOB/+q9LQ+VpN2TVuyzouVaYSxOSaHXg3/s1t4tUni" +
         "7Ih3EVwR4//dbTH7ob3JdDoRzlWsgJaHeytH8qW6hPCdRX/cHLT0PbldwryUh92/yjBeel4Lo7McirS97MYEl" +
         "fsSQ52bEo8GOhG8SPYTHruh4WNp/LD/NO042AZUfi6+9fITzgNe2PeUKvGaFB9CrPpdbylExGhXhjjUhodZEj" +
@@ -46,6 +44,7 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
     private SubscriptionsDetails subscriptionsDetails;
     private Gson                 gson;
     private UserInteractor       userInteractor;
+    private boolean              isSubscribed;
 
     private IInAppBillingService mBillingService;
     private ServiceConnection mServiceConnection = new ServiceConnection() {
@@ -79,8 +78,11 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
     }
 
     public void onViewHidden() {
+        if (activity != null) {
+            activity.unbindService(mServiceConnection);
+            activity = null;
+        }
         view = null;
-        activity = null;
         if (bp != null) {
             bp.release();
         }
@@ -91,9 +93,7 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
     }
 
     public boolean isSubscribed() {
-        return bp.isSubscribed(THREE_MONTH_SUBSCRIPTION_ID) ||
-            bp.isSubscribed(SIX_MONTH_SUBSCRIPTION_ID) ||
-            bp.isSubscribed(ONE_YEAR_SUBSCRIPTION_ID);
+        return isSubscribed;
     }
 
     @StringRes public int getSubscriptionStatusText() {
@@ -103,13 +103,13 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
     public void subscribe(int subscription) {
         switch (subscription) {
             case 0:
-                bp.subscribe(activity, THREE_MONTH_SUBSCRIPTION_ID);
+                bp.subscribe(activity, Subscription.THREE_MONTH_SUBSCRIPTION_ID.getPlanId());
                 break;
             case 1:
-                bp.subscribe(activity, SIX_MONTH_SUBSCRIPTION_ID);
+                bp.subscribe(activity, Subscription.SIX_MONTH_SUBSCRIPTION_ID.getPlanId());
                 break;
             case 2:
-                bp.subscribe(activity, ONE_YEAR_SUBSCRIPTION_ID);
+                bp.subscribe(activity, Subscription.ONE_YEAR_SUBSCRIPTION_ID.getPlanId());
                 break;
             default:
         }
@@ -131,31 +131,31 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
 
     public void receiveSubscriptionDetails() {
         ArrayList<String> skuList = new ArrayList<>();
-        skuList.add(THREE_MONTH_SUBSCRIPTION_ID);
-        skuList.add(SIX_MONTH_SUBSCRIPTION_ID);
-        skuList.add(ONE_YEAR_SUBSCRIPTION_ID);
+        skuList.add(Subscription.THREE_MONTH_SUBSCRIPTION_ID.getPlanId());
+        skuList.add(Subscription.SIX_MONTH_SUBSCRIPTION_ID.getPlanId());
+        skuList.add(Subscription.ONE_YEAR_SUBSCRIPTION_ID.getPlanId());
         Bundle querySkus = new Bundle();
         querySkus.putStringArrayList("ITEM_ID_LIST", skuList);
 
         try {
             Bundle skuDetails = mBillingService.getPurchases(3, activity.getPackageName(),
                 "subs", null);
-
             int response = skuDetails.getInt("RESPONSE_CODE");
             if (response == 0) {
                 ArrayList<String> purchaseDataList =
                     skuDetails.getStringArrayList("INAPP_PURCHASE_DATA_LIST");
                 if (purchaseDataList != null && purchaseDataList.size() > 0) {
+                    isSubscribed = true;
+                    Bus.event(SubscriptionChangeEvent.EVENT);
                     subscriptionsDetails = getSubscribeDataFromString(purchaseDataList.get(0));
                     userInteractor.sendInAppStatus(subscriptionsDetails.getPlanName(),
-                        SubscriptionDetailsUtils
-                            .getExpiredDate(subscriptionsDetails.getPurchaseDate()),
-                        SubscriptionDetailsUtils.isActive(subscriptionsDetails.isRenewing(),
-                            subscriptionsDetails.getPurchaseDate()))
+                        SubscriptionDetailsUtils.getFormattedExpiredDate(subscriptionsDetails),
+                        SubscriptionDetailsUtils.isActive(subscriptionsDetails))
                         .subscribeOn(Schedulers.io())
                         .subscribe(result -> { }, ignoreError -> { });
                 } else if (userInteractor.getUser() != null &&
-                        userInteractor.getUser().getProvider() == null) {
+                    userInteractor.getUser().getProvider() == null) {
+                    isSubscribed = false;
                     userInteractor.sendInAppStatusExpired()
                         .subscribeOn(Schedulers.io())
                         .subscribe(result -> { }, ignoreError -> { });
