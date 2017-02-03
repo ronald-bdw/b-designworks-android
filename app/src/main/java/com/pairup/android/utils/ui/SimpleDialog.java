@@ -59,6 +59,7 @@ public class SimpleDialog {
             secondBtnLabel, secondBtnAction, true);
     }
 
+    //CHECKSTYLE:OFF: checkstyle:parameternumbercheck
     public static void show(
         @NonNull Context context,
         @Nullable String title, String message,
@@ -92,6 +93,7 @@ public class SimpleDialog {
         }
         builder.show();
     }
+    //CHECKSTYLE:ON: checkstyle:parameternumbercheck
 
     public static void show(Context context, RetrofitException error) {
         CommonError parsedError = error.getErrorBodyAs(CommonError.class);
