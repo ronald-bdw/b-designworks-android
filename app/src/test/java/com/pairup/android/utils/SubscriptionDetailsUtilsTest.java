@@ -22,7 +22,7 @@ public class SubscriptionDetailsUtilsTest {
     @Before
     public void createSubscriptionDetails() {
         subscriptionsDetails = new SubscriptionsDetails();
-        subscriptionsDetails.setPlanName(SUBSCRIPTION_NAME);
+        subscriptionsDetails.setPlanId(SUBSCRIPTION_NAME);
         subscriptionsDetails.setRenewing(true);
         subscriptionsDetails.setPurchaseDate(Times.now());
     }

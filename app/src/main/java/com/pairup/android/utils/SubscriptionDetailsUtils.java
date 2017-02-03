@@ -28,7 +28,7 @@ public class SubscriptionDetailsUtils {
 
     public static Date getExpireDate(@NonNull SubscriptionsDetails subscriptionsDetails) {
         int monthsCountToExpire = 0;
-        switch (subscriptionsDetails.getPlanName()) {
+        switch (subscriptionsDetails.getPlanId()) {
             case SubscriptionPresenter.THREE_MONTH_SUBSCRIPTION_ID:
                 monthsCountToExpire = 3;
                 break;

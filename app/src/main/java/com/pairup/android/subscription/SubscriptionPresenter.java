@@ -10,7 +10,6 @@ import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 
 import com.android.vending.billing.IInAppBillingService;
 import com.anjlab.android.iab.v3.BillingProcessor;
@@ -82,8 +81,11 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
     }
 
     public void onViewHidden() {
+        if (activity != null) {
+            activity.unbindService(mServiceConnection);
+            activity = null;
+        }
         view = null;
-        activity = null;
         if (bp != null) {
             bp.release();
         }
@@ -141,7 +143,6 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
         try {
             Bundle skuDetails = mBillingService.getPurchases(3, activity.getPackageName(),
                 "subs", null);
-
             int response = skuDetails.getInt("RESPONSE_CODE");
             if (response == 0) {
                 ArrayList<String> purchaseDataList =
