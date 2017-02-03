@@ -29,6 +29,7 @@ import com.pairup.android.utils.AndroidUtils;
 import com.pairup.android.utils.Bus;
 import com.pairup.android.utils.Keyboard;
 import com.pairup.android.utils.Logger;
+import com.pairup.android.utils.Times;
 import com.pairup.android.utils.di.Injector;
 import com.pairup.android.utils.network.ErrorUtils;
 import com.pairup.android.utils.ui.SimpleDialog;
@@ -100,6 +101,8 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
             @Override public void onDrawerStateChanged(int newState) {
             }
         });
+
+        userInteractor.sendTimeZoneToServer(Times.getTimeZone());
 
         if (needGoogleFitIntegration) {
             googleFitPresenter.attachView(this, this);
