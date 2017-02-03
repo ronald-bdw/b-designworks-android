@@ -39,7 +39,7 @@ public class Times {
         return (Times.now() - start.getTime()) / 60;
     }
 
-    public static String getTimeZone(){
+    public static String getTimeZone() {
         return Calendar.getInstance().getTimeZone().getID();
     }
 }
