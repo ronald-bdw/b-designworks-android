@@ -27,22 +27,7 @@ public class SubscriptionDetailsUtils {
     }
 
     public static Date getExpireDate(@NonNull SubscriptionsDetails subscriptionsDetails) {
-        int monthsCountToExpire = 0;
-        switch (Subscription.getEnum(subscriptionsDetails.getPlanId())) {
-            case THREE_MONTH_SUBSCRIPTION_ID:
-                monthsCountToExpire = 3;
-                break;
-            case SIX_MONTH_SUBSCRIPTION_ID:
-                monthsCountToExpire = 6;
-                break;
-            case ONE_YEAR_SUBSCRIPTION_ID:
-                monthsCountToExpire = 12;
-                break;
-            default:
-                break;
-        }
-
         return Times.addToDateTime(subscriptionsDetails.getPurchaseDate(),
-            Calendar.MONTH, monthsCountToExpire);
+            Calendar.MONTH, Subscription.getEnum(subscriptionsDetails.getPlanId()).getMonths());
     }
 }

@@ -6,18 +6,24 @@ package com.pairup.android.subscription;
 
 public enum Subscription {
 
-    THREE_MONTH_SUBSCRIPTION_ID("three_month_subscription_v1"),
-    SIX_MONTH_SUBSCRIPTION_ID("six_month_subscription_v1"),
-    ONE_YEAR_SUBSCRIPTION_ID("one_year_subscription_v1");
+    THREE_MONTH_SUBSCRIPTION_ID("three_month_subscription_v1", 3),
+    SIX_MONTH_SUBSCRIPTION_ID("six_month_subscription_v1", 6),
+    ONE_YEAR_SUBSCRIPTION_ID("one_year_subscription_v1", 12);
 
     private String id;
+    private int    months;
 
-    Subscription(String id) {
+    Subscription(String id, int months) {
         this.id = id;
+        this.months = months;
     }
 
     public String getPlanId() {
         return id;
+    }
+
+    public int getMonths() {
+        return months;
     }
 
     @Override public String toString() {
