@@ -146,7 +146,8 @@
 
     <string name="screen_enter_phone_error_registered">Unsuccessful!</string>
     <string name="screen_enter_phone_error_not_registered">Verification is unsuccessful. You are not registered with Pair Up. Please sign up first.</string>
-    <string name="screen_enter_phone_error_has_no_provider">Verification is unsuccessful. You don\'t have a provider.</string>
+    <string name="screen_enter_phone_error_has_no_provider">Verification is unsuccessful. You don\'t have a provider Please try again or contact us at support@pairup.im</string>
+    <string name="screen_enter_phone_error_has_another_provider">Verification is unsuccessful. You selected wrong provider. Please try again or contact us at support@pairup.im</string>
     <string name="screen_enter_phone_error">Something went wrong. Please, try again.</string>
     <string name="subscription_owned_text">Congratulations! You are now subscribed for Pair Up for 1 month.</string>
     <string name="subscription_status_time">"Subscription was paid in "</string>
@@ -176,6 +177,10 @@
     <string name="sharing_text">Check out PairUp for your smartphone. Download it today from https://play.google.com/store/apps/details?id=com.pairup.android</string>
     <string name="google_play_services_connecting_exeption">"Exception while connecting to Google Play services: "</string>
     <string name="google_play_services_disconnected">Google Play services disconnected</string>
+
+    <string name="support_email">support@pairup.im</string>
+    <string name="email_subject">Android issues</string>
+    <string name="email_chooser">Select email app</string>
 
     <string-array name="trial_titles">
         <item>Welcome</item>

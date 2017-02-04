@@ -36,6 +36,13 @@ public class SimpleDialog {
         show(context, title, message, buttonLabel, action, null, null);
     }
 
+    public static void show(
+        @NonNull Context context,
+        @Nullable String title, String message,
+        @NonNull String buttonLabel, @Nullable Action0 action, boolean cancelable) {
+        show(context, title, message, buttonLabel, action, null, null, cancelable);
+    }
+
     public static void withOkBtn(@NonNull Context context, @StringRes int labelRes,
                                  @StringRes int descriptionRes, @NonNull Action0 onOkClick) {
         show(context, context.getString(labelRes), context.getString(descriptionRes),
@@ -48,6 +55,16 @@ public class SimpleDialog {
         @Nullable String title, String message,
         @NonNull String firstButtonLabel, @Nullable Action0 firstBtnAction,
         @Nullable String secondBtnLabel, @Nullable Action0 secondBtnAction) {
+        show(context, title, message, firstButtonLabel, firstBtnAction,
+            secondBtnLabel, secondBtnAction, true);
+    }
+
+    //CHECKSTYLE:OFF: checkstyle:parameternumbercheck
+    public static void show(
+        @NonNull Context context,
+        @Nullable String title, String message,
+        @NonNull String firstButtonLabel, @Nullable Action0 firstBtnAction,
+        @Nullable String secondBtnLabel, @Nullable Action0 secondBtnAction, boolean cancelable) {
         DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
             switch (which) {
                 case DialogInterface.BUTTON_POSITIVE:
@@ -68,6 +85,7 @@ public class SimpleDialog {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context)
             .setTitle(title)
+            .setCancelable(cancelable)
             .setMessage(message)
             .setPositiveButton(firstButtonLabel, dialogClickListener);
         if (secondBtnLabel != null) {
@@ -75,6 +93,7 @@ public class SimpleDialog {
         }
         builder.show();
     }
+    //CHECKSTYLE:ON: checkstyle:parameternumbercheck
 
     public static void show(Context context, RetrofitException error) {
         CommonError parsedError = error.getErrorBodyAs(CommonError.class);
