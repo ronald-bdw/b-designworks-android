@@ -18,7 +18,12 @@ public class SubscriptionsDetails {
     }
 
     public String getPlanName() {
-        return Subscription.getEnum(planId).getPlanName();
+        try {
+            return Subscription.getEnum(planId).getPlanName();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 
     public void setPlanId(String planId) {
