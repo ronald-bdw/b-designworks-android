@@ -7,7 +7,7 @@ package com.pairup.android.subscription;
 public enum Subscription {
 
     THREE_MONTH_SUBSCRIPTION_ID("three_month_subscription_v3", "habit_starter", 3),
-    SIX_MONTH_SUBSCRIPTION_ID("six_month_subscription_v3", "habit_stabiliser", 6),
+    SIX_MONTH_SUBSCRIPTION_ID("six_month_subscription_v3", "habit_stabliser", 6),
     ONE_YEAR_SUBSCRIPTION_ID("one_year_subscription_v3", "habit_master", 12);
 
     private String planId;
