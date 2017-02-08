@@ -1,5 +1,7 @@
 package com.pairup.android.subscription;
 
+import android.support.annotation.Nullable;
+
 /**
  * Created by almaziskhakov on 03/02/2017.
  */
@@ -44,9 +46,9 @@ public enum Subscription {
         return getPlanId();
     }
 
-    public static Subscription getEnum(String planId) {
+    @Nullable public static Subscription getEnum(String planId) {
         for (Subscription v : values())
             if (v.getPlanId().equalsIgnoreCase(planId)) return v;
-        throw new IllegalArgumentException();
+        return null;
     }
 }
