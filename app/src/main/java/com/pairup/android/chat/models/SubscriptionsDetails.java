@@ -18,7 +18,8 @@ public class SubscriptionsDetails {
     }
 
     public String getPlanName() {
-        return Subscription.getEnum(planId).getPlanName();
+        Subscription subscription = Subscription.getEnum(planId);
+        return subscription == null ? "" : subscription.getPlanName();
     }
 
     public void setPlanId(String planId) {
