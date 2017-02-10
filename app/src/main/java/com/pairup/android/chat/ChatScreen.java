@@ -221,7 +221,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         SubscriptionDialog.show(this);
     }
 
-    @Subscribe public void onEvent(SubscriptionDialogItemClickEvent subscription) {
+    @Subscribe(sticky = true) public void onEvent(SubscriptionDialogItemClickEvent subscription) {
         subscriptionPresenter.subscribe(subscription);
     }
 

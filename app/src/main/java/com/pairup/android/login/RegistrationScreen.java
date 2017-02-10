@@ -248,7 +248,7 @@ public class RegistrationScreen extends BaseActivity implements SubscriptionView
         SubscriptionDialog.show(this);
     }
 
-    @Subscribe public void onEvent(SubscriptionDialogItemClickEvent subscription) {
+    @Subscribe(sticky = true) public void onEvent(SubscriptionDialogItemClickEvent subscription) {
         subscriptionPresenter.subscribe(subscription);
     }
 
