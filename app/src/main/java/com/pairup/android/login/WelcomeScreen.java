@@ -56,12 +56,10 @@ public class WelcomeScreen extends BaseActivity {
         Analytics.logScreenOpened(Analytics.EVENT_OPEN_WELCOME_SCREEN);
 
         if (hasError) {
-            String errorMessage;
-            if (isPhoneRegistered) {
-                errorMessage = getString(R.string.someone_accessed_your_account_message);
-            } else {
-                errorMessage = getString(R.string.account_deleted_message);
-            }
+            String errorMessage = isPhoneRegistered ?
+                getString(R.string.someone_accessed_your_account_message) :
+                getString(R.string.account_deleted_message);
+
             SimpleDialog
                 .show(this, getString(R.string.error), errorMessage, getString(R.string.ok), null);
         }
