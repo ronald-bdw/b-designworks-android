@@ -56,7 +56,6 @@ public class RegistrationScreen extends BaseActivity implements SubscriptionView
     private static final String PRIVACY_POLICY_URL        = "http://www.pairup.im/privacy/";
     private static final String TERMS_OF_USE_URL          = "http://www.pairup.im/terms-google/";
 
-
     @InjectExtra(ARG_KEY_VERIFICATION_CODE) String argVerificationCode;
     @InjectExtra(ARG_PHONE_CODE_ID)         String argPhoneCodeId;
     @InjectExtra(ARG_PHONE_NUMBER)          String argPhoneNumber;
