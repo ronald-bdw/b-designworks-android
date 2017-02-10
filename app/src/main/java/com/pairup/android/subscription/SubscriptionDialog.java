@@ -24,17 +24,17 @@ public class SubscriptionDialog extends BaseDialogFragment {
     }
 
     @OnClick(R.id.starter) void onStartClick() {
-        Bus.event(SubscriptionDialogItemTabEvent.STARTER);
+        Bus.event(SubscriptionDialogItemClickEvent.STARTER);
         getDialog().dismiss();
     }
 
     @OnClick(R.id.stabilizer) void onStabilizerClick() {
-        Bus.event(SubscriptionDialogItemTabEvent.STABILIZER);
+        Bus.event(SubscriptionDialogItemClickEvent.STABILIZER);
         getDialog().dismiss();
     }
 
     @OnClick(R.id.master) void onMasterClick() {
-        Bus.event(SubscriptionDialogItemTabEvent.MASTER);
+        Bus.event(SubscriptionDialogItemClickEvent.MASTER);
         getDialog().dismiss();
     }
 

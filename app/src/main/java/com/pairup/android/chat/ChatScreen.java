@@ -21,7 +21,7 @@ import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.subscription.SubscriptionChangeEvent;
 import com.pairup.android.subscription.SubscriptionDialog;
-import com.pairup.android.subscription.SubscriptionDialogItemTabEvent;
+import com.pairup.android.subscription.SubscriptionDialogItemClickEvent;
 import com.pairup.android.subscription.SubscriptionPresenter;
 import com.pairup.android.subscription.SubscriptionView;
 import com.pairup.android.sync.GoogleFitPresenter;
@@ -221,7 +221,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         SubscriptionDialog.show(this);
     }
 
-    @Subscribe public void onEvent(SubscriptionDialogItemTabEvent subscription) {
+    @Subscribe public void onEvent(SubscriptionDialogItemClickEvent subscription) {
         subscriptionPresenter.subscribe(subscription);
     }
 

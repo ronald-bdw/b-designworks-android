@@ -21,7 +21,7 @@ import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.subscription.SubscriptionDialog;
-import com.pairup.android.subscription.SubscriptionDialogItemTabEvent;
+import com.pairup.android.subscription.SubscriptionDialogItemClickEvent;
 import com.pairup.android.subscription.SubscriptionPresenter;
 import com.pairup.android.subscription.SubscriptionView;
 import com.pairup.android.utils.Analytics;
@@ -248,7 +248,7 @@ public class RegistrationScreen extends BaseActivity implements SubscriptionView
         SubscriptionDialog.show(this);
     }
 
-    @Subscribe public void onEvent(SubscriptionDialogItemTabEvent subscription) {
+    @Subscribe public void onEvent(SubscriptionDialogItemClickEvent subscription) {
         subscriptionPresenter.subscribe(subscription);
     }
 
