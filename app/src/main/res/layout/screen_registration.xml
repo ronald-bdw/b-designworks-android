@@ -61,14 +61,15 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
-        android:padding="16dp"
         >
 
         <TextView
             android:id="@+id/privacy_policy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingBottom="16dp"
             android:paddingRight="4dp"
+            android:paddingTop="16dp"
             android:text="@string/registration_privacy_policy"
             android:textColor="@color/app_accent"
             />
@@ -76,8 +77,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingBottom="16dp"
             android:paddingLeft="0dp"
-            android:paddingRight="4dp"
+            android:paddingRight="0dp"
+            android:paddingTop="16dp"
             android:text="@string/registration_and"
             />
 
@@ -85,7 +88,9 @@
             android:id="@+id/terms_of_use"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="0dp"
+            android:paddingBottom="16dp"
+            android:paddingLeft="4dp"
+            android:paddingTop="16dp"
             android:text="@string/registration_terms_of_use"
             android:textColor="@color/app_accent"
             />
