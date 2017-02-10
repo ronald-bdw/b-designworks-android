@@ -53,6 +53,8 @@ public class RegistrationScreen extends BaseActivity implements SubscriptionView
     private static final String ARG_KEY_VERIFICATION_CODE = "argVerificationCode";
     private static final String ARG_PHONE_NUMBER          = "argPhoneNumber";
     private static final String ARG_PHONE_CODE_ID         = "argPhoneCodeId";
+    private static final String PRIVACY_POLICY_URL        = "http://www.pairup.im/privacy/";
+    private static final String TERMS_OF_USE_URL          = "http://www.pairup.im/terms-google/";
 
     @InjectExtra(ARG_KEY_VERIFICATION_CODE) String argVerificationCode;
     @InjectExtra(ARG_PHONE_CODE_ID)         String argPhoneCodeId;
@@ -121,6 +123,14 @@ public class RegistrationScreen extends BaseActivity implements SubscriptionView
         } else {
             subscriptionPresenter.showSubscriptionDialog();
         }
+    }
+
+    @OnClick(R.id.privacy_policy) void onPrivacyPolicyClick() {
+        Navigator.openUrl(this, PRIVACY_POLICY_URL);
+    }
+
+    @OnClick(R.id.terms_of_use) void onTermsOfUseClick() {
+        Navigator.openUrl(this, TERMS_OF_USE_URL);
     }
 
     private void tryRegistration() {
@@ -218,7 +228,7 @@ public class RegistrationScreen extends BaseActivity implements SubscriptionView
 
     @OnEditorAction(R.id.email) boolean onEnterClick(int actionId) {
         if (actionId == EditorInfo.IME_ACTION_DONE) {
-            tryRegistration();
+            onRegisterClick();
             return true;
         }
         return false;

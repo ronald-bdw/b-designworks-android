@@ -6,67 +6,97 @@
     android:layout_height="match_parent"
     android:background="#fbfbfb"
     android:orientation="vertical"
->
+    >
 
     <include layout="@layout/layout_toolbar" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-    >
+    <include layout="@layout/layout_profile_fields" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:dividerPadding="8dp"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:paddingLeft="24dp"
+        android:text="@string/profile_phone"
+        android:textColor="#5e7489"
+        android:textStyle="bold"
+        />
+
+    <EditText
+        android:id="@+id/phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_edit_profile"
+        android:enabled="false"
+        android:imeOptions="actionNone"
+        android:inputType="none"
+        android:maxLines="1"
+        tools:ignore="TextFields"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+
+    <Button
+        android:id="@+id/choose_your_plan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:background="@drawable/app_btn_filled"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:text="@string/registration_choose_subscriptions_btn"
+        android:textColor="@android:color/white"
+
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
         >
 
-
-            <include layout="@layout/layout_profile_fields" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:paddingLeft="24dp"
-                android:text="@string/profile_phone"
-                android:textColor="#5e7489"
-                android:textStyle="bold"
+        <TextView
+            android:id="@+id/privacy_policy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="4dp"
+            android:paddingTop="16dp"
+            android:text="@string/registration_privacy_policy"
+            android:textColor="@color/app_accent"
             />
 
-            <EditText
-                android:id="@+id/phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/bg_edit_profile"
-                android:enabled="false"
-                android:imeOptions="actionNone"
-                android:inputType="none"
-                android:maxLines="1"
-                tools:ignore="TextFields"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="16dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:paddingTop="16dp"
+            android:text="@string/registration_and"
             />
 
-            <Button
-                android:id="@+id/choose_your_plan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginBottom="24dp"
-                android:layout_marginTop="24dp"
-                android:background="@drawable/app_btn_filled"
-                android:paddingLeft="24dp"
-                android:paddingRight="24dp"
-                android:text="@string/registration_choose_subscriptions_btn"
-                android:textColor="@android:color/white"
+        <TextView
+            android:id="@+id/terms_of_use"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="16dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="16dp"
+            android:paddingTop="16dp"
+            android:text="@string/registration_terms_of_use"
+            android:textColor="@color/app_accent"
             />
 
-        </LinearLayout>
-
-    </ScrollView>
+    </LinearLayout>
 
 </LinearLayout>

@@ -181,6 +181,9 @@
     <string name="support_email">support@pairup.im</string>
     <string name="email_subject">Android issues</string>
     <string name="email_chooser">Select email app</string>
+    <string name="registration_privacy_policy">Privacy policy</string>
+    <string name="registration_and">and</string>
+    <string name="registration_terms_of_use">Terms of use</string>
 
     <string-array name="trial_titles">
         <item>Welcome</item>

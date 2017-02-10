@@ -88,4 +88,8 @@ public class ChatSidePanelFragment extends Fragment {
         Bus.event(CloseDrawerEvent.EVENT);
         Navigator.aboutUs(getContext());
     }
+
+    //Added for don't touch ChatScreen over this Fragment
+    @OnClick(R.id.chat_side_layout) void onLayoutClick() {
+    }
 }
