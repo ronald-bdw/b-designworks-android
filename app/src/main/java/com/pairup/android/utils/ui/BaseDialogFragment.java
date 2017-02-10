@@ -60,7 +60,6 @@ public abstract class BaseDialogFragment extends DialogFragment {
     }
 
     protected void restoreState(@NonNull Bundle savedState) {
-
     }
 
     protected void parseArguments(@NonNull Bundle args) {
