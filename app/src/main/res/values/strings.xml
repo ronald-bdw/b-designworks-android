@@ -184,6 +184,11 @@
     <string name="registration_privacy_policy">Privacy policy</string>
     <string name="registration_and">and</string>
     <string name="registration_terms_of_use">Terms of use</string>
+    <string name="subscription_dialog_title">Choose your auto-renewable subscription plan</string>
+    <string name="subscription_dialog_trial">1 month trial period available for all plans.</string>
+    <string name="subscription_habit_starter">Habit Starter (3 months) - $149.99.</string>
+    <string name="subscription_habit_stabilizer">Habit Stabilizer (6 months) - $179.99.</string>
+    <string name="subscription_habit_master">Habit Master (12 months) - $299.99.</string>
 
     <string-array name="trial_titles">
         <item>Welcome</item>
@@ -198,9 +203,4 @@
         <item>Try Pair Up free for 30 days. \n The choice is yours to continue a \n subscription that is far cheaper \n than traditional coaching.</item>
     </string-array>
 
-    <string-array name="subscriptions">
-        <item>Habit Starter (3 month)</item>
-        <item>Habit Stabliser (6 month)</item>
-        <item>Habit Master (one year)</item>
-    </string-array>
 </resources>

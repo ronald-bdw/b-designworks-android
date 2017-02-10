@@ -20,6 +20,8 @@ import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.subscription.SubscriptionChangeEvent;
+import com.pairup.android.subscription.SubscriptionDialog;
+import com.pairup.android.subscription.SubscriptionDialogItemClickEvent;
 import com.pairup.android.subscription.SubscriptionPresenter;
 import com.pairup.android.subscription.SubscriptionView;
 import com.pairup.android.sync.GoogleFitPresenter;
@@ -46,7 +48,6 @@ import io.smooch.core.Message;
 import io.smooch.core.MessageUploadStatus;
 import io.smooch.ui.ConversationActivity;
 import rx.functions.Action0;
-import rx.functions.Action1;
 
 /**
  * Created by Ilya Eremin on 04.08.2016.
@@ -217,14 +218,11 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     }
 
     @Override public void showSubscriptionDialog() {
-        SimpleDialog.showList(this,
-            getString(R.string.subscriptions),
-            getResources().getStringArray(R.array.subscriptions),
-            new Action1<Integer>() {
-                @Override public void call(Integer integer) {
-                    subscriptionPresenter.subscribe(integer);
-                }
-            });
+        SubscriptionDialog.show(this);
+    }
+
+    @Subscribe(sticky = true) public void onEvent(SubscriptionDialogItemClickEvent subscription) {
+        subscriptionPresenter.subscribe(subscription);
     }
 
     @Override

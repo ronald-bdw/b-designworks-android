@@ -100,15 +100,15 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
         return isSubscribed() ? R.string.subscribed_status : R.string.subscription_request;
     }
 
-    public void subscribe(int subscription) {
+    public void subscribe(SubscriptionDialogItemClickEvent subscription) {
         switch (subscription) {
-            case 0:
+            case STARTER:
                 bp.subscribe(activity, Subscription.THREE_MONTH_SUBSCRIPTION_ID.getPlanId());
                 break;
-            case 1:
+            case STABILIZER:
                 bp.subscribe(activity, Subscription.SIX_MONTH_SUBSCRIPTION_ID.getPlanId());
                 break;
-            case 2:
+            case MASTER:
                 bp.subscribe(activity, Subscription.ONE_YEAR_SUBSCRIPTION_ID.getPlanId());
                 break;
             default:

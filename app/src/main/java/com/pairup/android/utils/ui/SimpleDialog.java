@@ -108,11 +108,10 @@ public class SimpleDialog {
         withOkBtn(context, context.getString(R.string.error_network));
     }
 
-    public static void showList(
-        @NonNull Context context,
-        @Nullable String title, @NonNull String[] items,
-        @NonNull Action1<Integer> firstBtnAction) {
-
+    public static void showList(@NonNull Context context,
+                                @Nullable String title,
+                                @NonNull String[] items,
+                                @NonNull Action1<Integer> firstBtnAction) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context)
             .setTitle(title)
             .setItems(items, (dialog, id) -> firstBtnAction.call(id));
