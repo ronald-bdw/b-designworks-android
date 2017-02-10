@@ -88,4 +88,7 @@ public class ChatSidePanelFragment extends Fragment {
         Bus.event(CloseDrawerEvent.EVENT);
         Navigator.aboutUs(getContext());
     }
+
+    @OnClick(R.id.chat_side_layout) void onLayoutClick() {
+    }
 }
