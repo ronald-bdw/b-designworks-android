@@ -218,7 +218,7 @@ public class RegistrationScreen extends BaseActivity implements SubscriptionView
 
     @OnEditorAction(R.id.email) boolean onEnterClick(int actionId) {
         if (actionId == EditorInfo.IME_ACTION_DONE) {
-            tryRegistration();
+            onRegisterClick();
             return true;
         }
         return false;
