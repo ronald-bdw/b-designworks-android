@@ -48,7 +48,6 @@ import io.smooch.core.Message;
 import io.smooch.core.MessageUploadStatus;
 import io.smooch.ui.ConversationActivity;
 import rx.functions.Action0;
-import rx.functions.Action1;
 
 /**
  * Created by Ilya Eremin on 04.08.2016.
@@ -222,7 +221,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         SubscriptionDialog.show(this);
     }
 
-    @Subscribe public void onEvent(SubscriptionDialogItemTabEvent subscription){
+    @Subscribe public void onEvent(SubscriptionDialogItemTabEvent subscription) {
         subscriptionPresenter.subscribe(subscription);
     }
 
