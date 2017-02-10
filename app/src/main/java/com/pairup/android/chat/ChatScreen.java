@@ -20,6 +20,8 @@ import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.subscription.SubscriptionChangeEvent;
+import com.pairup.android.subscription.SubscriptionDialog;
+import com.pairup.android.subscription.SubscriptionDialogItemTabEvent;
 import com.pairup.android.subscription.SubscriptionPresenter;
 import com.pairup.android.subscription.SubscriptionView;
 import com.pairup.android.sync.GoogleFitPresenter;
@@ -217,14 +219,11 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     }
 
     @Override public void showSubscriptionDialog() {
-        SimpleDialog.showList(this,
-            getString(R.string.subscriptions),
-            getResources().getStringArray(R.array.subscriptions),
-            new Action1<Integer>() {
-                @Override public void call(Integer integer) {
-                    subscriptionPresenter.subscribe(integer);
-                }
-            });
+        SubscriptionDialog.show(this);
+    }
+
+    @Subscribe public void onEvent(SubscriptionDialogItemTabEvent subscription){
+        subscriptionPresenter.subscribe(subscription);
     }
 
     @Override

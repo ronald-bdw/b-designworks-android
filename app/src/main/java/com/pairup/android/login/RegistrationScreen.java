@@ -20,9 +20,12 @@ import com.pairup.android.BaseActivity;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
+import com.pairup.android.subscription.SubscriptionDialog;
+import com.pairup.android.subscription.SubscriptionDialogItemTabEvent;
 import com.pairup.android.subscription.SubscriptionPresenter;
 import com.pairup.android.subscription.SubscriptionView;
 import com.pairup.android.utils.Analytics;
+import com.pairup.android.utils.Bus;
 import com.pairup.android.utils.Keyboard;
 import com.pairup.android.utils.Rxs;
 import com.pairup.android.utils.Strings;
@@ -33,6 +36,8 @@ import com.pairup.android.utils.network.RetrofitException;
 import com.pairup.android.utils.ui.SimpleDialog;
 import com.pairup.android.utils.ui.UiInfo;
 import com.trello.rxlifecycle.ActivityEvent;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Random;
 
@@ -90,6 +95,7 @@ public class RegistrationScreen extends BaseActivity implements SubscriptionView
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
         Injector.inject(this);
+        Bus.subscribe(this);
 
         Analytics.logScreenOpened(Analytics.EVENT_OPEN_REGISTRATION_SCREEN);
 
@@ -239,10 +245,11 @@ public class RegistrationScreen extends BaseActivity implements SubscriptionView
     }
 
     @Override public void showSubscriptionDialog() {
-        SimpleDialog.showList(this,
-            getString(R.string.subscriptions),
-            getResources().getStringArray(R.array.subscriptions),
-            integer -> subscriptionPresenter.subscribe(integer));
+        SubscriptionDialog.show(this);
+    }
+
+    @Subscribe public void onEvent(SubscriptionDialogItemTabEvent subscription){
+        subscriptionPresenter.subscribe(subscription);
     }
 
     @Override
@@ -252,5 +259,10 @@ public class RegistrationScreen extends BaseActivity implements SubscriptionView
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    @Override protected void onDestroy() {
+        Bus.unsubscribe(this);
+        super.onDestroy();
     }
 }
