@@ -16,6 +16,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
@@ -53,14 +54,16 @@ public interface Api {
         @NonNull @Field("email") String email,
         @NonNull @Field("sms_code") String code,
         @NonNull @Field("phone_number") String phoneNumber,
-        @NonNull @Field("auth_phone_code_id") String phoneCodeId
+        @NonNull @Field("auth_phone_code_id") String phoneCodeId,
+        @NonNull @Header("user-agent") String deviceType
     );
 
     @FormUrlEncoded
     @POST(V1 + "users/sign_in") Observable<UserResponse> signIn(
         @NonNull @Field("sms_code") String code,
         @NonNull @Field("phone_number") String phoneNumber,
-        @NonNull @Field("auth_phone_code_id") String phoneCodeId
+        @NonNull @Field("auth_phone_code_id") String phoneCodeId,
+        @NonNull @Header("user-agent") String deviceType
     );
 
     @Multipart
