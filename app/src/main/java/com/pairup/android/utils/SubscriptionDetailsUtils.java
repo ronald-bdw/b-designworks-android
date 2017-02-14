@@ -17,7 +17,7 @@ public class SubscriptionDetailsUtils {
     public static final String EXPIRED_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 
     public static boolean isActive(@NonNull SubscriptionsDetails subscriptionsDetails) {
-        return subscriptionsDetails.isRenewing() ||
+        return subscriptionsDetails.isRenewing() &&
             (Times.now() < getExpireDate(subscriptionsDetails).getTime());
     }
 
