@@ -67,7 +67,8 @@ public class UserInteractor {
     public Observable<Void> register(@NonNull String firstName, @NonNull String lastName,
                                      @NonNull String email, @NonNull String code,
                                      @NonNull String phone, @NonNull String phoneCodeId) {
-        return api.register(firstName, lastName, email, code, phone, phoneCodeId, DEVICE_TYPE_ANDROID)
+        return api
+            .register(firstName, lastName, email, code, phone, phoneCodeId, DEVICE_TYPE_ANDROID)
             .map(saveUser());
     }
 
