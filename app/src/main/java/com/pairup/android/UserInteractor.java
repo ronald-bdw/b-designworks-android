@@ -67,14 +67,14 @@ public class UserInteractor {
     public Observable<Void> register(@NonNull String firstName, @NonNull String lastName,
                                      @NonNull String email, @NonNull String code,
                                      @NonNull String phone, @NonNull String phoneCodeId) {
-        return api.register(firstName, lastName, email, code, phone, phoneCodeId)
+        return api.register(firstName, lastName, email, code, phone, phoneCodeId, DEVICE_TYPE_ANDROID)
             .map(saveUser());
     }
 
     public Observable<Object> login(@NonNull String verificationCode,
                                     @NonNull String phone,
                                     @NonNull String phoneCodeId) {
-        return api.signIn(verificationCode, phone, phoneCodeId)
+        return api.signIn(verificationCode, phone, phoneCodeId, DEVICE_TYPE_ANDROID)
             .map(saveUser());
     }
 
