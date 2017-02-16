@@ -58,7 +58,7 @@ public class UserManagerTest {
         notificationManager = NotificationManagerCompat.from(context);
         when(mockedApi.sendMeCode(any(), any())).thenReturn(Observable.just(getFakeAuthResponse()));
         when(mockedApi.register(anyString(), anyString(), anyString(), anyString(),
-            eq(MY_FAKE_NUMBER), eq(MY_FAKE_NUMBER_CODE_ID)))
+            eq(MY_FAKE_NUMBER), eq(MY_FAKE_NUMBER_CODE_ID), anyString()))
             .thenReturn(Observable.just(getFakeRegisterResponse()));
         userManager = new UserInteractor(storage, userSettings, mockedApi, notificationManager);
     }
