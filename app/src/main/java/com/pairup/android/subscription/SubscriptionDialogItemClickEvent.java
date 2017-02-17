@@ -12,7 +12,7 @@ public enum SubscriptionDialogItemClickEvent {
 
     private Subscription subscription;
 
-    SubscriptionDialogItemClickEvent(Subscription subscription){
+    SubscriptionDialogItemClickEvent(Subscription subscription) {
         this.subscription = subscription;
     }
 
