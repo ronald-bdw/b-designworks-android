@@ -5,5 +5,18 @@ package com.pairup.android.subscription;
  */
 
 public enum SubscriptionDialogItemClickEvent {
-    STARTER, STABILIZER, MASTER
+
+    STARTER(Subscription.THREE_MONTH_SUBSCRIPTION_ID),
+    STABILIZER(Subscription.SIX_MONTH_SUBSCRIPTION_ID),
+    MASTER(Subscription.ONE_YEAR_SUBSCRIPTION_ID);
+
+    private Subscription subscription;
+
+    SubscriptionDialogItemClickEvent(Subscription subscription){
+        this.subscription = subscription;
+    }
+
+    public Subscription getSubscription() {
+        return subscription;
+    }
 }
