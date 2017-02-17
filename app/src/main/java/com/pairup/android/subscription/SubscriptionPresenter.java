@@ -51,7 +51,7 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             mBillingService = IInAppBillingService.Stub.asInterface(service);
-            receiveSubscriptionDetails();
+            checkSubscriptionFromBillingService();
         }
 
         @Override
@@ -100,19 +100,10 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
         return isSubscribed() ? R.string.subscribed_status : R.string.subscription_request;
     }
 
-    public void subscribe(SubscriptionDialogItemClickEvent subscription) {
-        switch (subscription) {
-            case STARTER:
-                bp.subscribe(activity, Subscription.THREE_MONTH_SUBSCRIPTION_ID.getPlanId());
-                break;
-            case STABILIZER:
-                bp.subscribe(activity, Subscription.SIX_MONTH_SUBSCRIPTION_ID.getPlanId());
-                break;
-            case MASTER:
-                bp.subscribe(activity, Subscription.ONE_YEAR_SUBSCRIPTION_ID.getPlanId());
-                break;
-            default:
-        }
+    public boolean subscribe(SubscriptionDialogItemClickEvent subscriptionEvent) {
+        return checkSubscriptionFromBillingService() ? bp.updateSubscription(activity,
+            subscriptionsDetails.getPlanId(), subscriptionEvent.getSubscription().getPlanId()) :
+            bp.subscribe(activity, subscriptionEvent.getSubscription().getPlanId());
     }
 
     public void showSubscriptionDialog() {
@@ -129,7 +120,7 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
         }
     }
 
-    public void receiveSubscriptionDetails() {
+    private boolean checkSubscriptionFromBillingService() {
         ArrayList<String> skuList = new ArrayList<>();
         skuList.add(Subscription.THREE_MONTH_SUBSCRIPTION_ID.getPlanId());
         skuList.add(Subscription.SIX_MONTH_SUBSCRIPTION_ID.getPlanId());
@@ -148,6 +139,7 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
                     isSubscribed = true;
                     Bus.event(SubscriptionChangeEvent.EVENT);
                     subscriptionsDetails = getSubscribeDataFromString(purchaseDataList.get(0));
+
                     userInteractor.sendInAppStatus(subscriptionsDetails.getPlanName(),
                         SubscriptionDetailsUtils.getFormattedExpiredDate(subscriptionsDetails),
                         SubscriptionDetailsUtils.isActive(subscriptionsDetails))
@@ -156,6 +148,7 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
                 } else if (userInteractor.getUser() != null &&
                     userInteractor.getUser().getProvider() == null) {
                     isSubscribed = false;
+
                     userInteractor.sendInAppStatusExpired()
                         .subscribeOn(Schedulers.io())
                         .subscribe(result -> { }, ignoreError -> { });
@@ -164,6 +157,7 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+        return isSubscribed;
     }
 
     private SubscriptionsDetails getSubscribeDataFromString(@NonNull String purchaseData) {
