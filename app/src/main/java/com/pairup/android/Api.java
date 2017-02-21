@@ -76,8 +76,10 @@ public interface Api {
 
     @Multipart
     @PUT(V1 + "users/{id}")
-    Observable<UserResponse> uploadAvatar(@NonNull @Path("id") String id,
-                                          @NonNull @Part MultipartBody.Part data);
+    Observable<UserResponse> uploadAvatar(
+        @NonNull @Path("id") String id,
+        @NonNull @Part MultipartBody.Part data
+    );
 
     @FormUrlEncoded
     @POST(V1 + "fitness_tokens") Observable<FitToken> integrateFitnessApp(
@@ -99,7 +101,9 @@ public interface Api {
 
     @FormUrlEncoded
     @POST(V1 + "registration_status")
-    Observable<UserStatus> getUserStatus(@Field("phone_number") String phone);
+    Observable<UserStatus> getUserStatus(
+        @Field("phone_number") String phone
+    );
 
     @FormUrlEncoded
     @POST(V1 + "subscriptions")
