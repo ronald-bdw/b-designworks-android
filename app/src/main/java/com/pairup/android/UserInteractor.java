@@ -253,9 +253,10 @@ public class UserInteractor {
         return storage.getBoolean(KEY_SHOW_TOUR_TO_USER, true);
     }
 
-    public Observable<Void> sendInAppStatus(@NonNull String planName, @NonNull String date,
-                                            boolean isActive) {
-        return api.sendSubscriptionStatus(planName, date, isActive).map(result -> null);
+    public Observable<Void> sendInAppStatus(@NonNull String planName, @NonNull String purchasedDate,
+                                            @NonNull String expiresDate, boolean isActive) {
+        return api.sendSubscriptionStatus(planName, purchasedDate, expiresDate, isActive)
+            .map(result -> null);
     }
 
     public Observable<Void> sendInAppStatusExpired() {
