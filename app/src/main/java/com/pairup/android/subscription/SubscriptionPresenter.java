@@ -141,6 +141,7 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
                     subscriptionsDetails = getSubscribeDataFromString(purchaseDataList.get(0));
 
                     userInteractor.sendInAppStatus(subscriptionsDetails.getPlanName(),
+                        SubscriptionDetailsUtils.getFormattedPurchasedDate(subscriptionsDetails),
                         SubscriptionDetailsUtils.getFormattedExpiredDate(subscriptionsDetails),
                         SubscriptionDetailsUtils.isActive(subscriptionsDetails))
                         .subscribeOn(Schedulers.io())
