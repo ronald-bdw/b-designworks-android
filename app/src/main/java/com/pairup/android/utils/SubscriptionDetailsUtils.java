@@ -21,6 +21,12 @@ public class SubscriptionDetailsUtils {
             (Times.now() < getExpireDate(subscriptionsDetails).getTime());
     }
 
+    public static String getFormattedPurchasedDate(
+        @NonNull SubscriptionsDetails subscriptionsDetails) {
+        return Times.parseDateToString(new Date(subscriptionsDetails.getPurchaseDate()),
+            EXPIRED_DATE_FORMAT);
+    }
+
     public static String getFormattedExpiredDate(
         @NonNull SubscriptionsDetails subscriptionsDetails) {
         return Times.parseDateToString(getExpireDate(subscriptionsDetails), EXPIRED_DATE_FORMAT);
