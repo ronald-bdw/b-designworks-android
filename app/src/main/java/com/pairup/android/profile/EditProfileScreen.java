@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.fixedtedbottompicker.FixedTedBottomPicker;
 import com.pairup.android.BaseActivity;
 import com.pairup.android.R;
 import com.pairup.android.login.models.User;
@@ -37,7 +38,6 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import gun0912.tedbottompicker.TedBottomPicker;
 
 /**
  * Created by Ilya Eremin on 04.08.2016.
@@ -149,7 +149,7 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
             .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
             .subscribe(granted -> {
                 if (granted) {
-                    TedBottomPicker tedBottomPicker = new TedBottomPicker.Builder(this)
+                    FixedTedBottomPicker tedBottomPicker = new FixedTedBottomPicker.Builder(this)
                         .setOnImageSelectedListener(uri -> CropUtil
                             .startCropImageActivity(this, uri, filePath.getAbsolutePath()))
                         .create();
