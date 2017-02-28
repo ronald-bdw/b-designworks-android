@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/initial_screen_gradient"
     android:orientation="vertical"
->
+    >
 
     <TextView
         android:id="@+id/have_account_link"
@@ -14,7 +14,7 @@
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="24dp"
         android:textColor="@color/app_accent"
-    />
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
         android:layout_marginBottom="48dp"
         android:gravity="center"
         android:orientation="vertical"
-    >
+        >
 
         <include layout="@layout/logo" />
 
@@ -36,7 +36,7 @@
             android:textColor="@color/app_accent"
             android:textSize="@dimen/font_size_big"
             android:textStyle="bold"
-        />
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -46,7 +46,7 @@
             android:text="@string/welcome_question"
             android:textColor="#61615f"
             android:textSize="@dimen/font_size_medium"
-        />
+            />
 
     </LinearLayout>
 
@@ -57,7 +57,7 @@
         android:layout_marginBottom="64dp"
         android:gravity="center"
         android:orientation="horizontal"
-    >
+        >
 
         <Button
             android:id="@+id/no"
@@ -67,7 +67,7 @@
             android:background="@drawable/app_btn_border"
             android:text="@string/no"
             android:textColor="@color/app_accent"
-        />
+            />
 
 
         <Button
@@ -78,7 +78,7 @@
             android:background="@drawable/app_btn_filled"
             android:text="@string/yes"
             android:textColor="@android:color/white"
-        />
+            />
 
     </LinearLayout>
 

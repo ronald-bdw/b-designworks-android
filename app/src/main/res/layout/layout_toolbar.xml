@@ -7,4 +7,4 @@
     android:layout_height="?actionBarSize"
     android:background="@color/app_accent"
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-/>
+    />

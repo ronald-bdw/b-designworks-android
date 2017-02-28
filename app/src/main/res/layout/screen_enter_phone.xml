@@ -7,21 +7,21 @@
     android:background="@drawable/initial_screen_gradient"
     android:keepScreenOn="true"
     android:orientation="vertical"
->
+    >
 
     <include layout="@layout/layout_toolbar" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-    >
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical"
-        >
+            >
 
             <include layout="@layout/logo" />
 
@@ -31,7 +31,7 @@
                 android:layout_marginTop="24dp"
                 android:gravity="center"
                 android:text="@string/enter_phone_description"
-            />
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                 android:background="@drawable/edit_text_bg_with_border"
                 android:orientation="horizontal"
                 android:padding="1dp"
-            >
+                >
 
                 <EditText
                     android:id="@+id/area_code"
@@ -55,7 +55,7 @@
                     android:imeOptions="actionNext"
                     android:inputType="phone"
                     android:paddingLeft="16dp"
-                />
+                    />
 
                 <ImageView
                     android:id="@+id/area_code_btn"
@@ -63,7 +63,7 @@
                     android:layout_height="48dp"
                     android:padding="12dp"
                     android:src="@drawable/ic_arrow_right"
-                />
+                    />
 
             </LinearLayout>
 
@@ -81,7 +81,7 @@
                 android:inputType="phone"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-            />
+                />
 
             <Button
                 android:id="@+id/submit"
@@ -92,7 +92,7 @@
                 android:background="@drawable/app_btn_filled"
                 android:text="@string/submit"
                 android:textColor="@android:color/white"
-            />
+                />
 
         </LinearLayout>
 
