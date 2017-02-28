@@ -105,6 +105,11 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
 
         userInteractor.sendTimeZoneToServer(Times.getTimeZone());
 
+        if (userInteractor.getUser().isFirstPopupActive()) {
+            SimpleDialog
+                .withOkBtn(this, userInteractor.getUser().getProvider().getFirstPopupMessage());
+        }
+
         if (needGoogleFitIntegration) {
             googleFitPresenter.attachView(this, this);
         }
@@ -237,6 +242,13 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     @Override public void onMessageSent(Message message, MessageUploadStatus messageUploadStatus) {
         super.onMessageSent(message, messageUploadStatus);
         Analytics.logUserResponseSpeed();
+
+        if (userInteractor.getUser().isSecondPopupActive() &&
+            !subscriptionPresenter.isSubscribed()) {
+
+            SimpleDialog
+                .withOkBtn(this, userInteractor.getUser().getProvider().getSecondPopupMessage());
+        }
     }
 
     @Override
