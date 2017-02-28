@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.fixedtedbottompicker.FixedTedBottomPicker;
 import com.pairup.android.BaseActivity;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
@@ -30,7 +31,6 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import gun0912.tedbottompicker.TedBottomPicker;
 import rx.Subscription;
 
 /**
@@ -79,7 +79,7 @@ public class TourScreenUploadAvatar extends BaseActivity {
             .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
             .subscribe(granted -> {
                 if (granted) {
-                    TedBottomPicker tedBottomPicker = new TedBottomPicker.Builder(this)
+                    FixedTedBottomPicker tedBottomPicker = new FixedTedBottomPicker.Builder(this)
                         .setOnImageSelectedListener(uri -> CropUtil.startCropImageActivity(this,
                             uri, filePath.getAbsolutePath()))
                         .create();
