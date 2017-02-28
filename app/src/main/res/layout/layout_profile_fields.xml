@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="@layout/screen_edit_profile">
+    tools:showIn="@layout/screen_edit_profile"
+    >
 
 
     <TextView
@@ -12,7 +13,7 @@
         android:text="@string/edit_profile_first_name"
         android:textColor="@color/app_accent"
         android:textStyle="bold"
-    />
+        />
 
     <EditText
         android:id="@+id/first_name"
@@ -24,7 +25,7 @@
         android:background="@drawable/bg_edit_profile"
         android:imeOptions="actionNext"
         android:inputType="textCapWords"
-    />
+        />
 
     <TextView
         android:layout_width="match_parent"
@@ -34,7 +35,7 @@
         android:text="@string/edit_profile_last_name"
         android:textColor="@color/app_accent"
         android:textStyle="bold"
-    />
+        />
 
     <EditText
         android:id="@+id/last_name"
@@ -46,7 +47,7 @@
         android:background="@drawable/bg_edit_profile"
         android:imeOptions="actionNext"
         android:inputType="textCapWords"
-    />
+        />
 
     <TextView
         android:layout_width="match_parent"
@@ -56,7 +57,7 @@
         android:text="@string/edit_profile_email"
         android:textColor="@color/app_accent"
         android:textStyle="bold"
-    />
+        />
 
     <EditText
         android:id="@+id/email"
@@ -68,5 +69,5 @@
         android:background="@drawable/bg_edit_profile"
         android:imeOptions="actionDone"
         android:inputType="textEmailAddress"
-    />
+        />
 </merge>

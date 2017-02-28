@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
->
+    >
 
     <include layout="@layout/layout_toolbar" />
 
@@ -13,18 +13,18 @@
         android:id="@+id/swipe_to_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-    >
+        >
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-        >
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-            >
+                >
 
                 <include layout="@layout/layout_user_info_header" />
 
@@ -38,7 +38,7 @@
                     android:textColor="@color/app_accent"
                     android:textSize="@dimen/font_size_medium"
                     android:textStyle="bold"
-                />
+                    />
 
                 <View
                     android:layout_width="match_parent"
@@ -47,7 +47,7 @@
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="8dp"
                     android:background="@color/app_accent"
-                />
+                    />
 
                 <TextView
                     android:id="@+id/email"
@@ -61,7 +61,7 @@
                     android:textSize="@dimen/font_size_medium"
                     tools:ignore="HardcodedText"
                     tools:text="example@email.com"
-                />
+                    />
 
 
                 <TextView
@@ -74,7 +74,7 @@
                     android:textColor="@color/app_accent"
                     android:textSize="@dimen/font_size_medium"
                     android:textStyle="bold"
-                />
+                    />
 
                 <View
                     android:layout_width="match_parent"
@@ -83,7 +83,7 @@
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="8dp"
                     android:background="@color/app_accent"
-                />
+                    />
 
                 <TextView
                     android:id="@+id/phone"
@@ -97,7 +97,7 @@
                     tools:ignore="HardcodedText"
                     tools:text="8912345678"
 
-                />
+                    />
 
 
             </LinearLayout>
