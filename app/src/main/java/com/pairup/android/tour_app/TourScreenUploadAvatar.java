@@ -111,7 +111,6 @@ public class TourScreenUploadAvatar extends BaseActivity {
     @Override protected void onResume() {
         super.onResume();
         showAvatar(userInteractor.getUser().getAvatar().getThumb());
-        uiProgress.setVisibility(View.GONE);
     }
 
     @Override protected void onStop() {
