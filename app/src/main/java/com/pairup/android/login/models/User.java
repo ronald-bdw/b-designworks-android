@@ -16,6 +16,8 @@ public class User {
     private Avatar            avatar;
     private List<Integration> integrations;
     private Provider          provider;
+    private boolean           firstPopupActive;
+    private boolean           secondPopupActive;
 
     public void setProvider(Provider provider) {
         this.provider = provider;
@@ -68,4 +70,13 @@ public class User {
     public void setIntegrations(List<Integration> integrations) {
         this.integrations = integrations;
     }
+
+    public boolean isFirstPopupActive() {
+        return firstPopupActive;
+    }
+
+    public boolean isSecondPopupActive() {
+        return secondPopupActive;
+    }
+
 }

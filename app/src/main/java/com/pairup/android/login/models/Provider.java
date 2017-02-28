@@ -8,6 +8,8 @@ public class Provider {
     private String id;
     private String name;
     private int    priority;
+    private String firstPopupMessage;
+    private String secondPopupMessage;
 
     public void setId(String id) {
         this.id = id;
@@ -27,6 +29,14 @@ public class Provider {
 
     public int getPriority() {
         return priority;
+    }
+
+    public String getFirstPopupMessage() {
+        return firstPopupMessage;
+    }
+
+    public String getSecondPopupMessage() {
+        return secondPopupMessage;
     }
 
 }
