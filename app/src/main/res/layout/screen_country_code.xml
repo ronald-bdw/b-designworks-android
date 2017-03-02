@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
->
+    >
 
     <include layout="@layout/layout_toolbar" />
 
@@ -18,6 +18,6 @@
         app:fastScrollPopupBgColor="@color/app_accent"
         app:fastScrollPopupTextColor="@android:color/primary_text_dark"
         app:fastScrollThumbColor="@color/app_accent"
-    />
+        />
 
 </LinearLayout>

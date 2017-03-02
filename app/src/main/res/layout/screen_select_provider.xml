@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/initial_screen_gradient"
->
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,7 +12,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:orientation="vertical"
-    >
+        >
 
         <include layout="@layout/logo" />
 
@@ -22,30 +22,33 @@
             android:layout_marginTop="24dp"
             android:text="@string/select_provider_label"
             android:textSize="@dimen/font_size_medium"
-        />
+            />
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
 
             <Spinner
                 android:id="@+id/select_provider_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
                 android:layout_marginLeft="24dp"
                 android:layout_marginRight="24dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
                 android:background="@android:color/white"
-                android:gravity="center_vertical|start" />
+                android:gravity="center_vertical|start"
+                />
 
             <ProgressBar
+                android:id="@+id/load_providers_progress_bar"
                 style="?android:attr/progressBarStyle"
                 android:layout_width="wrap_content"
-                android:id="@+id/load_providers_progress_bar"
+                android:layout_height="40dp"
                 android:layout_gravity="center|center_horizontal"
-                android:layout_height="40dp" />
+                />
         </FrameLayout>
 
     </LinearLayout>
@@ -59,6 +62,6 @@
         android:background="@drawable/app_btn_filled"
         android:text="@string/next"
         android:textColor="@android:color/white"
-    />
+        />
 
 </FrameLayout>

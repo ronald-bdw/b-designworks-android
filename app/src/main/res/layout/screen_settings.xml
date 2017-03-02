@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
->
+    >
 
     <include layout="@layout/layout_toolbar" />
 
@@ -14,18 +14,18 @@
         android:layout_marginBottom="@dimen/settings_item_height"
         android:layout_marginTop="?actionBarSize"
         android:background="@android:color/white"
-    >
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-        >
+            >
 
             <LinearLayout
                 android:id="@+id/edit_profile"
                 style="@style/settings_item_container"
-            >
+                >
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/avatar"
@@ -33,7 +33,7 @@
                     android:layout_height="32dp"
                     android:layout_marginLeft="16dp"
                     tools:src="@drawable/avatar_placeholder"
-                />
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -41,7 +41,7 @@
                     android:padding="16dp"
                     android:text="@string/settings_edit_profile"
                     android:textColor="@color/settings_font"
-                />
+                    />
 
             </LinearLayout>
 
@@ -49,19 +49,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:background="@color/separator"
-            />
+                />
 
             <LinearLayout
                 android:id="@+id/notifications"
                 style="@style/settings_item_container"
-            >
+                >
 
                 <ImageView
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginLeft="16dp"
                     android:src="@drawable/ic_notifications"
-                />
+                    />
 
                 <TextView
                     android:layout_width="0dp"
@@ -71,7 +71,7 @@
                     android:paddingLeft="16dp"
                     android:text="@string/settings_notifications"
                     android:textColor="@color/settings_font"
-                />
+                    />
 
                 <android.support.v7.widget.SwitchCompat
                     android:id="@+id/notifications_toggle"
@@ -80,7 +80,7 @@
                     android:clickable="false"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
-                />
+                    />
 
             </LinearLayout>
 
@@ -88,19 +88,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:background="@color/separator"
-            />
+                />
 
             <LinearLayout
                 android:id="@+id/sync"
                 style="@style/settings_item_container"
-            >
+                >
 
                 <ImageView
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginLeft="16dp"
                     android:src="@drawable/ic_sync"
-                />
+                    />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -109,7 +109,7 @@
                     android:paddingLeft="16dp"
                     android:text="@string/settings_sync"
                     android:textColor="@color/settings_font"
-                />
+                    />
 
             </LinearLayout>
 
@@ -117,7 +117,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:background="@color/separator"
-            />
+                />
 
         </LinearLayout>
 
@@ -131,14 +131,14 @@
         android:layout_marginLeft="1dp"
         android:layout_marginRight="1dp"
         android:background="#29547D"
-    >
+        >
 
         <ImageView
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginLeft="16dp"
             android:src="@drawable/ic_logout"
-        />
+            />
 
         <TextView
             android:layout_width="match_parent"
@@ -149,7 +149,7 @@
             android:paddingLeft="16dp"
             android:text="@string/settings_logout"
             android:textColor="@android:color/white"
-        />
+            />
 
     </LinearLayout>
 

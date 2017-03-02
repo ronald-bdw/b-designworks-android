@@ -11,4 +11,4 @@
     android:textSize="@dimen/font_size_medium"
     android:textStyle="bold"
     tools:text="B"
-/>
+    />

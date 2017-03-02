@@ -92,9 +92,12 @@ public class TourScreenUploadAvatar extends BaseActivity {
     }
 
     private void updateAvatar(String url) {
-        if (uploadAvatarSubs != null) return;
         showAvatar(url);
         showAvatarUploadingProgress();
+
+        if (uploadAvatarSubs != null) {
+            uploadAvatarSubs.unsubscribe();
+        }
 
         uploadAvatarSubs = userInteractor.uploadAvatar(url)
             .compose(Rxs.doInBackgroundDeliverToUI())
@@ -108,7 +111,6 @@ public class TourScreenUploadAvatar extends BaseActivity {
     @Override protected void onResume() {
         super.onResume();
         showAvatar(userInteractor.getUser().getAvatar().getThumb());
-        uiProgress.setVisibility(View.GONE);
     }
 
     @Override protected void onStop() {

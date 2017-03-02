@@ -10,7 +10,8 @@
     android:orientation="horizontal"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    tools:showIn="@layout/screen_edit_profile">
+    tools:showIn="@layout/screen_edit_profile"
+    >
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/avatar"
@@ -21,7 +22,7 @@
         android:src="@drawable/avatar_placeholder"
         app:civ_border_color="@android:color/white"
         app:civ_border_width="3dp"
-    />
+        />
 
     <TextView
         android:id="@+id/current_full_name"
@@ -33,7 +34,7 @@
         android:textSize="@dimen/font_size_medium"
         android:textStyle="bold"
         tools:text="Vladimir Eremin"
-    />
+        />
 
     <TextView
         android:id="@+id/current_email"
@@ -43,6 +44,6 @@
         android:layout_marginBottom="16dp"
         android:textColor="@android:color/white"
         tools:text="example@email.com"
-    />
+        />
 
 </FrameLayout>

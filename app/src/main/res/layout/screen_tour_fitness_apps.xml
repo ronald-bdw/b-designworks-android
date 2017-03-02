@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
->
+    >
 
     <include layout="@layout/layout_toolbar" />
 
@@ -12,7 +12,7 @@
         style="@style/tour_caption_style"
         android:layout_marginTop="16dp"
         android:text="@string/tour_socials_title"
-    />
+        />
 
     <TextView
         android:layout_width="wrap_content"
@@ -21,13 +21,13 @@
         android:layout_marginTop="12dp"
         android:gravity="center_horizontal"
         android:text="@string/tour_socials_description"
-    />
+        />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-    >
+        >
 
         <ImageView
             android:id="@+id/fitbit"
@@ -36,7 +36,7 @@
             android:layout_gravity="center"
             android:layout_marginRight="40dp"
             android:src="@drawable/ic_fitbit"
-        />
+            />
 
         <ImageView
             android:id="@+id/google_fit"
@@ -45,7 +45,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="40dp"
             android:src="@drawable/ic_google_fit"
-        />
+            />
 
     </FrameLayout>
 
@@ -59,6 +59,6 @@
         android:layout_marginRight="8dp"
         android:background="@drawable/app_btn_border"
         android:text="@string/skip"
-    />
+        />
 
 </LinearLayout>

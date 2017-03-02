@@ -7,14 +7,14 @@
     android:orientation="vertical"
     android:paddingBottom="24dp"
     android:paddingTop="32dp"
->
+    >
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:text="@string/trial_dialog_no_worries"
-    />
+        />
 
     <Button
         android:id="@+id/start_trial_now"
@@ -24,7 +24,7 @@
         android:background="@drawable/app_btn_filled"
         android:text="@string/start_free_30_day_trial_now"
         android:textColor="@android:color/white"
-    />
+        />
 
     <Button
         android:id="@+id/learn_more"
@@ -34,6 +34,6 @@
         android:background="@drawable/app_btn_border"
         android:text="@string/trial_dialog_learn_more"
         android:textColor="@color/app_accent"
-    />
+        />
 
 </LinearLayout>
