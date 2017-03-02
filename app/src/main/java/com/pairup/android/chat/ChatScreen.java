@@ -19,7 +19,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
-import com.pairup.android.subscription.SubscriptionChangeEvent;
 import com.pairup.android.subscription.SubscriptionDialog;
 import com.pairup.android.subscription.SubscriptionDialogItemClickEvent;
 import com.pairup.android.subscription.SubscriptionPresenter;
@@ -115,14 +114,6 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         }
     }
 
-    private void setChatGone(boolean gone) {
-        if (gone) {
-            uiBuySubscription.setVisibility(View.VISIBLE);
-        } else {
-            uiBuySubscription.setVisibility(View.INVISIBLE);
-        }
-    }
-
     private void customizeSmoochInterface() {
         ViewGroup rootView = ((ViewGroup) findViewById(android.R.id.content));
         View oldChatLayout = rootView.getChildAt(0);
@@ -159,8 +150,6 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         Bus.subscribe(this);
         chatPresenter.onViewShown(this);
         subscriptionPresenter.attachView(this, this);
-        setChatGone(!(subscriptionPresenter.isSubscribed() ||
-            userInteractor.getUser().hasProvider()));
 
         // we could not customize part of the UI in on create
         // because not all necessary views present in the hierarcy
@@ -194,12 +183,6 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(UserProfileUpdatedEvent event) {
         showUserName(userInteractor.getFullName());
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(SubscriptionChangeEvent event) {
-        setChatGone(!(subscriptionPresenter.isSubscribed() ||
-            userInteractor.getUser().hasProvider()));
     }
 
     @Override public void onPause() {
