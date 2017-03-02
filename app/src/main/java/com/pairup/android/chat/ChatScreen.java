@@ -229,8 +229,13 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         if (userInteractor.getUser().isSecondPopupActive() &&
             !subscriptionPresenter.isSubscribed()) {
 
-            SimpleDialog
-                .withOkBtn(this, userInteractor.getUser().getProvider().getSecondPopupMessage());
+            SimpleDialog.show(this, null,
+                userInteractor.getUser().getProvider().getSecondPopupMessage(),
+                getString(R.string.subscribe), new Action0() {
+                    @Override public void call() {
+                        subscriptionPresenter.showSubscriptionDialog();
+                    }
+                }, true);
         }
     }
 
