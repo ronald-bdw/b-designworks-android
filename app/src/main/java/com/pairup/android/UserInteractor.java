@@ -276,4 +276,13 @@ public class UserInteractor {
             .subscribeOn(Schedulers.io())
             .subscribe(result -> { }, ignoreError -> { });
     }
+
+    public void savefirstPopupShown(boolean firstPopupShown) {
+        userSettings.saveFirstPopupShown(firstPopupShown);
+    }
+
+    public boolean firstPopupShown() {
+        return userSettings.firstPopupShown();
+    }
+
 }
