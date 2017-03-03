@@ -32,35 +32,40 @@ public class EditProfilePresenter {
     }
 
     public void showUserInfo() {
-        view.showUserInfo(userInteractor.getUser());
+        if (view != null) {
+            view.showUserInfo(userInteractor.getUser());
+        }
     }
 
     public void updateUser() {
         if (updateProfileSubscribtion != null) return;
-        String email = view.getEmail();
-        if (email.isEmpty()) {
-            view.showEmailError(R.string.error_empty_email);
-            return;
+        String email = null;
+        if (view != null) {
+            email = view.getEmail();
+            if (email.isEmpty()) {
+                view.showEmailError(R.string.error_empty_email);
+                return;
+            }
+            if (!isCorrectEmailAdress(email)) {
+                view.showEmailError(R.string.error_incorrect_email);
+                return;
+            }
+            view.showProgressDialog();
+            view.hideKeyboard();
+            updateProfileSubscribtion = userInteractor
+                .updateUser(view.getFirstName(), view.getLastName(), email)
+                .subscribeOn(Schedulers.io())
+                .doOnTerminate(() -> {
+                    view.hideProgress();
+                    updateProfileSubscribtion = null;
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(result -> {
+                    view.showUserInfo(result.getUser());
+                    view.profileHasBeenUpdated();
+                    view.closeEditor();
+                }, view::showError);
         }
-        if (!isCorrectEmailAdress(email)) {
-            view.showEmailError(R.string.error_incorrect_email);
-            return;
-        }
-        view.showProgressDialog();
-        view.hideKeyboard();
-        updateProfileSubscribtion = userInteractor
-            .updateUser(view.getFirstName(), view.getLastName(), email)
-            .subscribeOn(Schedulers.io())
-            .doOnTerminate(() -> {
-                view.hideProgress();
-                updateProfileSubscribtion = null;
-            })
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(result -> {
-                view.showUserInfo(result.getUser());
-                view.profileHasBeenUpdated();
-                view.closeEditor();
-            }, view::showError);
     }
 
     private boolean isCorrectEmailAdress(String email) {
@@ -76,7 +81,9 @@ public class EditProfilePresenter {
     }
 
     public void onScreenHidden() {
-        view.hideProgress();
+        if (view != null) {
+            view.hideProgress();
+        }
     }
 
     public void cancelRequest() {
@@ -87,7 +94,7 @@ public class EditProfilePresenter {
     }
 
     public void detachView() {
-        this.view = null;
+        view = null;
     }
 
     public void updateAvatar(@Nullable String imageUrl) {
@@ -109,6 +116,8 @@ public class EditProfilePresenter {
     }
 
     public void userCancelAvatarUploading() {
-        view.showAvatar(userInteractor.getUser().getAvatar().getThumb());
+        if (view != null) {
+            view.showAvatar(userInteractor.getUser().getAvatar().getThumb());
+        }
     }
 }
