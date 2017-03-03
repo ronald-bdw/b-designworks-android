@@ -60,7 +60,7 @@ public class User {
     }
 
     public boolean hasProvider() {
-        return provider != null;
+        return provider != null && !"subscriber".equals(provider.getName());
     }
 
     public List<Integration> getIntegrations() {
