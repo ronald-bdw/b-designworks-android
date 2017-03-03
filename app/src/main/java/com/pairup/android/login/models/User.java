@@ -8,18 +8,20 @@ import java.util.List;
  * Created by Ilya Eremin on 9/12/16.
  */
 public class User {
-    private                                        String            id;
-    private                                        String            zendeskId;
-    private                                        String            authenticationToken;
-    private                                        String            firstName;
-    private                                        String            lastName;
-    private                                        String            email;
-    private                                        String            phoneNumber;
-    private                                        Avatar            avatar;
-    private                                        List<Integration> integrations;
-    private                                        Provider          provider;
-    @SerializedName("first_popup_active") private  boolean           subscriptionExpiringSoon;
-    @SerializedName("second_popup_active") private boolean           subscriptionExpired;
+    private String            id;
+    private String            zendeskId;
+    private String            authenticationToken;
+    private String            firstName;
+    private String            lastName;
+    private String            email;
+    private String            phoneNumber;
+    private Avatar            avatar;
+    private List<Integration> integrations;
+    private Provider          provider;
+    @SerializedName("first_popup_active")
+    private boolean           subscriptionExpiringSoon;
+    @SerializedName("second_popup_active")
+    private boolean           subscriptionExpired;
 
     public void setProvider(Provider provider) {
         this.provider = provider;

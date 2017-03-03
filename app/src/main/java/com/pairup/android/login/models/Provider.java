@@ -7,13 +7,14 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class Provider {
-    private                                         String  id;
-    private                                         String  name;
-    private                                         int     priority;
-    private                                         boolean subscriber;
-    @SerializedName("first_popup_message") private  String  subscriptionExpiringSoonMessage;
-    @SerializedName("second_popup_message") private String  subscriptionExpiredMessage;
-    //loginSubExpiringMsg
+    private String  id;
+    private String  name;
+    private int     priority;
+    private boolean subscriber;
+    @SerializedName("first_popup_message")
+    private String  subscriptionExpiringSoonMessage;
+    @SerializedName("second_popup_message")
+    private String  subscriptionExpiredMessage;
 
     public void setId(String id) {
         this.id = id;
