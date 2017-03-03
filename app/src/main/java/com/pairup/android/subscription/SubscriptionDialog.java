@@ -54,11 +54,7 @@ public class SubscriptionDialog extends BaseDialogFragment {
 
     private void subscribe(@NonNull SubscriptionDialogItemClickEvent subscriptionWithTrial,
                            @NonNull SubscriptionDialogItemClickEvent subscriptionWithoutTrial) {
-        if (withTrial) {
-            Bus.event(subscriptionWithTrial);
-        } else {
-            Bus.event(subscriptionWithoutTrial);
-        }
+        Bus.event(withTrial ? subscriptionWithTrial : subscriptionWithoutTrial);
         getDialog().dismiss();
     }
 
