@@ -21,12 +21,20 @@ public class SubscriptionDialog extends BaseDialogFragment {
 
     private boolean withTrial;
 
-    public static void show(FragmentActivity activity, boolean withTrial) {
+    private static void show(FragmentActivity activity, boolean withTrial) {
         Bundle args = new Bundle();
         args.putBoolean(ARG_WITH_TRIAL, withTrial);
         SubscriptionDialog subscriptionDialog = new SubscriptionDialog();
         subscriptionDialog.setArguments(args);
         show(subscriptionDialog, activity);
+    }
+
+    public static void showWithTrial(FragmentActivity activity) {
+        show(activity, true);
+    }
+
+    public static void showWithoutTrial(FragmentActivity activity) {
+        show(activity, false);
     }
 
     @Override protected UiInfo getUiInfo() {
@@ -38,23 +46,23 @@ public class SubscriptionDialog extends BaseDialogFragment {
     }
 
     @OnClick(R.id.starter) void onStartClick() {
-        subscribe(SubscriptionDialogItemClickEvent.STARTER,
+        Bus.event(withTrial ?
+            SubscriptionDialogItemClickEvent.STARTER :
             SubscriptionDialogItemClickEvent.STARTER_WITHOUT_TRIAL);
+        getDialog().dismiss();
     }
 
     @OnClick(R.id.stabilizer) void onStabilizerClick() {
-        subscribe(SubscriptionDialogItemClickEvent.STABILIZER,
+        Bus.event(withTrial ?
+            SubscriptionDialogItemClickEvent.STABILIZER :
             SubscriptionDialogItemClickEvent.STABILIZER_WITHOUT_TRIAL);
+        getDialog().dismiss();
     }
 
     @OnClick(R.id.master) void onMasterClick() {
-        subscribe(SubscriptionDialogItemClickEvent.MASTER,
+        Bus.event(withTrial ?
+            SubscriptionDialogItemClickEvent.MASTER :
             SubscriptionDialogItemClickEvent.MASTER_WITHOUT_TRIAL);
-    }
-
-    private void subscribe(@NonNull SubscriptionDialogItemClickEvent subscriptionWithTrial,
-                           @NonNull SubscriptionDialogItemClickEvent subscriptionWithoutTrial) {
-        Bus.event(withTrial ? subscriptionWithTrial : subscriptionWithoutTrial);
         getDialog().dismiss();
     }
 
