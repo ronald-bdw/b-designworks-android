@@ -14,6 +14,7 @@ public class User {
     private String            email;
     private String            phoneNumber;
     private Avatar            avatar;
+    private boolean           trialUsed;
     private List<Integration> integrations;
     private Provider          provider;
 
@@ -59,6 +60,10 @@ public class User {
 
     public boolean hasProvider() {
         return provider != null;
+    }
+
+    public boolean isTrialUsed() {
+        return trialUsed;
     }
 
     public List<Integration> getIntegrations() {
