@@ -1,5 +1,7 @@
 package com.pairup.android.login.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -17,6 +19,10 @@ public class User {
     private boolean           trialUsed;
     private List<Integration> integrations;
     private Provider          provider;
+    @SerializedName("first_popup_active")
+    private boolean           subscriptionExpiringSoon;
+    @SerializedName("second_popup_active")
+    private boolean           subscriptionExpired;
 
     public void setProvider(Provider provider) {
         this.provider = provider;
@@ -59,7 +65,7 @@ public class User {
     }
 
     public boolean hasProvider() {
-        return provider != null;
+        return provider != null && provider.isNotSubscriber();
     }
 
     public boolean isTrialUsed() {
@@ -73,4 +79,13 @@ public class User {
     public void setIntegrations(List<Integration> integrations) {
         this.integrations = integrations;
     }
+
+    public boolean isSubscriptionExpiringSoon() {
+        return subscriptionExpiringSoon;
+    }
+
+    public boolean isSubscriptionExpired() {
+        return subscriptionExpired;
+    }
+
 }
