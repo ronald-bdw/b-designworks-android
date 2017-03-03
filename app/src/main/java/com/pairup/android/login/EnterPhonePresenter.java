@@ -55,13 +55,11 @@ public class EnterPhonePresenter {
         }
     }
 
-    public boolean isSubscribe() {
-        return !verifyNumberSubs.isUnsubscribed();
-    }
-
-    public void unsubscribeSubs() {
-        verifyNumberSubs.unsubscribe();
-        verifyNumberSubs = null;
+    private void unsubscribeSubs() {
+        if (verifyNumberSubs != null) {
+            verifyNumberSubs.unsubscribe();
+            verifyNumberSubs = null;
+        }
     }
 
     public String getAreaCode(@NonNull String areaCode) {
@@ -192,9 +190,7 @@ public class EnterPhonePresenter {
     }
 
     public void onCancelVerifyingProcess() {
-        if (verifyNumberSubs != null && isSubscribe()) {
-            unsubscribeSubs();
-        }
+        unsubscribeSubs();
     }
 
     public void detachView() {
