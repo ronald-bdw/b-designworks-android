@@ -218,7 +218,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     }
 
     @Override public void showSubscriptionDialog() {
-        SubscriptionDialog.show(this);
+        SubscriptionDialog.show(this, !userInteractor.getUser().isTrialUsed());
     }
 
     @Subscribe(sticky = true) public void onEvent(SubscriptionDialogItemClickEvent subscription) {

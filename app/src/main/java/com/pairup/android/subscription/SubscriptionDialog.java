@@ -1,5 +1,7 @@
 package com.pairup.android.subscription;
 
+import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 
 import com.pairup.android.R;
@@ -15,26 +17,48 @@ import butterknife.OnClick;
 
 public class SubscriptionDialog extends BaseDialogFragment {
 
-    public static void show(FragmentActivity activity) {
-        show(new SubscriptionDialog(), activity);
+    private static final String ARG_WITH_TRIAL = "withTrial";
+
+    private boolean withTrial;
+
+    public static void show(FragmentActivity activity, boolean withTrial) {
+        Bundle args = new Bundle();
+        args.putBoolean(ARG_WITH_TRIAL, withTrial);
+        SubscriptionDialog subscriptionDialog = new SubscriptionDialog();
+        subscriptionDialog.setArguments(args);
+        show(subscriptionDialog, activity);
     }
 
     @Override protected UiInfo getUiInfo() {
         return new UiInfo(R.layout.dialog_subscription);
     }
 
+    @Override protected void parseArguments(@NonNull Bundle args) {
+        withTrial = args.getBoolean(ARG_WITH_TRIAL, true);
+    }
+
     @OnClick(R.id.starter) void onStartClick() {
-        Bus.event(SubscriptionDialogItemClickEvent.STARTER);
-        getDialog().dismiss();
+        subscribe(SubscriptionDialogItemClickEvent.STARTER,
+            SubscriptionDialogItemClickEvent.STARTER_WITHOUT_TRIAL);
     }
 
     @OnClick(R.id.stabilizer) void onStabilizerClick() {
-        Bus.event(SubscriptionDialogItemClickEvent.STABILIZER);
-        getDialog().dismiss();
+        subscribe(SubscriptionDialogItemClickEvent.STABILIZER,
+            SubscriptionDialogItemClickEvent.STABILIZER_WITHOUT_TRIAL);
     }
 
     @OnClick(R.id.master) void onMasterClick() {
-        Bus.event(SubscriptionDialogItemClickEvent.MASTER);
+        subscribe(SubscriptionDialogItemClickEvent.MASTER,
+            SubscriptionDialogItemClickEvent.MASTER_WITHOUT_TRIAL);
+    }
+
+    private void subscribe(@NonNull SubscriptionDialogItemClickEvent subscriptionWithTrial,
+                           @NonNull SubscriptionDialogItemClickEvent subscriptionWithoutTrial) {
+        if (withTrial) {
+            Bus.event(subscriptionWithTrial);
+        } else {
+            Bus.event(subscriptionWithoutTrial);
+        }
         getDialog().dismiss();
     }
 
