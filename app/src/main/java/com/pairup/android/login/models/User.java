@@ -1,23 +1,25 @@
 package com.pairup.android.login.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
  * Created by Ilya Eremin on 9/12/16.
  */
 public class User {
-    private String            id;
-    private String            zendeskId;
-    private String            authenticationToken;
-    private String            firstName;
-    private String            lastName;
-    private String            email;
-    private String            phoneNumber;
-    private Avatar            avatar;
-    private List<Integration> integrations;
-    private Provider          provider;
-    private boolean           firstPopupActive;
-    private boolean           secondPopupActive;
+    private                                        String            id;
+    private                                        String            zendeskId;
+    private                                        String            authenticationToken;
+    private                                        String            firstName;
+    private                                        String            lastName;
+    private                                        String            email;
+    private                                        String            phoneNumber;
+    private                                        Avatar            avatar;
+    private                                        List<Integration> integrations;
+    private                                        Provider          provider;
+    @SerializedName("first_popup_active") private  boolean           subscriptionExpiringSoon;
+    @SerializedName("second_popup_active") private boolean           subscriptionExpired;
 
     public void setProvider(Provider provider) {
         this.provider = provider;
@@ -71,12 +73,12 @@ public class User {
         this.integrations = integrations;
     }
 
-    public boolean isFirstPopupActive() {
-        return firstPopupActive;
+    public boolean isSubscriptionExpiringSoon() {
+        return subscriptionExpiringSoon;
     }
 
-    public boolean isSecondPopupActive() {
-        return secondPopupActive;
+    public boolean isSubscriptionExpired() {
+        return subscriptionExpired;
     }
 
 }

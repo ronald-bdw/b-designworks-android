@@ -11,8 +11,9 @@ public class Provider {
     private                                         String  name;
     private                                         int     priority;
     private                                         boolean subscriber;
-    @SerializedName("first_popup_message") private  String  loginSubscriptionExpiringMessage;
-    @SerializedName("second_popup_message") private String  chatSubscriptionExpiredMessage;
+    @SerializedName("first_popup_message") private  String  subscriptionExpiringSoonMessage;
+    @SerializedName("second_popup_message") private String  subscriptionExpiredMessage;
+    //loginSubExpiringMsg
 
     public void setId(String id) {
         this.id = id;
@@ -34,12 +35,16 @@ public class Provider {
         return priority;
     }
 
-    public String getLoginSubscriptionExpiringMessage() {
-        return loginSubscriptionExpiringMessage;
+    public boolean isSubscriber() {
+        return subscriber;
     }
 
-    public String getChatSubscriptionExpiredMessage() {
-        return chatSubscriptionExpiredMessage;
+    public String getSubscriptionExpiringSoonMessage() {
+        return subscriptionExpiringSoonMessage;
+    }
+
+    public String getSubscriptionExpiredMessage() {
+        return subscriptionExpiredMessage;
     }
 
 }

@@ -104,10 +104,10 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
 
         userInteractor.sendTimeZoneToServer(Times.getTimeZone());
 
-        if (userInteractor.getUser().isFirstPopupActive() &&
+        if (userInteractor.getUser().isSubscriptionExpiringSoon() &&
             !userInteractor.loginSubscriptionExpiringMessageShown()) {
             SimpleDialog.withOkBtn(this,
-                userInteractor.getUser().getProvider().getLoginSubscriptionExpiringMessage());
+                userInteractor.getUser().getProvider().getSubscriptionExpiringSoonMessage());
             userInteractor.saveLoginSubscriptionExpiringMessageShown(true);
         }
 
@@ -228,11 +228,11 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         super.onMessageSent(message, messageUploadStatus);
         Analytics.logUserResponseSpeed();
 
-        if (userInteractor.getUser().isSecondPopupActive() &&
+        if (userInteractor.getUser().isSubscriptionExpired() &&
             !subscriptionPresenter.isSubscribed()) {
 
             SimpleDialog.show(this, null,
-                userInteractor.getUser().getProvider().getChatSubscriptionExpiredMessage(),
+                userInteractor.getUser().getProvider().getSubscriptionExpiredMessage(),
                 getString(R.string.subscribe), new Action0() {
                     @Override public void call() {
                         subscriptionPresenter.showSubscriptionDialog();
