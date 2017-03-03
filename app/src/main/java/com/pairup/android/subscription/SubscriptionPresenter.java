@@ -18,7 +18,6 @@ import com.google.gson.Gson;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.chat.models.SubscriptionsDetails;
-import com.pairup.android.utils.Bus;
 import com.pairup.android.utils.SubscriptionDetailsUtils;
 
 import java.util.ArrayList;
@@ -137,7 +136,6 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
                     skuDetails.getStringArrayList("INAPP_PURCHASE_DATA_LIST");
                 if (purchaseDataList != null && purchaseDataList.size() > 0) {
                     isSubscribed = true;
-                    Bus.event(SubscriptionChangeEvent.EVENT);
                     subscriptionsDetails = getSubscribeDataFromString(purchaseDataList.get(0));
 
                     userInteractor.sendInAppStatus(subscriptionsDetails.getPlanName(),

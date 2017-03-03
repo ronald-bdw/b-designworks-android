@@ -276,4 +276,13 @@ public class UserInteractor {
             .subscribeOn(Schedulers.io())
             .subscribe(result -> { }, ignoreError -> { });
     }
+
+    public void saveSubscriptionExpiringSoonMessageShown() {
+        userSettings.saveSubscriptionExpiringSoonMessageShown();
+    }
+
+    public boolean subscriptionExpiringSoonMessageShown() {
+        return userSettings.subscriptionExpiringSoonMessageShown();
+    }
+
 }

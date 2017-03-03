@@ -19,26 +19,26 @@ import rx.functions.Action1;
  */
 public class SimpleDialog {
 
-    public static void withOkBtn(Context context, String message) {
+    public static void withOkBtn(@NonNull Context context, @Nullable String message) {
         withOkBtn(context, null, message);
     }
 
     private static void withOkBtn(
         @NonNull Context context,
-        @Nullable String title, String message) {
+        @Nullable String title, @Nullable String message) {
         show(context, title, message, context.getString(android.R.string.yes), null, null, null);
     }
 
     public static void show(
         @NonNull Context context,
-        @Nullable String title, String message,
+        @Nullable String title, @Nullable String message,
         @NonNull String buttonLabel, @Nullable Action0 action) {
         show(context, title, message, buttonLabel, action, null, null);
     }
 
     public static void show(
         @NonNull Context context,
-        @Nullable String title, String message,
+        @Nullable String title, @Nullable String message,
         @NonNull String buttonLabel, @Nullable Action0 action, boolean cancelable) {
         show(context, title, message, buttonLabel, action, null, null, cancelable);
     }
@@ -52,7 +52,7 @@ public class SimpleDialog {
 
     public static void show(
         @NonNull Context context,
-        @Nullable String title, String message,
+        @Nullable String title, @Nullable String message,
         @NonNull String firstButtonLabel, @Nullable Action0 firstBtnAction,
         @Nullable String secondBtnLabel, @Nullable Action0 secondBtnAction) {
         show(context, title, message, firstButtonLabel, firstBtnAction,
@@ -62,7 +62,7 @@ public class SimpleDialog {
     //CHECKSTYLE:OFF: checkstyle:parameternumbercheck
     public static void show(
         @NonNull Context context,
-        @Nullable String title, String message,
+        @Nullable String title, @Nullable String message,
         @NonNull String firstButtonLabel, @Nullable Action0 firstBtnAction,
         @Nullable String secondBtnLabel, @Nullable Action0 secondBtnAction, boolean cancelable) {
         DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
@@ -95,7 +95,7 @@ public class SimpleDialog {
     }
     //CHECKSTYLE:ON: checkstyle:parameternumbercheck
 
-    public static void show(Context context, RetrofitException error) {
+    public static void show(@NonNull Context context, @NonNull RetrofitException error) {
         CommonError parsedError = error.getErrorBodyAs(CommonError.class);
         if (parsedError != null) {
             withOkBtn(context, parsedError.getMessage());
@@ -104,7 +104,7 @@ public class SimpleDialog {
         }
     }
 
-    public static void networkProblem(Context context) {
+    public static void networkProblem(@NonNull Context context) {
         withOkBtn(context, context.getString(R.string.error_network));
     }
 
