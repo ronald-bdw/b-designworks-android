@@ -12,6 +12,13 @@ public enum Subscription {
     SIX_MONTH_SUBSCRIPTION_ID("six_month_subscription_v3", "habit_stabilizer", 6),
     ONE_YEAR_SUBSCRIPTION_ID("one_year_subscription_v3", "habit_master", 12),
 
+    THREE_MONTH_SUBSCRIPTION_WITHOUT_TRIAL_ID
+        ("three_month_subscription_v3_without_trial", "habit_starter", 3),
+    SIX_MONTH_SUBSCRIPTION_WITHOUT_TRIAL_ID
+        ("six_month_subscription_v3_without_trial", "habit_stabilizer", 6),
+    ONE_YEAR_SUBSCRIPTION_WITHOUT_TRIAL_ID
+        ("one_year_subscription_v3_without_trial", "habit_master", 12),
+
     THREE_MONTH_SUBSCRIPTION_ID_V1("three_month_subscription_v1", "habit_starter", 3),
     SIX_MONTH_SUBSCRIPTION_ID_V1("six_month_subscription_v1", "habit_stabilizer", 6),
     ONE_YEAR_SUBSCRIPTION_ID_V1("one_year_subscription_v1", "habit_master", 12),
