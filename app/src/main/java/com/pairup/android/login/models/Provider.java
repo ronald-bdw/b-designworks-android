@@ -1,15 +1,18 @@
 package com.pairup.android.login.models;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by almaziskhakov on 26/10/2016.
  */
 
 public class Provider {
-    private String id;
-    private String name;
-    private int    priority;
-    private String firstPopupMessage;
-    private String secondPopupMessage;
+    private                                         String  id;
+    private                                         String  name;
+    private                                         int     priority;
+    private                                         boolean subscriber;
+    @SerializedName("first_popup_message") private  String  loginSubscriptionExpiringMessage;
+    @SerializedName("second_popup_message") private String  chatSubscriptionExpiredMessage;
 
     public void setId(String id) {
         this.id = id;
@@ -31,12 +34,12 @@ public class Provider {
         return priority;
     }
 
-    public String getFirstPopupMessage() {
-        return firstPopupMessage;
+    public String getLoginSubscriptionExpiringMessage() {
+        return loginSubscriptionExpiringMessage;
     }
 
-    public String getSecondPopupMessage() {
-        return secondPopupMessage;
+    public String getChatSubscriptionExpiredMessage() {
+        return chatSubscriptionExpiredMessage;
     }
 
 }

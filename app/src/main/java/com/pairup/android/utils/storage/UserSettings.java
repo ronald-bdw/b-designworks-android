@@ -10,7 +10,7 @@ public class UserSettings {
 
     private static final String KEY_TOKEN             = "token";
     private static final String KEY_PHONE             = "phone";
-    private static final String KEY_FIRST_POPUP_SHOWN = "firstPopupShown";
+    private static final String KEY_FIRST_POPUP_SHOWN = "loginSubscriptionExpiringMessageShown";
 
     private final IStorage storage;
 
@@ -35,11 +35,12 @@ public class UserSettings {
         return storage.getString(KEY_PHONE);
     }
 
-    public void saveFirstPopupShown(boolean firstPopupShown) {
-        storage.putBoolean(KEY_FIRST_POPUP_SHOWN, firstPopupShown);
+    public void saveLoginSubscriptionExpiringMessageShown(
+        boolean loginSubscriptionExpiringMessageShown) {
+        storage.putBoolean(KEY_FIRST_POPUP_SHOWN, loginSubscriptionExpiringMessageShown);
     }
 
-    public boolean firstPopupShown() {
+    public boolean loginSubscriptionExpiringMessageShown() {
         return storage.getBoolean(KEY_FIRST_POPUP_SHOWN, true);
     }
 

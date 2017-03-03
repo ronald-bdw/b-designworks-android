@@ -104,10 +104,10 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
 
         userInteractor.sendTimeZoneToServer(Times.getTimeZone());
 
-        if (userInteractor.getUser().isFirstPopupActive() && !userInteractor.firstPopupShown()) {
+        if (userInteractor.getUser().isFirstPopupActive() && !userInteractor.loginSubscriptionExpiringMessageShown()) {
             SimpleDialog
-                .withOkBtn(this, userInteractor.getUser().getProvider().getFirstPopupMessage());
-            userInteractor.savefirstPopupShown(true);
+                .withOkBtn(this, userInteractor.getUser().getProvider().getLoginSubscriptionExpiringMessage());
+            userInteractor.saveLoginSubscriptionExpiringMessageShown(true);
         }
 
         if (needGoogleFitIntegration) {
@@ -231,7 +231,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
             !subscriptionPresenter.isSubscribed()) {
 
             SimpleDialog.show(this, null,
-                userInteractor.getUser().getProvider().getSecondPopupMessage(),
+                userInteractor.getUser().getProvider().getChatSubscriptionExpiredMessage(),
                 getString(R.string.subscribe), new Action0() {
                     @Override public void call() {
                         subscriptionPresenter.showSubscriptionDialog();

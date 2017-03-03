@@ -277,12 +277,14 @@ public class UserInteractor {
             .subscribe(result -> { }, ignoreError -> { });
     }
 
-    public void savefirstPopupShown(boolean firstPopupShown) {
-        userSettings.saveFirstPopupShown(firstPopupShown);
+    public void saveLoginSubscriptionExpiringMessageShown(
+        boolean loginSubscriptionExpiringMessageShown) {
+        userSettings
+            .saveLoginSubscriptionExpiringMessageShown(loginSubscriptionExpiringMessageShown);
     }
 
-    public boolean firstPopupShown() {
-        return userSettings.firstPopupShown();
+    public boolean loginSubscriptionExpiringMessageShown() {
+        return userSettings.loginSubscriptionExpiringMessageShown();
     }
 
 }
