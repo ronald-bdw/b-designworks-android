@@ -104,9 +104,10 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
 
         userInteractor.sendTimeZoneToServer(Times.getTimeZone());
 
-        if (userInteractor.getUser().isFirstPopupActive() && !userInteractor.loginSubscriptionExpiringMessageShown()) {
-            SimpleDialog
-                .withOkBtn(this, userInteractor.getUser().getProvider().getLoginSubscriptionExpiringMessage());
+        if (userInteractor.getUser().isFirstPopupActive() &&
+            !userInteractor.loginSubscriptionExpiringMessageShown()) {
+            SimpleDialog.withOkBtn(this,
+                userInteractor.getUser().getProvider().getLoginSubscriptionExpiringMessage());
             userInteractor.saveLoginSubscriptionExpiringMessageShown(true);
         }
 
