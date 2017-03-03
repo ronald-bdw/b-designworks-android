@@ -55,13 +55,11 @@ public class EnterPhonePresenter {
         }
     }
 
-    public boolean isSubscribe() {
-        return !verifyNumberSubs.isUnsubscribed();
-    }
-
-    public void unsubscribeSubs() {
-        verifyNumberSubs.unsubscribe();
-        verifyNumberSubs = null;
+    private void unsubscribeSubs() {
+        if (verifyNumberSubs != null) {
+            verifyNumberSubs.unsubscribe();
+            verifyNumberSubs = null;
+        }
     }
 
     public String getAreaCode(@NonNull String areaCode) {
@@ -110,17 +108,21 @@ public class EnterPhonePresenter {
             view.hideKeyboard();
             view.showProgress();
         }
+
         final String formattedPhone;
+
         if ("+61".equals(areaCode) && '0' == phone.charAt(0)) {
             formattedPhone = phone.substring(1, phone.length());
         } else {
             formattedPhone = phone;
         }
+
         userInteractor.requestUserStatus(areaCode + formattedPhone)
             .compose(Rxs.doInBackgroundDeliverToUI())
             .subscribe(result -> {
                 boolean passed = false;
                 hasProvider = result.userHasProvider();
+
                 switch (accountVerificationType) {
                     case IS_REGISTERED:
                         passed = result.isPhoneRegistered();
@@ -129,7 +131,7 @@ public class EnterPhonePresenter {
                         passed = !result.isPhoneRegistered();
                         break;
                     case HAS_PROVIDER:
-                        if (hasProvider && result.getProvider().equals(providerName)) {
+                        if (providerName.equals(result.getProvider())) {
                             passed = hasProvider;
                         } else {
                             analytics.logWrongProviderChoosen();
@@ -138,6 +140,7 @@ public class EnterPhonePresenter {
                     default:
                         break;
                 }
+
                 if (passed) {
                     requestAuthorizationCode(areaCode, formattedPhone);
                 } else {
@@ -154,6 +157,7 @@ public class EnterPhonePresenter {
 
     private void requestAuthorizationCode(@NonNull String areaCode, @NonNull String phone) {
         if (verifyNumberSubs != null) return;
+
         verifyNumberSubs = userInteractor.requestCode(areaCode + phone)
             .doOnTerminate(() -> {
                 verifyNumberSubs = null;
@@ -166,8 +170,8 @@ public class EnterPhonePresenter {
                 loginFlowInteractor.setPhoneCodeId(result.getPhoneCodeId());
                 loginFlowInteractor.setPhoneRegistered(result.isPhoneRegistered());
                 loginFlowInteractor.setPhoneNumber(areaCode + phone);
-
                 loginFlowInteractor.setHasProvider(hasProvider);
+
                 if (view != null) {
                     view.openVerificationScreen();
                 }
@@ -192,9 +196,7 @@ public class EnterPhonePresenter {
     }
 
     public void onCancelVerifyingProcess() {
-        if (verifyNumberSubs != null && isSubscribe()) {
-            unsubscribeSubs();
-        }
+        unsubscribeSubs();
     }
 
     public void detachView() {

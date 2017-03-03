@@ -62,7 +62,7 @@ public class SelectProviderScreen extends BaseActivity implements SelectProvider
     }
 
     @Override
-    public void showProviders(List<String> providers) {
+    public void showProviders(@NonNull List<String> providers) {
 
         providers.add(getResources().getString(R.string.select_providers_list_last_item));
 
@@ -99,7 +99,7 @@ public class SelectProviderScreen extends BaseActivity implements SelectProvider
                 getString(R.string.retry),
                 () -> selectProviderPresenter.fetchProviders(),
                 getString(R.string.cancel),
-                () -> closeScreen());
+            this::closeScreen);
     }
 
     @Override
