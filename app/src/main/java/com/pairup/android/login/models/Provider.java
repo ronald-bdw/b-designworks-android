@@ -39,6 +39,10 @@ public class Provider {
         return subscriber;
     }
 
+    public boolean isNotSubscriber() {
+        return "subscriber".equals(name);
+    }
+
     public String getSubscriptionExpiringSoonMessage() {
         return subscriptionExpiringSoonMessage;
     }

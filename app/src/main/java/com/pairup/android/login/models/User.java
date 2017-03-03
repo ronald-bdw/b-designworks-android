@@ -62,7 +62,7 @@ public class User {
     }
 
     public boolean hasProvider() {
-        return provider != null && !"subscriber".equals(provider.getName());
+        return provider != null && provider.isNotSubscriber();
     }
 
     public List<Integration> getIntegrations() {
