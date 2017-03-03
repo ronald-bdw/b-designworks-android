@@ -19,7 +19,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
-import com.pairup.android.subscription.SubscriptionChangeEvent;
 import com.pairup.android.subscription.SubscriptionDialog;
 import com.pairup.android.subscription.SubscriptionDialogItemClickEvent;
 import com.pairup.android.subscription.SubscriptionPresenter;
@@ -105,16 +104,15 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
 
         userInteractor.sendTimeZoneToServer(Times.getTimeZone());
 
+        if (userInteractor.getUser().isSubscriptionExpiringSoon() &&
+            !userInteractor.subscriptionExpiringSoonMessageShown()) {
+            SimpleDialog.withOkBtn(this,
+                userInteractor.getUser().getProvider().getSubscriptionExpiringSoonMessage());
+            userInteractor.saveSubscriptionExpiringSoonMessageShown();
+        }
+
         if (needGoogleFitIntegration) {
             googleFitPresenter.attachView(this, this);
-        }
-    }
-
-    private void setChatGone(boolean gone) {
-        if (gone) {
-            uiBuySubscription.setVisibility(View.VISIBLE);
-        } else {
-            uiBuySubscription.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -154,8 +152,6 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         Bus.subscribe(this);
         chatPresenter.onViewShown(this);
         subscriptionPresenter.attachView(this, this);
-        setChatGone(!(subscriptionPresenter.isSubscribed() ||
-            userInteractor.getUser().hasProvider()));
 
         // we could not customize part of the UI in on create
         // because not all necessary views present in the hierarcy
@@ -189,12 +185,6 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(UserProfileUpdatedEvent event) {
         showUserName(userInteractor.getFullName());
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(SubscriptionChangeEvent event) {
-        setChatGone(!(subscriptionPresenter.isSubscribed() ||
-            userInteractor.getUser().hasProvider()));
     }
 
     @Override public void onPause() {
@@ -237,6 +227,18 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     @Override public void onMessageSent(Message message, MessageUploadStatus messageUploadStatus) {
         super.onMessageSent(message, messageUploadStatus);
         Analytics.logUserResponseSpeed();
+
+        if (userInteractor.getUser().isSubscriptionExpired() &&
+            !subscriptionPresenter.isSubscribed()) {
+
+            SimpleDialog.show(this, null,
+                userInteractor.getUser().getProvider().getSubscriptionExpiredMessage(),
+                getString(R.string.subscribe), new Action0() {
+                    @Override public void call() {
+                        subscriptionPresenter.showSubscriptionDialog();
+                    }
+                }, true);
+        }
     }
 
     @Override
