@@ -16,6 +16,7 @@ public class User {
     private String            email;
     private String            phoneNumber;
     private Avatar            avatar;
+    private boolean           trialUsed;
     private List<Integration> integrations;
     private Provider          provider;
     @SerializedName("first_popup_active")
@@ -65,6 +66,10 @@ public class User {
 
     public boolean hasProvider() {
         return provider != null && provider.isNotSubscriber();
+    }
+
+    public boolean isTrialUsed() {
+        return trialUsed;
     }
 
     public List<Integration> getIntegrations() {
