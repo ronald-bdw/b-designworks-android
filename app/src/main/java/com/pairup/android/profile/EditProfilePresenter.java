@@ -39,9 +39,8 @@ public class EditProfilePresenter {
 
     public void updateUser() {
         if (updateProfileSubscribtion != null) return;
-        String email = null;
         if (view != null) {
-            email = view.getEmail();
+            String email = view.getEmail();
             if (email.isEmpty()) {
                 view.showEmailError(R.string.error_empty_email);
                 return;
