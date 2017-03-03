@@ -35,7 +35,7 @@ public class UserSettings {
         return storage.getString(KEY_PHONE);
     }
 
-    public void saveLoginSubscriptionExpiringMessageShown() {
+    public void saveSubscriptionExpiringSoonMessageShown() {
         storage.putBoolean(KEY_FIRST_POPUP_SHOWN, true);
     }
 

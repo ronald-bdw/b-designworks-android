@@ -108,7 +108,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
             !userInteractor.subscriptionExpiringSoonMessageShown()) {
             SimpleDialog.withOkBtn(this,
                 userInteractor.getUser().getProvider().getSubscriptionExpiringSoonMessage());
-            userInteractor.saveLoginSubscriptionExpiringMessageShown(true);
+            userInteractor.saveSubscriptionExpiringSoonMessageShown();
         }
 
         if (needGoogleFitIntegration) {

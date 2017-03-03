@@ -277,8 +277,8 @@ public class UserInteractor {
             .subscribe(result -> { }, ignoreError -> { });
     }
 
-    public void saveLoginSubscriptionExpiringMessageShown() {
-        userSettings.saveLoginSubscriptionExpiringMessageShown();
+    public void saveSubscriptionExpiringSoonMessageShown() {
+        userSettings.saveSubscriptionExpiringSoonMessageShown();
     }
 
     public boolean subscriptionExpiringSoonMessageShown() {
