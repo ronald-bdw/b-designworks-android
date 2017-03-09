@@ -7,4 +7,6 @@ package com.pairup.android.chat;
 public interface ChatView {
 
     void openWelcomeScreenWithError(boolean isPhoneRegistered);
+
+    void onError(Throwable error);
 }
