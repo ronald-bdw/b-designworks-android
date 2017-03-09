@@ -2,7 +2,6 @@ package com.pairup.android.login.models;
 
 import com.pairup.android.utils.Strings;
 
-
 /**
  * Created by Klymenko on 08.11.2016.
  */
