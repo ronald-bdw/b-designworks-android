@@ -1,5 +1,7 @@
 package com.pairup.android.login.models;
 
+import com.pairup.android.utils.Strings;
+
 /**
  * Created by Klymenko on 08.11.2016.
  */
@@ -7,7 +9,7 @@ package com.pairup.android.login.models;
 public class UserStatus {
 
     private boolean phoneRegistered;
-    private String provider;
+    private String  provider;
 
     public void setPhoneRegistered(boolean phoneRegistered) {
         this.phoneRegistered = phoneRegistered;
@@ -26,6 +28,6 @@ public class UserStatus {
     }
 
     public boolean userHasProvider() {
-        return provider != null ? !provider.isEmpty() : false;
+        return !Strings.isEmpty(provider) && !provider.equalsIgnoreCase("subscriber");
     }
 }
