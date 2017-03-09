@@ -1,6 +1,7 @@
 package com.pairup.android.login.models;
 
-import java.util.Locale;
+import com.pairup.android.utils.Strings;
+
 
 /**
  * Created by Klymenko on 08.11.2016.
@@ -28,7 +29,6 @@ public class UserStatus {
     }
 
     public boolean userHasProvider() {
-        return provider != null && !provider.isEmpty() &&
-            !provider.toLowerCase(Locale.ENGLISH).equals("subscriber");
+        return !Strings.isEmpty(provider) && !provider.equalsIgnoreCase("subscriber");
     }
 }
