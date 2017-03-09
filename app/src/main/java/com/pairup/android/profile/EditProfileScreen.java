@@ -158,7 +158,7 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
                     Toast.makeText(this, R.string.edit_profile_error_access_storage,
                         Toast.LENGTH_SHORT).show();
                 }
-            });
+            }, error -> ErrorUtils.handle(this, error));
     }
 
     public void showAvatar(@Nullable String imageUrl) {

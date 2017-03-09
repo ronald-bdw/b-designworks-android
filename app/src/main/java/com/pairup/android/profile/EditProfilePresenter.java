@@ -109,9 +109,7 @@ public class EditProfilePresenter {
             .subscribe(result -> {
                 view.avatarSuccessfullyUploaded();
                 view.showAvatar(result.getUser().getAvatar().getThumb());
-            }, error -> {
-                view.showUploadAvatarError(imageUrl);
-            });
+            }, error -> view.showUploadAvatarError(imageUrl));
     }
 
     public void userCancelAvatarUploading() {

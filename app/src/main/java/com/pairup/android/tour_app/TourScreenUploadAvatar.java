@@ -20,6 +20,7 @@ import com.pairup.android.utils.Analytics;
 import com.pairup.android.utils.ImageLoader;
 import com.pairup.android.utils.Rxs;
 import com.pairup.android.utils.di.Injector;
+import com.pairup.android.utils.network.ErrorUtils;
 import com.pairup.android.utils.ui.SimpleDialog;
 import com.pairup.android.utils.ui.UiInfo;
 import com.tbruyelle.rxpermissions.RxPermissions;
@@ -88,7 +89,7 @@ public class TourScreenUploadAvatar extends BaseActivity {
                     Toast.makeText(this, R.string.edit_profile_error_access_storage,
                         Toast.LENGTH_SHORT).show();
                 }
-            });
+            }, error -> ErrorUtils.handle(this, error));
     }
 
     private void updateAvatar(String url) {
@@ -101,11 +102,8 @@ public class TourScreenUploadAvatar extends BaseActivity {
 
         uploadAvatarSubs = userInteractor.uploadAvatar(url)
             .compose(Rxs.doInBackgroundDeliverToUI())
-            .subscribe(result -> {
-                avatarSuccessfullyUploaded();
-            }, error -> {
-                showUploadAvatarError(url);
-            });
+            .subscribe(result -> avatarSuccessfullyUploaded(),
+                error -> showUploadAvatarError(url));
     }
 
     @Override protected void onResume() {
