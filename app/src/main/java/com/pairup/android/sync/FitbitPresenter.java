@@ -32,7 +32,8 @@ public class FitbitPresenter {
                 }
             })
             .subscribe(fitToken -> userInteractor
-                .saveFitnessTokenLocally(fitToken.getId(), Provider.FITBIT), error -> {
+                    .saveFitnessTokenLocally(fitToken.getId(), Provider.FITBIT),
+                error -> {
                     if (view != null) {
                         view.onError(error);
                     }

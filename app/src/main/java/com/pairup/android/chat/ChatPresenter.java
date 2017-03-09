@@ -36,15 +36,15 @@ public class ChatPresenter {
     public void checkUserAuthorization() {
         if (userInteractor.getUser() != null) {
             userInteractor.requestUserStatus(userInteractor.getPhone())
-                    .compose(Rxs.doInBackgroundDeliverToUI())
-                    .subscribe(result -> {
-                        if (!result.isPhoneRegistered() && !result.userHasProvider()) {
-                            userInteractor.logout();
-                            if (view != null) {
-                                view.openWelcomeScreenWithError(result.isPhoneRegistered());
-                            }
+                .compose(Rxs.doInBackgroundDeliverToUI())
+                .subscribe(result -> {
+                    if (!result.isPhoneRegistered() && !result.userHasProvider()) {
+                        userInteractor.logout();
+                        if (view != null) {
+                            view.openWelcomeScreenWithError(result.isPhoneRegistered());
                         }
-                    });
+                    }
+                }, error -> view.onError(error));
         }
     }
 
