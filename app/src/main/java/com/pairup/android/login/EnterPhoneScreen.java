@@ -16,7 +16,7 @@ import com.pairup.android.BaseActivity;
 import com.pairup.android.BuildConfig;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
-import com.pairup.android.login.functional_area.Area;
+import com.pairup.android.login.functional_area.models.Area;
 import com.pairup.android.login.functional_area.FunctionalToAreaCodeScreen;
 import com.pairup.android.utils.Analytics;
 import com.pairup.android.utils.Keyboard;

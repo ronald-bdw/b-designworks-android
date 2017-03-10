@@ -1,4 +1,4 @@
-package com.pairup.android.utils.network;
+package com.pairup.android.utils.network.models;
 
 /**
  * Created by Ilya Eremin on 12.08.2016.

@@ -62,7 +62,7 @@ public class App extends Application {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(UserUnauthorizedEvent event) {
-        if (unauthorizingSubscription == null) {
+        if (unauthorizingSubscription == null && userInteractor.getUser() != null) {
             unauthorizingSubscription = userInteractor.requestUserStatus(userInteractor.getPhone())
                 .doOnTerminate(() -> unauthorizingSubscription = null)
                 .compose(Rxs.doInBackgroundDeliverToUI())

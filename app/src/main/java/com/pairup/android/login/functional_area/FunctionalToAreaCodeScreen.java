@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import com.pairup.android.BaseActivity;
 import com.pairup.android.R;
 import com.pairup.android.login.OnAreaSelectedEvent;
+import com.pairup.android.login.functional_area.models.Area;
 import com.pairup.android.utils.Analytics;
 import com.pairup.android.utils.Areas;
 import com.pairup.android.utils.Bus;

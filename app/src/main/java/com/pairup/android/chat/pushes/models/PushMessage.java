@@ -1,4 +1,4 @@
-package com.pairup.android.chat.pushes;
+package com.pairup.android.chat.pushes.models;
 
 /**
  * Created by Ilya Eremin on 10/4/16.

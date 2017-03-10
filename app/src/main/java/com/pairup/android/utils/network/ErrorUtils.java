@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.pairup.android.utils.Analytics;
+import com.pairup.android.utils.network.models.RetrofitException;
 import com.pairup.android.utils.ui.SimpleDialog;
 
 import rx.functions.Action1;

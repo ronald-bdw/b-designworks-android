@@ -3,6 +3,7 @@ package com.pairup.android.login.functional_area;
 import android.support.annotation.NonNull;
 import android.view.ViewGroup;
 
+import com.pairup.android.login.functional_area.models.Area;
 import com.pairup.android.utils.ui.BaseAdapter;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;

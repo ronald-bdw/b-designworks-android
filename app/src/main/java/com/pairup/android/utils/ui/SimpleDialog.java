@@ -8,8 +8,8 @@ import android.support.annotation.StringRes;
 import android.support.v7.app.AlertDialog;
 
 import com.pairup.android.R;
-import com.pairup.android.utils.network.CommonError;
-import com.pairup.android.utils.network.RetrofitException;
+import com.pairup.android.utils.network.models.CommonError;
+import com.pairup.android.utils.network.models.RetrofitException;
 
 import rx.functions.Action0;
 import rx.functions.Action1;

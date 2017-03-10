@@ -5,7 +5,7 @@ import com.pairup.android.UserInteractor;
 import com.pairup.android.login.models.AuthResponse;
 import com.pairup.android.login.models.UserStatus;
 import com.pairup.android.utils.Analytics;
-import com.pairup.android.utils.network.RetrofitException;
+import com.pairup.android.utils.network.models.RetrofitException;
 
 import org.junit.Assert;
 import org.junit.Before;

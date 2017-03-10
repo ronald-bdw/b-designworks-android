@@ -1,4 +1,4 @@
-package com.pairup.android.utils.network;
+package com.pairup.android.utils.network.models;
 
 import com.pairup.android.utils.Strings;
 
