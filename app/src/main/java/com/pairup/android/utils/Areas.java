@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.pairup.android.R;
-import com.pairup.android.login.functional_area.Area;
+import com.pairup.android.login.functional_area.models.Area;
 
 import java.util.ArrayList;
 import java.util.List;

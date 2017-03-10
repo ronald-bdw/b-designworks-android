@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.pairup.android.UserInteractor;
-import com.pairup.android.login.functional_area.Area;
+import com.pairup.android.login.functional_area.models.Area;
 import com.pairup.android.utils.Analytics;
 import com.pairup.android.utils.Areas;
 import com.pairup.android.utils.Rxs;

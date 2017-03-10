@@ -1,6 +1,6 @@
 package com.pairup.android.login;
 
-import com.pairup.android.login.functional_area.Area;
+import com.pairup.android.login.functional_area.models.Area;
 
 /**
  * Created by Ilya Eremin on 10/5/16.

@@ -3,7 +3,7 @@ package com.pairup.android.utils;
 import android.content.Context;
 
 import com.pairup.android.R;
-import com.pairup.android.login.functional_area.Area;
+import com.pairup.android.login.functional_area.models.Area;
 
 import junit.framework.Assert;
 

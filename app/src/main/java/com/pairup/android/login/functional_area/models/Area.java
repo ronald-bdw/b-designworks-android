@@ -1,4 +1,4 @@
-package com.pairup.android.login.functional_area;
+package com.pairup.android.login.functional_area.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;

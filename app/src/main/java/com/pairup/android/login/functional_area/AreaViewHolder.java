@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.pairup.android.R;
 import com.pairup.android.login.OnAreaSelectedEvent;
+import com.pairup.android.login.functional_area.models.Area;
 import com.pairup.android.utils.Bus;
 import com.pairup.android.utils.ui.BaseHolder;
 
