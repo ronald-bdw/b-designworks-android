@@ -2,6 +2,7 @@ package com.pairup.android.utils.network;
 
 import com.pairup.android.UserUnauthorizedEvent;
 import com.pairup.android.utils.Bus;
+import com.pairup.android.utils.network.models.RetrofitException;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
