@@ -237,6 +237,9 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
 
             SimpleDialog.show(this, null,
                 userInteractor.getUser().getProvider().getSubscriptionExpiredMessage(),
+            SimpleDialog.show(this, null, userInteractor.getUser().hasProvider() ?
+                    userInteractor.getUser().getProvider().getSubscriptionExpiredMessage() :
+                    getString(R.string.subscription_expired_popup_message),
                 getString(R.string.subscribe), new Action0() {
                     @Override public void call() {
                         subscriptionPresenter.showSubscriptionDialog();
