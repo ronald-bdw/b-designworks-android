@@ -235,13 +235,13 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         if (userInteractor.getUser().isSubscriptionExpired() &&
             !subscriptionPresenter.isSubscribed()) {
 
-            SimpleDialog.show(this, null,
-                userInteractor.getUser().getProvider().getSubscriptionExpiredMessage(),
+            Keyboard.hide(this);
+            SimpleDialog.show(this, null, getSubscriptionExpiredMessage(),
                 getString(R.string.subscribe), new Action0() {
                     @Override public void call() {
                         subscriptionPresenter.showSubscriptionDialog();
                     }
-                }, true);
+                }, getString(R.string.cancel), null, true);
         }
     }
 
@@ -303,5 +303,11 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         googleFitPresenter.logout();
         googleFitPresenter.startIntegrate(this);
         needGoogleFitIntegration = false;
+    }
+
+    private String getSubscriptionExpiredMessage() {
+        return userInteractor.getUser().hasProvider() ?
+            userInteractor.getUser().getProvider().getSubscriptionExpiredMessage() :
+            getString(R.string.subscription_expired_popup_message);
     }
 }

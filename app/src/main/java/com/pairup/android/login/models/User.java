@@ -85,7 +85,7 @@ public class User {
     }
 
     public boolean isSubscriptionExpired() {
-        return subscriptionExpired;
+        return subscriptionExpired || !hasProvider();
     }
 
 }
