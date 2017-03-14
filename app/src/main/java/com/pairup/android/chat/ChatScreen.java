@@ -232,11 +232,11 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         super.onMessageSent(message, messageUploadStatus);
         Analytics.logUserResponseSpeed();
 
-        if (userInteractor.getUser().isSubscriptionExpired() &&
+        if ((!userInteractor.getUser().hasProvider() ||
+            userInteractor.getUser().isSubscriptionExpired()) &&
             !subscriptionPresenter.isSubscribed()) {
 
-            SimpleDialog.show(this, null,
-                userInteractor.getUser().getProvider().getSubscriptionExpiredMessage(),
+            Keyboard.hide(this);
             SimpleDialog.show(this, null, userInteractor.getUser().hasProvider() ?
                     userInteractor.getUser().getProvider().getSubscriptionExpiredMessage() :
                     getString(R.string.subscription_expired_popup_message),
@@ -244,7 +244,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
                     @Override public void call() {
                         subscriptionPresenter.showSubscriptionDialog();
                     }
-                }, true);
+                }, getString(R.string.cancel), null, true);
         }
     }
 
