@@ -106,7 +106,9 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
     }
 
     public void showSubscriptionDialog() {
-        view.showSubscriptionDialog();
+        if (view != null) {
+            view.showSubscriptionDialog();
+        }
     }
 
     private void initPayments() {
@@ -164,7 +166,9 @@ public class SubscriptionPresenter implements BillingProcessor.IBillingHandler {
     }
 
     @Override public void onProductPurchased(String productId, TransactionDetails details) {
-        view.onProductPurchased(productId, details);
+        if (view != null) {
+            view.onProductPurchased(productId, details);
+        }
     }
 
     @Override public void onPurchaseHistoryRestored() {

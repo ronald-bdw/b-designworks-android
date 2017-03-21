@@ -55,15 +55,23 @@ public class EditProfilePresenter {
                 .updateUser(view.getFirstName(), view.getLastName(), email)
                 .subscribeOn(Schedulers.io())
                 .doOnTerminate(() -> {
-                    view.hideProgress();
+                    if (view != null) {
+                        view.hideProgress();
+                    }
                     updateProfileSubscribtion = null;
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> {
-                    view.showUserInfo(result.getUser());
-                    view.profileHasBeenUpdated();
-                    view.closeEditor();
-                }, view::showError);
+                    if (view != null) {
+                        view.showUserInfo(result.getUser());
+                        view.profileHasBeenUpdated();
+                        view.closeEditor();
+                    }
+                }, error -> {
+                    if (view != null) {
+                        view.showError(error);
+                    }
+                });
         }
     }
 
@@ -107,9 +115,15 @@ public class EditProfilePresenter {
         uploadingSubscription = userInteractor.uploadAvatar(imageUrl)
             .compose(Rxs.doInBackgroundDeliverToUI())
             .subscribe(result -> {
-                view.avatarSuccessfullyUploaded();
-                view.showAvatar(result.getUser().getAvatar().getThumb());
-            }, error -> view.showUploadAvatarError(imageUrl));
+                if (view != null) {
+                    view.avatarSuccessfullyUploaded();
+                    view.showAvatar(result.getUser().getAvatar().getThumb());
+                }
+            }, error -> {
+                if (view != null) {
+                    view.showUploadAvatarError(imageUrl);
+                }
+            });
     }
 
     public void userCancelAvatarUploading() {
