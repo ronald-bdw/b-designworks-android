@@ -23,7 +23,7 @@ public class FitbitPresenter {
     }
 
     public void handleCode(String code) {
-        if(view!=null) {
+        if (view != null) {
             view.showSendingFitbitCodeProgress();
         }
         userInteractor.integrateFitnessApp(code, Provider.FITBIT)
