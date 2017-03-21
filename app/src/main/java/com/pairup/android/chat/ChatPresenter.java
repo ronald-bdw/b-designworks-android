@@ -44,7 +44,11 @@ public class ChatPresenter {
                             view.openWelcomeScreenWithError(result.isPhoneRegistered());
                         }
                     }
-                }, error -> view.onError(error));
+                }, error -> {
+                    if (view != null) {
+                        view.onError(error);
+                    }
+                });
         }
     }
 

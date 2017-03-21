@@ -41,14 +41,20 @@ public class VerifyPresenter {
 
         requestingSmsCodeSubs = userInteractor.requestCode(phoneNumber)
             .doOnTerminate(() -> {
-                view.hideRequestVerificationProgressDialog();
+                if (view != null) {
+                    view.hideRequestVerificationProgressDialog();
+                }
                 requestingSmsCodeSubs = null;
             })
             .compose(Rxs.doInBackgroundDeliverToUI())
             .subscribe(result -> {
                 loginFlowInteractor.setPhoneCodeId(result.getPhoneCodeId());
                 loginFlowInteractor.setPhoneRegistered(result.isPhoneRegistered());
-            }, view::showError);
+            }, error -> {
+                if (view != null) {
+                    view.showError(error);
+                }
+            });
     }
 
     public void handleSmsCode(String verificationCode) {
