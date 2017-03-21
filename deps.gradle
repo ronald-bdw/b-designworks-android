@@ -1,15 +1,15 @@
 ext {
     versions = [
             okHttp               : '3.4.1',
-            support              : '25.0.1',
+            support              : '25.3.0',
             googleServicesVersion: '10.0.1',
             retrofit             : '2.0.2',
             espressoVersion      : '2.2.2',
-            BUILD_TOOLS_VERSION  : '24.0.1',
+            BUILD_TOOLS_VERSION  : '25.0.2',
             MIN_SDK_VERSION      : 16,
-            TARGET_SDK_VERSION   : 23,
+            TARGET_SDK_VERSION   : 25,
             dagger               : "2.5",
-            smooch               : "4.2.0"
+            smooch               : "4.2.1"
     ]
     supportDeps = [
             appcompatV7      : "com.android.support:appcompat-v7:$versions.support",
