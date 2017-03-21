@@ -62,7 +62,6 @@ public class GoogleFitPresenter {
                 new GoogleApiClient.ConnectionCallbacks() {
                     @Override
                     public void onConnected(Bundle bundle) {
-
                         if (view != null) {
                             view.onClientConnected();
                         }
