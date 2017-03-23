@@ -65,7 +65,7 @@ public class User {
     }
 
     public boolean hasProvider() {
-        return provider != null && provider.isNotSubscriber();
+        return provider != null && !provider.isSubscriber();
     }
 
     public boolean isTrialUsed() {
