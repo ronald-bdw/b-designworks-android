@@ -14,11 +14,11 @@ import okhttp3.logging.HttpLoggingInterceptor;
 
 public class NetworkUtils {
 
-    public static void initStetho(Context context) {
+    public static void initialize(Context context) {
         Stetho.initializeWithDefaults(context);
     }
 
-    public static void addInterceptorsToClientBuilder(OkHttpClient.Builder httpClientBuilder) {
+    public static void addInterceptors(OkHttpClient.Builder httpClientBuilder) {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         httpClientBuilder.addInterceptor(interceptor);

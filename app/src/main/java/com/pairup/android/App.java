@@ -40,7 +40,7 @@ public class App extends Application {
             .appModule(new AppModule(this))
             .build();
 
-        NetworkUtils.initStetho(this);
+        NetworkUtils.initialize(this);
         AndroidUtils.initialize(this);
         setUpServices();
         Injector.inject(this);

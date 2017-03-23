@@ -67,7 +67,7 @@ public class AppModule {
         httpClientBuilder.cache(new Cache(cachedDir, 20 * 1024 * 1024));
         httpClientBuilder.readTimeout(30, TimeUnit.SECONDS);
 
-        NetworkUtils.addInterceptorsToClientBuilder(httpClientBuilder);
+        NetworkUtils.addInterceptors(httpClientBuilder);
 
         httpClientBuilder.addInterceptor(chain -> {
             if (userSettings.userHasToken()) {

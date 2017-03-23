@@ -10,11 +10,11 @@ import okhttp3.OkHttpClient;
 
 public class NetworkUtils {
 
-    public static void initStetho(Context context){
+    public static void initialize(Context context) {
         //do nothing
     }
 
-    public static void addInterceptorsToClientBuilder(OkHttpClient.Builder httpClientBuilder) {
+    public static void addInterceptors(OkHttpClient.Builder httpClientBuilder) {
         //add nothing
     }
 }
