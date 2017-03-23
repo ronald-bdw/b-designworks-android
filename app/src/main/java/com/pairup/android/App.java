@@ -7,6 +7,7 @@ import com.pairup.android.utils.AndroidUtils;
 import com.pairup.android.utils.Bus;
 import com.pairup.android.utils.Logger;
 import com.pairup.android.utils.Rxs;
+import com.pairup.android.utils.NetworkUtils;
 import com.pairup.android.utils.di.AppComponent;
 import com.pairup.android.utils.di.AppModule;
 import com.pairup.android.utils.di.DaggerAppComponent;
@@ -38,6 +39,8 @@ public class App extends Application {
 //             This also corresponds to the name of your module: %component_name%Module
             .appModule(new AppModule(this))
             .build();
+
+        NetworkUtils.initStetho(this);
         AndroidUtils.initialize(this);
         setUpServices();
         Injector.inject(this);
