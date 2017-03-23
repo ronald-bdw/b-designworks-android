@@ -11,7 +11,6 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.pairup.android.Api;
-import com.pairup.android.BuildConfig;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.chat.ChatPresenter;
 import com.pairup.android.login.EnterPhonePresenter;
@@ -24,6 +23,7 @@ import com.pairup.android.sync.FitbitPresenter;
 import com.pairup.android.sync.GoogleFitPresenter;
 import com.pairup.android.utils.Analytics;
 import com.pairup.android.utils.ImageLoader;
+import com.pairup.android.utils.NetworkUtils;
 import com.pairup.android.utils.network.RxErrorHandlingCallAdapterFactory;
 import com.pairup.android.utils.network.StringConverterFactory;
 import com.pairup.android.utils.storage.IStorage;
@@ -40,7 +40,6 @@ import dagger.Provides;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -68,11 +67,8 @@ public class AppModule {
         httpClientBuilder.cache(new Cache(cachedDir, 20 * 1024 * 1024));
         httpClientBuilder.readTimeout(30, TimeUnit.SECONDS);
 
-        if (BuildConfig.DEBUG) {
-            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-            httpClientBuilder.addInterceptor(interceptor);
-        }
+        NetworkUtils.addInterceptors(httpClientBuilder);
+
         httpClientBuilder.addInterceptor(chain -> {
             if (userSettings.userHasToken()) {
                 Request request = chain.request().newBuilder()
@@ -98,7 +94,7 @@ public class AppModule {
                                                  @NonNull UserSettings userSettings,
                                                  @NonNull Api api,
                                                  @NonNull NotificationManagerCompat
-                                                         notificationManager) {
+                                                     notificationManager) {
         return new UserInteractor(storage, userSettings, api, notificationManager);
     }
 
