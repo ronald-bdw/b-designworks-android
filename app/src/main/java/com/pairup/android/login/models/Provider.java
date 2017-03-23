@@ -41,7 +41,7 @@ public class Provider {
     }
 
     public boolean isNotSubscriber() {
-        return !"subscriber".equals(name);
+        return !"subscriber".equalsIgnoreCase(name);
     }
 
     public String getSubscriptionExpiringSoonMessage() {
