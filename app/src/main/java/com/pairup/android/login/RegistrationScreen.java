@@ -124,8 +124,11 @@ public class RegistrationScreen extends BaseActivity implements SubscriptionView
     }
 
     @OnClick(R.id.choose_your_plan) void onRegisterClick() {
+        Keyboard.hide(this);
+        if (!fieldVerificationPassed()) return;
+
         if (subscriptionPresenter.isSubscribed()) {
-            tryRegistration();
+            performRegistration();
         } else {
             subscriptionPresenter.showSubscriptionDialog();
         }
@@ -139,13 +142,9 @@ public class RegistrationScreen extends BaseActivity implements SubscriptionView
         Navigator.openUrl(this, TERMS_OF_USE_URL);
     }
 
-    private void tryRegistration() {
-        Keyboard.hide(this);
-        if (progressSubs != null || !fieldVerificationPassed()) return;
-        performRegistration();
-    }
-
     private void performRegistration() {
+        if (progressSubs != null) return;
+
         showRegistrationDialog();
         progressSubs = userInteractor.register(textOf(uiFirstName), textOf(uiLastName),
             textOf(uiEmail), argVerificationCode, textOf(uiPhone), argPhoneCodeId)
@@ -255,7 +254,7 @@ public class RegistrationScreen extends BaseActivity implements SubscriptionView
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            tryRegistration();
+            performRegistration();
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
