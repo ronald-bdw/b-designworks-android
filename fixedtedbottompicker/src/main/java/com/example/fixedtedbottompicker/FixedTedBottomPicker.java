@@ -193,9 +193,11 @@ public class FixedTedBottomPicker extends BottomSheetDialogFragment {
         } else {
             ContentValues values = new ContentValues(1);
             values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpg");
-            cameraImageUri = getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            cameraImageUri = getActivity().getContentResolver()
+                .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
             cameraInent.putExtra(MediaStore.EXTRA_OUTPUT, cameraImageUri);
-            cameraInent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            cameraInent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION |
+                Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         }
         startActivityForResult(cameraInent, REQ_CODE_CAMERA);
 
