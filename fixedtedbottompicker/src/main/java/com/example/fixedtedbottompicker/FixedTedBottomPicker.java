@@ -187,17 +187,16 @@ public class FixedTedBottomPicker extends BottomSheetDialogFragment {
             return;
         }
 
-        //original code with crash on Android N
-//        File imageFile = getImageFile();
-//        cameraInent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imageFile));
-//        startActivityForResult(cameraInent, REQ_CODE_CAMERA);
-
-        //fixed code
-        ContentValues values = new ContentValues(1);
-        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpg");
-        cameraImageUri = getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-        cameraInent.putExtra(MediaStore.EXTRA_OUTPUT, cameraImageUri);
-        cameraInent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            File imageFile = getImageFile();
+            cameraInent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imageFile));
+        } else {
+            ContentValues values = new ContentValues(1);
+            values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpg");
+            cameraImageUri = getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            cameraInent.putExtra(MediaStore.EXTRA_OUTPUT, cameraImageUri);
+            cameraInent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        }
         startActivityForResult(cameraInent, REQ_CODE_CAMERA);
 
     }
