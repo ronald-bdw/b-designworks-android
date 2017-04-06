@@ -144,7 +144,7 @@ public class RegistrationScreen extends BaseActivity implements SubscriptionView
 
     private void performRegistration() {
         if (progressSubs != null) return;
-        
+
         showRegistrationDialog();
         progressSubs = userInteractor.register(textOf(uiFirstName), textOf(uiLastName),
             textOf(uiEmail), argVerificationCode, textOf(uiPhone), argPhoneCodeId)
