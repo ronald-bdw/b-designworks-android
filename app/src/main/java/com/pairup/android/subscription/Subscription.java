@@ -8,9 +8,9 @@ import android.support.annotation.Nullable;
 
 public enum Subscription {
 
-    THREE_MONTH_SUBSCRIPTION_ID("three_month_subscription_v3", "habit_starter", 3),
-    SIX_MONTH_SUBSCRIPTION_ID("six_month_subscription_v3", "habit_stabilizer", 6),
-    ONE_YEAR_SUBSCRIPTION_ID("one_year_subscription_v3", "habit_master", 12),
+    THREE_MONTH_SUBSCRIPTION_ID("three_month_subscription_v4", "habit_starter", 3),
+    SIX_MONTH_SUBSCRIPTION_ID("six_month_subscription_v4", "habit_stabilizer", 6),
+    ONE_YEAR_SUBSCRIPTION_ID("one_year_subscription_v4", "habit_master", 12),
 
     THREE_MONTH_SUBSCRIPTION_WITHOUT_TRIAL_ID
         ("three_month_subscription_v3_without_trial", "habit_starter", 3),
@@ -25,7 +25,11 @@ public enum Subscription {
 
     THREE_MONTH_SUBSCRIPTION_ID_V2("three_month_subscription_v2", "habit_starter", 3),
     SIX_MONTH_SUBSCRIPTION_ID_V2("six_month_subscription_v2", "habit_stabilizer", 6),
-    ONE_YEAR_SUBSCRIPTION_ID_V2("one_year_subscription_v2", "habit_master", 12);
+    ONE_YEAR_SUBSCRIPTION_ID_V2("one_year_subscription_v2", "habit_master", 12),
+
+    THREE_MONTH_SUBSCRIPTION_ID_V3("three_month_subscription_v3", "habit_starter", 3),
+    SIX_MONTH_SUBSCRIPTION_ID_V3("six_month_subscription_v3", "habit_stabilizer", 6),
+    ONE_YEAR_SUBSCRIPTION_ID_V3("one_year_subscription_v3", "habit_master", 12);
 
     private String planId;
     private String planName;

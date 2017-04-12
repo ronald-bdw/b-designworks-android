@@ -66,13 +66,13 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="trial_dialog_no_worries">No worries. Pair Up is open to everyone!</string>
-    <string name="start_free_30_day_trial_now">Start a free 30 day trial now</string>
+    <string name="start_free_14_day_trial_now">Start a free 14 day trial now</string>
     <string name="trial_dialog_learn_more">Learn more</string>
     <string name="select_provider_label">Please select your provider:</string>
     <string name="welcome_question">Did you receive a personal\nsign-up invitation?</string>
     <string name="confirm">Confirm</string>
     <string name="title_start_trial">Start your free trial</string>
-    <string name="trial_start_trial">Start a free 30 day trial now</string>
+    <string name="trial_start_trial">Start a free 14 day trial now</string>
     <string name="verify_resend">Re-send</string>
     <string name="loading_sending_request_for_code">Requesting verification code</string>
     <string name="verify_waiting_for_sms">Success! Please wait for your SMS confirmation to complete the verification process.</string>
@@ -107,7 +107,7 @@
     <string name="tour_socials_title">Looks like you are\nall set!</string>
     <string name="tour_socials_description">One of our coach will contact you\nshortly. Meanwhile, you can follow us\non Facebook for more tips to\nget active</string>
     <string name="tour_socials_fb_link">facebook.com/pearupapp</string>
-    <string name="tour_socials_description_2">Or you can share this app with your\nfamily and friends to enjoy the FREE 30 days trial.</string>
+    <string name="tour_socials_description_2">Or you can share this app with your\nfamily and friends to enjoy the FREE 14 days trial.</string>
     <string name="welcome_hint_area_code">Area code</string>
     <string name="verify_code_format_hint">0000</string>
     <string name="share">Share</string>
@@ -149,7 +149,7 @@
     <string name="screen_enter_phone_error_has_no_provider">Verification is unsuccessful. You don\'t have a provider Please try again or contact us at support@pairup.im</string>
     <string name="screen_enter_phone_error_has_another_provider">Verification is unsuccessful. You selected wrong provider. Please try again or contact us at support@pairup.im</string>
     <string name="screen_enter_phone_error">Something went wrong. Please, try again.</string>
-    <string name="subscription_owned_text">Congratulations! You are now subscribed for Pair Up for 1 month.</string>
+    <string name="subscription_owned_text">Congratulations! You are now subscribed for Pair Up.</string>
     <string name="subscription_status_time">"Subscription was paid in "</string>
     <string name="subscribed_status">You are already subscribed</string>
     <string name="provider_not_chosen">Please select your provider:</string>
@@ -185,7 +185,7 @@
     <string name="registration_and">and</string>
     <string name="registration_terms_of_use">Terms of use</string>
     <string name="subscription_dialog_title">Choose your auto-renewable subscription plan</string>
-    <string name="subscription_dialog_trial">1 month trial period available for all plans.</string>
+    <string name="subscription_dialog_trial">2 week trial period available for all plans.</string>
     <string name="subscription_habit_starter">Habit Starter (3 months) - $149.99.</string>
     <string name="subscription_habit_stabilizer">Habit Stabilizer (6 months) - $179.99.</string>
     <string name="subscription_habit_master">Habit Master (12 months) - $299.99.</string>
@@ -195,13 +195,13 @@
         <item>Welcome</item>
         <item>Power of Habits</item>
         <item>Data insights</item>
-        <item>Free 30 day trial</item>
+        <item>Free 14 day trial</item>
     </string-array>
     <string-array name="trial_descriptions">
         <item>Pair Up uses simple in-app chat \n conversations with a friendly \n human coach to help you lead \n a more active lifestyle.</item>
         <item>Your Pair Up coach will help you \n turn small steps into get-active \n habits that last - for \n a healthier, happier you!</item>
         <item>Pair Up syncs with your phone and \n most activity trackers, providing \n your coach with key insights \n to help you lock-in new habits.</item>
-        <item>Try Pair Up free for 30 days. \n The choice is yours to continue a \n subscription that is far cheaper \n than traditional coaching.</item>
+        <item>Try Pair Up free for 14 days. \n The choice is yours to continue a \n subscription that is far cheaper \n than traditional coaching.</item>
     </string-array>
 
 </resources>
