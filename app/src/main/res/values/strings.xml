@@ -149,7 +149,7 @@
     <string name="screen_enter_phone_error_has_no_provider">Verification is unsuccessful. You don\'t have a provider Please try again or contact us at support@pairup.im</string>
     <string name="screen_enter_phone_error_has_another_provider">Verification is unsuccessful. You selected wrong provider. Please try again or contact us at support@pairup.im</string>
     <string name="screen_enter_phone_error">Something went wrong. Please, try again.</string>
-    <string name="subscription_owned_text">Congratulations! You are now subscribed for Pair Up for 1 month.</string>
+    <string name="subscription_owned_text">Congratulations! You are now subscribed for Pair Up.</string>
     <string name="subscription_status_time">"Subscription was paid in "</string>
     <string name="subscribed_status">You are already subscribed</string>
     <string name="provider_not_chosen">Please select your provider:</string>
