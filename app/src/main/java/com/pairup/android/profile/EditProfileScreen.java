@@ -196,7 +196,7 @@ public class EditProfileScreen extends BaseActivity implements EditProfileView {
     }
 
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
+        if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP && data != null) {
             String imagelink = imageLoader.getCorrectLink(UCrop.getOutput(data));
             if (imagelink == null) {
                 incorrectImage();

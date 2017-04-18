@@ -149,7 +149,7 @@ public class TourScreenUploadAvatar extends BaseActivity {
     }
 
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
+        if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP && data != null) {
             String imagelink = imageLoader.getCorrectLink(UCrop.getOutput(data));
             if (imagelink == null) {
                 SimpleDialog.withOkBtn(context(), getString(R.string.error_image_unacceptable));
