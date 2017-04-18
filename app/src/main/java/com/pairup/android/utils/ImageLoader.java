@@ -33,11 +33,14 @@ public class ImageLoader {
         }
     }
 
-    @Nullable public String getRealPathFromURI(Uri contentUri) {
+    @Nullable public String getRealPathFromURI(@NonNull Uri contentUri) {
         Cursor cursor = null;
         try {
             String[] proj = {MediaStore.Images.Media.DATA};
             cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
+
+            if (cursor == null) return null;
+
             int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             cursor.moveToFirst();
             return cursor.getString(columnIndex);
@@ -50,7 +53,7 @@ public class ImageLoader {
         }
     }
 
-    @Nullable public String getCorrectLink(Uri uri) {
+    @Nullable public String getCorrectLink(@Nullable Uri uri) {
         if (uri != null) {
             File file = new File(uri.getPath());
             if (!file.exists()) {
