@@ -251,14 +251,13 @@ public class FixedTedBottomPicker extends BottomSheetDialogFragment {
             Uri selectedImageUri = null;
             if (requestCode == REQ_CODE_GALLERY && data != null) {
                 selectedImageUri = data.getData();
-                if (selectedImageUri == null) {
-                    errorMessage();
-                }
             } else if (requestCode == REQ_CODE_CAMERA) {
                 // Do something with imagePath
                 selectedImageUri = cameraImageUri;
-                MediaScannerConnection.scanFile(getContext(),
-                    new String[]{selectedImageUri.getPath()}, new String[]{"image/jpeg"}, null);
+                if (selectedImageUri != null) {
+                    MediaScannerConnection.scanFile(getContext(),
+                        new String[]{selectedImageUri.getPath()}, new String[]{"image/jpeg"}, null);
+                }
             }
 
             if (selectedImageUri != null) {
