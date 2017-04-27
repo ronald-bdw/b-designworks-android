@@ -72,7 +72,7 @@ public class UserInteractor {
             .map(saveUser());
     }
 
-    public Observable<Object> login(@NonNull String verificationCode,
+    public Observable<Void> login(@NonNull String verificationCode,
                                     @NonNull String phone,
                                     @NonNull String phoneCodeId) {
         return api.signIn(verificationCode, phone, phoneCodeId, DEVICE_TYPE_ANDROID)
@@ -127,9 +127,9 @@ public class UserInteractor {
     }
 
     public void saveUser(@NonNull User user) {
-        Bus.event(UserProfileUpdatedEvent.EVENT);
         storage.put(KEY_USER, user);
         userSettings.saveAuthInfo(user.getAuthenticationToken(), user.getPhoneNumber());
+        Bus.event(UserProfileUpdatedEvent.EVENT);
     }
 
     public User getUser() {
@@ -151,10 +151,11 @@ public class UserInteractor {
     }
 
     public Observable<User> updateUserProfile() {
-        return api.currentUser().map(response -> {
-            saveUser(response.getUser());
-            return response.getUser();
-        });
+        return api.currentUser()
+            .map(response -> {
+                saveUser(response.getUser());
+                return response.getUser();
+            });
     }
 
     public String getFullName() {
