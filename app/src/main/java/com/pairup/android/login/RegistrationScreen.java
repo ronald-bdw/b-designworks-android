@@ -60,10 +60,6 @@ public class RegistrationScreen extends BaseActivity implements SubscriptionView
     private static final String PRIVACY_POLICY_URL        = "http://www.pairup.im/privacy/";
     private static final String TERMS_OF_USE_URL          = "http://www.pairup.im/terms-google/";
 
-    private String argVerificationCode;
-    private String argPhoneCodeId;
-    private String argPhoneNumber;
-
     @Inject UserInteractor        userInteractor;
     @Inject LoginFlowInteractor   loginFlowInteractor;
     @Inject SubscriptionPresenter subscriptionPresenter;
@@ -75,6 +71,10 @@ public class RegistrationScreen extends BaseActivity implements SubscriptionView
 
     @Nullable private Subscription   progressSubs;
     @Nullable private ProgressDialog progressDialog;
+
+    private String argVerificationCode;
+    private String argPhoneCodeId;
+    private String argPhoneNumber;
 
     public static Intent createIntent(Context context, String phoneNumber,
                                       String verificationCode, String phoneCodeId) {
