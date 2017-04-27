@@ -61,9 +61,9 @@ public class RegistrationScreen extends BaseActivity implements SubscriptionView
     private static final String PRIVACY_POLICY_URL        = "http://www.pairup.im/privacy/";
     private static final String TERMS_OF_USE_URL          = "http://www.pairup.im/terms-google/";
 
-    @InjectExtra(ARG_KEY_VERIFICATION_CODE) String argVerificationCode;
-    @InjectExtra(ARG_PHONE_CODE_ID)         String argPhoneCodeId;
-    @InjectExtra(ARG_PHONE_NUMBER)          String argPhoneNumber;
+    private String argVerificationCode;
+    private String argPhoneCodeId;
+    private String argPhoneNumber;
 
     @Inject UserInteractor        userInteractor;
     @Inject LoginFlowInteractor   loginFlowInteractor;
@@ -90,6 +90,12 @@ public class RegistrationScreen extends BaseActivity implements SubscriptionView
         return new UiInfo(R.layout.screen_registration)
             .setTitleRes(R.string.title_start_trial)
             .enableBackButton();
+    }
+
+    @Override protected void parseArguments(@NonNull Bundle extras) {
+        argVerificationCode = extras.getString(ARG_KEY_VERIFICATION_CODE);
+        argPhoneCodeId = extras.getString(ARG_PHONE_CODE_ID);
+        argPhoneNumber = extras.getString(ARG_PHONE_NUMBER);
     }
 
     @Override protected void onCreate(@Nullable Bundle savedState) {
