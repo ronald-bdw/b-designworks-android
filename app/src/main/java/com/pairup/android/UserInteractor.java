@@ -72,7 +72,7 @@ public class UserInteractor {
             .map(saveUser());
     }
 
-    public Observable<Void> login(@NonNull String verificationCode,
+    public Observable<Object> login(@NonNull String verificationCode,
                                     @NonNull String phone,
                                     @NonNull String phoneCodeId) {
         return api.signIn(verificationCode, phone, phoneCodeId, DEVICE_TYPE_ANDROID)
