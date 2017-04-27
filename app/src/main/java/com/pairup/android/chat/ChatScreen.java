@@ -75,8 +75,6 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
                 .getBooleanExtra(ARG_NEED_GOOGLE_FIT_INTEGRATION, false);
         }
 
-        chatPresenter.initialization();
-
         Analytics.logScreenOpened(Analytics.EVENT_OPEN_CHAT_SCREEN);
 
         customizeSmoochInterface();

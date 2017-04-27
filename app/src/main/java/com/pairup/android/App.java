@@ -5,7 +5,6 @@ import android.app.Application;
 import com.flurry.android.FlurryAgent;
 import com.pairup.android.utils.AndroidUtils;
 import com.pairup.android.utils.Bus;
-import com.pairup.android.utils.Logger;
 import com.pairup.android.utils.Rxs;
 import com.pairup.android.utils.NetworkUtils;
 import com.pairup.android.utils.di.AppComponent;
@@ -65,15 +64,19 @@ public class App extends Application {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(UserUnauthorizedEvent event) {
-        if (unauthorizingSubscription == null && userInteractor.getUser() != null) {
+        if (userInteractor.getUser() == null) {
+            logout(true);
+        } else if (unauthorizingSubscription == null) {
             unauthorizingSubscription = userInteractor.requestUserStatus(userInteractor.getPhone())
                 .doOnTerminate(() -> unauthorizingSubscription = null)
                 .compose(Rxs.doInBackgroundDeliverToUI())
-                .subscribe(result -> {
-                    userInteractor.logout();
-                    Navigator.welcomeWithError(getApplicationContext(), result.isPhoneRegistered());
-                }, Logger::e);
+                .subscribe(result -> logout(result.isPhoneRegistered()), error -> logout(true));
         }
+    }
+
+    private void logout(boolean isPhoneRegistered) {
+        userInteractor.logout();
+        Navigator.welcomeWithError(getApplicationContext(), isPhoneRegistered);
     }
 
     private void startFlurry() {
