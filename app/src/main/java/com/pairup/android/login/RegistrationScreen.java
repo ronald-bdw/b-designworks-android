@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.anjlab.android.iab.v3.TransactionDetails;
-import com.f2prateek.dart.InjectExtra;
 import com.pairup.android.BaseActivity;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
