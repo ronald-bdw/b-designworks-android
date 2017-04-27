@@ -26,7 +26,6 @@ public class ChatPresenter {
         this.userInteractor = userInteractor;
     }
 
-    @SuppressWarnings("URF_UNREAD_FIELD")
     public void onViewShown(@NonNull ChatView view) {
         this.view = view;
     }
