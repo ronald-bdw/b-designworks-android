@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import com.anjlab.android.iab.v3.TransactionDetails;
 import com.google.android.gms.common.ConnectionResult;
-import com.pairup.android.Navigator;
 import com.pairup.android.R;
 import com.pairup.android.UserInteractor;
 import com.pairup.android.subscription.SubscriptionDialog;
@@ -244,8 +243,7 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     }
 
     @Override
-    public void openWelcomeScreenWithError(boolean isPhoneRegistered) {
-        Navigator.welcomeWithError(ChatScreen.this, isPhoneRegistered);
+    public void openWelcomeScreenWithError() {
     }
 
     public void initSidePanel() {

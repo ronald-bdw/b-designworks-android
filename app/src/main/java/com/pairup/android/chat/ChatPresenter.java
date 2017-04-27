@@ -26,6 +26,7 @@ public class ChatPresenter {
         this.userInteractor = userInteractor;
     }
 
+    @SuppressWarnings("URF_UNREAD_FIELD")
     public void onViewShown(@NonNull ChatView view) {
         this.view = view;
     }
@@ -35,8 +36,8 @@ public class ChatPresenter {
             Smooch.logout();
             userInteractor.trackFirstVisit();
         }
-        com.pairup.android.login.models.User user = userInteractor.getUser();
 
+        com.pairup.android.login.models.User user = userInteractor.getUser();
         if (user != null) {
             Smooch.login(userInteractor.getUserZendeskId(), null);
             Map<String, Object> additionalPropertyForPushes = new HashMap<>();
@@ -48,10 +49,12 @@ public class ChatPresenter {
             userInteractor.sendNotificationsStatus();
         } else {
             Bus.event(UserUnauthorizedEvent.EVENT);
+            view.openWelcomeScreenWithError();
         }
     }
 
     public void onViewHidden() {
         this.view = null;
     }
+
 }
