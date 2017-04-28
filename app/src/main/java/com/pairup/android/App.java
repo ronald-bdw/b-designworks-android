@@ -65,18 +65,29 @@ public class App extends Application {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(UserUnauthorizedEvent event) {
         if (userInteractor.getUser() == null) {
-            logout(true);
+            logoutCauseAuthFromAnotherDevice();
         } else if (unauthorizingSubscription == null) {
             unauthorizingSubscription = userInteractor.requestUserStatus(userInteractor.getPhone())
                 .doOnTerminate(() -> unauthorizingSubscription = null)
                 .compose(Rxs.doInBackgroundDeliverToUI())
-                .subscribe(result -> logout(result.isPhoneRegistered()), error -> logout(true));
+                .subscribe(result -> {
+                    if (result.isPhoneRegistered()) {
+                        logoutCauseAuthFromAnotherDevice();
+                    } else {
+                        logoutCauseAccDeleted();
+                    }
+                }, error -> logoutCauseAuthFromAnotherDevice());
         }
     }
 
-    private void logout(boolean isPhoneRegistered) {
+    private void logoutCauseAuthFromAnotherDevice() {
         userInteractor.logout();
-        Navigator.welcomeWithError(getApplicationContext(), isPhoneRegistered);
+        Navigator.welcomeWithError(getApplicationContext(), true);
+    }
+
+    private void logoutCauseAccDeleted() {
+        userInteractor.logout();
+        Navigator.welcomeWithError(getApplicationContext(), false);
     }
 
     private void startFlurry() {
