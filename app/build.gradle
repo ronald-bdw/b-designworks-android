@@ -123,7 +123,6 @@ dependencies {
 
     compile 'com.jakewharton:butterknife:7.0.0' // view injection
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.f2prateek.dart:dart:1.1.0' // activity arguments arguments inject
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'fr.avianey.com.viewpagerindicator:library:2.4.1.1@aar'
     compile 'org.greenrobot:eventbus:3.0.0'
