@@ -50,8 +50,7 @@ import rx.functions.Action0;
 /**
  * Created by Ilya Eremin on 04.08.2016.
  */
-public class ChatScreen extends ConversationActivity implements SubscriptionView, ChatView,
-    GoogleFitView {
+public class ChatScreen extends ConversationActivity implements SubscriptionView, GoogleFitView {
 
     public static final String ARG_NEED_GOOGLE_FIT_INTEGRATION = "needGoogleFitIntegration";
 
@@ -147,7 +146,6 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     @Override public void onResume() {
         super.onResume();
         Bus.subscribe(this);
-        chatPresenter.onViewShown(this);
         subscriptionPresenter.attachView(this, this);
 
         // we could not customize part of the UI in on create
@@ -187,7 +185,6 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
     @Override public void onPause() {
         Bus.unsubscribe(this);
         subscriptionPresenter.onViewHidden();
-        chatPresenter.onViewHidden();
         super.onPause();
     }
 
@@ -240,10 +237,6 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
                     }
                 }, getString(R.string.cancel), null, true);
         }
-    }
-
-    @Override
-    public void openWelcomeScreenWithError() {
     }
 
     public void initSidePanel() {

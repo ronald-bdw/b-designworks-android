@@ -1,7 +1,5 @@
 package com.pairup.android.chat;
 
-import android.support.annotation.NonNull;
-
 import com.pairup.android.UserInteractor;
 import com.pairup.android.UserUnauthorizedEvent;
 import com.pairup.android.utils.Bus;
@@ -20,14 +18,8 @@ public class ChatPresenter {
 
     private final UserInteractor userInteractor;
 
-    private ChatView view;
-
     public ChatPresenter(UserInteractor userInteractor) {
         this.userInteractor = userInteractor;
-    }
-
-    public void onViewShown(@NonNull ChatView view) {
-        this.view = view;
     }
 
     public void initSmooch() {
@@ -48,12 +40,7 @@ public class ChatPresenter {
             userInteractor.sendNotificationsStatus();
         } else {
             Bus.event(UserUnauthorizedEvent.EVENT);
-            view.openWelcomeScreenWithError();
         }
-    }
-
-    public void onViewHidden() {
-        this.view = null;
     }
 
 }
