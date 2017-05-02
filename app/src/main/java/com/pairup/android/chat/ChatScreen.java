@@ -220,8 +220,9 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (!subscriptionPresenter.getBillingProcessor()
-            .handleActivityResult(requestCode, resultCode, data)) {
+        if (!(subscriptionPresenter.getBillingProcessor() != null &&
+            subscriptionPresenter.getBillingProcessor()
+                .handleActivityResult(requestCode, resultCode, data))) {
             super.onActivityResult(requestCode, resultCode, data);
             googleFitPresenter.handleResponse(requestCode, resultCode, data);
         }
