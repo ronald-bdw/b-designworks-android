@@ -169,7 +169,6 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 
         ((View) uiInputText.getParent()).setBackgroundColor(0xFFECF3FA);
-        ((ImageView) findViewById(R.id.Smooch_btnSend)).setImageResource(R.drawable.ic_send);
 
         showUserName(userInteractor.getFullName());
     }
