@@ -9,7 +9,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -169,7 +168,6 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 
         ((View) uiInputText.getParent()).setBackgroundColor(0xFFECF3FA);
-        ((ImageView) findViewById(R.id.Smooch_btnSend)).setImageResource(R.drawable.ic_send);
 
         showUserName(userInteractor.getFullName());
     }
@@ -221,8 +219,9 @@ public class ChatScreen extends ConversationActivity implements SubscriptionView
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (!subscriptionPresenter.getBillingProcessor()
-            .handleActivityResult(requestCode, resultCode, data)) {
+        if (!(subscriptionPresenter.getBillingProcessor() != null &&
+            subscriptionPresenter.getBillingProcessor()
+                .handleActivityResult(requestCode, resultCode, data))) {
             super.onActivityResult(requestCode, resultCode, data);
             googleFitPresenter.handleResponse(requestCode, resultCode, data);
         }
