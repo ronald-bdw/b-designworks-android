@@ -48,7 +48,7 @@ public class FixedTedBottomPicker extends BottomSheetDialogFragment {
     public static final String TAG              = "ted";
     static final        int    REQ_CODE_CAMERA  = 1;
     static final        int    REQ_CODE_GALLERY = 2;
-    Builder builder;
+    @SuppressLint("StaticFieldLeak") static Builder builder;
     ImageGalleryAdapter imageGalleryAdapter;
     TextView            tv_title;
     private RecyclerView rc_gallery;
@@ -103,7 +103,7 @@ public class FixedTedBottomPicker extends BottomSheetDialogFragment {
         CoordinatorLayout.Behavior behavior = layoutParams.getBehavior();
         if (behavior != null && behavior instanceof BottomSheetBehavior) {
             ((BottomSheetBehavior) behavior).setBottomSheetCallback(mBottomSheetBehaviorCallback);
-            if (builder != null && builder.peekHeight > 0) {
+            if (builder.peekHeight > 0) {
                 // ((BottomSheetBehavior) behavior).setPeekHeight(1500);
                 ((BottomSheetBehavior) behavior).setPeekHeight(builder.peekHeight);
             }
