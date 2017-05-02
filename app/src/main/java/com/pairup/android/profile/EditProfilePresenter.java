@@ -18,7 +18,7 @@ import rx.schedulers.Schedulers;
 public class EditProfilePresenter {
 
     @Nullable private EditProfileView view;
-    @Nullable private Subscription    updateProfileSubscribtion;
+    @Nullable private Subscription    updateProfileSubscription;
     @Nullable private Subscription    uploadingSubscription;
 
     private final UserInteractor userInteractor;
@@ -38,7 +38,7 @@ public class EditProfilePresenter {
     }
 
     public void updateUser() {
-        if (updateProfileSubscribtion != null) return;
+        if (updateProfileSubscription != null) return;
         if (view != null) {
             String email = view.getEmail();
             if (email.isEmpty()) {
@@ -51,14 +51,14 @@ public class EditProfilePresenter {
             }
             view.showProgressDialog();
             view.hideKeyboard();
-            updateProfileSubscribtion = userInteractor
+            updateProfileSubscription = userInteractor
                 .updateUser(view.getFirstName(), view.getLastName(), email)
                 .subscribeOn(Schedulers.io())
                 .doOnTerminate(() -> {
                     if (view != null) {
                         view.hideProgress();
                     }
-                    updateProfileSubscribtion = null;
+                    updateProfileSubscription = null;
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> {
@@ -80,7 +80,7 @@ public class EditProfilePresenter {
     }
 
     public void onScreenShown() {
-        if (updateProfileSubscribtion != null) {
+        if (updateProfileSubscription != null) {
             if (view != null) {
                 view.showProgressDialog();
             }
@@ -94,9 +94,9 @@ public class EditProfilePresenter {
     }
 
     public void cancelRequest() {
-        if (updateProfileSubscribtion != null && !updateProfileSubscribtion.isUnsubscribed()) {
-            updateProfileSubscribtion.unsubscribe();
-            updateProfileSubscribtion = null;
+        if (updateProfileSubscription != null && !updateProfileSubscription.isUnsubscribed()) {
+            updateProfileSubscription.unsubscribe();
+            updateProfileSubscription = null;
         }
     }
 
