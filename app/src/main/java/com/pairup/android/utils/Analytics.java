@@ -1,5 +1,6 @@
 package com.pairup.android.utils;
 
+import com.crashlytics.android.Crashlytics;
 import com.flurry.android.FlurryAgent;
 import com.pairup.android.BuildConfig;
 
@@ -51,12 +52,14 @@ public class Analytics {
     public static void logEvent(String event) {
         if (BuildConfig.FLAVOR.equals("production")) {
             FlurryAgent.logEvent(event);
+            Crashlytics.log(event);
         }
     }
 
     public static void logEvent(String event, Map<String, String> param) {
         if (BuildConfig.FLAVOR.equals("production")) {
             FlurryAgent.logEvent(event, param);
+            Crashlytics.log(event + param.toString());
         }
     }
 

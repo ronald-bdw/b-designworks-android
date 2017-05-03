@@ -5,7 +5,6 @@ import android.app.Application;
 import com.flurry.android.FlurryAgent;
 import com.pairup.android.utils.AndroidUtils;
 import com.pairup.android.utils.Bus;
-import com.pairup.android.utils.Logger;
 import com.pairup.android.utils.Rxs;
 import com.pairup.android.utils.NetworkUtils;
 import com.pairup.android.utils.di.AppComponent;
@@ -65,15 +64,30 @@ public class App extends Application {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(UserUnauthorizedEvent event) {
-        if (unauthorizingSubscription == null && userInteractor.getUser() != null) {
+        if (userInteractor.getUser() == null) {
+            logoutCauseAuthFromAnotherDevice();
+        } else if (unauthorizingSubscription == null) {
             unauthorizingSubscription = userInteractor.requestUserStatus(userInteractor.getPhone())
                 .doOnTerminate(() -> unauthorizingSubscription = null)
                 .compose(Rxs.doInBackgroundDeliverToUI())
                 .subscribe(result -> {
-                    userInteractor.logout();
-                    Navigator.welcomeWithError(getApplicationContext(), result.isPhoneRegistered());
-                }, Logger::e);
+                    if (result.isPhoneRegistered()) {
+                        logoutCauseAuthFromAnotherDevice();
+                    } else {
+                        logoutCauseAccDeleted();
+                    }
+                }, error -> logoutCauseAuthFromAnotherDevice());
         }
+    }
+
+    private void logoutCauseAuthFromAnotherDevice() {
+        userInteractor.logout();
+        Navigator.welcomeWithError(getApplicationContext(), true);
+    }
+
+    private void logoutCauseAccDeleted() {
+        userInteractor.logout();
+        Navigator.welcomeWithError(getApplicationContext(), false);
     }
 
     private void startFlurry() {

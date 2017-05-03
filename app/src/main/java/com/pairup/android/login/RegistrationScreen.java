@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.anjlab.android.iab.v3.TransactionDetails;
-import com.f2prateek.dart.InjectExtra;
 import com.pairup.android.BaseActivity;
 import com.pairup.android.Navigator;
 import com.pairup.android.R;
@@ -61,10 +60,6 @@ public class RegistrationScreen extends BaseActivity implements SubscriptionView
     private static final String PRIVACY_POLICY_URL        = "http://www.pairup.im/privacy/";
     private static final String TERMS_OF_USE_URL          = "http://www.pairup.im/terms-google/";
 
-    @InjectExtra(ARG_KEY_VERIFICATION_CODE) String argVerificationCode;
-    @InjectExtra(ARG_PHONE_CODE_ID)         String argPhoneCodeId;
-    @InjectExtra(ARG_PHONE_NUMBER)          String argPhoneNumber;
-
     @Inject UserInteractor        userInteractor;
     @Inject LoginFlowInteractor   loginFlowInteractor;
     @Inject SubscriptionPresenter subscriptionPresenter;
@@ -76,6 +71,10 @@ public class RegistrationScreen extends BaseActivity implements SubscriptionView
 
     @Nullable private Subscription   progressSubs;
     @Nullable private ProgressDialog progressDialog;
+
+    private String argVerificationCode;
+    private String argPhoneCodeId;
+    private String argPhoneNumber;
 
     public static Intent createIntent(Context context, String phoneNumber,
                                       String verificationCode, String phoneCodeId) {
@@ -90,6 +89,12 @@ public class RegistrationScreen extends BaseActivity implements SubscriptionView
         return new UiInfo(R.layout.screen_registration)
             .setTitleRes(R.string.title_start_trial)
             .enableBackButton();
+    }
+
+    @Override protected void parseArguments(@NonNull Bundle extras) {
+        argVerificationCode = extras.getString(ARG_KEY_VERIFICATION_CODE);
+        argPhoneCodeId = extras.getString(ARG_PHONE_CODE_ID);
+        argPhoneNumber = extras.getString(ARG_PHONE_NUMBER);
     }
 
     @Override protected void onCreate(@Nullable Bundle savedState) {

@@ -40,13 +40,6 @@
 }
 -dontwarn sun.misc.Unsafe
 
-#dart
--dontwarn com.f2prateek.dart.internal.**
--keep class **$$ExtraInjector { *; }
--keepclasseswithmembernames class * {
-    @com.f2prateek.dart.* <fields>;
-}
-
 #start gson
 -keepattributes Signature
 # For using GSON @Expose annotation

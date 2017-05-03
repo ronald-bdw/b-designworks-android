@@ -12,10 +12,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.pairup.android.R;
 import com.pairup.android.utils.Keyboard;
 import com.pairup.android.utils.ui.UiInfo;
-import com.f2prateek.dart.Dart;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import butterknife.ButterKnife;
@@ -32,7 +30,6 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     @Override protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        Dart.inject(this);
         setContentView(getUiInfo().getLayoutRes());
         ButterKnife.bind(this);
         if (getIntent() != null && getIntent().getExtras() != null) {
